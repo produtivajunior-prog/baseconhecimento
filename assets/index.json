@@ -1,6 +1,20 @@
 {
   "assets": [
     {
+      "uuid": "7c1f0a52-9d38-4b61-a0e2-3f5c8d1147a1",
+      "path": "vendor/react.production.min.js",
+      "mime": "text/javascript",
+      "compressed": true,
+      "bytes": 10751
+    },
+    {
+      "uuid": "7c1f0a52-9d38-4b61-a0e2-3f5c8d1147a2",
+      "path": "vendor/react-dom.production.min.js",
+      "mime": "text/javascript",
+      "compressed": true,
+      "bytes": 131835
+    },
+    {
       "uuid": "3ef4b086-390f-48b4-b543-ba27789b2a30",
       "path": "assets/logo.png",
       "mime": "image/png",

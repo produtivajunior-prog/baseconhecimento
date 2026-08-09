@@ -63,15 +63,17 @@ o navegador enxerga.
 
 ## Limitações conhecidas
 
-Duas dependências externas estão quebradas no modo como o arquivo é distribuído hoje:
-
 | | |
 |---|---|
-| **React via unpkg.com** | O `dc-runtime` baixa React de CDN em runtime. Sem internet ou com firewall corporativo, a página renderiza o template cru, com `{{ item.nome }}` visível na tela. Verificado em Chromium — falha idêntica no bundle original. |
-| **`window.claude.complete`** | Só existe dentro do sandbox de artifacts da Claude.ai. Como a distribuição é por download do HTML, **as 4 funcionalidades de IA falham em 100% das tentativas** hoje, com mensagem que sugere erro do usuário. |
+| ✅ **React via unpkg.com** | **Resolvido.** O `dc-runtime` baixava React de CDN em runtime; sem internet a página renderizava o template cru, com `{{ item.nome }}` visível na tela. React 18.3.1 agora vai embutido no bundle, carregado antes do runtime. Verificado em Chromium com o unpkg inacessível. |
+| 🔴 **`window.claude.complete`** | Só existe dentro do sandbox de artifacts da Claude.ai. Como a distribuição é por download do HTML, **as 4 funcionalidades de IA falham em 100% das tentativas** hoje, com mensagem que sugere erro do usuário. Exige backend — não dá para resolver dentro do bundle. |
 
 Além disso: nada persiste (F5 apaga tudo), não há login, e os anexos são apenas metadados —
 nenhum arquivo existe por trás dos botões "Baixar".
+
+> Ruído esperado no console em `file://`: `dc-runtime.js:154` faz `fetch(location.href)` para
+> recarregar o template (recurso de editor). É bloqueado por CORS, já tratado pelo `.catch()`
+> do próprio runtime, e não afeta o funcionamento.
 
 Detalhes e o resto do inventário no [DIAGNOSTICO.md](DIAGNOSTICO.md).
 

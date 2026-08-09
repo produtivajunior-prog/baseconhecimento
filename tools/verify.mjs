@@ -82,18 +82,39 @@ function extrairDados(logic) {
 const a = parseBundle(join(ROOT, 'original/Biblioteca_CIEP.html'));
 const b = parseBundle(join(ROOT, 'dist/Biblioteca_CIEP.html'));
 
+// Assets deliberadamente acrescentados depois do bundle original, com o motivo.
+// Qualquer outra diferença de asset continua sendo falha.
+const ADICIONADOS = {
+  '7c1f0a52-9d38-4b61-a0e2-3f5c8d1147a1': 'react.production.min.js (embutido: mata o unpkg)',
+  '7c1f0a52-9d38-4b61-a0e2-3f5c8d1147a2': 'react-dom.production.min.js (embutido: mata o unpkg)',
+};
+
 // ---------------------------------------------------------------- assets
 for (const uuid of new Set([...Object.keys(a.assets), ...Object.keys(b.assets)])) {
   const x = a.assets[uuid], y = b.assets[uuid];
   const label = `${uuid.slice(0, 8)} ${x?.mime || y?.mime}`;
+
+  if (!x && y && ADICIONADOS[uuid]) {
+    check(y.bytes.length > 0, `asset ${label}  +${y.bytes.length} bytes  ${ADICIONADOS[uuid]}`,
+      `asset ${label} acrescentado porém vazio`);
+    continue;
+  }
   if (!x || !y) { check(false, '', `asset ${label} existe em só um dos bundles`); continue; }
   check(x.bytes.equals(y.bytes), `asset ${label}  ${x.bytes.length} bytes  sha ${sha(x.bytes)}`,
     `asset ${label} DIVERGENTE (${x.bytes.length} vs ${y.bytes.length})`);
 }
 
 // ---------------------------------------------------------------- markup
-check(a.markup === b.markup, `markup idêntico  (${a.markup.length} chars, sha ${sha(a.markup)})`,
-  `markup DIVERGENTE (${a.markup.length} vs ${b.markup.length})`);
+// A única alteração aceita na marcação é a inclusão dos <script> do React. Removendo
+// essas linhas, o resultado tem de bater com o original caractere a caractere — assim a
+// checagem continua apertada em vez de virar "mudou, tudo bem".
+const markupNormalizado = b.markup
+  .replace(/<!-- React embutido\.[\s\S]*?-->\n/, '')
+  .replace(/<script src="7c1f0a52-[^"]*"><\/script>\n/g, '');
+
+check(a.markup === markupNormalizado,
+  `markup idêntico ao original, exceto os <script> do React  (${a.markup.length} chars, sha ${sha(a.markup)})`,
+  `markup DIVERGENTE além da inclusão do React (${a.markup.length} vs ${markupNormalizado.length})`);
 
 // ---------------------------------------------------------------- dados
 const da = extrairDados(a.logic);
