@@ -1,0 +1,91 @@
+[
+  {
+    "key": "mapear",
+    "label": "Mapear processos",
+    "ids": [
+      "bpmn",
+      "ishikawa"
+    ]
+  },
+  {
+    "key": "diagnosticar",
+    "label": "Diagnosticar problemas",
+    "ids": [
+      "5porques",
+      "ishikawa",
+      "swot"
+    ]
+  },
+  {
+    "key": "priorizar",
+    "label": "Priorizar ações",
+    "ids": [
+      "gut",
+      "esforcoimpacto"
+    ]
+  },
+  {
+    "key": "organizar",
+    "label": "Organizar informações do cliente",
+    "ids": [
+      "stakeholders",
+      "entrevista"
+    ]
+  },
+  {
+    "key": "plano",
+    "label": "Criar plano de ação",
+    "ids": [
+      "5w2h",
+      "esforcoimpacto"
+    ]
+  },
+  {
+    "key": "mercado",
+    "label": "Analisar mercado",
+    "ids": [
+      "swot",
+      "valueprop"
+    ]
+  },
+  {
+    "key": "proposta",
+    "label": "Estruturar proposta",
+    "ids": [
+      "escopo",
+      "bmc"
+    ]
+  },
+  {
+    "key": "indicadores",
+    "label": "Melhorar indicadores",
+    "ids": [
+      "gut",
+      "5porques"
+    ]
+  },
+  {
+    "key": "redesenhar",
+    "label": "Redesenhar processo",
+    "ids": [
+      "bpmn",
+      "ishikawa"
+    ]
+  },
+  {
+    "key": "validar",
+    "label": "Validar ideia de produto",
+    "ids": [
+      "bmc",
+      "valueprop"
+    ]
+  },
+  {
+    "key": "escopo",
+    "label": "Construir escopo de projeto",
+    "ids": [
+      "escopo",
+      "kickoff"
+    ]
+  }
+]

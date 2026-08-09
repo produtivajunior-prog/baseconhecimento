@@ -1,0 +1,170 @@
+{
+  "type": "metodologia",
+  "nome": "Process Map Model Canvas",
+  "sigla": "PMMC",
+  "subtitulo": "Mapeamento e redesenho de processos",
+  "categoria": "Processos",
+  "intro": "O Process Map Model Canvas (PMMC) é uma ferramenta visual que simplifica a análise e o redesenho de processos. Em uma única página, condensa os blocos essenciais do fluxo de valor, garantindo uma visão sistêmica e facilitando a validação do entendimento junto ao gestor.\nBaseada na lógica da Cadeia de Valor, a metodologia investiga a relação entre entradas, transformações e saídas, assegurando uma coleta padronizada e assertiva como base para diagnósticos e melhorias operacionais.",
+  "secoes": [
+    {
+      "grupo": "Entradas",
+      "titulo": "Principais Fornecedores",
+      "descricao": "Define a origem dos recursos que alimentam o processo, identificando quem entrega o que é necessário para a operação começar. O fornecedor pode ser externo, um departamento interno ou uma etapa anterior do fluxo.",
+      "perguntas": [
+        "De onde são retirados os insumos envolvidos no processo?",
+        "O fornecedor é externo (outra empresa) ou interno (outro setor)?",
+        "Quem é o responsável direto por disponibilizar o recurso no tempo certo?"
+      ]
+    },
+    {
+      "grupo": "Entradas",
+      "titulo": "Principais Insumos",
+      "descricao": "Representam a matéria-prima do processo — elementos tangíveis ou intangíveis (dados, informações) que entram no fluxo para serem transformados. Se o fornecedor é \"quem entrega\", o insumo é \"o que é entregue\".",
+      "perguntas": [
+        "Quais são os inputs (físicos ou intelectuais) que serão processados?",
+        "O que é indispensável receber para que a atividade comece?",
+        "Os insumos chegam no padrão ou formato correto?"
+      ]
+    },
+    {
+      "grupo": "Processos",
+      "titulo": "Principais Atividades",
+      "descricao": "O motor da operação: o conjunto de ações que transformam os insumos nos produtos finais. Liste as etapas macro que agregam valor, não cada micro-movimento.",
+      "perguntas": [
+        "Quais atividades são desempenhadas do repasse dos insumos até a entrega?",
+        "Quais são as etapas críticas de transformação que não podem faltar?",
+        "Existe uma sequência lógica clara entre as ações listadas?"
+      ]
+    },
+    {
+      "grupo": "Saídas",
+      "titulo": "Principais Produtos",
+      "descricao": "A materialização do valor gerado pelas atividades — a entrega final do fluxo. Descreva com clareza o que está sendo entregue: objeto físico, relatório, serviço ou informação processada.",
+      "perguntas": [
+        "Quais são os resultados tangíveis do processo?",
+        "O que é efetivamente entregue ao final das atividades?",
+        "O produto atende aos requisitos de qualidade esperados?"
+      ]
+    },
+    {
+      "grupo": "Saídas",
+      "titulo": "Principais Clientes",
+      "descricao": "Identifica quem recebe o produto mapeado. O cliente pode ser externo (consumidor final) ou interno (o próximo setor que depende dessa entrega para o seu trabalho).",
+      "perguntas": [
+        "Quem são os beneficiários do processo?",
+        "Para quem o produto é destinado?",
+        "O cliente é o consumidor final ou uma etapa interna posterior?"
+      ]
+    },
+    {
+      "grupo": "Suporte",
+      "titulo": "Recursos Humanos",
+      "descricao": "Foca nas pessoas: quem são os agentes necessários para executar as atividades e quais competências são exigidas. Ajuda a visualizar se a equipe está dimensionada corretamente.",
+      "perguntas": [
+        "Quem e quantos são os responsáveis pela execução do processo?",
+        "Quais funções e cargos específicos são exigidos?",
+        "A equipe possui as competências necessárias para as atividades?"
+      ]
+    },
+    {
+      "grupo": "Suporte",
+      "titulo": "Recursos Tecnológicos",
+      "descricao": "Mapeia as ferramentas não humanas — softwares, ERPs, máquinas ou equipamentos — que dão suporte às atividades, revelando o nível de automação e as dependências de sistemas.",
+      "perguntas": [
+        "Quais equipamentos e sistemas são utilizados durante o processo?",
+        "As ferramentas disponíveis atendem à demanda das atividades?"
+      ]
+    }
+  ],
+  "blocos": [
+    {
+      "titulo": "Parceiros",
+      "itens": [
+        "Fornecedores estratégicos",
+        "Patrocinadores",
+        "Terceirizados",
+        "Quem indica o trabalho"
+      ],
+      "w": "normal"
+    },
+    {
+      "titulo": "Atividades-chave",
+      "itens": [
+        "Atividades internas",
+        "Atividades externas",
+        "Processos centrais"
+      ],
+      "w": "normal"
+    },
+    {
+      "titulo": "Recursos-chave",
+      "itens": [
+        "Matéria-prima",
+        "Funcionários",
+        "Softwares e ferramentas",
+        "Maquinário e infraestrutura"
+      ],
+      "w": "normal"
+    },
+    {
+      "titulo": "Proposta de Valor",
+      "itens": [
+        "Dor solucionada e como soluciona",
+        "Por que o cliente escolhe seu serviço",
+        "Especialidade da empresa",
+        "Propósito e objetivo"
+      ],
+      "w": "wide"
+    },
+    {
+      "titulo": "Relacionamento com Cliente",
+      "itens": [
+        "Planos de fidelidade e indicação",
+        "Modo de atendimento",
+        "Brindes e benefícios",
+        "Medida de satisfação"
+      ],
+      "w": "normal"
+    },
+    {
+      "titulo": "Canais",
+      "itens": [
+        "Redes sociais",
+        "E-mail",
+        "Meios de comunicação",
+        "Pontos de contato"
+      ],
+      "w": "normal"
+    },
+    {
+      "titulo": "Segmento de Cliente",
+      "itens": [
+        "Faixa etária e gênero",
+        "Classe social e localização",
+        "Hábitos de consumo",
+        "Dores solucionadas"
+      ],
+      "w": "normal"
+    },
+    {
+      "titulo": "Estrutura de Custos",
+      "itens": [
+        "Custos fixos e variáveis",
+        "Matéria-prima e fornecedores",
+        "Folha e terceirizados",
+        "Softwares e infraestrutura"
+      ],
+      "w": "wide"
+    },
+    {
+      "titulo": "Fontes de Receita",
+      "itens": [
+        "Produtos vendidos",
+        "Assinaturas e planos",
+        "Serviços adicionais",
+        "Comissões recebidas"
+      ],
+      "w": "wide"
+    }
+  ]
+}

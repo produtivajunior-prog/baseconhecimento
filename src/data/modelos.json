@@ -1,0 +1,67 @@
+[
+  {
+    "id": "bmc",
+    "toolId": "bmc",
+    "nome": "Business Model Canvas",
+    "sigla": "BMC",
+    "fonte": "[CIEP] Modelo - BMC.pdf",
+    "layout": "canvas",
+    "registrado": "Lido do anexo",
+    "blocos": [
+      {
+        "titulo": "Parceiros",
+        "gc": "1 / 3",
+        "gr": "1 / 3",
+        "dica": "Fornecedores, patrocinadores, terceirizados, quem indica o trabalho."
+      },
+      {
+        "titulo": "Atividades-chave",
+        "gc": "3 / 5",
+        "gr": "1 / 2",
+        "dica": "Atividades internas e externas que sustentam a operação."
+      },
+      {
+        "titulo": "Recursos-chave",
+        "gc": "3 / 5",
+        "gr": "2 / 3",
+        "dica": "Matéria-prima, pessoas, softwares, ferramentas, infraestrutura."
+      },
+      {
+        "titulo": "Proposta de Valor",
+        "gc": "5 / 7",
+        "gr": "1 / 3",
+        "dica": "A dor solucionada e por que o cliente escolhe o seu serviço."
+      },
+      {
+        "titulo": "Relacionamento com Cliente",
+        "gc": "7 / 9",
+        "gr": "1 / 2",
+        "dica": "Fidelidade, atendimento, brindes, medida de satisfação."
+      },
+      {
+        "titulo": "Canais",
+        "gc": "7 / 9",
+        "gr": "2 / 3",
+        "dica": "Redes sociais, e-mail, meios de comunicação, pontos de contato."
+      },
+      {
+        "titulo": "Segmento de Cliente",
+        "gc": "9 / 11",
+        "gr": "1 / 3",
+        "dica": "Perfil, características, hábitos de consumo e dores solucionadas."
+      },
+      {
+        "titulo": "Estrutura de Custos",
+        "gc": "1 / 6",
+        "gr": "3 / 4",
+        "dica": "Custos fixos e variáveis, folha, fornecedores, softwares."
+      },
+      {
+        "titulo": "Fontes de Receita",
+        "gc": "6 / 11",
+        "gr": "3 / 4",
+        "dica": "Produtos, assinaturas, serviços adicionais, comissões."
+      }
+    ]
+  }
+]

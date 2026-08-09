@@ -1,0 +1,47 @@
+{
+  "assets": [
+    {
+      "uuid": "3ef4b086-390f-48b4-b543-ba27789b2a30",
+      "path": "assets/logo.png",
+      "mime": "image/png",
+      "compressed": false,
+      "bytes": 13912
+    },
+    {
+      "uuid": "d86ab0ea-3916-499b-afed-17b753de85d4",
+      "path": "vendor/dc-runtime.js",
+      "mime": "text/javascript",
+      "compressed": true,
+      "bytes": 53975
+    },
+    {
+      "uuid": "8f6aa08c-6052-42dd-be04-24c855873021",
+      "path": "assets/fonts/font-1.woff2",
+      "mime": "font/woff2",
+      "compressed": false,
+      "bytes": 10228
+    },
+    {
+      "uuid": "34412a38-9a0d-47f6-9a93-6665ccbcf757",
+      "path": "assets/fonts/font-2.woff2",
+      "mime": "font/woff2",
+      "compressed": false,
+      "bytes": 20184
+    },
+    {
+      "uuid": "b079fce0-bcf1-4a12-ba16-93f6625aab58",
+      "path": "assets/fonts/font-3.woff2",
+      "mime": "font/woff2",
+      "compressed": false,
+      "bytes": 20844
+    },
+    {
+      "uuid": "b80189db-c2fa-4e80-989f-17eb0c30eca4",
+      "path": "assets/fonts/font-4.woff2",
+      "mime": "font/woff2",
+      "compressed": false,
+      "bytes": 46864
+    }
+  ],
+  "extResources": []
+}
