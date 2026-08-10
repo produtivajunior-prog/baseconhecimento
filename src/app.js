@@ -32,7 +32,18 @@ class Component extends DCLogic {
     modeloNome: '',
     modeloFile: null,
     modeloLoading: false,
-    modeloError: ''
+    modeloError: '',
+    // importar documento → página da Biblioteca
+    docs: [],
+    docFile: null,
+    docBase64: '',
+    docTexto: '',
+    docTituloHint: '',
+    docCategoria: 'Processos',
+    docPreview: null,
+    docLoading: false,
+    docError: '',
+    selDocId: null
   };
 
   // Modelos-padrão de ferramenta já registrados (formato lido de um anexo).
@@ -54,6 +65,7 @@ class Component extends DCLogic {
     'Escopo':{bg:'#ECEFF7',color:'#4E5E96',visual:'#EAEEF7'},
     'Template':{bg:'#E9F4EE',color:'#39795B',visual:'#E7F4ED'},
     'Checklist':{bg:'#FBF0E7',color:'#A5632B',visual:'#FBF0E6'},
+    'Documento':{bg:'#EDF1F8',color:'#4A6FA5',visual:'#EBF0F8'},
   };
   COMPLEX_STYLE = {
     'Baixo':{bg:'#E7F4EC',color:'#2E7D52'},
@@ -68,7 +80,9 @@ class Component extends DCLogic {
     'Material complementar':{bg:'#EFEDFB',color:'#6A5FB0',ext:'PDF'},
   };
 
-  allData() { return this.state.extra.concat(this.DATA); }
+  // Documentos importados entram na Biblioteca junto das ferramentas: aparecem
+  // na busca e nos filtros, mas abrem a própria página (ver decorate).
+  allData() { return this.state.docs.concat(this.state.extra, this.DATA); }
   initials(name) { return (name||'').split(' ').filter(w=>w.length>2).slice(0,2).map(w=>w[0]).join('').toUpperCase() || 'C'; }
   extOf(a) { const m=(a.nome||'').match(/\.([a-z0-9]+)$/i); return m?m[1].toUpperCase():(this.ANEXO_STYLE[a.tipo]?this.ANEXO_STYLE[a.tipo].ext:'DOC'); }
 
@@ -83,7 +97,7 @@ class Component extends DCLogic {
       initial: (it.nome||'?')[0].toUpperCase(),
       quandoResumo: (it.quandoUsar && it.quandoUsar[0]) || '',
       anexosCount: (it.anexos||[]).length,
-      open: () => this.openContent(it.id),
+      open: () => it.isDocumento ? this.openDocumento(it.id) : this.openContent(it.id),
       openAnexos: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.setState({ anexosId: it.id }); },
     };
   }
@@ -333,6 +347,227 @@ class Component extends DCLogic {
   }
   removeModelo(id) { this.setState(st=>({ modelos: st.modelos.filter(m=>m.id!==id) })); }
 
+  // ===== Importar documento → vira página da Biblioteca =====
+  // Formatos de texto (.md, .txt, .csv, .html) são estruturados aqui mesmo, no
+  // navegador, sem depender de IA. PDF e .docx precisam de leitura por IA: o
+  // arquivo é lido e guardado em base64 para o backend processar (ver README).
+  TEXTO_EXT = ['md','markdown','txt','text','csv','tsv','html','htm','json'];
+  BINARIO_EXT = ['pdf','docx','doc','odt','rtf','pptx'];
+
+  extensao(nome) { const m = String(nome||'').match(/\.([a-z0-9]+)$/i); return m ? m[1].toLowerCase() : ''; }
+
+  onDocFile(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const ext = this.extensao(file.name);
+    const meta = { nome: file.name, ext, tamanho: file.size };
+    this.setState({ docFile: meta, docLoading: true, docError: '', docPreview: null });
+
+    const reader = new FileReader();
+    reader.onerror = () => this.setState({ docLoading: false, docError: 'Não consegui abrir o arquivo. Verifique se ele não está corrompido.' });
+
+    if (this.BINARIO_EXT.includes(ext)) {
+      // Guarda o conteúdo para o backend enviar à IA. Sem backend, para aqui —
+      // com uma mensagem honesta em vez de fingir que leu.
+      reader.onload = () => this.setState({
+        docLoading: false,
+        docBase64: String(reader.result || '').split(',')[1] || '',
+        docError: 'Arquivos ' + ext.toUpperCase() + ' precisam ser lidos por IA, o que exige o servidor da Biblioteca. Por enquanto, exporte o documento como .md ou .txt — ou cole o texto no campo abaixo.'
+      });
+      reader.readAsDataURL(file);
+      return;
+    }
+
+    reader.onload = () => {
+      const bruto = String(reader.result || '');
+      if (!bruto.trim()) { this.setState({ docLoading:false, docError:'O arquivo está vazio.' }); return; }
+      try {
+        const doc = this.parseDocumento(bruto, file.name, ext);
+        this.setState({ docLoading: false, docPreview: doc });
+      } catch (err) {
+        this.setState({ docLoading: false, docError: 'Não consegui interpretar a estrutura deste arquivo.' });
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  clearDocFile() { this.setState({ docFile:null, docPreview:null, docError:'', docBase64:'', docTexto:'' }); }
+
+  lerDocColado() {
+    const t = (this.state.docTexto || '').trim();
+    if (t.length < 20) { this.setState({ docError:'Cole um pouco mais de conteúdo para eu conseguir estruturar.' }); return; }
+    try {
+      const doc = this.parseDocumento(t, this.state.docTituloHint || 'Documento colado', 'md');
+      this.setState({ docPreview: doc, docError: '' });
+    } catch (err) {
+      this.setState({ docError: 'Não consegui interpretar a estrutura desse texto.' });
+    }
+  }
+
+  /** Remove marcação inline (negrito, itálico, código, links) mantendo o texto. */
+  limparInline(s) {
+    return String(s || '')
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+      .replace(/(\*\*|__)(.*?)\1/g, '$2')
+      .replace(/(\*|_)(.*?)\1/g, '$2')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  /**
+   * Estrutura texto em seções tipadas — determinístico, sem IA.
+   * Reconhece títulos Markdown (#), listas, listas numeradas e tabelas em pipe.
+   * HTML tem as tags removidas antes; o resto vira parágrafo.
+   */
+  parseDocumento(bruto, nomeArquivo, ext) {
+    let texto = bruto.replace(/\r\n?/g, '\n');
+
+    if (ext === 'html' || ext === 'htm') {
+      texto = texto
+        .replace(/<(script|style)[\s\S]*?<\/\1>/gi, '')
+        .replace(/<h([1-6])[^>]*>/gi, (_m, n) => '\n' + '#'.repeat(+n) + ' ')
+        .replace(/<li[^>]*>/gi, '\n- ')
+        .replace(/<\/(p|div|h[1-6]|li|tr)>/gi, '\n')
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<[^>]+>/g, '')
+        .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    }
+
+    const linhas = texto.split('\n');
+    const secoes = [];
+    let tituloDoc = '';
+    let atual = null;
+    let buffer = [];
+
+    const classificar = (linhasBloco) => {
+      const uteis = linhasBloco.filter(l => l.trim());
+      if (!uteis.length) return null;
+
+      const tabela = uteis.filter(l => l.trim().startsWith('|'));
+      if (tabela.length >= 2) {
+        const celulas = (l) => l.trim().replace(/^\||\|$/g, '').split('|').map(c => this.limparInline(c));
+        const corpo = tabela.filter(l => !/^\s*\|[\s:|-]+\|\s*$/.test(l));
+        const colunas = celulas(corpo[0]);
+        const linhasTab = corpo.slice(1).map(celulas).filter(r => r.some(c => c));
+        if (colunas.length && linhasTab.length) return { tipo:'tabela', colunas, linhas: linhasTab };
+      }
+
+      const numeradas = uteis.filter(l => /^\s*\d+[.)]\s+/.test(l));
+      if (numeradas.length >= 2 && numeradas.length >= uteis.length * 0.6) {
+        return { tipo:'passos', itens: numeradas.map(l => this.limparInline(l.replace(/^\s*\d+[.)]\s+/, ''))) };
+      }
+
+      const marcadas = uteis.filter(l => /^\s*[-*•+]\s+/.test(l));
+      if (marcadas.length >= 2 && marcadas.length >= uteis.length * 0.6) {
+        return { tipo:'lista', itens: marcadas.map(l => this.limparInline(l.replace(/^\s*[-*•+]\s+/, ''))) };
+      }
+
+      const paragrafos = linhasBloco.join('\n').split(/\n\s*\n/)
+        .map(p => this.limparInline(p.replace(/\n/g, ' '))).filter(Boolean);
+      return paragrafos.length ? { tipo:'texto', paragrafos } : null;
+    };
+
+    const fechar = () => {
+      if (!atual) { buffer = []; return; }
+      const bloco = classificar(buffer);
+      if (bloco) atual.blocos.push(bloco);
+      buffer = [];
+    };
+
+    for (const linha of linhas) {
+      const h = linha.match(/^(#{1,6})\s+(.+)$/);
+      // Linha isolada em CAIXA ALTA também conta como título (comum em export de Docs).
+      const caps = !h && /^[A-ZÁÀÂÃÉÊÍÓÔÕÚÇ0-9][^a-z]{4,70}$/.test(linha.trim()) && linha.trim().length < 72;
+
+      if (h || caps) {
+        const titulo = this.limparInline(h ? h[2] : linha);
+        const nivel = h ? h[1].length : 2;
+        if (!tituloDoc && nivel === 1) { tituloDoc = titulo; fechar(); atual = null; continue; }
+        fechar();
+        atual = { titulo, blocos: [] };
+        secoes.push(atual);
+        continue;
+      }
+      if (!atual) { atual = { titulo: '', blocos: [] }; secoes.push(atual); }
+      buffer.push(linha);
+    }
+    fechar();
+
+    const comConteudo = secoes.filter(s => s.blocos.length);
+    if (!comConteudo.length) throw new Error('sem conteúdo');
+
+    // Sem título explícito, usa o nome do arquivo.
+    if (!tituloDoc) {
+      tituloDoc = String(nomeArquivo || 'Documento').replace(/\.[a-z0-9]+$/i, '').replace(/[_-]+/g, ' ').trim();
+    }
+    // Primeira seção sem título vira o resumo de abertura.
+    let resumo = '';
+    if (comConteudo[0] && !comConteudo[0].titulo) {
+      const t = comConteudo[0].blocos.find(b => b.tipo === 'texto');
+      if (t) resumo = t.paragrafos[0] || '';
+    }
+
+    const totalItens = comConteudo.reduce((n, s) => n + s.blocos.reduce((m, b) =>
+      m + (b.itens ? b.itens.length : b.linhas ? b.linhas.length : b.paragrafos.length), 0), 0);
+
+    return {
+      titulo: tituloDoc,
+      resumo: resumo || 'Documento importado para a Biblioteca.',
+      secoes: comConteudo,
+      fonte: nomeArquivo || 'texto colado',
+      totalSecoes: comConteudo.length,
+      totalItens,
+    };
+  }
+
+  importarDoc() {
+    const p = this.state.docPreview;
+    if (!p) return;
+    const id = 'doc-' + Date.now();
+    const item = {
+      id,
+      isDocumento: true,
+      nome: p.titulo,
+      tipo: 'Documento',
+      categoria: this.state.docCategoria || 'Processos',
+      etapa: 'Análise',
+      complexidade: 'Médio',
+      tempo: '—',
+      status: 'Em revisão',
+      freq: 'Baixa',
+      acessos: 0,
+      nota: '—',
+      responsavel: 'Importado',
+      atualizado: 'Hoje',
+      descricao: p.resumo,
+      objetivo: '—', problema: '—',
+      quandoUsar: [], quandoNao: [], entradas: [], saidas: [],
+      passos: [], perguntas: [], cuidados: [], exemplos: [], anexos: [],
+      secoes: p.secoes,
+      fonteArquivo: p.fonte,
+      totalSecoes: p.totalSecoes,
+      totalItens: p.totalItens,
+    };
+    this.setState(st => ({ docs: [item, ...st.docs], docFile: null, docPreview: null, docTexto: '', docError: '' }));
+    this.showToast('Documento importado. Página criada na Biblioteca.');
+    setTimeout(() => this.openDocumento(id), 700);
+  }
+
+  openDocumento(id) {
+    this.setState({ screen: 'documento', selDocId: id });
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
+  }
+
+  removeDoc(id) {
+    this.setState(st => ({
+      docs: st.docs.filter(d => d.id !== id),
+      screen: st.selDocId === id ? 'biblioteca' : st.screen,
+    }));
+    this.showToast('Documento removido da Biblioteca.');
+  }
+
   updateDoc(patch) { this.setState(st=>({ doc: { ...st.doc, ...patch } })); }
   setDocType(t) { this.updateDoc({ type:t }); }
   updateSecao(i, patch) { this.setState(st=>{ const secoes=st.doc.secoes.map((x,idx)=>idx===i?{...x,...patch}:x); return { doc:{...st.doc, secoes} }; }); }
@@ -482,6 +717,43 @@ class Component extends DCLogic {
     const applyIsCanvas = !!(ar && ar.layout==='canvas');
     const applyCanvasCells = applyIsCanvas ? ar.blocos.map(b=>({ titulo:b.titulo, itens:b.itens||[], gc:b.gc||'auto', gr:b.gr||'auto' })) : [];
 
+    // documento importado — página gerada a partir do arquivo
+    const docRaw = s.docs.find(d => d.id === s.selDocId) || null;
+    const dts = this.TIPO_STYLE['Documento'];
+    const docPag = docRaw ? {
+      id: docRaw.id, nome: docRaw.nome, resumo: docRaw.descricao, categoria: docRaw.categoria,
+      fonte: docRaw.fonteArquivo, status: docRaw.status, atualizado: docRaw.atualizado,
+      statusColor: this.STATUS_COLOR[docRaw.status] || '#9DAEB4',
+      tipoBg: dts.bg, tipoColor: dts.color,
+      totalSecoes: docRaw.totalSecoes, totalItens: docRaw.totalItens,
+    } : null;
+    // O template precisa de flags por tipo de bloco: <sc-if> não avalia expressões.
+    const docPagSecoes = docRaw ? docRaw.secoes.map((sec, i) => ({
+      num: (i+1<10?'0':'') + (i+1),
+      titulo: sec.titulo || 'Abertura',
+      blocos: sec.blocos.map(b => {
+        // Tabela vai como grid CSS, não como <table>: o parser de HTML remove
+        // elementos estranhos (<sc-for>) de dentro de <table>/<tr> antes de o
+        // runtime processá-los, então as linhas nunca chegariam a renderizar.
+        const colunas = b.colunas || [];
+        const linhas = b.linhas || [];
+        return {
+          isTexto:  b.tipo === 'texto',
+          isLista:  b.tipo === 'lista',
+          isPassos: b.tipo === 'passos',
+          isTabela: b.tipo === 'tabela',
+          paragrafos: b.paragrafos || [],
+          itens: b.itens || [],
+          passos: (b.itens || []).map((t, j) => ({ n: j+1, text: t })),
+          cabecalho: colunas,
+          celulas: linhas.flatMap((linha, li) =>
+            colunas.map((_, ci) => ({ txt: linha[ci] || '', bg: li % 2 ? '#FBFDFD' : '#fff' }))),
+          gridCols: colunas.length ? `repeat(${colunas.length}, minmax(140px, 1fr))` : '1fr',
+          minWidth: (colunas.length * 140) + 'px',
+        };
+      }),
+    })) : [];
+
     return {
       // routing
       isHome: s.screen==='home', isBiblioteca: s.screen==='biblioteca', isConteudo: s.screen==='conteudo',
@@ -538,6 +810,8 @@ class Component extends DCLogic {
       // cadastro — abas
       isCadIA: s.cadMode==='ia', isCadManual: s.cadMode==='manual', isCadModelo: s.cadMode==='modelo',
       setCadIA:()=>this.setState({cadMode:'ia'}), setCadManual:()=>this.setState({cadMode:'manual'}), setCadModelo:()=>this.setState({cadMode:'modelo'}),
+      isCadImportar: s.cadMode==='importar', setCadImportar:()=>this.setState({cadMode:'importar'}),
+      cadImpBg: tabBtn('importar').bg, cadImpColor: tabBtn('importar').color, cadImpShadow: tabBtn('importar').shadow,
       cadIaBg: tabBtn('ia').bg, cadIaColor: tabBtn('ia').color, cadIaShadow: tabBtn('ia').shadow,
       cadManBg: tabBtn('manual').bg, cadManColor: tabBtn('manual').color, cadManShadow: tabBtn('manual').shadow,
       cadModeloBg: tabBtn('modelo').bg, cadModeloColor: tabBtn('modelo').color, cadModeloShadow: tabBtn('modelo').shadow,
@@ -560,6 +834,42 @@ class Component extends DCLogic {
       secoesEdit, secoesPrev, introParas, addSecao:()=>this.addSecao(),
       docCount: doc.secoes.length,
       exportPdf:()=>this.exportDoc('PDF'), saveDoc:()=>this.saveDocLibrary(),
+      // importar documento
+      onDocFile:(e)=>this.onDocFile(e), clearDocFile:()=>this.clearDocFile(),
+      docFileName: s.docFile ? s.docFile.nome : '', hasDocFile: !!s.docFile, noDocFile: !s.docFile,
+      docLoading: s.docLoading, docNotLoading: !s.docLoading,
+      docError: s.docError, hasDocError: !!s.docError,
+      docTextoVal: s.docTexto, setDocTexto:(e)=>this.setState({docTexto:e.target.value}),
+      docTituloHintVal: s.docTituloHint, setDocTituloHint:(e)=>this.setState({docTituloHint:e.target.value}),
+      docCategoriaVal: s.docCategoria, setDocCategoria:(e)=>this.setState({docCategoria:e.target.value}),
+      lerDocColado:()=>this.lerDocColado(),
+      importarDoc:()=>this.importarDoc(),
+      hasDocPreview: !!s.docPreview, noDocPreview: !s.docPreview,
+      docPrevTitulo: s.docPreview ? s.docPreview.titulo : '',
+      docPrevResumo: s.docPreview ? s.docPreview.resumo : '',
+      docPrevFonte: s.docPreview ? s.docPreview.fonte : '',
+      docPrevSecoes: s.docPreview ? s.docPreview.totalSecoes : 0,
+      docPrevItens: s.docPreview ? s.docPreview.totalItens : 0,
+      docPrevLista: s.docPreview ? s.docPreview.secoes.map((sec,i)=>({
+        num: (i+1<10?'0':'')+(i+1),
+        titulo: sec.titulo || 'Abertura',
+        resumo: sec.blocos.map(b => b.tipo==='tabela' ? ('tabela · '+b.linhas.length+' linhas')
+          : b.tipo==='passos' ? (b.itens.length+' passos')
+          : b.tipo==='lista' ? (b.itens.length+' itens')
+          : (b.paragrafos.length+' parágrafo'+(b.paragrafos.length>1?'s':''))).join(' · ')
+      })) : [],
+      // documentos já importados
+      docsList: s.docs.map(d=>({
+        id:d.id, nome:d.nome, fonte:d.fonteArquivo, categoria:d.categoria,
+        resumo: d.totalSecoes+' seções · '+d.totalItens+' itens',
+        abrir:()=>this.openDocumento(d.id), remover:()=>this.removeDoc(d.id),
+      })),
+      hasDocs: s.docs.length>0, docsCount: s.docs.length,
+      // página do documento
+      isDocumento: s.screen==='documento',
+      docPag: docPag,
+      docPagSecoes: docPagSecoes,
+      removeDocAtual: docPag ? (()=>this.removeDoc(docPag.id)) : (()=>{}),
       // toast
       toastOpen: !!s.toast, toastMsg: s.toast,
     };
