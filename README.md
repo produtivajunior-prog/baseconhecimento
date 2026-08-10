@@ -61,6 +61,24 @@ Comparação byte a byte do arquivo inteiro não serve: o gzip do Node não repr
 do compressor original, e os dados saíram do código para JSON. O que precisa bater é o que
 o navegador enxerga.
 
+## Importar documento
+
+Em **Cadastrar → Importar documento**, o consultor anexa um arquivo (ou cola o texto) e a
+Biblioteca cria uma página nova, organizada em seções, com o mesmo layout das outras telas.
+
+| Formato | Como é lido |
+|---|---|
+| `.md` `.txt` `.csv` `.html` `.json` | ✅ **Estruturado no navegador**, sem IA e sem servidor. Títulos `#`, listas `-`, listas numeradas e tabelas em pipe viram seções tipadas |
+| `.pdf` `.docx` | ⏸️ O arquivo é lido e guardado em base64, mas interpretá-lo exige IA — ou seja, o backend da Fase 2. Até lá a interface avisa e sugere exportar como `.md`/`.txt` |
+
+O documento importado entra na Biblioteca como tipo **Documento**: aparece na busca e nos
+filtros junto das ferramentas, mas abre a própria página em vez da ficha de ferramenta.
+Entra com status *Em revisão*.
+
+> ⚠️ Tabelas são renderizadas com **grid CSS, não com `<table>`**. O parser de HTML remove
+> elementos estranhos (como o `<sc-for>` do dc-runtime) de dentro de `<table>`/`<tr>` antes
+> do runtime processá-los — com `<table>` de verdade, as linhas nunca renderizam.
+
 ## Limitações conhecidas
 
 | | |

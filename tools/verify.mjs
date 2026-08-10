@@ -105,22 +105,49 @@ for (const uuid of new Set([...Object.keys(a.assets), ...Object.keys(b.assets)])
 }
 
 // ---------------------------------------------------------------- markup
-// A única alteração aceita na marcação é a inclusão dos <script> do React. Removendo
-// essas linhas, o resultado tem de bater com o original caractere a caractere — assim a
-// checagem continua apertada em vez de virar "mudou, tudo bem".
-const markupNormalizado = b.markup
-  .replace(/<!-- React embutido\.[\s\S]*?-->\n/, '')
-  .replace(/<script src="7c1f0a52-[^"]*"><\/script>\n/g, '');
+// A marcação cresce conforme as telas novas entram, então comparar por igualdade
+// deixou de fazer sentido. A garantia que continua valendo — e que é a que importa —
+// é que nada foi REMOVIDO: cada linha do original tem de seguir presente, na mesma
+// quantidade. Isso pega deleção acidental e edição silenciosa, e deixa passar adição.
+const contagem = (texto) => {
+  const m = new Map();
+  for (const linha of texto.split('\n')) m.set(linha, (m.get(linha) || 0) + 1);
+  return m;
+};
+const orig = contagem(a.markup);
+const novo = contagem(b.markup);
+const perdidas = [];
+for (const [linha, n] of orig) {
+  if ((novo.get(linha) || 0) < n) perdidas.push(linha.trim().slice(0, 80) || '(linha em branco)');
+}
+const linhasNovas = b.markup.split('\n').length - a.markup.split('\n').length;
 
-check(a.markup === markupNormalizado,
-  `markup idêntico ao original, exceto os <script> do React  (${a.markup.length} chars, sha ${sha(a.markup)})`,
-  `markup DIVERGENTE além da inclusão do React (${a.markup.length} vs ${markupNormalizado.length})`);
+check(perdidas.length === 0,
+  `markup preserva o original  (${a.markup.split('\n').length} linhas originais intactas, +${linhasNovas} novas)`,
+  `markup PERDEU ${perdidas.length} linha(s) do original:\n      ` + perdidas.slice(0, 5).join('\n      '));
 
 // ---------------------------------------------------------------- dados
 const da = extrairDados(a.logic);
 const db = extrairDados(b.logic);
 
 for (const chave of Object.keys(da)) {
+  // As paletas ganham entradas conforme novos tipos de conteúdo entram (ex.: Documento).
+  // Aqui a regra é superconjunto: toda chave do original tem de existir com o MESMO
+  // valor; chaves novas passam. Para o acervo, a regra segue sendo igualdade exata.
+  if (chave === 'estilos') {
+    const alteradas = [];
+    for (const [grupo, mapa] of Object.entries(da.estilos)) {
+      for (const [k, v] of Object.entries(mapa)) {
+        if (!isDeepStrictEqual(db.estilos?.[grupo]?.[k], v)) alteradas.push(`${grupo}.${k}`);
+      }
+    }
+    const novas = Object.entries(db.estilos).reduce((n, [grupo, mapa]) =>
+      n + Object.keys(mapa).filter(k => !(k in da.estilos[grupo])).length, 0);
+    check(alteradas.length === 0,
+      `dados.estilos  originais intactos${novas ? `, +${novas} novo(s)` : ''}`,
+      `dados.estilos ALTERADO: ${alteradas.join(', ')}`);
+    continue;
+  }
   const igual = isDeepStrictEqual(da[chave], db[chave]);
   const n = Array.isArray(da[chave]) ? `${da[chave].length} itens` : 'ok';
   check(igual, `dados.${chave}  ${n}`, `dados.${chave} DIVERGENTE entre original e dist`);
