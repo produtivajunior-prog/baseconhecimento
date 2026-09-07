@@ -1,0 +1,158 @@
+# id: 1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY
+# nome: Modelo Padrão - 5 Forças de Porter
+# mimeType: application/vnd.google-apps.spreadsheet
+# dono: heitorqueiroz@produtivajunior.com.br
+# url: https://docs.google.com/spreadsheets/d/1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY/edit?usp=drivesdk&ouid=100327922083657613631
+# extraidoEm: 2026-09-07
+# uso: ferramenta:porter
+---
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - INÍCIO | \[merged\] ANÁLISE | \[merged\] ANÁLISE |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | \[merged\] GRÁFICO | \[merged\] GRÁFICO | \[merged\] GRÁFICO |
+
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] CINCO FORÇAS DE PORTER - RIVALIDADE ENTRE OS CONCORRENTES | \[merged\] ANÁLISE | \[merged\] ANÁLISE |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  | QUESTÕES DETERMINANTES | AVALIAÇÃO | INVERTE | NOTA |  |  | N | S |  |  |  |  |  |  |  |  |  |
+|  | Quantidade de concorrentes diretos | MUITO ALTA | N | 5 |  | MUITO ALTA | 5 | 0 |  |  |  |  |  |  |  |  |  |
+|  | Poder de mercado dos concorrentes diretos | BAIXA | N | 2 |  | ALTA | 4 | 1 |  |  |  |  |  |  |  |  |  |
+|  | Perda de mercado para os concorrentes | MUITO BAIXA | N | 1 |  | MÉDIA | 3 | 2 |  |  |  |  |  |  |  |  |  |
+|  | Existência de diferencial competitivo da sua empresa | MUITO ALTA | S | 0 |  | BAIXA | 2 | 3 |  |  |  |  |  |  |  |  |  |
+|  | Custos de produção/prestação serviço | ALTA | N | 4 |  | MUITO BAIXA | 1 | 4 |  |  |  |  |  |  |  |  |  |
+|  | Preço do seu produto/serviço no mercado | BAIXA | N | 2 |  | ZERO | 0 | 5 |  |  |  |  |  |  |  |  |  |
+|  | Facilidade de alteração no espaço físico e adequação dos funcionários à mudanças rápidas | ALTA | S | 1 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  | MÉDIA | 2,1 |  |  |  |  |  |  |  |  |  |  |  |  |  |
+
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS FORNECEDORES | \[merged\] ANÁLISE | \[merged\] ANÁLISE |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  | QUESTÕES DETERMINANTES | AVALIAÇÃO | INVERTE | NOTA |  |  | N | S |  |  |  |  |  |  |  |  |  |  |
+|  | Dependência da sua empresa com um ou alguns fornecedores. | MUITO ALTA | N | 5 |  | MUITO ALTA | 5 | 0 |  |  |  |  |  |  |  |  |  |  |
+|  | Possibilidade de substituir os produtos/serviços dos fornecedores. | BAIXA | S | 3 |  | ALTA | 4 | 1 |  |  |  |  |  |  |  |  |  |  |
+|  | Grau de importância da sua empresa para os fornecedores. | MUITO BAIXA | S | 4 |  | MÉDIA | 3 | 2 |  |  |  |  |  |  |  |  |  |  |
+|  | Existência de estratégias para amenizar os efeitos da dependência com os fornecedores. |  | S |  |  | BAIXA | 2 | 3 |  |  |  |  |  |  |  |  |  |  |
+|  | Custos envolvidos em mudar de fornecedor. |  | N |  |  | MUITO BAIXA | 1 | 4 |  |  |  |  |  |  |  |  |  |  |
+|  | Grau de procura de fornecedores de sua empresa pelo mercado |  | S |  |  | ZERO | 0 | 5 |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  | MÉDIA | 4 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] CINCO FORÇAS DE PORTER - PODER DE BARGANHA DOS CLIENTES | \[merged\] ANÁLISE | \[merged\] ANÁLISE |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  | QUESTÕES DETERMINANTES | AVALIAÇÃO | INVERTE | NOTA |  |  | N | S |  |  |  |  |  |  |  |  |  |  |
+|  | Quantidade de clientes de sua empresa em relação ao total de clientes em potencial. | MÉDIA | S | 2 |  | MUITO ALTA | 5 | 0 |  |  |  |  |  |  |  |  |  |  |
+|  | Parte do faturamento total oriundos de poucos clientes. | BAIXA | N | 2 |  | ALTA | 4 | 1 |  |  |  |  |  |  |  |  |  |  |
+|  | Grau de poder de negociação destes poucos clientes. | ALTA | N | 4 |  | MÉDIA | 3 | 2 |  |  |  |  |  |  |  |  |  |  |
+|  | Existência de estratégias para amenizar os efeitos do poder de negociação destes clientes. | MUITO ALTA | S | 0 |  | BAIXA | 2 | 3 |  |  |  |  |  |  |  |  |  |  |
+|  | Grau de informação dos seus clientes sobre o mercado. | MUITO BAIXA | N | 1 |  | MUITO BAIXA | 1 | 4 |  |  |  |  |  |  |  |  |  |  |
+|  | Grau de importância de seus produtos/serviços para os clientes. | ALTA | S | 1 |  | ZERO | 0 | 5 |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  | MÉDIA | 1,7 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE NOVOS ENTRANTES | \[merged\] ANÁLISE | \[merged\] ANÁLISE |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  | QUESTÕES DETERMINANTES | AVALIAÇÃO | INVERTE | NOTA |  |  |  | N | S |  |  |  |  |  |  |  |  |  |
+|  | Quantidade de novas empresas que entram no mesmo mercado que sua empresa atua. | MUITO ALTA | N | 5 |  |  | MUITO ALTA | 5 | 0 |  |  |  |  |  |  |  |  |  |
+|  | Perda de mercado da sua empresa para estas novas empresas. | ALTA | N | 4 |  |  | ALTA | 4 | 1 |  |  |  |  |  |  |  |  |  |
+|  | Grau com que as políticas governamentais afetam negativamente sua empresa. | BAIXA | N | 2 |  |  | MÉDIA | 3 | 2 |  |  |  |  |  |  |  |  |  |
+|  | Existência de estretégias para diminuir os impactos de ameaças de novos entrantes. | MUITO BAIXA | S | 4 |  |  | BAIXA | 2 | 3 |  |  |  |  |  |  |  |  |  |
+|  | Grau de diferencial que estas empresas possuem em relação à sua empresa. | ALTA | N | 4 |  |  | MUITO BAIXA | 1 | 4 |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  | ZERO | 0 | 5 |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  | MÉDIA | 3,8 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] CINCO FORÇAS DE PORTER - AMEAÇA DE PRODUTOS SUBSTITUTOS | \[merged\] ANÁLISE | \[merged\] ANÁLISE |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  | QUESTÕES DETERMINANTES | AVALIAÇÃO | INVERTE | NOTA |  |  | N | S |  |  |  |  |  |  |  |  |  |  |
+|  | Existência da possibilidade de algum tipo de produto ou serviço poder realizar a mesma função que sua empresa realiza. | MÉDIA | N | 3 |  | MUITO ALTA | 5 | 0 |  |  |  |  |  |  |  |  |  |  |
+|  | Perda de vendas em decorrência de produtos subsitutos. | BAIXA | N | 2 |  | ALTA | 4 | 1 |  |  |  |  |  |  |  |  |  |  |
+|  | Existência de estratégias implementadas para competir com estes produtos/serviços. | MÉDIA | S | 2 |  | MÉDIA | 3 | 2 |  |  |  |  |  |  |  |  |  |  |
+|  | Grau de desenvolvimento de produtos/serviços pela sua empresa diferentes dos já existentes. | MUITO ALTA | S | 0 |  | BAIXA | 2 | 3 |  |  |  |  |  |  |  |  |  |  |
+|  | Chances desses novos produtos/serviços substitutos mudarem as preferencias dos seus clientes. | BAIXA | N | 2 |  | MUITO BAIXA | 1 | 4 |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  | ZERO | 0 | 5 |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  | MÉDIA | 1,8 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| INÍCIO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] CINCO FORÇAS DE PORTER - GRÁFICO | \[merged\] ANÁLISE | \[merged\] ANÁLISE |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| RIVALIDADE ENTRE CONCORRENTES | 2,1 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| PODER DE NEGOCIAÇÃO DOS FORNECEDORES | 4,0 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| PODER DE NEGOCIAÇÃO DOS CLIENTES | 1,7 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| AMEAÇA DE NOVOS ENTRANTES | 3,8 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| AMEAÇA DE PRODUTOS SUBSTITUTOS | 1,8 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |

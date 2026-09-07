@@ -1,0 +1,122 @@
+{
+  "id": "mapa-perceptual",
+  "nome": "Mapa Perceptual",
+  "tipo": "Ferramenta",
+  "categoria": "Metodologias",
+  "complexidade": "Baixo",
+  "tempo": "1–2h",
+  "status": "Ativo",
+  "freq": "Média",
+  "responsavel": {
+    "nome": "Vinícius Moraes",
+    "email": "viniciusmoraes@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "No marketing estratégico, tão importante quanto saber como sua marca se compara à concorrência é entender como ela é percebida — e essas duas coisas nem sempre coincidem.",
+  "objetivo": "É exatamente essa distinção que torna o Mapa Perceptual uma ferramenta indispensável: em vez de avaliar atributos objetivos, ela captura a opinião e o sentimento do consumidor sobre cada marca, traduzindo percepções em posições visuais dentro de um mercado.",
+  "problema": "O desafio central é substituir suposições sobre posicionamento por evidências visuais concretas.",
+  "quandoUsar": null,
+  "quandoNao": null,
+  "entradas": [
+    "Lista de marcas concorrentes",
+    "Dois atributos relevantes para o consumidor-alvo"
+  ],
+  "saidas": [
+    "Mapa com as marcas plotadas nos eixos",
+    "Leitura de clusters, espaços em branco e posicionamento"
+  ],
+  "passos": [
+    "Os 4 Conceitos-Chave — Cluster — quando várias marcas aparecem agrupadas no mesmo quadrante, significa que o consumidor as percebe de forma muito parecida."
+  ],
+  "perguntas": null,
+  "cuidados": null,
+  "exemplos": null,
+  "anexos": [
+    {
+      "nome": "Metodologia - Mapa Perceptual.pdf",
+      "tipo": "Metodologia (PDF)",
+      "descricao": "Estado atual, estrutura do mapa, 4 conceitos-chave, escolha dos eixos e exemplo prático.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K",
+      "url": "https://drive.google.com/file/d/1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K/view"
+    },
+    {
+      "nome": "Modelo Padrão - Mapa Perceptual.pdf",
+      "tipo": "Modelo padrão",
+      "descricao": "Plano cartesiano em branco com dois eixos de atributos e até 6 marcas.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg",
+      "url": "https://drive.google.com/file/d/1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg/view"
+    }
+  ],
+  "fontes": [
+    {
+      "tipo": "drive-pdf",
+      "id": "1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K",
+      "nome": "Metodologia - Mapa Perceptual.pdf",
+      "hash": "932dc2e8eec74ce19b109edc0c0da123831e0f5b16c322dabaa4d3f6028394b9"
+    },
+    {
+      "tipo": "drive-pdf",
+      "id": "1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg",
+      "nome": "Modelo Padrão - Mapa Perceptual.pdf",
+      "hash": "55806c6ecac24cca0a480136987f41a92b608bc2e17f2cf4d5c07c9546f5fb22"
+    }
+  ],
+  "origem": {
+    "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+    "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+    "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+    "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+    "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+    "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+    "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+    "descricao": "drive:1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K#introducao",
+    "objetivo": "drive:1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K#introducao",
+    "problema": "drive:1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K#analise-do-estado-atual/principais-desafios",
+    "passos": "drive:1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K#como-funciona-a-ferramenta/os-4-conceitos-chave",
+    "entradas": "manual:viniciusmoraes@produtivajunior.com.br",
+    "saidas": "manual:viniciusmoraes@produtivajunior.com.br",
+    "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): quandoUsar, quandoNao, perguntas, cuidados, exemplos"
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  },
+  "modelo": {
+    "id": "mapa-perceptual",
+    "toolId": "mapa-perceptual",
+    "nome": "Mapa Perceptual",
+    "sigla": "MP",
+    "fonte": {
+      "driveId": "1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg",
+      "nome": "Modelo Padrão - Mapa Perceptual.pdf"
+    },
+    "layout": "grid",
+    "registrado": "Extraído do Modelo Padrão",
+    "blocos": [
+      {
+        "titulo": "Eixo horizontal",
+        "dica": "Atributo e seu oposto (ex.: simples ↔ complexo)."
+      },
+      {
+        "titulo": "Eixo vertical",
+        "dica": "Atributo e seu oposto (ex.: gratuito ↔ pago)."
+      },
+      {
+        "titulo": "Marcas plotadas",
+        "dica": "Até 6 marcas com a posição percebida em cada eixo."
+      },
+      {
+        "titulo": "Leitura",
+        "dica": "Clusters, espaços em branco, marca isolada e posicionamento da empresa."
+      }
+    ]
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "id": "capacidade-produtiva",
+  "nome": "Capacidade Produtiva",
+  "grupo": "PRODUÇÃO",
+  "status": "despriorizado",
+  "descricao": "Mapeia e modela os processos, cronometra e calcula tempos normal e padrão e chega à capacidade produtiva com ferramenta de acompanhamento e relatório crítico.",
+  "responsavel": {
+    "nome": "Thiago Melo",
+    "email": "thiagomelo@produtivajunior.com.br"
+  },
+  "fontes": [
+    {
+      "tipo": "drive-sheet",
+      "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
+      "nome": "Resumão dos escopos",
+      "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+    },
+    {
+      "tipo": "drive-doc",
+      "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+      "nome": "Checklist Escopos",
+      "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+    }
+  ],
+  "etapas": [
+    {
+      "id": "estudo-sobre-o-servico",
+      "ordem": 1,
+      "nome": "Estudo sobre o serviço",
+      "ferramentas": []
+    },
+    {
+      "id": "entendimento-da-empresa",
+      "ordem": 2,
+      "nome": "Entendimento da empresa",
+      "ferramentas": []
+    },
+    {
+      "id": "mapeamento-dos-processos",
+      "ordem": 3,
+      "nome": "Mapeamento dos processos",
+      "ferramentas": []
+    },
+    {
+      "id": "modelagem-dos-processos",
+      "ordem": 4,
+      "nome": "Modelagem dos processos",
+      "ferramentas": []
+    },
+    {
+      "id": "construcao-de-ferramenta",
+      "ordem": 5,
+      "nome": "Construção de ferramenta",
+      "ferramentas": []
+    },
+    {
+      "id": "definir-os-elementos",
+      "ordem": 6,
+      "nome": "Definir os elementos",
+      "ferramentas": []
+    },
+    {
+      "id": "calculo-do-n",
+      "ordem": 7,
+      "nome": "Cálculo do N",
+      "ferramentas": []
+    },
+    {
+      "id": "cronometragem",
+      "ordem": 8,
+      "nome": "Cronometragem",
+      "ferramentas": []
+    },
+    {
+      "id": "tempo-medio-velocidade-e-ft",
+      "ordem": 9,
+      "nome": "Tempo médio, velocidade e FT",
+      "ferramentas": []
+    },
+    {
+      "id": "definicao-do-tn-e-tp",
+      "ordem": 10,
+      "nome": "Definição DO TN E TP",
+      "ferramentas": []
+    },
+    {
+      "id": "capacidade-produtiva",
+      "ordem": 11,
+      "nome": "Capacidade produtiva",
+      "ferramentas": []
+    },
+    {
+      "id": "construcao-de-ferramenta-de-acompanhamen",
+      "ordem": 12,
+      "nome": "Construção de ferramenta de acompanhamento e mensuração",
+      "ferramentas": []
+    },
+    {
+      "id": "relatorio-de-capacidade-produtiva-analis",
+      "ordem": 13,
+      "nome": "Relatório de capacidade produtiva + análise crítica",
+      "ferramentas": []
+    }
+  ],
+  "origem": {
+    "nome": "manual:thiagomelo@produtivajunior.com.br",
+    "descricao": "manual:thiagomelo@produtivajunior.com.br",
+    "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/capacidade-produtiva (caixa normalizada)",
+    "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
+  },
+  "pendencias": [
+    "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas",
+    "Checklist Escopos: Sai muito pouco, despriorizando, pode ser feito"
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

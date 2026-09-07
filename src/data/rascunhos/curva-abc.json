@@ -1,0 +1,54 @@
+{
+  "id": "curva-abc",
+  "nome": "Curva ABC",
+  "tipo": "Ferramenta",
+  "categoria": "Metodologias",
+  "complexidade": "Baixo",
+  "tempo": "1h com os dados em mãos",
+  "status": "Em construção",
+  "freq": "Média",
+  "responsavel": {
+    "nome": "Thiago Melo",
+    "email": "thiagomelo@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "Classificação de produtos, clientes ou materiais pela participação acumulada no faturamento ou no gasto.",
+  "objetivo": "",
+  "problema": "",
+  "quandoUsar": [],
+  "quandoNao": [],
+  "entradas": [],
+  "saidas": [],
+  "passos": [],
+  "perguntas": [],
+  "cuidados": [],
+  "exemplos": [],
+  "anexos": [],
+  "fontes": [
+    {
+      "tipo": "manual",
+      "id": "thiagomelo@produtivajunior.com.br",
+      "nome": "Stub: sem arquivo-fonte no Drive",
+      "hash": null
+    }
+  ],
+  "origem": {
+    "nome": "manual:thiagomelo@produtivajunior.com.br",
+    "tipo": "manual:thiagomelo@produtivajunior.com.br",
+    "categoria": "manual:thiagomelo@produtivajunior.com.br",
+    "complexidade": "manual:thiagomelo@produtivajunior.com.br",
+    "tempo": "manual:thiagomelo@produtivajunior.com.br",
+    "freq": "manual:thiagomelo@produtivajunior.com.br",
+    "responsavel": "manual:thiagomelo@produtivajunior.com.br",
+    "descricao": "manual:thiagomelo@produtivajunior.com.br",
+    "anexos": "manual:thiagomelo@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Etapa do Custeio e Precificação e da Gestão de Estoque; sem metodologia no Drive."
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

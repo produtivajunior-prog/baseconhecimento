@@ -1,0 +1,54 @@
+{
+  "id": "raci",
+  "nome": "Matriz RACI",
+  "tipo": "Ferramenta",
+  "categoria": "Processos",
+  "complexidade": "Baixo",
+  "tempo": "1h",
+  "status": "Em construção",
+  "freq": "Média",
+  "responsavel": {
+    "nome": "Carlos Eduardo",
+    "email": "carloseduardo@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "Matriz que define quem é Responsável, Aprovador, Consultado e Informado em cada atividade do processo.",
+  "objetivo": "",
+  "problema": "",
+  "quandoUsar": [],
+  "quandoNao": [],
+  "entradas": [],
+  "saidas": [],
+  "passos": [],
+  "perguntas": [],
+  "cuidados": [],
+  "exemplos": [],
+  "anexos": [],
+  "fontes": [
+    {
+      "tipo": "manual",
+      "id": "carloseduardo@produtivajunior.com.br",
+      "nome": "Stub: sem arquivo-fonte no Drive",
+      "hash": null
+    }
+  ],
+  "origem": {
+    "nome": "manual:carloseduardo@produtivajunior.com.br",
+    "tipo": "manual:carloseduardo@produtivajunior.com.br",
+    "categoria": "manual:carloseduardo@produtivajunior.com.br",
+    "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+    "tempo": "manual:carloseduardo@produtivajunior.com.br",
+    "freq": "manual:carloseduardo@produtivajunior.com.br",
+    "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+    "descricao": "manual:carloseduardo@produtivajunior.com.br",
+    "anexos": "manual:carloseduardo@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Só aplicações em cliente (ex.: Matriz RACI - PotiCode); falta metodologia e modelo padrão."
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

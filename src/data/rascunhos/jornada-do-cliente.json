@@ -1,0 +1,54 @@
+{
+  "id": "jornada-do-cliente",
+  "nome": "Jornada do Cliente (AS IS / TO BE)",
+  "tipo": "Ferramenta",
+  "categoria": "Metodologias",
+  "complexidade": "Médio",
+  "tempo": "2–3h",
+  "status": "Em construção",
+  "freq": "Alta",
+  "responsavel": {
+    "nome": "Vinícius Moraes",
+    "email": "viniciusmoraes@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "Mapa das etapas, pontos de contato e emoções do cliente com a empresa, hoje e como deveria ser.",
+  "objetivo": "",
+  "problema": "",
+  "quandoUsar": [],
+  "quandoNao": [],
+  "entradas": [],
+  "saidas": [],
+  "passos": [],
+  "perguntas": [],
+  "cuidados": [],
+  "exemplos": [],
+  "anexos": [],
+  "fontes": [
+    {
+      "tipo": "manual",
+      "id": "viniciusmoraes@produtivajunior.com.br",
+      "nome": "Stub: sem arquivo-fonte no Drive",
+      "hash": null
+    }
+  ],
+  "origem": {
+    "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+    "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+    "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+    "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+    "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+    "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+    "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+    "descricao": "manual:viniciusmoraes@produtivajunior.com.br",
+    "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Só aplicações em cliente (Jornada do Cliente To Be / As Is); falta metodologia e modelo padrão."
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

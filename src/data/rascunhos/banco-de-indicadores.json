@@ -1,0 +1,97 @@
+{
+  "id": "banco-de-indicadores",
+  "nome": "Banco de Indicadores",
+  "tipo": "Template",
+  "categoria": "Metodologias",
+  "complexidade": "Baixo",
+  "tempo": "Consulta",
+  "status": "Ativo",
+  "freq": "Alta",
+  "responsavel": {
+    "nome": "Carlos Eduardo",
+    "email": "carloseduardo@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "Planilha com 139 indicadores classificados por hierarquia (estratégico, tático, operacional), tipo (KPI ou suporte), segmento, escopo sugerido, medida, direção (maior ou menor é melhor), fórmula e método de aplicação.",
+  "objetivo": "Dar ao consultor um ponto de partida para escolher indicadores no PMMC, no gerenciamento financeiro, em processos e nos demais escopos, sem inventar métrica do zero.",
+  "problema": "Cada projeto reinventava indicadores; a planilha padroniza nome, fórmula e forma de coleta.",
+  "quandoUsar": [
+    "Ao preencher o bloco Indicadores de Performance do PMMC",
+    "Ao definir indicadores em Gerenciamento Financeiro, Custeio, Comercial ou Estoque",
+    "Quando o gestor pede 'um indicador' e não sabe qual"
+  ],
+  "quandoNao": [
+    "Quando o cliente já tem indicadores maduros e consistentes: nesse caso, revise os dele"
+  ],
+  "entradas": [
+    "Escopo do projeto e setor do cliente"
+  ],
+  "saidas": [
+    "Lista curta de indicadores com fórmula e método de coleta"
+  ],
+  "passos": [
+    "Filtre a aba 1 pelo escopo sugerido e pelo setor",
+    "Escolha poucos indicadores, misturando estratégico, tático e operacional",
+    "Confira na aba 2 a fórmula e o método de aplicação",
+    "Valide com o gestor se o dado existe ou pode ser coletado"
+  ],
+  "perguntas": [
+    "O dado necessário para a fórmula já é coletado hoje?",
+    "O indicador é KPI ou apenas suporte?",
+    "Maior ou menor é melhor para este indicador?"
+  ],
+  "cuidados": [
+    "Não leve 15 indicadores ao cliente: escolha os que ele consegue acompanhar",
+    "Confirme a unidade de medida antes de montar dashboard"
+  ],
+  "exemplos": [
+    "Gerenciamento Financeiro: 12 indicadores sugeridos na aba 2",
+    "Mapeamento e Modelagem: 17 indicadores sugeridos na aba 2"
+  ],
+  "anexos": [
+    {
+      "nome": "Planilha de indicadores [PROCESSOS]",
+      "tipo": "Planilha",
+      "descricao": "Aba 1: indicador, hierarquia, tipo, segmento, escopo, medida, melhor, como calcular, o que é. Aba 2: escopo sugerido, setor, fórmula e método.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+      "url": "https://docs.google.com/spreadsheets/d/1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A/edit"
+    }
+  ],
+  "fontes": [
+    {
+      "tipo": "drive-sheet",
+      "id": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+      "nome": "Planilha de indicadores [PROCESSOS]",
+      "hash": "f2f33ad986991b7399b762cc48e83ceca4d492bdc175929298b157b2332273ce"
+    }
+  ],
+  "origem": {
+    "nome": "manual:carloseduardo@produtivajunior.com.br",
+    "tipo": "manual:carloseduardo@produtivajunior.com.br",
+    "categoria": "manual:carloseduardo@produtivajunior.com.br",
+    "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+    "tempo": "manual:carloseduardo@produtivajunior.com.br",
+    "freq": "manual:carloseduardo@produtivajunior.com.br",
+    "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+    "descricao": "manual:carloseduardo@produtivajunior.com.br",
+    "objetivo": "manual:carloseduardo@produtivajunior.com.br",
+    "problema": "manual:carloseduardo@produtivajunior.com.br",
+    "quandoUsar": "manual:carloseduardo@produtivajunior.com.br",
+    "quandoNao": "manual:carloseduardo@produtivajunior.com.br",
+    "entradas": "manual:carloseduardo@produtivajunior.com.br",
+    "saidas": "manual:carloseduardo@produtivajunior.com.br",
+    "passos": "manual:carloseduardo@produtivajunior.com.br",
+    "perguntas": "manual:carloseduardo@produtivajunior.com.br",
+    "cuidados": "manual:carloseduardo@produtivajunior.com.br",
+    "exemplos": "manual:carloseduardo@produtivajunior.com.br",
+    "anexos": "manual:carloseduardo@produtivajunior.com.br"
+  },
+  "pendencias": [],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

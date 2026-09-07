@@ -1,0 +1,90 @@
+{
+  "id": "previsao-de-demanda",
+  "nome": "Previsão de Demanda",
+  "grupo": "PRODUÇÃO",
+  "status": "despriorizado",
+  "descricao": "Alinha o objetivo da previsão, analisa o histórico, escolhe método e horizonte, constrói a ferramenta de cálculo e o MAD e treina a equipe.",
+  "responsavel": {
+    "nome": "Thiago Melo",
+    "email": "thiagomelo@produtivajunior.com.br"
+  },
+  "fontes": [
+    {
+      "tipo": "drive-sheet",
+      "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
+      "nome": "Resumão dos escopos",
+      "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+    },
+    {
+      "tipo": "drive-doc",
+      "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+      "nome": "Checklist Escopos",
+      "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+    }
+  ],
+  "etapas": [
+    {
+      "id": "alinhar-objetivo-da-previsao",
+      "ordem": 1,
+      "nome": "Alinhar objetivo da previsão",
+      "ferramentas": []
+    },
+    {
+      "id": "coleta-analise-de-dados-historicos",
+      "ordem": 2,
+      "nome": "Coleta/análise de dados históricos",
+      "ferramentas": []
+    },
+    {
+      "id": "definir-horizonte-de-tempo",
+      "ordem": 3,
+      "nome": "Definir horizonte de tempo",
+      "ferramentas": []
+    },
+    {
+      "id": "definir-metodo-da-previsao",
+      "ordem": 4,
+      "nome": "Definir método da previsão",
+      "ferramentas": []
+    },
+    {
+      "id": "construir-ferramenta-calculo-da-previsao",
+      "ordem": 5,
+      "nome": "Construir ferramenta/ cálculo da previsão",
+      "ferramentas": []
+    },
+    {
+      "id": "construir-mad",
+      "ordem": 6,
+      "nome": "Construir MAD",
+      "ferramentas": []
+    },
+    {
+      "id": "manual-de-implementacao-e-documentacao",
+      "ordem": 7,
+      "nome": "Manual de implementação e documentação",
+      "ferramentas": []
+    },
+    {
+      "id": "treinamento-e-acompanhamento",
+      "ordem": 8,
+      "nome": "Treinamento e acompanhamento",
+      "ferramentas": []
+    }
+  ],
+  "origem": {
+    "nome": "manual:thiagomelo@produtivajunior.com.br",
+    "descricao": "manual:thiagomelo@produtivajunior.com.br",
+    "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/previsao-de-demanda (caixa normalizada)",
+    "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
+  },
+  "pendencias": [
+    "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas",
+    "Checklist Escopos: Quase não sai, pouco domínio"
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

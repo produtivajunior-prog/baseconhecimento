@@ -1,0 +1,54 @@
+{
+  "id": "ux-research-canvas",
+  "nome": "UX Research Canvas",
+  "tipo": "Ferramenta",
+  "categoria": "Metodologias",
+  "complexidade": "Baixo",
+  "tempo": "1h",
+  "status": "Em construção",
+  "freq": "Baixa",
+  "responsavel": {
+    "nome": "Vinícius Moraes",
+    "email": "viniciusmoraes@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "Canvas que define objetivo, hipóteses, público, método e métricas de uma pesquisa antes de aplicá-la.",
+  "objetivo": "",
+  "problema": "",
+  "quandoUsar": [],
+  "quandoNao": [],
+  "entradas": [],
+  "saidas": [],
+  "passos": [],
+  "perguntas": [],
+  "cuidados": [],
+  "exemplos": [],
+  "anexos": [],
+  "fontes": [
+    {
+      "tipo": "manual",
+      "id": "viniciusmoraes@produtivajunior.com.br",
+      "nome": "Stub: sem arquivo-fonte no Drive",
+      "hash": null
+    }
+  ],
+  "origem": {
+    "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+    "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+    "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+    "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+    "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+    "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+    "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+    "descricao": "manual:viniciusmoraes@produtivajunior.com.br",
+    "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Método da etapa 'Definição da Pesquisa' no Cronograma Base de Pesquisa de Mercado; sem metodologia no Drive."
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "id": "bmc",
+  "nome": "Business Model Canvas (BMC)",
+  "tipo": "Ferramenta",
+  "categoria": "Entendimento",
+  "complexidade": "Baixo",
+  "tempo": "1–2h",
+  "status": "Em construção",
+  "freq": "Alta",
+  "responsavel": {
+    "nome": "Gabriela Palma",
+    "email": "gabrielapalma@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "Canvas de 9 blocos que descreve o modelo de negócio da empresa: segmentos, proposta de valor, canais, relacionamento, receitas, recursos, atividades, parcerias e custos.",
+  "objetivo": "",
+  "problema": "",
+  "quandoUsar": [],
+  "quandoNao": [],
+  "entradas": [],
+  "saidas": [],
+  "passos": [],
+  "perguntas": [],
+  "cuidados": [],
+  "exemplos": [],
+  "anexos": [],
+  "fontes": [
+    {
+      "tipo": "manual",
+      "id": "gabrielapalma@produtivajunior.com.br",
+      "nome": "Stub: sem arquivo-fonte no Drive",
+      "hash": null
+    }
+  ],
+  "origem": {
+    "nome": "manual:gabrielapalma@produtivajunior.com.br",
+    "tipo": "manual:gabrielapalma@produtivajunior.com.br",
+    "categoria": "manual:gabrielapalma@produtivajunior.com.br",
+    "complexidade": "manual:gabrielapalma@produtivajunior.com.br",
+    "tempo": "manual:gabrielapalma@produtivajunior.com.br",
+    "freq": "manual:gabrielapalma@produtivajunior.com.br",
+    "responsavel": "manual:gabrielapalma@produtivajunior.com.br",
+    "descricao": "manual:gabrielapalma@produtivajunior.com.br",
+    "anexos": "manual:gabrielapalma@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Sem PDF de metodologia no Drive: só a página do Hangar e o modelo '[CIEP] Modelo - BMC.pdf' citado no MVP. Pedir a gabrielapalma@ a metodologia ou colar a página do Hangar em fontes/hangar/bmc.md."
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  },
+  "modeloLegadoId": "bmc"
+}

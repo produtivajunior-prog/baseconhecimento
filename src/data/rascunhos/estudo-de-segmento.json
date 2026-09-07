@@ -1,0 +1,104 @@
+{
+  "id": "estudo-de-segmento",
+  "nome": "Estudo de Segmento",
+  "tipo": "Checklist",
+  "categoria": "Entendimento",
+  "complexidade": "Baixo",
+  "tempo": "2–4h de pesquisa",
+  "status": "Ativo",
+  "freq": "Alta",
+  "responsavel": {
+    "nome": "Carlos Eduardo",
+    "email": "carloseduardo@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "Checklist do que levantar sobre a empresa e o segmento antes de iniciar o projeto: informações básicas, contexto de mercado e materiais de coleta.",
+  "objetivo": "Chegar à RAC e à RAP já conhecendo porte, produtos, clientes, concorrentes, tendências e regulamentação do segmento.",
+  "problema": "Consultor entrava no cliente sem estudo prévio e gastava as primeiras reuniões descobrindo o básico.",
+  "quandoUsar": [
+    "Sempre, antes da primeira reunião com o gestor",
+    "Ao receber o repasse comercial de um cliente novo"
+  ],
+  "quandoNao": null,
+  "entradas": [
+    "Nome e CNPJ da empresa",
+    "Site, LinkedIn, Reclame Aqui, Instagram"
+  ],
+  "saidas": [
+    "Ficha do segmento preenchida antes da RAC/RAP"
+  ],
+  "passos": [
+    "Informações básicas: Nome, Localização, Porte (micro, pequena, média, grande)",
+    "MVV: Número de Colaboradores, Principais Produtos/Serviços, Principais Clientes, Segmentos Atendidos, Fornecedores e Parceiros Estratégicos, Canais de Comunicação",
+    "Contexto DE mercado: Principais Concorrentes, Participação de Mercado, Posicionamento da Marca, Tendências e Inovações do Setor, Regulamentações e Normas, Barreiras de Entrada, Desafios do Setor, Indicadores Utéis (Banco de Indicadores)",
+    "Materiais DE coleta E estudo: Site Institucional, Busca por CNPJ, Linkedin, Reclame Aqui, Instagram, Perplexity, ChatGPT"
+  ],
+  "perguntas": [
+    "Qual o porte e quantos colaboradores?",
+    "Quem são os principais concorrentes e qual a participação de mercado?",
+    "Há regulamentações ou normas que limitam o setor?",
+    "Quais indicadores do Banco de Indicadores se aplicam ao segmento?"
+  ],
+  "cuidados": null,
+  "exemplos": null,
+  "anexos": [
+    {
+      "nome": "[CIEP] Checklist do Estudo de Segmento.pdf",
+      "tipo": "Modelo padrão",
+      "descricao": "Checklist: informações básicas, contexto de mercado e materiais de coleta.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1KcKyCTQceifhm4btNwmzvW43BEFbQ-Kh",
+      "url": "https://drive.google.com/file/d/1KcKyCTQceifhm4btNwmzvW43BEFbQ-Kh/view"
+    },
+    {
+      "nome": "Banco de Indicadores",
+      "tipo": "Planilha",
+      "descricao": "Indicadores úteis por segmento e escopo.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+      "url": "https://docs.google.com/spreadsheets/d/1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A/edit"
+    }
+  ],
+  "fontes": [
+    {
+      "tipo": "drive-pdf",
+      "id": "1KcKyCTQceifhm4btNwmzvW43BEFbQ-Kh",
+      "nome": "[CIEP] Checklist do Estudo de Segmento.pdf",
+      "hash": "509e6af5042f27f33f84780b01438c0b302b2d81e1ae9d97e0502298c4bd0c86"
+    },
+    {
+      "tipo": "drive-sheet",
+      "id": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+      "nome": "Planilha de indicadores [PROCESSOS]",
+      "hash": "f2f33ad986991b7399b762cc48e83ceca4d492bdc175929298b157b2332273ce"
+    }
+  ],
+  "origem": {
+    "nome": "manual:carloseduardo@produtivajunior.com.br",
+    "tipo": "manual:carloseduardo@produtivajunior.com.br",
+    "categoria": "manual:carloseduardo@produtivajunior.com.br",
+    "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+    "tempo": "manual:carloseduardo@produtivajunior.com.br",
+    "freq": "manual:carloseduardo@produtivajunior.com.br",
+    "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+    "passos": "drive:1KcKyCTQceifhm4btNwmzvW43BEFbQ-Kh#informacoes-basicas/nome",
+    "descricao": "manual:carloseduardo@produtivajunior.com.br",
+    "objetivo": "manual:carloseduardo@produtivajunior.com.br",
+    "problema": "manual:carloseduardo@produtivajunior.com.br",
+    "quandoUsar": "manual:carloseduardo@produtivajunior.com.br",
+    "entradas": "manual:carloseduardo@produtivajunior.com.br",
+    "saidas": "manual:carloseduardo@produtivajunior.com.br",
+    "perguntas": "manual:carloseduardo@produtivajunior.com.br",
+    "anexos": "manual:carloseduardo@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): quandoNao, cuidados, exemplos"
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

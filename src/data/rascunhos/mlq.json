@@ -1,0 +1,54 @@
+{
+  "id": "mlq",
+  "nome": "MLQ-6S (Liderança)",
+  "tipo": "Template",
+  "categoria": "Pesquisas de cultura",
+  "complexidade": "Médio",
+  "tempo": "1 sprint de aplicação",
+  "status": "Em construção",
+  "freq": "Baixa",
+  "responsavel": {
+    "nome": "Laura Rodrigues",
+    "email": "laurarodrigues@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "Questionário multifatorial de liderança aplicado a gestores e equipes.",
+  "objetivo": "",
+  "problema": "",
+  "quandoUsar": [],
+  "quandoNao": [],
+  "entradas": [],
+  "saidas": [],
+  "passos": [],
+  "perguntas": [],
+  "cuidados": [],
+  "exemplos": [],
+  "anexos": [],
+  "fontes": [
+    {
+      "tipo": "manual",
+      "id": "laurarodrigues@produtivajunior.com.br",
+      "nome": "Stub: sem arquivo-fonte no Drive",
+      "hash": null
+    }
+  ],
+  "origem": {
+    "nome": "manual:laurarodrigues@produtivajunior.com.br",
+    "tipo": "manual:laurarodrigues@produtivajunior.com.br",
+    "categoria": "manual:laurarodrigues@produtivajunior.com.br",
+    "complexidade": "manual:laurarodrigues@produtivajunior.com.br",
+    "tempo": "manual:laurarodrigues@produtivajunior.com.br",
+    "freq": "manual:laurarodrigues@produtivajunior.com.br",
+    "responsavel": "manual:laurarodrigues@produtivajunior.com.br",
+    "descricao": "manual:laurarodrigues@produtivajunior.com.br",
+    "anexos": "manual:laurarodrigues@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Só o formulário aplicado em cliente (CRN-Bio); sem metodologia."
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

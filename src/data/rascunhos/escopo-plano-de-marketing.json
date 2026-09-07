@@ -1,0 +1,135 @@
+{
+  "id": "plano-de-marketing",
+  "nome": "Plano de Marketing",
+  "grupo": "ESTRATÉGIA",
+  "status": "ativo",
+  "descricao": "Diagnostica o marketing da empresa, analisa ambiente e concorrentes, define público-alvo e buyer persona, desenha a jornada do cliente, escolhe canais de tração e entrega estratégias com ferramenta de acompanhamento.",
+  "responsavel": {
+    "nome": "Thiago Melo",
+    "email": "thiagomelo@produtivajunior.com.br"
+  },
+  "fontes": [
+    {
+      "tipo": "drive-sheet",
+      "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
+      "nome": "Resumão dos escopos",
+      "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+    },
+    {
+      "tipo": "drive-doc",
+      "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+      "nome": "Checklist Escopos",
+      "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+    },
+    {
+      "tipo": "drive-sheet",
+      "id": "10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ",
+      "nome": "Cronograma Base Plano de Marketing - Thiago Melo",
+      "hash": "58b713b88aa525b17b9655c87aace773ed23b4ab58da51f51987047a576553b8",
+      "url": "https://docs.google.com/spreadsheets/d/10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ/edit"
+    }
+  ],
+  "etapas": [
+    {
+      "id": "entendimento-de-negocio",
+      "ordem": 1,
+      "nome": "Entendimento de negócio",
+      "ferramentas": [
+        "bmc"
+      ],
+      "entregaveis": [
+        "BMC",
+        "8 P's do marketing"
+      ]
+    },
+    {
+      "id": "analise-de-ambiente",
+      "ordem": 2,
+      "nome": "Análise de ambiente",
+      "ferramentas": [
+        "swot",
+        "pestel",
+        "matriz-de-concorrentes",
+        "mapa-perceptual",
+        "comparativo-de-marcas"
+      ],
+      "entregaveis": [
+        "SWOT + PESTEL + Matriz de concorrentes"
+      ]
+    },
+    {
+      "id": "pesquisa-de-mercado",
+      "ordem": 3,
+      "nome": "Pesquisa de mercado",
+      "ferramentas": [],
+      "entregaveis": [
+        "Dashboard e relatório com compilado das respostas"
+      ]
+    },
+    {
+      "id": "construcao-do-publico-alvo-e-buyer-perso",
+      "ordem": 4,
+      "nome": "Construção do público alvo e Buyer Persona",
+      "ferramentas": [
+        "icp",
+        "buyer-persona"
+      ],
+      "entregaveis": [
+        "ICP e Buyer Persona"
+      ]
+    },
+    {
+      "id": "elaboracao-da-jornada-do-cliente",
+      "ordem": 5,
+      "nome": "Elaboração da Jornada do Cliente",
+      "ferramentas": [
+        "jornada-do-cliente"
+      ],
+      "entregaveis": [
+        "Bullseye Framework + Jornada do cliente"
+      ]
+    },
+    {
+      "id": "definir-os-canais-de-tracao",
+      "ordem": 6,
+      "nome": "Definir os canais de tração",
+      "ferramentas": []
+    },
+    {
+      "id": "tracar-estrategias-de-marketing",
+      "ordem": 7,
+      "nome": "Traçar estratégias de marketing",
+      "ferramentas": [],
+      "entregaveis": [
+        "Relatório de estratégias + Ferramenta de suporte"
+      ]
+    },
+    {
+      "id": "constuir-ferramentas-de-suporte",
+      "ordem": 8,
+      "nome": "Constuir ferramentas de suporte",
+      "ferramentas": []
+    },
+    {
+      "id": "definir-indicadores-de-acompanhamento-e",
+      "ordem": 9,
+      "nome": "Definir indicadores de acompanhamento e controle",
+      "ferramentas": [
+        "banco-de-indicadores"
+      ]
+    }
+  ],
+  "origem": {
+    "nome": "manual:thiagomelo@produtivajunior.com.br",
+    "descricao": "manual:thiagomelo@produtivajunior.com.br",
+    "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/plano-de-mkt (caixa normalizada)",
+    "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+    "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ)"
+  },
+  "pendencias": [],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

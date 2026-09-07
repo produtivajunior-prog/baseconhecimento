@@ -1,0 +1,229 @@
+{
+  "id": "pmmc",
+  "nome": "Process Map Model Canvas (PMMC)",
+  "tipo": "Metodologia",
+  "categoria": "Processos",
+  "complexidade": "Médio",
+  "tempo": "1 reunião de 2h + consolidação",
+  "status": "Ativo",
+  "freq": "Alta",
+  "responsavel": {
+    "nome": "Carlos Eduardo",
+    "email": "carloseduardo@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "O Process Map Model Canvas (PMMC) é uma ferramenta visual projetada para simplificar a análise e o redesenho de processos.",
+  "objetivo": "Funcionando como um guia prático, ele condensa em uma única página os 10 blocos essenciais que compõem o fluxo de valor, garantindo uma visão sistêmica e facilitando a validação do entendimento junto ao gestor.",
+  "problema": null,
+  "quandoUsar": null,
+  "quandoNao": null,
+  "entradas": [
+    "Reunião ou brainstorming com o gestor e a equipe do processo",
+    "Documentos existentes: POPs, manuais, fluxogramas antigos"
+  ],
+  "saidas": [
+    "Canvas PMMC preenchido e validado com o gestor",
+    "Base para o mapeamento AS IS e para o relatório de melhorias"
+  ],
+  "passos": [
+    "Principais Fornecedores — Este é o ponto de partida lógico do mapeamento.",
+    "Principais Insumos — Os insumos representam a \"matéria-prima\" do processo.",
+    "Principais Atividades — Este é o motor da operação.",
+    "Principais Produtos — Os produtos são a materialização do valor gerado pelas atividades.",
+    "Principais Clientes — Nenhum processo existe sem um propósito ou um destinatário.",
+    "Recursos Humanos — Este quadrante foca nas pessoas.",
+    "Recursos Tecnológicos — Além das pessoas, a maioria dos processos modernos depende de uma base tecnológica para funcionar.",
+    "Finalidade e Melhorias — Este bloco conecta a operação à estratégia.",
+    "Indicadores de Performance — \"O que não é medido não é gerenciado\".",
+    "Ferramentas de Controle — Para fechar o canvas, temos a governança."
+  ],
+  "perguntas": [
+    "De onde são retirados os insumos envolvidos no processo?",
+    "O fornecedor é externo (outra empresa) ou interno (outro setor/processo)?",
+    "Quem é o responsável direto por disponibilizar o recurso no tempo certo?",
+    "Quais são os inputs (físicos ou intelectuais) que serão processados?",
+    "O que é indispensável receber para que a atividade possa começar?",
+    "Os insumos chegam no padrão ou formato correto para serem utilizados?",
+    "Quais atividades são desempenhadas desde o repasse dos insumos até a finalização da proposta de valor?",
+    "Quais são as etapas críticas de transformação que não podem faltar?",
+    "Existe uma sequência lógica clara entre as ações listadas?",
+    "Quais são as informações de saída ou resultados tangíveis resultantes do processo?",
+    "O que é efetivamente entregue ao final das atividades listadas?",
+    "O produto atende aos requisitos de qualidade esperados?",
+    "Quem são os beneficiários do processo?",
+    "Para quem o produto é destinado?",
+    "O cliente é o consumidor final ou uma etapa posterior interna?",
+    "Quem e quantos são os responsáveis pela execução do processo?",
+    "Quais funções e cargos específicos são exigidos para a operação?",
+    "A equipe alocada possui as competências necessárias para as atividades mapeadas?",
+    "Quais equipamentos e sistemas são utilizados durante o processo?",
+    "As ferramentas tecnológicas disponíveis atendem à demanda das atividades?",
+    "O processo é manual ou automatizado por algum software específico?",
+    "Qual o objetivo principal desse processo?",
+    "Existem melhorias propostas ou já em andamento?",
+    "O processo atual atende plenamente à sua finalidade estratégica?",
+    "Quais indicadores (quantitativos) são utilizados para apuração de resultados?",
+    "Como mensuramos o sucesso ou fracasso dessa operação?",
+    "Os indicadores atuais refletem a realidade da eficiência do processo?",
+    "Quais os controles utilizados para o acompanhamento do processo?",
+    "Como garantimos a padronização e evitamos desvios na execução?",
+    "A frequência de controle é adequada à criticidade do processo?"
+  ],
+  "cuidados": [
+    "Preparação e Contextualização — Levantamento Prévio: Antes da reunião, solicite ou pesquise se já existem documentos sobre o processo (POPs antigos, manuais ou fluxogramas).",
+    "Validação da Realidade (Real vs. Ideal) — Foco no \"As-Is\" (Como É): Questione sempre: \"Isso acontece 100% das vezes ou é o cenário ideal?\".",
+    "Atenção às Incongruências Comuns — Nível de Detalhe: Evite listar microtarefas (ex: \"clicar no botão salvar\").",
+    "Visão Sistêmica e Escrita — Interconexão: Entenda que os quadrantes não são gavetas isoladas; \"nada está solto\".",
+    "Dinâmica da Dupla de Consultoria Para otimizar a reunião e não perder informações, divida os papéis — Consultor A: Fica responsável por apresentar a ferramenta (BMC), conduzir a dinâmica e fazer as perguntas assertivas.",
+    "A Regra do 80/20 (Foco na Regra, não na Exceção) — Mapeie o fluxo padrão: O PMMC deve retratar o que acontece na maioria das vezes."
+  ],
+  "exemplos": null,
+  "anexos": [
+    {
+      "nome": "[CIEP] Metodologia - PMMC.pdf",
+      "tipo": "Metodologia (PDF)",
+      "descricao": "Metodologia completa: os 10 blocos, perguntas-chave e recomendações de condução.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr",
+      "url": "https://drive.google.com/file/d/16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr/view"
+    },
+    {
+      "nome": "[CIEP] Process Map Model Canvas.pdf",
+      "tipo": "Modelo padrão",
+      "descricao": "Canvas em branco com os 10 blocos e a pergunta-guia de cada um.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1sfzv1hNxzuRhD0NDe9ekpxfNE2EDsqOB",
+      "url": "https://drive.google.com/file/d/1sfzv1hNxzuRhD0NDe9ekpxfNE2EDsqOB/view"
+    },
+    {
+      "nome": "Banco de Indicadores",
+      "tipo": "Planilha",
+      "descricao": "139 indicadores por escopo, com fórmula e método, para o bloco Indicadores de Performance.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+      "url": "https://docs.google.com/spreadsheets/d/1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A/edit"
+    }
+  ],
+  "fontes": [
+    {
+      "tipo": "drive-pdf",
+      "id": "16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr",
+      "nome": "[CIEP] Metodologia - PMMC.pdf",
+      "hash": "d7e1804269b6b4559f548520dc6539d6752a88e2b92e616369ba82c9000e6ce4"
+    },
+    {
+      "tipo": "drive-pdf",
+      "id": "1sfzv1hNxzuRhD0NDe9ekpxfNE2EDsqOB",
+      "nome": "[CIEP] Process Map Model Canvas.pdf",
+      "hash": "1d24052d64964ce5daf821c893b9e779fd9bb3af172b02b957ac695301630e23"
+    },
+    {
+      "tipo": "drive-sheet",
+      "id": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+      "nome": "Planilha de indicadores [PROCESSOS]",
+      "hash": "f2f33ad986991b7399b762cc48e83ceca4d492bdc175929298b157b2332273ce"
+    }
+  ],
+  "origem": {
+    "nome": "manual:carloseduardo@produtivajunior.com.br",
+    "tipo": "manual:carloseduardo@produtivajunior.com.br",
+    "categoria": "manual:carloseduardo@produtivajunior.com.br",
+    "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+    "tempo": "manual:carloseduardo@produtivajunior.com.br",
+    "freq": "manual:carloseduardo@produtivajunior.com.br",
+    "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+    "descricao": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#introducao",
+    "objetivo": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#introducao",
+    "passos": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#entradas/principais-fornecedores drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#entradas/principais-insumos drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#processos/principais-atividades drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#saidas/principais-produtos drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#saidas/principais-clientes drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/recursos-humanos drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/recursos-tecnologicos drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/finalidade-e-melhorias drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/indicadores-de-performance drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/ferramentas-de-controle",
+    "perguntas": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#entradas/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#entradas/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#processos/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#saidas/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#saidas/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/perguntas-chave",
+    "cuidados": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/preparacao-e-contextualizacao drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/validacao-da-realidade-real-vs-ideal drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/atencao-as-incongruencias-comuns drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/visao-sistemica-e-escrita drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/dinamica-da-dupla-de-consultoria-para-otimizar-a-reuniao-e-nao-perder-informacoes-divida-os-papeis drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/a-regra-do-80-20-foco-na-regra-nao-na-excecao",
+    "entradas": "manual:carloseduardo@produtivajunior.com.br",
+    "saidas": "manual:carloseduardo@produtivajunior.com.br",
+    "anexos": "manual:carloseduardo@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): problema, quandoUsar, quandoNao, exemplos"
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  },
+  "modelo": {
+    "id": "pmmc",
+    "toolId": "pmmc",
+    "nome": "Process Map Model Canvas (PMMC)",
+    "sigla": "PMMC",
+    "fonte": {
+      "driveId": "1sfzv1hNxzuRhD0NDe9ekpxfNE2EDsqOB",
+      "nome": "[CIEP] Process Map Model Canvas.pdf"
+    },
+    "layout": "canvas",
+    "registrado": "Extraído do Modelo Padrão",
+    "blocos": [
+      {
+        "titulo": "Principais Fornecedores",
+        "gc": "1 / 2",
+        "gr": "1 / 2",
+        "dica": "De onde são retirados os insumos envolvidos no processo?"
+      },
+      {
+        "titulo": "Principais Insumos",
+        "gc": "2 / 3",
+        "gr": "1 / 2",
+        "dica": "Inputs (físicos ou de ordem intelectual) que serão processados até o resultado final."
+      },
+      {
+        "titulo": "Principais Atividades",
+        "gc": "3 / 4",
+        "gr": "1 / 2",
+        "dica": "Quais atividades são desempenhadas desde o repasse dos insumos até a finalização da proposta de valor?"
+      },
+      {
+        "titulo": "Principais Produtos",
+        "gc": "4 / 5",
+        "gr": "1 / 2",
+        "dica": "Informações de saída resultantes do processo (resultados)."
+      },
+      {
+        "titulo": "Principais Clientes",
+        "gc": "5 / 6",
+        "gr": "1 / 2",
+        "dica": "Beneficiários do processo. Aqueles a quem o produto é destinado."
+      },
+      {
+        "titulo": "Recursos Humanos",
+        "gc": "1 / 3",
+        "gr": "2 / 3",
+        "dica": "Quem e quantos são responsáveis pelo processo? Funções e cargos podem ser importantes."
+      },
+      {
+        "titulo": "Recursos Tecnológicos",
+        "gc": "3 / 4",
+        "gr": "2 / 3",
+        "dica": "Equipamentos e sistemas utilizados."
+      },
+      {
+        "titulo": "Finalidade e Melhorias",
+        "gc": "4 / 6",
+        "gr": "2 / 3",
+        "dica": "Qual o objetivo desse processo? Existem melhorias propostas ou em andamento?"
+      },
+      {
+        "titulo": "Indicadores de Performance",
+        "gc": "1 / 3",
+        "gr": "3 / 4",
+        "dica": "Indicadores (quantitativos) utilizados para apuração de resultados na empresa."
+      },
+      {
+        "titulo": "Ferramentas de Controle",
+        "gc": "3 / 6",
+        "gr": "3 / 4",
+        "dica": "Quais os controles utilizados para o acompanhamento do processo?"
+      }
+    ]
+  }
+}

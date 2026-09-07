@@ -1,0 +1,71 @@
+{
+  "id": "idealizacao-de-novos-produtos",
+  "nome": "Idealização de Novos Produtos",
+  "grupo": "ESTRATÉGIA",
+  "status": "despriorizado",
+  "descricao": "Analisa mercado, constrói e prioriza ideias com ICP, Buyer Persona, CPV e SWOT, estrutura o novo produto e o lançamento.",
+  "responsavel": {
+    "nome": "Thiago Melo",
+    "email": "thiagomelo@produtivajunior.com.br"
+  },
+  "fontes": [
+    {
+      "tipo": "drive-sheet",
+      "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
+      "nome": "Resumão dos escopos",
+      "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+    },
+    {
+      "tipo": "drive-doc",
+      "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+      "nome": "Checklist Escopos",
+      "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+    }
+  ],
+  "etapas": [
+    {
+      "id": "entendimento",
+      "ordem": 1,
+      "nome": "Entendimento",
+      "ferramentas": []
+    },
+    {
+      "id": "analise-de-mercado",
+      "ordem": 2,
+      "nome": "Analise DE mercado",
+      "ferramentas": []
+    },
+    {
+      "id": "construcao-e-priorizacao-de-ideias-icp-b",
+      "ordem": 3,
+      "nome": "Construção E priorização DE ideias (icp, bp, cvp, SWOT",
+      "ferramentas": []
+    },
+    {
+      "id": "construcao-de-novo-produto",
+      "ordem": 4,
+      "nome": "Construção DE NOVO produto",
+      "ferramentas": []
+    },
+    {
+      "id": "estruturacao-e-lancamento",
+      "ordem": 5,
+      "nome": "Estruturação E lançamento",
+      "ferramentas": []
+    }
+  ],
+  "origem": {
+    "nome": "manual:thiagomelo@produtivajunior.com.br",
+    "descricao": "manual:thiagomelo@produtivajunior.com.br",
+    "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/idealizacao-de-novos-produtos (caixa normalizada)",
+    "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
+  },
+  "pendencias": [
+    "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas"
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

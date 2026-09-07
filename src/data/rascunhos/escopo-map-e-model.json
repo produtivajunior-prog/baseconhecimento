@@ -1,0 +1,125 @@
+{
+  "id": "map-e-model",
+  "nome": "Mapeamento e Modelagem de Processos",
+  "grupo": "PRODUÇÃO",
+  "status": "ativo",
+  "descricao": "Entende o macroprocesso, mapeia os processos AS IS de um setor, aponta causas raízes e oportunidades, modela os processos TO BE e deixa rotina, DCO e manual do setor implantados.",
+  "responsavel": {
+    "nome": "Thiago Melo",
+    "email": "thiagomelo@produtivajunior.com.br"
+  },
+  "fontes": [
+    {
+      "tipo": "drive-sheet",
+      "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
+      "nome": "Resumão dos escopos",
+      "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+    },
+    {
+      "tipo": "drive-doc",
+      "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+      "nome": "Checklist Escopos",
+      "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+    },
+    {
+      "tipo": "drive-sheet",
+      "id": "13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE",
+      "nome": "Cronograma Base Mapeamento e modelagem - Thiago Melo",
+      "hash": "65135ff20379594a7e6dd5240ff4e9d366b72833fa5d5563fd0acf17f8b666ae",
+      "url": "https://docs.google.com/spreadsheets/d/13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE/edit"
+    }
+  ],
+  "etapas": [
+    {
+      "id": "entendimento",
+      "ordem": 1,
+      "nome": "Entendimento",
+      "ferramentas": [
+        "bmc",
+        "mapa-de-contexto",
+        "pmmc"
+      ],
+      "entregaveis": [
+        "BMC + Macroprocesso",
+        "Process Map Model Canvas"
+      ]
+    },
+    {
+      "id": "mapeamento",
+      "ordem": 2,
+      "nome": "Mapeamento",
+      "ferramentas": [
+        "pmmc",
+        "bpmn",
+        "sipoc"
+      ],
+      "entregaveis": [
+        "Fluxogramas AS IS"
+      ]
+    },
+    {
+      "id": "relatorio-de-analise",
+      "ordem": 3,
+      "nome": "Relatório de análise",
+      "ferramentas": [],
+      "entregaveis": [
+        "Relatório de causas raízes e oportunidades de melhoria"
+      ]
+    },
+    {
+      "id": "modelagens",
+      "ordem": 4,
+      "nome": "Modelagens",
+      "ferramentas": [
+        "bpmn"
+      ],
+      "entregaveis": [
+        "Modelagens dos processos + Implementação + Treinamentos"
+      ]
+    },
+    {
+      "id": "ferramenta-de-rotina-e-rotina-das-modela",
+      "ordem": 5,
+      "nome": "Ferramenta de rotina e rotina das modelagens",
+      "ferramentas": [
+        "raci"
+      ]
+    },
+    {
+      "id": "dco",
+      "ordem": 6,
+      "nome": "DCO",
+      "ferramentas": [
+        "dco"
+      ]
+    },
+    {
+      "id": "documentacao-treinamento",
+      "ordem": 7,
+      "nome": "Documentação Treinamento",
+      "ferramentas": [],
+      "entregaveis": [
+        "Manual do setor + DCO"
+      ]
+    },
+    {
+      "id": "acompanhamento",
+      "ordem": 8,
+      "nome": "Acompanhamento",
+      "ferramentas": []
+    }
+  ],
+  "origem": {
+    "nome": "manual:thiagomelo@produtivajunior.com.br",
+    "descricao": "manual:thiagomelo@produtivajunior.com.br",
+    "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/map-e-model (caixa normalizada)",
+    "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+    "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE)"
+  },
+  "pendencias": [],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

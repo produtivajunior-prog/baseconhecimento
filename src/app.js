@@ -439,7 +439,7 @@ class Component extends DCLogic {
     const gruposEscopo = this.TAXONOMIA.gruposEscopo;
     const escoposPorGrupo = Object.keys(gruposEscopo).map(g => ({
       grupo:g, label:gruposEscopo[g].label||g, cor:gruposEscopo[g].cor, bg:gruposEscopo[g].bg,
-      escopos:this.ESCOPOS.filter(e=>e.grupo===g).map(decEscopo),
+      escopos:this.ESCOPOS.filter(e=>e.grupo===g).sort((a,b)=>(a.status==='ativo'?0:1)-(b.status==='ativo'?0:1)).map(decEscopo),
     })).filter(g => g.escopos.length);
     const escopoRaw = s.escopoId ? this.ESCOPOS.find(e=>e.id===s.escopoId) : null;
     const escopoSel = escopoRaw ? decEscopo(escopoRaw) : null;

@@ -1,0 +1,88 @@
+{
+  "id": "teoria-da-saliencia",
+  "nome": "Teoria da Saliência (Stakeholders)",
+  "tipo": "Ferramenta",
+  "categoria": "Metodologias",
+  "complexidade": "Médio",
+  "tempo": "2h",
+  "status": "Ativo",
+  "freq": "Baixa",
+  "responsavel": {
+    "nome": "Vinícius Moraes",
+    "email": "viniciusmoraes@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "Em um ambiente organizacional cada vez mais dinâmico e competitivo, a construção de estratégias de marketing eficazes exige não apenas o entendimento do mercado, mas também a identificação e priorização dos stakeholders envolvidos no processo.",
+  "objetivo": "Nesse contexto, este Plano de Marketing tem como objetivo estruturar ações estratégicas a partir de uma análise criteriosa dos principais atores que influenciam e são impactados pelas decisões da organização.",
+  "problema": "Ausência de visualização estruturada compromete decisões gerenciais e ações assertivas.",
+  "quandoUsar": null,
+  "quandoNao": null,
+  "entradas": [
+    "Lista de stakeholders do projeto ou da empresa"
+  ],
+  "saidas": [
+    "Classificação de cada stakeholder (dominante, dependente, perigoso, definitivo…)",
+    "Prioridade de atenção por stakeholder"
+  ],
+  "passos": null,
+  "perguntas": null,
+  "cuidados": null,
+  "exemplos": null,
+  "anexos": [
+    {
+      "nome": "Metodologia - Teoria da Saliência.pdf",
+      "tipo": "Metodologia (PDF)",
+      "descricao": "Poder, legitimidade e urgência; tipologia dos stakeholders em 3 passos.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH",
+      "url": "https://drive.google.com/file/d/1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH/view"
+    },
+    {
+      "nome": "Modelo Padrão - Teoria da Saliência.pdf",
+      "tipo": "Modelo padrão",
+      "descricao": "Tabela de stakeholders × atributos e diagrama de Venn para classificação.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1sjp_K3sv-IFSORfI7IbqAd7PUGY1aQ2c",
+      "url": "https://drive.google.com/file/d/1sjp_K3sv-IFSORfI7IbqAd7PUGY1aQ2c/view"
+    }
+  ],
+  "fontes": [
+    {
+      "tipo": "drive-pdf",
+      "id": "1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH",
+      "nome": "Metodologia - Teoria da Saliência .pdf",
+      "hash": "05b198a4430c13b894291adae5f518f0f12b25ccea3eae90d1bb08e16928f8a2"
+    },
+    {
+      "tipo": "drive-pdf",
+      "id": "1sjp_K3sv-IFSORfI7IbqAd7PUGY1aQ2c",
+      "nome": "Modelo Padrão - Teoria da Salliência.pdf",
+      "hash": "9e15ef5843ff13e547e3c6e634e9f8b86c4f4aa60b49e53340b405fe1c48181c"
+    }
+  ],
+  "origem": {
+    "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+    "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+    "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+    "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+    "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+    "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+    "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+    "descricao": "drive:1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH#introducao",
+    "objetivo": "drive:1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH#introducao",
+    "problema": "drive:1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH#analise-do-estado-atual/principais-desafios",
+    "entradas": "manual:viniciusmoraes@produtivajunior.com.br",
+    "saidas": "manual:viniciusmoraes@produtivajunior.com.br",
+    "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): quandoUsar, quandoNao, passos, perguntas, cuidados, exemplos"
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

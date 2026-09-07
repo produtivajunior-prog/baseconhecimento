@@ -1,0 +1,140 @@
+{
+  "id": "cpv",
+  "nome": "Canvas de Proposta de Valor (CPV)",
+  "tipo": "Ferramenta",
+  "categoria": "Entendimento",
+  "complexidade": "Baixo",
+  "tempo": "1–2h",
+  "status": "Ativo",
+  "freq": "Média",
+  "responsavel": {
+    "nome": "Laura Rodrigues",
+    "email": "laurarodrigues@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "Lançar um produto, serviço ou marca no mercado exige mais do que uma boa ideia — é necessário entender profundamente quem é o cliente, o que ele valoriza e quais problemas realmente precisam ser resolvidos.",
+  "objetivo": "Nesse cenário, o Canvas de Proposta de Valor surge como uma ferramenta estratégica que permite alinhar o que sua solução oferece com as necessidades reais do público-alvo.",
+  "problema": null,
+  "quandoUsar": null,
+  "quandoNao": null,
+  "entradas": [
+    "Segmento de cliente definido (ICP ou persona)",
+    "Entrevistas ou pesquisa com clientes"
+  ],
+  "saidas": [
+    "Canvas com perfil do cliente e mapa de valor encaixados"
+  ],
+  "passos": null,
+  "perguntas": null,
+  "cuidados": null,
+  "exemplos": [
+    "PROJETO REFERÊNCIA: Bee Delivery"
+  ],
+  "anexos": [
+    {
+      "nome": "Metodologia - CPV.pdf",
+      "tipo": "Metodologia (PDF)",
+      "descricao": "Definição, perfil do cliente (tarefas, dores, ganhos) e mapa de valor, com dicas e projeto de referência.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb",
+      "url": "https://drive.google.com/file/d/1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb/view"
+    },
+    {
+      "nome": "[CIEP] Proposta de Valor (Modelo Padrão)",
+      "tipo": "Modelo padrão",
+      "descricao": "Canvas em branco com os 6 blocos.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1QK6lIIWR589W8HG0xWhknAENBw8cwwYD",
+      "url": "https://drive.google.com/file/d/1QK6lIIWR589W8HG0xWhknAENBw8cwwYD/view"
+    }
+  ],
+  "fontes": [
+    {
+      "tipo": "drive-pdf",
+      "id": "1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb",
+      "nome": "Metodologia - CPV.pdf",
+      "hash": "73933dff45f79517ea7b1313a744b78eeabd63949cbb6fda528b17fcb7e23355"
+    },
+    {
+      "tipo": "drive-pdf",
+      "id": "1QK6lIIWR589W8HG0xWhknAENBw8cwwYD",
+      "nome": "[CIEP] Proposta de Valo( Modelo Padrão)",
+      "hash": "d05a0dc1fb9f068818fabd555f75c26e7e3facbe04b432146a33cc6f8babb101"
+    }
+  ],
+  "origem": {
+    "nome": "manual:laurarodrigues@produtivajunior.com.br",
+    "tipo": "manual:laurarodrigues@produtivajunior.com.br",
+    "categoria": "manual:laurarodrigues@produtivajunior.com.br",
+    "complexidade": "manual:laurarodrigues@produtivajunior.com.br",
+    "tempo": "manual:laurarodrigues@produtivajunior.com.br",
+    "freq": "manual:laurarodrigues@produtivajunior.com.br",
+    "responsavel": "manual:laurarodrigues@produtivajunior.com.br",
+    "descricao": "drive:1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb#introducao/definicao",
+    "objetivo": "drive:1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb#introducao/definicao",
+    "exemplos": "drive:1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb#link-de-referencia/projeto-referencia-bee-delivery",
+    "entradas": "manual:laurarodrigues@produtivajunior.com.br",
+    "saidas": "manual:laurarodrigues@produtivajunior.com.br",
+    "anexos": "manual:laurarodrigues@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): problema, quandoUsar, quandoNao, passos, perguntas, cuidados"
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  },
+  "modelo": {
+    "id": "cpv",
+    "toolId": "cpv",
+    "nome": "Canvas de Proposta de Valor (CPV)",
+    "sigla": "CPV",
+    "fonte": {
+      "driveId": "1QK6lIIWR589W8HG0xWhknAENBw8cwwYD",
+      "nome": "[CIEP] Proposta de Valor (Modelo Padrão)"
+    },
+    "layout": "canvas",
+    "registrado": "Extraído do Modelo Padrão",
+    "blocos": [
+      {
+        "titulo": "Produtos e serviços",
+        "gc": "1 / 2",
+        "gr": "1 / 4",
+        "dica": "O que a empresa oferece para o segmento."
+      },
+      {
+        "titulo": "Aliviadores de dores",
+        "gc": "2 / 3",
+        "gr": "1 / 2",
+        "dica": "Como a oferta reduz ou elimina as dores do cliente."
+      },
+      {
+        "titulo": "Criadores de ganhos",
+        "gc": "2 / 3",
+        "gr": "2 / 4",
+        "dica": "Como a oferta gera os ganhos que o cliente espera."
+      },
+      {
+        "titulo": "Tarefas do cliente",
+        "gc": "3 / 4",
+        "gr": "1 / 4",
+        "dica": "O que o cliente está tentando realizar."
+      },
+      {
+        "titulo": "Dores",
+        "gc": "4 / 5",
+        "gr": "1 / 2",
+        "dica": "Frustrações, riscos e obstáculos que o cliente enfrenta."
+      },
+      {
+        "titulo": "Ganhos",
+        "gc": "4 / 5",
+        "gr": "2 / 4",
+        "dica": "Resultados e benefícios que o cliente deseja."
+      }
+    ]
+  }
+}

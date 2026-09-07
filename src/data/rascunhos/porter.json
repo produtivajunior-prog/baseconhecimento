@@ -1,0 +1,143 @@
+{
+  "id": "porter",
+  "nome": "5 Forças de Porter",
+  "tipo": "Ferramenta",
+  "categoria": "Entendimento",
+  "complexidade": "Médio",
+  "tempo": "2–3h",
+  "status": "Ativo",
+  "freq": "Média",
+  "responsavel": {
+    "nome": "Gabriela Palma",
+    "email": "gabrielapalma@produtivajunior.com.br"
+  },
+  "atualizado": "2026-09-07",
+  "descricao": "O modelo das 5 Forças de Porter é uma estrutura de análise da competitividade setorial que examina cinco fatores chave do ambiente externo, determinando como o valor econômico é dividido entre os atores de uma empresa.",
+  "objetivo": "Em suma, a ferramenta serve para dissecar o ambiente competitivo de empresas já atuantes no mercado, provendo insights sobre pressões externas que afetam a rentabilidade e embasando decisões estratégicas fundamentadas.",
+  "problema": null,
+  "quandoUsar": null,
+  "quandoNao": null,
+  "entradas": [
+    "Dados do setor: concorrentes, fornecedores, clientes, substitutos",
+    "Entrevista com o gestor sobre o mercado"
+  ],
+  "saidas": [
+    "Nota de intensidade de cada força",
+    "Leitura da atratividade do setor para o planejamento"
+  ],
+  "passos": [
+    "Analise as questões determinantes: cada força tem questões padrões específicas que ajudam  — a determinar a intensidade dessa força no mercado.",
+    "Atribuição de notas de 0 a 5 — Para cada uma dessas questões, você vai atribuir uma nota de 0 a 5, conforme a intensidade da força: 5 = Muito Alta, 4 = Alta, 3 = Média, 2 = Baixa, 1 = Muito Baixa, 0 = Zero. *Quando uma força recebe alta pontuação significa dizer que ela é uma grande ameaça para a organização, então vamos inverter a nota quando a questão determinante for favorável à empresa, ou seja: Se o fator determinante for favorável a capacidade de combater a ameaça (ex.: “grau de desenvolvimento de novos produtos/serviços pela empresa”) iremos inverter a nota... seguindo essa lógica se der “Muito Alta” significa que a empresa tem alta capacidade de combater produtos substitutos, então ao invés de atribuirmos a nota 5, iremos inverter e atribuir a nota 0.",
+    "Cálculo das — Médias: depois de atribuir notas para cada questão determinante em cada uma das 5 forças, você deve calcular a média das notas de cada força para ver qual delas tem maior impacto na empresa.",
+    "Resumo das análises: por fim, traga de forma visual em um quadro um resumo das análises fe — itas, este resumo visual ajuda a compartilhar os insights de maneira clara e objetiva, facilitando a tomada de decisões estratégicas."
+  ],
+  "perguntas": null,
+  "cuidados": null,
+  "exemplos": null,
+  "anexos": [
+    {
+      "nome": "Metodologia - 5 Forças de Porter.pdf",
+      "tipo": "Metodologia (PDF)",
+      "descricao": "Definição, as 5 forças com 'como coletar', construção e modelo padrão.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h",
+      "url": "https://drive.google.com/file/d/1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h/view"
+    },
+    {
+      "nome": "Modelo - 5 Forças de Porter.pdf",
+      "tipo": "Modelo padrão",
+      "descricao": "Diagrama das 5 forças com as perguntas-guia.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "19FF6AvSQ5YzYieFjahDTW5ShIX9h3qCq",
+      "url": "https://drive.google.com/file/d/19FF6AvSQ5YzYieFjahDTW5ShIX9h3qCq/view"
+    },
+    {
+      "nome": "Modelo Padrão - 5 Forças de Porter",
+      "tipo": "Planilha",
+      "descricao": "Planilha com questões determinantes, avaliação e nota por força, e gráfico.",
+      "versao": "v1.0",
+      "data": "2026-09-07",
+      "driveId": "1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY",
+      "url": "https://docs.google.com/spreadsheets/d/1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY/edit"
+    }
+  ],
+  "fontes": [
+    {
+      "tipo": "drive-pdf",
+      "id": "1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h",
+      "nome": "Metodologia - 5 Forças de Porter.pdf",
+      "hash": "122911069556e09f569ad1dc761263b655c0cddaf9d72482996ddb03c87d4dc5"
+    },
+    {
+      "tipo": "drive-pdf",
+      "id": "19FF6AvSQ5YzYieFjahDTW5ShIX9h3qCq",
+      "nome": "Modelo - 5 Forças de Porter.pdf",
+      "hash": "775c063ce9e032dd33ddc45e2355dbdaa595d8bb28fb6543f9d097c9c8d1ca00"
+    },
+    {
+      "tipo": "drive-sheet",
+      "id": "1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY",
+      "nome": "Modelo Padrão - 5 Forças de Porter",
+      "hash": "c0d9ccc25dc2f1021f9401ac0b65aa203aadbbc2bf10587845de8e85368e27f0"
+    }
+  ],
+  "origem": {
+    "nome": "manual:gabrielapalma@produtivajunior.com.br",
+    "tipo": "manual:gabrielapalma@produtivajunior.com.br",
+    "categoria": "manual:gabrielapalma@produtivajunior.com.br",
+    "complexidade": "manual:gabrielapalma@produtivajunior.com.br",
+    "tempo": "manual:gabrielapalma@produtivajunior.com.br",
+    "freq": "manual:gabrielapalma@produtivajunior.com.br",
+    "responsavel": "manual:gabrielapalma@produtivajunior.com.br",
+    "descricao": "drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#introducao/definicao",
+    "objetivo": "drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#introducao/definicao",
+    "passos": "drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/analise-as-questoes-determinantes-cada-forca-tem-questoes-padroes-especificas-que-ajudam drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/atribuicao-de-notas-de-0-a-5 drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/calculo-das drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/resumo-das-analises-por-fim-traga-de-forma-visual-em-um-quadro-um-resumo-das-analises-fe",
+    "entradas": "manual:gabrielapalma@produtivajunior.com.br",
+    "saidas": "manual:gabrielapalma@produtivajunior.com.br",
+    "anexos": "manual:gabrielapalma@produtivajunior.com.br"
+  },
+  "pendencias": [
+    "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): problema, quandoUsar, quandoNao, perguntas, cuidados, exemplos"
+  ],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  },
+  "modelo": {
+    "id": "porter",
+    "toolId": "porter",
+    "nome": "5 Forças de Porter",
+    "sigla": "5F",
+    "fonte": {
+      "driveId": "19FF6AvSQ5YzYieFjahDTW5ShIX9h3qCq",
+      "nome": "Modelo - 5 Forças de Porter.pdf"
+    },
+    "layout": "grid",
+    "registrado": "Extraído do Modelo Padrão",
+    "blocos": [
+      {
+        "titulo": "Rivalidade entre os concorrentes",
+        "dica": "Quantos concorrentes, com que intensidade disputam preço e cliente."
+      },
+      {
+        "titulo": "Poder de barganha dos fornecedores",
+        "dica": "Quantos fornecedores existem e quanto ditam preço e prazo."
+      },
+      {
+        "titulo": "Poder de barganha dos clientes",
+        "dica": "Quanto os clientes pressionam preço e condições."
+      },
+      {
+        "titulo": "Ameaça de novos entrantes",
+        "dica": "Barreiras de entrada e facilidade de novos concorrentes surgirem."
+      },
+      {
+        "titulo": "Ameaça de produtos substitutos",
+        "dica": "Alternativas que resolvem a mesma necessidade do cliente."
+      }
+    ]
+  }
+}

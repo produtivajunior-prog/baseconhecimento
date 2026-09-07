@@ -1,0 +1,111 @@
+{
+  "id": "planejamento-estrategico",
+  "nome": "Planejamento Estratégico",
+  "grupo": "ESTRATÉGIA",
+  "status": "ativo",
+  "descricao": "Revisa missão, visão e valores, analisa ambiente com SWOT, PESTEL e 5 Forças, cruza dados de pesquisa e estrutura metas, objetivos e acompanhamento estratégico com planos de ação.",
+  "responsavel": {
+    "nome": "Thiago Melo",
+    "email": "thiagomelo@produtivajunior.com.br"
+  },
+  "fontes": [
+    {
+      "tipo": "drive-sheet",
+      "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
+      "nome": "Resumão dos escopos",
+      "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+    },
+    {
+      "tipo": "drive-doc",
+      "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+      "nome": "Checklist Escopos",
+      "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+    },
+    {
+      "tipo": "drive-sheet",
+      "id": "1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE",
+      "nome": "Cronograma Base Planejamento estratégico - Thiago Melo",
+      "hash": "ad38ac88fcda6aeb9deebaad1065f970d05cd5a75c96ca7670fc3b60730f724d",
+      "url": "https://docs.google.com/spreadsheets/d/1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE/edit"
+    }
+  ],
+  "etapas": [
+    {
+      "id": "entendimento",
+      "ordem": 1,
+      "nome": "Entendimento",
+      "ferramentas": [
+        "bmc"
+      ],
+      "entregaveis": [
+        "BMC"
+      ]
+    },
+    {
+      "id": "analise-do-mvv",
+      "ordem": 2,
+      "nome": "Análise do MVV",
+      "ferramentas": [],
+      "entregaveis": [
+        "MVV atualizado"
+      ]
+    },
+    {
+      "id": "analise-do-ambiente",
+      "ordem": 3,
+      "nome": "Analise do ambiente",
+      "ferramentas": [
+        "swot",
+        "pestel",
+        "porter"
+      ],
+      "entregaveis": [
+        "SWOT + PESTEL + 5 Forças de Porter"
+      ]
+    },
+    {
+      "id": "pesquisa-de-mercado",
+      "ordem": 4,
+      "nome": "Pesquisa de mercado",
+      "ferramentas": [
+        "estudo-de-segmento"
+      ],
+      "entregaveis": [
+        "Dashboard com dados primários + Relatório de dados secundários"
+      ]
+    },
+    {
+      "id": "estruturar-metas-e-objetivos-e-acompanha",
+      "ordem": 5,
+      "nome": "Estruturar metas e objetivos e acompanhamento estratégico",
+      "ferramentas": [
+        "banco-de-indicadores"
+      ],
+      "entregaveis": [
+        "Planilha de PE + Acompanhamento estratégico"
+      ]
+    },
+    {
+      "id": "planos-de-acao",
+      "ordem": 6,
+      "nome": "Planos de ação",
+      "ferramentas": [],
+      "entregaveis": [
+        "Planos de ação"
+      ]
+    }
+  ],
+  "origem": {
+    "nome": "manual:thiagomelo@produtivajunior.com.br",
+    "descricao": "manual:thiagomelo@produtivajunior.com.br",
+    "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/planejamento-estrategico (caixa normalizada)",
+    "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+    "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE)"
+  },
+  "pendencias": [],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "id": "gerenciamento-financeiro",
+  "nome": "Gerenciamento Financeiro",
+  "grupo": "FINANCEIRO",
+  "status": "ativo",
+  "descricao": "Mapeia os processos financeiros, classifica gastos, parametriza sistema ou constrói a planilha de gerenciamento, define indicadores e dashboard e documenta a rotina do setor.",
+  "responsavel": {
+    "nome": "Thiago Melo",
+    "email": "thiagomelo@produtivajunior.com.br"
+  },
+  "fontes": [
+    {
+      "tipo": "drive-sheet",
+      "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
+      "nome": "Resumão dos escopos",
+      "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+    },
+    {
+      "tipo": "drive-doc",
+      "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+      "nome": "Checklist Escopos",
+      "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+    },
+    {
+      "tipo": "drive-sheet",
+      "id": "1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo",
+      "nome": "Cronograma Base Gerenciamento financeiro - Thiago Melo",
+      "hash": "35fdda89b2790d76994d6d16d157afb6e2f0f9feed3acb84400449ef8a9ec8cc",
+      "url": "https://docs.google.com/spreadsheets/d/1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo/edit"
+    }
+  ],
+  "etapas": [
+    {
+      "id": "entendimento",
+      "ordem": 1,
+      "nome": "Entendimento",
+      "ferramentas": [
+        "bmc",
+        "pmmc"
+      ],
+      "entregaveis": [
+        "BMC + Macroprocesso",
+        "Process Map Model Canvas do setor financeiro"
+      ]
+    },
+    {
+      "id": "mapeamento-dos-processos-financeiros",
+      "ordem": 2,
+      "nome": "Mapeamento dos processos financeiros",
+      "ferramentas": [
+        "pmmc",
+        "bpmn"
+      ],
+      "entregaveis": [
+        "Processos AS IS + Relatório de melhorias"
+      ]
+    },
+    {
+      "id": "coleta-de-dados-gastos-entradas",
+      "ordem": 3,
+      "nome": "Coleta de dados/ gastos/entradas",
+      "ferramentas": [],
+      "entregaveis": [
+        "Gastos classificados + Manual de classificação de gastos"
+      ]
+    },
+    {
+      "id": "analise-desses-dados",
+      "ordem": 4,
+      "nome": "Análise desses dados",
+      "ferramentas": []
+    },
+    {
+      "id": "construir-ferramentas-financeiras-dre-fl",
+      "ordem": 5,
+      "nome": "Construir ferramentas financeiras (DRE, FLUXO)",
+      "ferramentas": [
+        "dre"
+      ],
+      "entregaveis": [
+        "Sistema parametrizado ou planilha de gerenciamento financeiro"
+      ]
+    },
+    {
+      "id": "indicadores",
+      "ordem": 6,
+      "nome": "Indicadores",
+      "ferramentas": [
+        "banco-de-indicadores"
+      ],
+      "entregaveis": [
+        "Indicadores financeiros"
+      ]
+    },
+    {
+      "id": "analise-de-indicadores",
+      "ordem": 7,
+      "nome": "Analise de indicadores",
+      "ferramentas": [
+        "banco-de-indicadores"
+      ]
+    },
+    {
+      "id": "dashboard",
+      "ordem": 8,
+      "nome": "Dashboard",
+      "ferramentas": [],
+      "entregaveis": [
+        "Dashboard Financeiro"
+      ]
+    },
+    {
+      "id": "modelagens",
+      "ordem": 9,
+      "nome": "Modelagens",
+      "ferramentas": [
+        "bpmn",
+        "dco"
+      ],
+      "entregaveis": [
+        "Manual do setor financeiro + Implementação"
+      ]
+    },
+    {
+      "id": "planos-de-acao",
+      "ordem": 10,
+      "nome": "Planos de ação",
+      "ferramentas": []
+    }
+  ],
+  "origem": {
+    "nome": "manual:thiagomelo@produtivajunior.com.br",
+    "descricao": "manual:thiagomelo@produtivajunior.com.br",
+    "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/gerenciamento (caixa normalizada)",
+    "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+    "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo)"
+  },
+  "pendencias": [],
+  "revisao": {
+    "status": "rascunho",
+    "revisor": null,
+    "data": null
+  }
+}
