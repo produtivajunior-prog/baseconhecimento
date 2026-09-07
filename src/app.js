@@ -2,16 +2,17 @@ class Component extends DCLogic {
   state = {
     screen: 'home',
     query: '',
-    filters: { tipo: [], area: [], etapa: [], complexidade: [], status: [], freq: [], responsavel: [] },
+    filters: { tipo: [], area: [], escopo: [], complexidade: [], status: [], freq: [], responsavel: [] },
     cardStyle: 'detalhado',
     selId: null,
+    escopoId: null,
     open: {},
     rating: null,
     feedback: '',
     anexosId: null,
     recoKey: null,
     toast: '',
-    form: { nome:'', tipo:'Ferramenta', categoria:'Estratégia', descricao:'', objetivo:'', problema:'', etapa:'Diagnóstico', complexidade:'Médio', tempo:'', responsavel:'' },
+    form: this.formVazio(),
     extra: [],
     doc: null,
     aiDocInput: '',
@@ -48,25 +49,44 @@ class Component extends DCLogic {
 
   PROBLEMAS = DADOS.problemas;
 
-  TIPO_STYLE = {
-    'Ferramenta':{bg:'#EAF6F9',color:'#1E7C92',visual:'#E4F3F7'},
-    'Metodologia':{bg:'#EFEDFB',color:'#6A5FB0',visual:'#EEEBFA'},
-    'Escopo':{bg:'#ECEFF7',color:'#4E5E96',visual:'#EAEEF7'},
-    'Template':{bg:'#E9F4EE',color:'#39795B',visual:'#E7F4ED'},
-    'Checklist':{bg:'#FBF0E7',color:'#A5632B',visual:'#FBF0E6'},
-  };
-  COMPLEX_STYLE = {
-    'Baixo':{bg:'#E7F4EC',color:'#2E7D52'},
-    'Médio':{bg:'#FBF1E0',color:'#9A6B17'},
-    'Alto':{bg:'#FBE9EA',color:'#B23B47'},
-  };
-  STATUS_COLOR = { 'Ativo':'#2E9D5B', 'Em revisão':'#C9942A', 'Arquivado':'#9DAEB4' };
-  ANEXO_STYLE = {
-    'Template editável':{bg:'#E9F4EE',color:'#39795B',ext:'DOCX'},
-    'Exemplo preenchido':{bg:'#EAF6F9',color:'#1E7C92',ext:'PDF'},
-    'PDF explicativo':{bg:'#FBE9EA',color:'#B23B47',ext:'PDF'},
-    'Material complementar':{bg:'#EFEDFB',color:'#6A5FB0',ext:'PDF'},
-  };
+  // Escopos (linhas de serviço) com etapas ordenadas — src/data/escopos.json.
+  ESCOPOS = DADOS.escopos;
+
+  // Enums e estilos vêm de src/data/taxonomia.json. Nenhuma lista literal aqui:
+  // filtro, formulário, chips, cores e o schema do prompt derivam de TAXONOMIA.
+  TAXONOMIA = DADOS.taxonomia;
+  TIPO_STYLE = DADOS.taxonomia.tipos;
+  COMPLEX_STYLE = DADOS.taxonomia.complexidade;
+  STATUS_COLOR = DADOS.taxonomia.status;
+  ANEXO_STYLE = DADOS.taxonomia.anexos;
+
+  // Valores "vivos" de um enum da taxonomia (sem os marcados como legado do MVP).
+  vivos(obj) { return Array.isArray(obj) ? obj.slice() : Object.keys(obj).filter(k => !(obj[k] && obj[k].legado)); }
+  // Lê DADOS direto: é chamado no inicializador de `state`, antes dos outros campos existirem.
+  formVazio() { return { nome:'', tipo:'Ferramenta', categoria:this.vivos(DADOS.taxonomia.categorias)[0], descricao:'', objetivo:'', problema:'', complexidade:'Médio', tempo:'', responsavel:'' }; }
+  hoje() { return new Date().toISOString().slice(0,10); }
+  fmtData(s) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');
+    if (!m) return s||'';
+    const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+    return (+m[3])+' '+meses[+m[2]-1]+' '+m[1];
+  }
+  // `responsavel` é {nome,email} no acervo real e string nos itens herdados/criados em sessão.
+  respNome(r) { return typeof r === 'string' ? r : ((r && r.nome) || ''); }
+  respEmail(r) { return (r && typeof r === 'object' && r.email) || ''; }
+  normaliza(t) { return String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
+
+  // Índice ferramenta → [{escopo, etapa}], derivado de escopos.json. A relação é N:N e
+  // nunca é gravada dentro da ferramenta — a fonte é sempre a etapa do escopo.
+  usoDe(id) {
+    if (!this._uso) {
+      this._uso = {};
+      for (const e of this.ESCOPOS) for (const et of (e.etapas||[])) for (const fid of (et.ferramentas||[])) {
+        (this._uso[fid] = this._uso[fid] || []).push({ escopoId:e.id, escopoNome:e.nome, grupo:e.grupo, etapaId:et.id, etapaNome:et.nome, ordem:et.ordem, open:()=>this.openEscopo(e.id) });
+      }
+    }
+    return this._uso[id] || [];
+  }
 
   allData() { return this.state.extra.concat(this.DATA); }
   initials(name) { return (name||'').split(' ').filter(w=>w.length>2).slice(0,2).map(w=>w[0]).join('').toUpperCase() || 'C'; }
@@ -75,14 +95,20 @@ class Component extends DCLogic {
   decorate(it) {
     const ts = this.TIPO_STYLE[it.tipo] || this.TIPO_STYLE['Ferramenta'];
     const cs = this.COMPLEX_STYLE[it.complexidade] || this.COMPLEX_STYLE['Médio'];
+    const uso = this.usoDe(it.id);
     return {
       ...it,
       tipoBg: ts.bg, tipoColor: ts.color, visualBg: ts.visual,
       complexBg: cs.bg, complexColor: cs.color,
       statusColor: this.STATUS_COLOR[it.status] || '#9DAEB4',
+      categoriaCor: (this.TAXONOMIA.categorias[it.categoria]||{}).cor || '#1E7C92',
       initial: (it.nome||'?')[0].toUpperCase(),
       quandoResumo: (it.quandoUsar && it.quandoUsar[0]) || '',
       anexosCount: (it.anexos||[]).length,
+      respNome: this.respNome(it.responsavel), respEmail: this.respEmail(it.responsavel),
+      atualizadoFmt: this.fmtData(it.atualizado),
+      usoEmEscopos: uso, usoCount: uso.length, hasUso: uso.length>0, semUso: uso.length===0,
+      usoResumo: uso.length ? (uso.length===1 ? uso[0].escopoNome : uso.length+' escopos') : 'Sem escopo vinculado',
       open: () => this.openContent(it.id),
       openAnexos: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.setState({ anexosId: it.id }); },
     };
@@ -128,7 +154,8 @@ class Component extends DCLogic {
       this.setState({ applyLoading:false, applyError:'Não consegui preencher agora. Tente refinar os insumos e gerar de novo.' });
     }
   }
-  nav(screen) { this.setState({ screen }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+  nav(screen) { this.setState({ screen, escopoId: screen==='escopos' ? null : this.state.escopoId }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+  openEscopo(id) { this.setState({ screen:'escopos', escopoId:id }); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
   toggleFilter(group, value) {
     this.setState(s => {
@@ -140,17 +167,24 @@ class Component extends DCLogic {
 
   computeFiltered() {
     const f = this.state.filters;
-    const q = this.state.query.trim().toLowerCase();
+    const q = this.normaliza(this.state.query.trim());
     return this.allData().filter(it => {
+      const uso = this.usoDe(it.id);
       if (f.tipo.length && !f.tipo.includes(it.tipo)) return false;
       if (f.area.length && !f.area.includes(it.categoria)) return false;
-      if (f.etapa.length && !f.etapa.includes(it.etapa)) return false;
+      if (f.escopo.length && !uso.some(u => f.escopo.includes(u.escopoId))) return false;
       if (f.complexidade.length && !f.complexidade.includes(it.complexidade)) return false;
       if (f.status.length && !f.status.includes(it.status)) return false;
       if (f.freq.length && !f.freq.includes(it.freq)) return false;
-      if (f.responsavel.length && !f.responsavel.includes(it.responsavel)) return false;
+      if (f.responsavel.length && !f.responsavel.includes(this.respNome(it.responsavel))) return false;
       if (q) {
-        const hay = [it.nome,it.descricao,it.problema,it.categoria,it.tipo,it.responsavel,it.etapa,it.objetivo].join(' ').toLowerCase();
+        // Busca no conteúdo inteiro da ficha, não só no cabeçalho — sem acento e sem caixa.
+        const hay = this.normaliza([
+          it.nome, it.descricao, it.problema, it.categoria, it.tipo, this.respNome(it.responsavel), it.objetivo,
+          ...(it.quandoUsar||[]), ...(it.quandoNao||[]), ...(it.entradas||[]), ...(it.saidas||[]),
+          ...(it.passos||[]), ...(it.perguntas||[]), ...(it.cuidados||[]), ...(it.exemplos||[]),
+          ...(it.anexos||[]).map(a=>a.nome), ...uso.map(u=>u.escopoNome+' '+u.etapaNome),
+        ].join(' '));
         if (!hay.includes(q)) return false;
       }
       return true;
@@ -159,20 +193,22 @@ class Component extends DCLogic {
 
   buildFilterGroups() {
     const data = this.allData();
+    const tx = this.TAXONOMIA;
+    // Os valores vêm da taxonomia (inclusive os legados: opção com contagem zero some sozinha).
     const groups = [
-      { key:'tipo', label:'Tipo de conteúdo', values:['Ferramenta','Metodologia','Escopo','Template','Checklist'] },
-      { key:'area', label:'Área de aplicação', field:'categoria', values:['Processos','Estratégia','Financeiro','Marketing','Pessoas','Operações','Comercial','Inovação','Gestão'] },
-      { key:'etapa', label:'Etapa do projeto', values:['Diagnóstico','Coleta','Análise','Planejamento','Execução','Validação','Entrega Final'] },
-      { key:'complexidade', label:'Complexidade', values:['Baixo','Médio','Alto'] },
-      { key:'status', label:'Status', values:['Ativo','Em revisão','Arquivado'] },
-      { key:'freq', label:'Frequência de uso', values:['Alta','Média','Baixa'] },
+      { key:'tipo', label:'Tipo de conteúdo', values:Object.keys(tx.tipos) },
+      { key:'area', label:'Área de aplicação', field:'categoria', values:Object.keys(tx.categorias) },
+      { key:'escopo', label:'Usada no escopo', options:this.ESCOPOS.map(e=>({ value:e.id, label:e.nome })), match:(d,v)=>this.usoDe(d.id).some(u=>u.escopoId===v) },
+      { key:'complexidade', label:'Complexidade', values:Object.keys(tx.complexidade) },
+      { key:'status', label:'Status', values:Object.keys(tx.status) },
+      { key:'freq', label:'Frequência de uso', values:tx.freq },
     ];
     return groups.map(g => {
       const field = g.field || g.key;
-      const opts = g.values.map(v => {
-        const count = data.filter(d => d[field]===v).length;
-        const active = this.state.filters[g.key].includes(v);
-        return { value:v, count, active, inactive:!active, toggle: ()=>this.toggleFilter(g.key, v) };
+      const opts = (g.options || g.values.map(v=>({ value:v, label:v }))).map(o => {
+        const count = data.filter(d => g.match ? g.match(d, o.value) : d[field]===o.value).length;
+        const active = this.state.filters[g.key].includes(o.value);
+        return { value:o.value, label:o.label, count, active, inactive:!active, toggle: ()=>this.toggleFilter(g.key, o.value) };
       }).filter(o => o.count>0 || o.active);
       return { key:g.key, label:g.label, options:opts };
     });
@@ -206,15 +242,15 @@ class Component extends DCLogic {
     if (!f.nome.trim() || !f.descricao.trim()) { this.setState({ toast:'Preencha ao menos nome e descrição.' }); setTimeout(()=>this.setState({toast:''}),2600); return; }
     const id = 'novo-'+Date.now();
     const item = {
-      id, nome:f.nome, tipo:f.tipo, categoria:f.categoria, etapa:f.etapa, complexidade:f.complexidade,
-      tempo:f.tempo||'A definir', status:'Em revisão', freq:'Baixa', acessos:0, nota:'—',
-      responsavel:f.responsavel||'Núcleo CIEP', atualizado:'Hoje',
+      id, nome:f.nome, tipo:f.tipo, categoria:f.categoria, complexidade:f.complexidade,
+      tempo:f.tempo||'A definir', status:'Em revisão', freq:'Baixa',
+      responsavel:f.responsavel||'Núcleo CIEP', atualizado:this.hoje(), revisao:{ status:'rascunho', revisor:null, data:null },
       descricao:f.descricao, objetivo:f.objetivo||'—', problema:f.problema||'—',
       quandoUsar:['Definir durante a revisão do conteúdo'], quandoNao:['—'],
       entradas:['—'], saidas:['—'], passos:['Conteúdo gerado automaticamente a partir do cadastro.'],
       perguntas:['—'], cuidados:['—'], exemplos:['—'], anexos:[]
     };
-    this.setState(s => ({ extra:[item, ...s.extra], toast:'Conteúdo publicado! Página gerada automaticamente.', form:{ nome:'', tipo:'Ferramenta', categoria:'Estratégia', descricao:'', objetivo:'', problema:'', etapa:'Diagnóstico', complexidade:'Médio', tempo:'', responsavel:'' } }));
+    this.setState(s => ({ extra:[item, ...s.extra], toast:'Conteúdo publicado! Página gerada automaticamente.', form:this.formVazio() }));
     setTimeout(()=>{ this.openContent(id); this.setState({toast:''}); }, 1100);
   }
 
@@ -276,7 +312,9 @@ class Component extends DCLogic {
     if (inp.length < 8) { this.setState({ aiToolError:'Cole ou descreva o conteúdo da ferramenta primeiro.' }); return; }
     this.setState({ aiToolLoading:true, aiToolError:'' });
     const nomeHint = (this.state.aiToolNome||'').trim();
-    const schema = '{"nome":string,"tipo":"Ferramenta"|"Metodologia"|"Escopo"|"Template"|"Checklist","categoria":"Processos"|"Estratégia"|"Financeiro"|"Marketing"|"Pessoas"|"Operações"|"Comercial"|"Inovação"|"Gestão","etapa":"Diagnóstico"|"Coleta"|"Análise"|"Planejamento"|"Execução"|"Validação"|"Entrega Final","complexidade":"Baixo"|"Médio"|"Alto","tempo":string curto,"descricao":string (1 frase),"objetivo":string (1 frase),"problema":string (1 frase),"quandoUsar":[3 strings curtas],"quandoNao":[2 strings curtas],"entradas":[3 strings curtas],"saidas":[3 strings curtas],"passos":[4 a 5 strings curtas],"perguntas":[3 strings curtas],"cuidados":[2 strings curtas],"exemplos":[2 strings curtas]}';
+    const tx = this.TAXONOMIA;
+    const en = (arr) => arr.map(v=>'"'+v+'"').join('|');
+    const schema = '{"nome":string,"tipo":'+en(this.vivos(tx.tipos))+',"categoria":'+en(this.vivos(tx.categorias))+',"complexidade":'+en(Object.keys(tx.complexidade))+',"tempo":string curto,"descricao":string (1 frase),"objetivo":string (1 frase),"problema":string (1 frase),"quandoUsar":[3 strings curtas],"quandoNao":[2 strings curtas],"entradas":[3 strings curtas],"saidas":[3 strings curtas],"passos":[4 a 5 strings curtas],"perguntas":[3 strings curtas],"cuidados":[2 strings curtas],"exemplos":[2 strings curtas]}';
     const prompt = 'Você é um consultor sênior da Produtiva Júnior. Com base no conteúdo abaixo, estruture uma ferramenta de consultoria para a biblioteca interna, em português do Brasil. Responda SOMENTE com JSON válido e COMPLETO neste formato exato: '+schema+'. Seja específico mas MUITO conciso (frases curtas, itens curtos) para que a resposta caiba inteira e o JSON feche.'+(nomeHint?(' O nome da ferramenta é "'+nomeHint+'".'):'')+'\n\nConteúdo de referência:\n'+inp;
     try {
       const out = await window.claude.complete({ messages:[{ role:'user', content: prompt }] });
@@ -284,10 +322,11 @@ class Component extends DCLogic {
       const id = 'ia-'+Date.now();
       const arr = (v,f)=>Array.isArray(v)&&v.length?v:f;
       const item = {
-        id, nome: j.nome || nomeHint || 'Ferramenta gerada', tipo: j.tipo||'Ferramenta', categoria: j.categoria||'Processos',
-        etapa: j.etapa||'Análise', complexidade: ['Baixo','Médio','Alto'].includes(j.complexidade)?j.complexidade:'Médio',
-        tempo: j.tempo||'A definir', status:'Em revisão', freq:'Baixa', acessos:0, nota:'—',
-        responsavel:'Gerado por IA · CIEP', atualizado:'Hoje',
+        id, nome: j.nome || nomeHint || 'Ferramenta gerada', tipo: this.vivos(tx.tipos).includes(j.tipo)?j.tipo:'Ferramenta',
+        categoria: this.vivos(tx.categorias).includes(j.categoria)?j.categoria:this.vivos(tx.categorias)[0],
+        complexidade: Object.keys(tx.complexidade).includes(j.complexidade)?j.complexidade:'Médio',
+        tempo: j.tempo||'A definir', status:'Em revisão', freq:'Baixa',
+        responsavel:'Gerado por IA · CIEP', atualizado:this.hoje(), revisao:{ status:'rascunho', revisor:null, data:null },
         descricao: j.descricao||'', objetivo: j.objetivo||'', problema: j.problema||'',
         quandoUsar: arr(j.quandoUsar,['—']), quandoNao: arr(j.quandoNao,['—']),
         entradas: arr(j.entradas,['—']), saidas: arr(j.saidas,['—']), passos: arr(j.passos,['—']),
@@ -347,11 +386,11 @@ class Component extends DCLogic {
     const d = this.state.doc; const isModelo = d.type==='modelo';
     const id = 'doc-'+Date.now();
     const anexoNome = d.nome + (isModelo ? ' — Modelo.xlsx' : (d.type==='manual' ? ' — Manual.pdf' : ' — Metodologia.pdf'));
-    const anexoTipo = isModelo ? 'Template editável' : 'PDF explicativo';
+    const anexoTipo = isModelo ? 'Modelo padrão' : 'Metodologia (PDF)';
     const item = {
-      id, nome:d.nome, tipo:(isModelo?'Template':'Metodologia'), categoria:d.categoria||'Processos', etapa:'Análise',
-      complexidade:'Médio', tempo:'A definir', status:'Em revisão', freq:'Baixa', acessos:0, nota:'—',
-      responsavel:'Núcleo CIEP', atualizado:'Hoje',
+      id, nome:d.nome, tipo:(isModelo?'Template':'Metodologia'), categoria:d.categoria||'Processos',
+      complexidade:'Médio', tempo:'A definir', status:'Em revisão', freq:'Baixa',
+      responsavel:'Núcleo CIEP', atualizado:this.hoje(), revisao:{ status:'rascunho', revisor:null, data:null },
       descricao: d.subtitulo || (d.intro.split('\n')[0]||'Documento gerado pela plataforma.').slice(0,140),
       objetivo: d.intro.split('\n')[0] || '—',
       problema: 'Padronizar a documentação e o uso da ferramenta nos projetos.',
@@ -360,7 +399,7 @@ class Component extends DCLogic {
       passos: isModelo ? ['Preencha cada bloco do modelo conforme o projeto.'] : d.secoes.map((x,i)=>(i+1<10?'0':'')+(i+1)+'. '+x.titulo),
       perguntas: isModelo ? ['—'] : (d.secoes[0]?d.secoes[0].perguntas:['—']),
       cuidados:['—'], exemplos:['—'],
-      anexos:[{nome:anexoNome, tipo:anexoTipo, descricao:'Documento gerado automaticamente pela plataforma.', versao:'v1.0', data:'Hoje'}]
+      anexos:[{nome:anexoNome, tipo:anexoTipo, descricao:'Documento gerado automaticamente pela plataforma.', versao:'v1.0', data:this.hoje()}]
     };
     this.setState(st=>({ extra:[item, ...st.extra] }));
     this.showToast('Documentação salva na biblioteca!');
@@ -373,25 +412,43 @@ class Component extends DCLogic {
     const dec = (it) => it ? this.decorate(it) : null;
 
     // nav
-    const navDef = [{key:'home',label:'Início'},{key:'biblioteca',label:'Biblioteca'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
+    const navDef = [{key:'home',label:'Início'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
     const navItems = navDef.map(n => {
       const active = s.screen===n.key || (n.key==='biblioteca' && s.screen==='conteudo');
       return { label:n.label, go: n.key==='docs' ? ()=>this.goDocs() : ()=>this.nav(n.key), bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
     });
 
-    // home sections
-    const sorted = [...data].sort((a,b)=>b.acessos-a.acessos);
-    const maisAcessados = sorted.slice(0,3).map(dec);
-    const novidades = [...data].slice(0,3).map(it=>({...dec(it)}));
-    const recomendados = ['swot','5w2h','escopo'].map(id=>dec(data.find(d=>d.id===id))).filter(Boolean);
+    // home sections — nada de contador fictício: escopos ativos, atualizações reais e uso frequente.
+    const decEscopo = (e) => {
+      const g = this.TAXONOMIA.gruposEscopo[e.grupo] || { cor:'#1E7C92', bg:'#EAF6F9', label:e.grupo };
+      const ferrIds = new Set(); for (const et of (e.etapas||[])) for (const f of (et.ferramentas||[])) ferrIds.add(f);
+      return { ...e, grupoLabel:g.label, grupoCor:g.cor, grupoBg:g.bg, ativo:e.status==='ativo', despriorizado:e.status!=='ativo',
+        statusLabel: e.status==='ativo' ? 'Ativo' : 'Despriorizado',
+        nEtapas:(e.etapas||[]).length, nFerr:ferrIds.size, respNome:this.respNome(e.responsavel),
+        resumo:(e.etapas||[]).length+' etapas · '+ferrIds.size+' ferramentas', pick:()=>this.openEscopo(e.id) };
+    };
+    const porEscopo = this.ESCOPOS.filter(e=>e.status==='ativo').slice(0,3).map(decEscopo);
+    const novidades = [...data].sort((a,b)=>String(b.atualizado||'').localeCompare(String(a.atualizado||''))).slice(0,3).map(dec);
+    const recomendados = data.filter(d=>d.freq==='Alta' && d.status==='Ativo').slice(0,3).map(dec);
 
-    const quickChips = [
-      {label:'Ferramentas',tipo:'Ferramenta',dot:'#1E7C92'},
-      {label:'Escopos',tipo:'Escopo',dot:'#4E5E96'},
-      {label:'Metodologias',tipo:'Metodologia',dot:'#6A5FB0'},
-      {label:'Templates',tipo:'Template',dot:'#39795B'},
-      {label:'Checklists',tipo:'Checklist',dot:'#A5632B'},
-    ].map(c => ({ ...c, go:()=>this.setState({ screen:'biblioteca', filters:{...s.filters, tipo:[c.tipo]} }) }));
+    const quickChips = this.vivos(this.TAXONOMIA.tipos)
+      .map(t => ({ label:this.TAXONOMIA.tipos[t].label||t, tipo:t, dot:this.TAXONOMIA.tipos[t].color, go:()=>this.setState({ screen:'biblioteca', filters:{...s.filters, tipo:[t]} }) }))
+      .concat([{ label:'Escopos', dot:'#4E5E96', go:()=>this.nav('escopos') }]);
+
+    // escopos
+    const gruposEscopo = this.TAXONOMIA.gruposEscopo;
+    const escoposPorGrupo = Object.keys(gruposEscopo).map(g => ({
+      grupo:g, label:gruposEscopo[g].label||g, cor:gruposEscopo[g].cor, bg:gruposEscopo[g].bg,
+      escopos:this.ESCOPOS.filter(e=>e.grupo===g).map(decEscopo),
+    })).filter(g => g.escopos.length);
+    const escopoRaw = s.escopoId ? this.ESCOPOS.find(e=>e.id===s.escopoId) : null;
+    const escopoSel = escopoRaw ? decEscopo(escopoRaw) : null;
+    const escopoEtapas = escopoRaw ? (escopoRaw.etapas||[]).map((et,i,arr) => {
+      const ferramentas = (et.ferramentas||[]).map(fid=>dec(data.find(d=>d.id===fid))).filter(Boolean);
+      return { ...et, num:(et.ordem<10?'0':'')+et.ordem, ferramentas, hasFerramentas:ferramentas.length>0, semFerramentas:ferramentas.length===0,
+        entregaveis:et.entregaveis||[], hasEntregaveis:!!(et.entregaveis&&et.entregaveis.length), hasDuracao:!!et.duracaoRef, duracaoRef:et.duracaoRef||'',
+        ultima:i===arr.length-1, linhaBg:i===arr.length-1?'transparent':'#DCE7EB' };
+    }) : [];
 
     // biblioteca
     const filtered = this.computeFiltered().map(dec);
@@ -404,20 +461,38 @@ class Component extends DCLogic {
       shadow: s.cardStyle===k?'0 1px 3px rgba(22,59,69,0.12)':'none'
     }));
     const activeChips = [];
-    Object.keys(s.filters).forEach(g => s.filters[g].forEach(v => activeChips.push({ value:v, remove:()=>this.toggleFilter(g,v) })));
+    const rotulo = (g,v) => g==='escopo' ? ((this.ESCOPOS.find(e=>e.id===v)||{}).nome||v) : v;
+    Object.keys(s.filters).forEach(g => s.filters[g].forEach(v => activeChips.push({ value:v, label:rotulo(g,v), remove:()=>this.toggleFilter(g,v) })));
 
     // conteudo
     const selRaw = data.find(d=>d.id===s.selId);
-    const sel = selRaw ? { ...dec(selRaw), respInitials:this.initials(selRaw.responsavel), anexos:(selRaw.anexos||[]).map(a=>{const st=this.ANEXO_STYLE[a.tipo]||this.ANEXO_STYLE['Template editável'];return {...a,bg:st.bg,color:st.color,ext:this.extOf(a)};}) } : null;
+    // Anexos apontam para o Drive: o bundle não carrega arquivo nenhum, só o link.
+    const decAnexo = (a) => {
+      const st = this.ANEXO_STYLE[a.tipo] || this.ANEXO_STYLE['Material complementar'] || { bg:'#EFF4F5', color:'#5E747B' };
+      const url = typeof a.url === 'string' && /^https:\/\//.test(a.url) ? a.url : '';
+      return { ...a, bg:st.bg, color:st.color, ext:this.extOf(a), dataFmt:this.fmtData(a.data), hasUrl:!!url, semUrl:!url,
+        btnLabel: url ? 'Abrir no Drive' : 'Arquivo não localizado',
+        abrir: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); if (url && typeof window!=='undefined') window.open(url, '_blank', 'noopener'); } };
+    };
+    const revisaoTexto = (it) => {
+      const r = it && it.revisao;
+      if (!r) return 'Conteúdo herdado do MVP · sem revisão';
+      if (r.status==='aprovado') return 'Aprovado por '+(r.revisor||'').split('@')[0]+' · '+this.fmtData(r.data);
+      return 'Rascunho · aguardando revisão';
+    };
+    const sel = selRaw ? { ...dec(selRaw), respInitials:this.initials(this.respNome(selRaw.responsavel)), anexos:(selRaw.anexos||[]).map(decAnexo), revisaoTexto:revisaoTexto(selRaw),
+      pendencias:selRaw.pendencias||[], hasPendencias:!!(selRaw.pendencias&&selRaw.pendencias.length) } : null;
     const blocks = selRaw ? this.buildBlocks(selRaw) : [];
 
     // anexos modal
     const anexFor = data.find(d=>d.id===s.anexosId);
-    const anexosList = anexFor ? (anexFor.anexos||[]).map(a=>{const st=this.ANEXO_STYLE[a.tipo]||this.ANEXO_STYLE['Template editável'];return {...a,bg:st.bg,color:st.color,ext:this.extOf(a)};}) : [];
+    const anexosList = anexFor ? (anexFor.anexos||[]).map(decAnexo) : [];
 
     // cadastro
     const setF = (k)=>(e)=>this.setState(st=>({form:{...st.form,[k]:e.target.value}}));
-    const complexOptions = ['Baixo','Médio','Alto'].map(c=>{
+    const tipoOptions = this.vivos(this.TAXONOMIA.tipos).map(v=>({ value:v }));
+    const categoriaOptions = this.vivos(this.TAXONOMIA.categorias).map(v=>({ value:v }));
+    const complexOptions = Object.keys(this.COMPLEX_STYLE).map(c=>{
       const active = s.form.complexidade===c; const cs=this.COMPLEX_STYLE[c];
       return { label:c, set:()=>this.setState(st=>({form:{...st.form,complexidade:c}})), border: active?cs.color:'#DCE7EB', bg: active?cs.bg:'#fff', color: active?cs.color:'#7C9097' };
     });
@@ -437,7 +512,7 @@ class Component extends DCLogic {
 
     // documentação
     const doc = s.doc || this.defaultDoc();
-    const GROUP_COLOR = { 'Entradas':'#1E7C92','Processos':'#6A5FB0','Saídas':'#39795B','Suporte':'#A5632B' };
+    const GROUP_COLOR = this.TAXONOMIA.gruposDoc;
     const docIsModelo = false;
     const docEyebrow = 'METODOLOGIA';
     const updField = (k)=>(e)=>this.updateDoc({[k]:e.target.value});
@@ -485,8 +560,11 @@ class Component extends DCLogic {
     return {
       // routing
       isHome: s.screen==='home', isBiblioteca: s.screen==='biblioteca', isConteudo: s.screen==='conteudo',
-      isCadastro: s.screen==='cadastro', isRecomendar: s.screen==='recomendar',
-      goHome:()=>this.nav('home'), goBiblioteca:()=>this.nav('biblioteca'), goRecomendar:()=>this.nav('recomendar'),
+      isCadastro: s.screen==='cadastro', isRecomendar: s.screen==='recomendar', isEscopos: s.screen==='escopos',
+      goHome:()=>this.nav('home'), goBiblioteca:()=>this.nav('biblioteca'), goRecomendar:()=>this.nav('recomendar'), goEscopos:()=>this.nav('escopos'),
+      // escopos
+      escoposPorGrupo, hasEscopoSel: !!escopoSel, noEscopoSel: !escopoSel, escopoSel, escopoEtapas,
+      escoposCount: this.ESCOPOS.length, semEscopos: this.ESCOPOS.length===0,
       navItems,
       // search
       query: s.query,
@@ -495,12 +573,12 @@ class Component extends DCLogic {
       runSearch:()=>this.nav('biblioteca'),
       quickChips,
       // home
-      maisAcessados, novidades, recomendados,
+      porEscopo, hasPorEscopo: porEscopo.length>0, novidades, recomendados,
       // biblioteca
       filtered, filterGroups, cardStyles,
       resultCount: filtered.length, noResults: filtered.length===0,
       isDetalhado: s.cardStyle==='detalhado', isCompacto: s.cardStyle==='compacto', isVisual: s.cardStyle==='visual',
-      hasActiveFilters: activeChips.length>0, activeChips, clearFilters:()=>this.setState({filters:{tipo:[],area:[],etapa:[],complexidade:[],status:[],freq:[],responsavel:[]}}),
+      hasActiveFilters: activeChips.length>0, activeChips, clearFilters:()=>this.setState({filters:{tipo:[],area:[],escopo:[],complexidade:[],status:[],freq:[],responsavel:[]}}),
       // conteudo
       sel, blocks,
       openSelAnexos:()=>this.setState({anexosId:s.selId}),
@@ -524,9 +602,9 @@ class Component extends DCLogic {
       anexosOpen: !!anexFor, anexosTitle: anexFor?anexFor.nome:'', anexosList,
       closeAnexos:()=>this.setState({anexosId:null}), stop:(e)=>e.stopPropagation(),
       // cadastro
-      form: s.form, complexOptions, formSteps,
+      form: s.form, complexOptions, tipoOptions, categoriaOptions, formSteps,
       formNome:setF('nome'), formTipo:setF('tipo'), formCategoria:setF('categoria'), formDescricao:setF('descricao'),
-      formObjetivo:setF('objetivo'), formProblema:setF('problema'), formEtapa:setF('etapa'), formTempo:setF('tempo'), formResp:setF('responsavel'),
+      formObjetivo:setF('objetivo'), formProblema:setF('problema'), formTempo:setF('tempo'), formResp:setF('responsavel'),
       publish:()=>this.publish(),
       // recomendar
       problemas, hasReco: !!recoDef, recoLabel: recoDef?recoDef.label:'', recoResults,

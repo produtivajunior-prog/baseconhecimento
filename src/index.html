@@ -171,7 +171,7 @@
         </div>
       </div>
       <nav style="display:flex;align-items:center;gap:4px;margin-left:6px">
-        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="3">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
           <button onclick="{{ n.go }}" style="border:none;background:{{ n.bg }};color:{{ n.color }};font-size:14.5px;font-weight:{{ n.weight }};padding:8px 14px;border-radius:9px;cursor:pointer">{{ n.label }}</button>
         </sc-for>
       </nav>
@@ -213,32 +213,33 @@
     </section>
 
     <div style="max-width:1200px;margin:0 auto;padding:54px 28px 80px">
-      <!-- Mais acessados -->
+      <!-- Por escopo -->
       <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px">
         <div>
-          <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">Mais acessados</h2>
-          <p style="font-size:14.5px;color:#7C9097;margin:5px 0 0">As ferramentas que mais aparecem nos projetos.</p>
+          <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">Por escopo</h2>
+          <p style="font-size:14.5px;color:#7C9097;margin:5px 0 0">As linhas de serviço da Produtiva, com as etapas e as ferramentas usadas em cada uma.</p>
         </div>
-        <button onclick="{{ goBiblioteca }}" style="border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer">Ver biblioteca →</button>
+        <button onclick="{{ goEscopos }}" style="border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer">Ver todos os escopos →</button>
       </div>
+      <sc-if value="{{ hasPorEscopo }}" hint-placeholder-val="{{ true }}">
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
-        <sc-for list="{{ maisAcessados }}" as="item" hint-placeholder-count="3">
-          <article onclick="{{ item.open }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:13px;transition:box-shadow .15s,transform .15s" style-hover="box-shadow:0 14px 34px -18px rgba(22,59,69,0.28);transform:translateY(-2px)">
+        <sc-for list="{{ porEscopo }}" as="e" hint-placeholder-count="3">
+          <article onclick="{{ e.pick }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:13px;transition:box-shadow .15s,transform .15s" style-hover="box-shadow:0 14px 34px -18px rgba(22,59,69,0.28);transform:translateY(-2px)">
             <div style="display:flex;align-items:center;justify-content:space-between">
-              <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:{{ item.tipoBg }};color:{{ item.tipoColor }}">{{ item.tipo }}</span>
-              <span style="font-size:12px;color:#9DAEB4;font-weight:500;display:flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke="#B6C4C9" stroke-width="1.7"></path><circle cx="12" cy="12" r="2.6" stroke="#B6C4C9" stroke-width="1.7"></circle></svg>{{ item.acessos }}</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:{{ e.grupoBg }};color:{{ e.grupoCor }}">{{ e.grupoLabel }}</span>
+              <span style="font-size:12px;color:#9DAEB4;font-weight:500">{{ e.resumo }}</span>
             </div>
             <div>
-              <h3 style="font-size:18px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25">{{ item.nome }}</h3>
-              <p style="font-size:14px;color:#5E747B;margin:7px 0 0;line-height:1.5">{{ item.descricao }}</p>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:6px">
-              <span style="font-size:12px;font-weight:600;padding:4px 9px;border-radius:6px;background:{{ item.complexBg }};color:{{ item.complexColor }}">{{ item.complexidade }}</span>
-              <span style="font-size:12.5px;color:#8AA0A7;display:flex;align-items:center;gap:5px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#B6C4C9" stroke-width="1.7"></circle><path d="M12 7.5V12l3 2" stroke="#B6C4C9" stroke-width="1.7" stroke-linecap="round"></path></svg>{{ item.tempo }}</span>
+              <h3 style="font-size:18px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25">{{ e.nome }}</h3>
+              <p style="font-size:14px;color:#5E747B;margin:7px 0 0;line-height:1.5">{{ e.descricao }}</p>
             </div>
           </article>
         </sc-for>
       </div>
+      </sc-if>
+      <sc-if value="{{ semEscopos }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:1px dashed #C9DBE0;border-radius:16px;padding:26px;text-align:center;color:#8AA0A7;font-size:14px">Os escopos ainda não foram cadastrados. Veja <b>fontes/README.md</b> para gerar o rascunho a partir do Resumão dos escopos.</div>
+      </sc-if>
 
       <!-- Novidades + Recomendados -->
       <div style="display:grid;grid-template-columns:1.55fr 1fr;gap:26px;margin-top:54px">
@@ -255,7 +256,7 @@
                   </div>
                   <p style="font-size:13.5px;color:#7C9097;margin:3px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.descricao }}</p>
                 </div>
-                <span style="font-size:12.5px;color:#9DAEB4;flex:none">{{ item.atualizado }}</span>
+                <span style="font-size:12.5px;color:#9DAEB4;flex:none">{{ item.atualizadoFmt }}</span>
               </article>
             </sc-for>
           </div>
@@ -263,14 +264,14 @@
         <div>
           <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin-bottom:18px">Recomendados para projetos</h2>
           <div style="background:linear-gradient(155deg,#1B4651 0%,#28697A 100%);border-radius:18px;padding:22px;color:#fff">
-            <p style="font-size:14px;color:#BFE2EA;margin:0 0 16px;line-height:1.5">Combinações que funcionam bem juntas em diagnóstico e planejamento.</p>
+            <p style="font-size:14px;color:#BFE2EA;margin:0 0 16px;line-height:1.5">Ferramentas de uso frequente nos projetos, prontas para aplicar.</p>
             <div style="display:flex;flex-direction:column;gap:10px">
               <sc-for list="{{ recomendados }}" as="item" hint-placeholder-count="3">
                 <button onclick="{{ item.open }}" style="text-align:left;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.06);border-radius:11px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:11px" style-hover="background:rgba(255,255,255,0.12)">
                   <span style="width:8px;height:8px;border-radius:50%;background:#7FD3E3;flex:none"></span>
                   <span style="flex:1;min-width:0">
                     <span style="display:block;font-size:14.5px;font-weight:600;color:#fff">{{ item.nome }}</span>
-                    <span style="display:block;font-size:12px;color:#9FC6D0;margin-top:1px">{{ item.categoria }} · {{ item.etapa }}</span>
+                    <span style="display:block;font-size:12px;color:#9FC6D0;margin-top:1px">{{ item.categoria }} · {{ item.usoResumo }}</span>
                   </span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M9 6l6 6-6 6" stroke="#7FD3E3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                 </button>
@@ -310,7 +311,7 @@
                   <sc-if value="{{ opt.inactive }}" hint-placeholder-val="{{ true }}">
                     <span style="width:17px;height:17px;border-radius:5px;border:1.6px solid #D4E0E4;flex:none"></span>
                   </sc-if>
-                  <span style="flex:1;font-size:13.5px;color:#3C545B">{{ opt.value }}</span>
+                  <span style="flex:1;font-size:13.5px;color:#3C545B">{{ opt.label }}</span>
                   <span style="font-size:12px;color:#B6C4C9;font-weight:500">{{ opt.count }}</span>
                 </label>
               </sc-for>
@@ -338,7 +339,7 @@
           <sc-if value="{{ hasActiveFilters }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;flex-wrap:wrap;gap:6px">
               <sc-for list="{{ activeChips }}" as="ch" hint-placeholder-count="2">
-                <button onclick="{{ ch.remove }}" style="display:flex;align-items:center;gap:6px;border:none;background:#EAF6F9;color:#1E7C92;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;cursor:pointer">{{ ch.value }} <span style="font-size:14px;line-height:1">×</span></button>
+                <button onclick="{{ ch.remove }}" style="display:flex;align-items:center;gap:6px;border:none;background:#EAF6F9;color:#1E7C92;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;cursor:pointer">{{ ch.label }} <span style="font-size:14px;line-height:1">×</span></button>
               </sc-for>
             </div>
           </sc-if>
@@ -449,8 +450,8 @@
           <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:20px;padding-top:18px;border-top:1px solid #F0F4F5">
             <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap">Complexidade</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ sel.complexidade }}</div></div>
             <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap">Tempo estimado</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ sel.tempo }}</div></div>
-            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap">Etapa</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ sel.etapa }}</div></div>
-            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap">Área</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ sel.categoria }}</div></div>
+            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap">Categoria</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ sel.categoria }}</div></div>
+            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap">Usado em</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ sel.usoResumo }}</div></div>
           </div>
         </div>
 
@@ -467,6 +468,34 @@
             </div>
           </div>
         </div>
+
+        <!-- Usado em (escopo → etapa) -->
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:22px 24px;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:10px">Usado em</div>
+          <sc-if value="{{ sel.hasUso }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ sel.usoEmEscopos }}" as="u" hint-placeholder-count="2">
+                <button onclick="{{ u.open }}" style="display:flex;align-items:center;gap:8px;border:1px solid #DCE7EB;background:#FAFCFC;color:#163B45;font-size:13.5px;padding:8px 12px;border-radius:10px;cursor:pointer;text-align:left" style-hover="border-color:#9FD7E2;background:#EAF6F9">
+                  <span style="font-weight:600">{{ u.escopoNome }}</span>
+                  <span style="color:#9DAEB4">›</span>
+                  <span style="color:#5E747B">{{ u.ordem }}. {{ u.etapaNome }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ sel.semUso }}" hint-placeholder-val="{{ true }}">
+            <p style="font-size:13.5px;color:#8AA0A7;margin:0">Ainda não vinculada a uma etapa de escopo. O vínculo é definido no Cronograma Base do escopo, não na ferramenta.</p>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ sel.hasPendencias }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#FFFBF2;border:1px solid #F1DFB0;border-radius:16px;padding:18px 22px;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#9A6B17;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px">Em construção — o que falta</div>
+          <ul style="margin:0;padding-left:18px;font-size:13.5px;color:#5E4A1E;line-height:1.6">
+            <sc-for list="{{ sel.pendencias }}" as="pd" hint-placeholder-count="2"><li>{{ pd }}</li></sc-for>
+          </ul>
+        </div>
+        </sc-if>
 
         <!-- Blocos recolhíveis -->
         <sc-for list="{{ blocks }}" as="bk" hint-placeholder-count="5">
@@ -536,9 +565,9 @@
                 <span style="flex:none;width:38px;height:38px;border-radius:9px;background:{{ a.bg }};color:{{ a.color }};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;letter-spacing:0.03em">{{ a.ext }}</span>
                 <div style="flex:1;min-width:0">
                   <div style="font-size:14px;font-weight:600;color:#163B45">{{ a.nome }}</div>
-                  <div style="font-size:12.5px;color:#8AA0A7">{{ a.tipo }} · {{ a.versao }} · {{ a.data }}</div>
+                  <div style="font-size:12.5px;color:#8AA0A7">{{ a.tipo }} · {{ a.versao }} · {{ a.dataFmt }}</div>
                 </div>
-                <button style="flex:none;border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer" style-hover="border-color:#9FD7E2">Baixar</button>
+                <button onclick="{{ a.abrir }}" disabled="{{ a.semUrl }}" style="flex:none;border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer" style-hover="border-color:#9FD7E2">{{ a.btnLabel }}</button>
               </div>
             </sc-for>
           </div>
@@ -552,12 +581,11 @@
           <div style="display:flex;flex-direction:column;gap:13px">
             <div style="display:flex;align-items:center;gap:11px">
               <div style="width:34px;height:34px;border-radius:50%;background:#163B45;color:#fff;font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none">{{ sel.respInitials }}</div>
-              <div><div style="font-size:11px;color:#9DAEB4;font-weight:600">Responsável</div><div style="font-size:14px;font-weight:600;color:#163B45">{{ sel.responsavel }}</div></div>
+              <div><div style="font-size:11px;color:#9DAEB4;font-weight:600">Responsável</div><div style="font-size:14px;font-weight:600;color:#163B45">{{ sel.respNome }}</div><div style="font-size:11.5px;color:#9DAEB4">{{ sel.respEmail }}</div></div>
             </div>
-            <div style="display:flex;justify-content:space-between;font-size:13.5px;padding-top:13px;border-top:1px solid #F0F4F5"><span style="color:#7C9097">Última atualização</span><span style="font-weight:600;color:#163B45;white-space:nowrap;padding-left:14px;text-align:right">{{ sel.atualizado }}</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13.5px;padding-top:13px;border-top:1px solid #F0F4F5"><span style="color:#7C9097">Última atualização</span><span style="font-weight:600;color:#163B45;white-space:nowrap;padding-left:14px;text-align:right">{{ sel.atualizadoFmt }}</span></div>
             <div style="display:flex;justify-content:space-between;font-size:13.5px"><span style="color:#7C9097">Frequência de uso</span><span style="font-weight:600;color:#163B45;white-space:nowrap;padding-left:14px;text-align:right">{{ sel.freq }}</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13.5px"><span style="color:#7C9097">Acessos</span><span style="font-weight:600;color:#163B45;white-space:nowrap;padding-left:14px;text-align:right">{{ sel.acessos }}</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:13.5px"><span style="color:#7C9097">Avaliação</span><span style="font-weight:600;color:#163B45;white-space:nowrap;padding-left:14px;text-align:right">★ {{ sel.nota }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px;font-size:13.5px"><span style="color:#7C9097;flex:none">Revisão</span><span style="font-weight:600;color:#163B45;text-align:right;line-height:1.35">{{ sel.revisaoTexto }}</span></div>
           </div>
           <button onclick="{{ openSelAnexos }}" style="width:100%;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px;border-radius:10px;cursor:pointer" style-hover="background:#2E9DB5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M16 8l-6.5 6.5a3 3 0 004.2 4.2L21 12a5 5 0 00-7-7L6.5 12.5" stroke="#fff" stroke-width="1.7" stroke-linecap="round"></path></svg>Acessar anexos ({{ sel.anexosCount }})</button>
         </div>
@@ -835,13 +863,13 @@
         <div>
           <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Tipo *</label>
           <select value="{{ form.tipo }}" onchange="{{ formTipo }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
-            <option>Ferramenta</option><option>Metodologia</option><option>Escopo</option><option>Template</option><option>Checklist</option>
+            <sc-for list="{{ tipoOptions }}" as="o" hint-placeholder-count="4"><option value="{{ o.value }}">{{ o.value }}</option></sc-for>
           </select>
         </div>
         <div>
-          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Área de aplicação *</label>
+          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Categoria (grupo do Hangar) *</label>
           <select value="{{ form.categoria }}" onchange="{{ formCategoria }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
-            <option>Processos</option><option>Estratégia</option><option>Financeiro</option><option>Marketing</option><option>Pessoas</option><option>Operações</option><option>Comercial</option><option>Inovação</option><option>Gestão</option>
+            <sc-for list="{{ categoriaOptions }}" as="o" hint-placeholder-count="5"><option value="{{ o.value }}">{{ o.value }}</option></sc-for>
           </select>
         </div>
         <div style="grid-column:span 2">
@@ -855,12 +883,6 @@
         <div style="grid-column:span 2">
           <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Problema que resolve *</label>
           <textarea value="{{ form.problema }}" oninput="{{ formProblema }}" placeholder="Qual dor do projeto essa ferramenta endereça?" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;resize:none;height:74px" style-focus="border-color:#9FD7E2"></textarea>
-        </div>
-        <div>
-          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Etapa do projeto *</label>
-          <select value="{{ form.etapa }}" onchange="{{ formEtapa }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
-            <option>Diagnóstico</option><option>Coleta</option><option>Análise</option><option>Planejamento</option><option>Execução</option><option>Validação</option><option>Entrega Final</option>
-          </select>
         </div>
         <div>
           <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Nível de complexidade *</label>
@@ -896,6 +918,102 @@
         <button onclick="{{ publish }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 22px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">Publicar conteúdo</button>
       </div>
     </div>
+    </sc-if>
+  </main>
+  </sc-if>
+
+  <!-- ============ ESCOPOS ============ -->
+  <sc-if value="{{ isEscopos }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:1200px;margin:0 auto;padding:34px 28px 80px">
+
+    <sc-if value="{{ noEscopoSel }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-bottom:8px">
+        <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em">Escopos</h1>
+        <p style="font-size:15px;color:#7C9097;margin:6px 0 0;max-width:720px;line-height:1.5">As linhas de serviço da Produtiva Júnior. Cada escopo tem suas etapas em sequência, e as ferramentas aparecem dentro da etapa em que são usadas — do jeito que o projeto acontece.</p>
+      </div>
+      <sc-if value="{{ semEscopos }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:28px;background:#fff;border:1px dashed #C9DBE0;border-radius:16px;padding:32px;text-align:center;color:#8AA0A7;font-size:14.5px">Nenhum escopo cadastrado ainda. O rascunho é gerado a partir do Resumão dos escopos — veja <b>fontes/README.md</b>.</div>
+      </sc-if>
+      <sc-for list="{{ escoposPorGrupo }}" as="g" hint-placeholder-count="3">
+        <div style="margin-top:34px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+            <span style="width:10px;height:10px;border-radius:3px;background:{{ g.cor }}"></span>
+            <h2 style="font-size:19px;font-weight:700;color:#163B45;letter-spacing:-0.01em">{{ g.label }}</h2>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <sc-for list="{{ g.escopos }}" as="e" hint-placeholder-count="3">
+              <article onclick="{{ e.pick }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:12px" style-hover="border-color:#C6E4EC;box-shadow:0 12px 30px -18px rgba(22,59,69,0.25)">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:{{ e.grupoBg }};color:{{ e.grupoCor }}">{{ e.grupoLabel }}</span>
+                  <sc-if value="{{ e.despriorizado }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;font-weight:600;color:#9DAEB4;background:#F2F6F7;padding:3px 9px;border-radius:6px">Despriorizado</span></sc-if>
+                </div>
+                <div>
+                  <h3 style="font-size:17.5px;font-weight:600;color:#163B45;line-height:1.25">{{ e.nome }}</h3>
+                  <p style="font-size:13.5px;color:#5E747B;margin:6px 0 0;line-height:1.5">{{ e.descricao }}</p>
+                </div>
+                <div style="font-size:12.5px;color:#8AA0A7;margin-top:auto;padding-top:4px">{{ e.resumo }}</div>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </sc-if>
+
+    <sc-if value="{{ hasEscopoSel }}" hint-placeholder-val="{{ false }}">
+      <button onclick="{{ goEscopos }}" style="display:flex;align-items:center;gap:7px;border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;margin-bottom:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#1E7C92" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Todos os escopos</button>
+
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;margin-bottom:22px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <span style="font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:7px;background:{{ escopoSel.grupoBg }};color:{{ escopoSel.grupoCor }}">{{ escopoSel.grupoLabel }}</span>
+          <span style="font-size:12.5px;color:#5E747B;background:#EFF4F5;padding:5px 11px;border-radius:7px">{{ escopoSel.statusLabel }}</span>
+        </div>
+        <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">{{ escopoSel.nome }}</h1>
+        <p style="font-size:16.5px;color:#5E747B;margin:12px 0 0;line-height:1.55;max-width:720px">{{ escopoSel.descricao }}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:20px;padding-top:18px;border-top:1px solid #F0F4F5">
+          <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Etapas</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.nEtapas }}</div></div>
+          <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Ferramentas mapeadas</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.nFerr }}</div></div>
+          <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Responsável</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.respNome }}</div></div>
+        </div>
+      </div>
+
+      <!-- Linha do tempo das etapas -->
+      <sc-for list="{{ escopoEtapas }}" as="et" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:52px 1fr;gap:16px">
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <span style="width:40px;height:40px;border-radius:50%;background:#163B45;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">{{ et.num }}</span>
+            <span style="flex:1;width:2px;background:{{ et.linhaBg }};margin:6px 0"></span>
+          </div>
+          <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px;margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <h3 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">{{ et.nome }}</h3>
+              <sc-if value="{{ et.hasDuracao }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:#8AA0A7;background:#EFF4F5;padding:3px 9px;border-radius:6px">{{ et.duracaoRef }}</span></sc-if>
+            </div>
+            <sc-if value="{{ et.hasEntregaveis }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+                <span style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase;align-self:center">Entregáveis</span>
+                <sc-for list="{{ et.entregaveis }}" as="en" hint-placeholder-count="2"><span style="font-size:12.5px;color:#2E7D52;background:#E7F4EC;padding:3px 9px;border-radius:6px">{{ en }}</span></sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ et.hasFerramentas }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">
+                <sc-for list="{{ et.ferramentas }}" as="item" hint-placeholder-count="2">
+                  <div onclick="{{ item.open }}" style="display:flex;align-items:center;gap:13px;padding:11px 14px;border:1px solid #EEF3F5;border-radius:11px;cursor:pointer" style-hover="border-color:#C6E4EC;background:#FAFCFC">
+                    <div style="flex:none;width:36px;height:36px;border-radius:9px;background:{{ item.tipoBg }};color:{{ item.tipoColor }};display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:15px">{{ item.initial }}</div>
+                    <div style="flex:1;min-width:0">
+                      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:14.5px;font-weight:600;color:#163B45">{{ item.nome }}</span><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;background:{{ item.tipoBg }};color:{{ item.tipoColor }}">{{ item.tipo }}</span></div>
+                      <p style="font-size:13px;color:#7C9097;margin:2px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.descricao }}</p>
+                    </div>
+                    <span style="flex:none;font-size:12px;font-weight:600;padding:4px 9px;border-radius:6px;background:{{ item.complexBg }};color:{{ item.complexColor }}">{{ item.complexidade }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ et.semFerramentas }}" hint-placeholder-val="{{ false }}">
+              <p style="font-size:13.5px;color:#8AA0A7;margin:12px 0 0">Ferramentas desta etapa ainda não mapeadas no Cronograma Base.</p>
+            </sc-if>
+          </div>
+        </div>
+      </sc-for>
     </sc-if>
   </main>
   </sc-if>
@@ -1116,9 +1234,9 @@ Pergunta 2" style="width:100%;border:1px solid #DCE7EB;border-radius:9px;padding
             <div style="flex:1;min-width:0">
               <div style="font-size:14.5px;font-weight:600;color:#163B45">{{ a.nome }}</div>
               <div style="font-size:12.5px;color:#8AA0A7;margin-top:1px">{{ a.descricao }}</div>
-              <div style="font-size:11.5px;color:#B6C4C9;margin-top:3px">{{ a.tipo }} · {{ a.versao }} · {{ a.data }}</div>
+              <div style="font-size:11.5px;color:#B6C4C9;margin-top:3px">{{ a.tipo }} · {{ a.versao }} · {{ a.dataFmt }}</div>
             </div>
-            <button style="flex:none;display:flex;align-items:center;gap:6px;border:none;background:#3DAFC7;color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:9px;cursor:pointer" style-hover="background:#2E9DB5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Baixar</button>
+            <button onclick="{{ a.abrir }}" disabled="{{ a.semUrl }}" style="flex:none;display:flex;align-items:center;gap:6px;border:none;background:#3DAFC7;color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:9px;cursor:pointer" style-hover="background:#2E9DB5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>{{ a.btnLabel }}</button>
           </div>
         </sc-for>
       </div>
