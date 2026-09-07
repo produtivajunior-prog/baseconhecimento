@@ -1,15 +1,20 @@
 #!/usr/bin/env node
 /**
- * verify.mjs — prova que dist/ preserva o conteúdo do bundle original.
+ * verify.mjs — valida o acervo em src/data/ e prova que dist/ o carrega fielmente.
  *
- * Comparar os arquivos byte a byte não serve por dois motivos legítimos:
- *   1. o gzip do Node não reproduz os bytes do compressor que gerou o original;
- *   2. os dados saíram do código para src/data/*.json, então o texto do script mudou.
+ * Até a Fase 1 este script comparava dist/ com original/ (o MVP herdado). Isso servia
+ * enquanto o conteúdo era o mesmo; com o acervo real entrando, virou um "nada mudou".
+ * Agora ele garante o que importa para quem edita conteúdo:
  *
- * O que precisa bater é o que o navegador enxerga. Três checagens:
- *   assets  — bytes idênticos depois de descomprimir
- *   markup  — a marcação <x-dc> idêntica caractere a caractere
- *   dados   — avalia a classe dos DOIS bundles e compara as estruturas resultantes
+ *   schema        — cada item tem os campos certos, com valores do enum de taxonomia.json
+ *   integridade   — toda referência por id aponta para algo que existe
+ *   revisão       — nada entra em ferramentas.json/escopos.json sem revisão aprovada
+ *   round-trip    — o bundle em dist/ carrega exatamente o que está em src/data/
+ *   assets        — os bytes dos assets do bundle batem com os arquivos em assets/ e vendor/
+ *   markup        — a marcação do bundle é src/index.html, sem edição à mão em dist/
+ *
+ * Itens sem o campo `revisao` são conteúdo herdado do MVP: enquanto
+ * taxonomia.legadoPermitido for true eles passam com checagem frouxa e aparecem como aviso.
  *
  *   node tools/verify.mjs
  */
@@ -25,11 +30,180 @@ const SCRIPT_OPEN = '<script type="text/x-dc" data-dc-script="">';
 const sha = (b) => createHash('sha256').update(b).digest('hex').slice(0, 16);
 
 const fail = [];
+const warn = [];
 const check = (ok, okMsg, failMsg) => {
   console.log(`${ok ? '✓' : '✗'} ${ok ? okMsg : failMsg}`);
   if (!ok) fail.push(failMsg);
 };
+const aviso = (msg) => { console.log(`! ${msg}`); warn.push(msg); };
 
+const json = (nome) => JSON.parse(readFileSync(join(ROOT, `src/data/${nome}.json`), 'utf8'));
+
+// ================================================================ src/data
+const T = json('taxonomia');
+const ferramentas = json('ferramentas');
+const escopos = json('escopos');
+const problemas = json('problemas');
+const modelos = json('modelos');
+const documentoPadrao = json('documento-padrao');
+
+const enumDe = (obj) => Array.isArray(obj) ? obj : Object.keys(obj);
+const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const ISO = /^\d{4}-\d{2}-\d{2}$/;
+const EMAIL = /^[^@\s]+@produtivajunior\.com\.br$/;
+const isStrArr = (v, min = 0) => Array.isArray(v) && v.length >= min && v.every((x) => typeof x === 'string');
+
+const problemas_ = [];
+const p = (ctx, msg) => problemas_.push(`${ctx}: ${msg}`);
+
+// ---------------------------------------------------------------- ferramentas
+const ids = new Set();
+let legados = 0;
+const CAMPOS_TEXTO = ['nome', 'tipo', 'categoria', 'complexidade', 'tempo', 'status', 'freq', 'atualizado', 'descricao', 'objetivo', 'problema'];
+const CAMPOS_LISTA = ['quandoUsar', 'quandoNao', 'entradas', 'saidas', 'passos', 'perguntas', 'cuidados', 'exemplos'];
+
+for (const it of ferramentas) {
+  const ctx = `ferramentas[${it.id ?? '?'}]`;
+  if (typeof it.id !== 'string' || !it.id) { p(ctx, 'sem id'); continue; }
+  if (ids.has(it.id)) p(ctx, 'id duplicado');
+  ids.add(it.id);
+
+  const legado = !it.revisao;
+  if (legado) legados++;
+
+  for (const c of CAMPOS_TEXTO) if (typeof it[c] !== 'string' || !it[c]) p(ctx, `campo "${c}" ausente ou vazio`);
+  for (const c of CAMPOS_LISTA) if (!isStrArr(it[c])) p(ctx, `campo "${c}" precisa ser lista de strings`);
+  if (!Array.isArray(it.anexos)) p(ctx, 'campo "anexos" precisa ser lista');
+
+  if (!enumDe(T.tipos).includes(it.tipo)) p(ctx, `tipo "${it.tipo}" fora da taxonomia`);
+  if (!enumDe(T.categorias).includes(it.categoria)) p(ctx, `categoria "${it.categoria}" fora da taxonomia`);
+  if (!enumDe(T.complexidade).includes(it.complexidade)) p(ctx, `complexidade "${it.complexidade}" fora da taxonomia`);
+  if (!enumDe(T.status).includes(it.status)) p(ctx, `status "${it.status}" fora da taxonomia`);
+  if (!enumDe(T.freq).includes(it.freq)) p(ctx, `freq "${it.freq}" fora da taxonomia`);
+
+  for (const [i, a] of (it.anexos || []).entries()) {
+    const actx = `${ctx}.anexos[${i}]`;
+    if (typeof a.nome !== 'string' || !a.nome) p(actx, 'sem nome');
+    if (!enumDe(T.anexos).includes(a.tipo)) p(actx, `tipo "${a.tipo}" fora da taxonomia`);
+    if (!legado && it.status === 'Ativo' && !(typeof a.url === 'string' && /^https:\/\//.test(a.url))) p(actx, 'anexo de item Ativo precisa de url https');
+  }
+
+  if (legado) {
+    if (!KEBAB.test(it.id) && !/^[a-z0-9]+$/.test(it.id)) p(ctx, 'id fora do padrão');
+    if (!T.legadoPermitido) p(ctx, 'item legado (sem "revisao") não é mais aceito');
+    if (T.tipos[it.tipo]?.legado === undefined && it.tipo === 'Escopo') p(ctx, 'tipo Escopo sem marca de legado');
+    continue;
+  }
+
+  // --- schema novo (item extraído do acervo real)
+  if (!KEBAB.test(it.id)) p(ctx, 'id precisa ser kebab-case');
+  for (const proibido of ['acessos', 'nota', 'etapa']) if (proibido in it) p(ctx, `campo "${proibido}" não existe mais no schema`);
+  if (T.tipos[it.tipo]?.legado) p(ctx, `tipo "${it.tipo}" é legado`);
+  if (T.categorias[it.categoria]?.legado) p(ctx, `categoria "${it.categoria}" é legada`);
+  if (!ISO.test(it.atualizado)) p(ctx, `atualizado "${it.atualizado}" precisa ser YYYY-MM-DD`);
+  if (!it.responsavel || typeof it.responsavel !== 'object' || typeof it.responsavel.nome !== 'string' || !EMAIL.test(it.responsavel.email || ''))
+    p(ctx, 'responsavel precisa ser {nome, email @produtivajunior.com.br}');
+  if (!Array.isArray(it.fontes) || !it.fontes.length) p(ctx, 'fontes[] vazio: todo item real precisa de origem');
+  for (const [i, f] of (it.fontes || []).entries()) {
+    if (!['drive-pdf', 'drive-sheet', 'drive-doc', 'hangar', 'manual'].includes(f.tipo)) p(`${ctx}.fontes[${i}]`, `tipo "${f.tipo}" desconhecido`);
+    if (typeof f.id !== 'string' || !f.id) p(`${ctx}.fontes[${i}]`, 'sem id');
+  }
+  if (!it.origem || typeof it.origem !== 'object') p(ctx, 'origem{} (campo → fonte) ausente');
+  const r = it.revisao;
+  if (r.status !== 'aprovado') p(ctx, `revisao.status "${r.status}" — só itens aprovados entram em ferramentas.json (rascunhos ficam em src/data/rascunhos/)`);
+  if (!EMAIL.test(r.revisor || '')) p(ctx, 'revisao.revisor precisa ser e-mail @produtivajunior.com.br');
+  if (!ISO.test(r.data || '')) p(ctx, 'revisao.data precisa ser YYYY-MM-DD');
+  if (it.status === 'Em construção' && !isStrArr(it.pendencias, 1)) p(ctx, 'item "Em construção" precisa listar pendencias[]');
+  for (const [i, a] of (it.anexos || []).entries()) {
+    if (T.anexos[a.tipo]?.legado) p(`${ctx}.anexos[${i}]`, `tipo de anexo "${a.tipo}" é legado`);
+  }
+}
+check(problemas_.length === 0 || !problemas_.some((x) => x.startsWith('ferramentas')),
+  `ferramentas.json  ${ferramentas.length} itens (${ferramentas.length - legados} do acervo, ${legados} legados)`,
+  'ferramentas.json com erros de schema');
+
+// ---------------------------------------------------------------- escopos
+const escopoIds = new Set();
+for (const e of escopos) {
+  const ctx = `escopos[${e.id ?? '?'}]`;
+  if (typeof e.id !== 'string' || !KEBAB.test(e.id)) { p(ctx, 'id ausente ou fora do kebab-case'); continue; }
+  if (escopoIds.has(e.id)) p(ctx, 'id duplicado');
+  escopoIds.add(e.id);
+  if (typeof e.nome !== 'string' || !e.nome) p(ctx, 'sem nome');
+  if (!enumDe(T.gruposEscopo).includes(e.grupo)) p(ctx, `grupo "${e.grupo}" fora da taxonomia`);
+  if (!['ativo', 'despriorizado'].includes(e.status)) p(ctx, `status "${e.status}" precisa ser ativo|despriorizado`);
+  if (typeof e.descricao !== 'string') p(ctx, 'descricao ausente');
+  if (!e.responsavel || !EMAIL.test(e.responsavel.email || '')) p(ctx, 'responsavel {nome,email} ausente');
+  if (!Array.isArray(e.fontes) || !e.fontes.length) p(ctx, 'fontes[] vazio');
+  if (!e.revisao || e.revisao.status !== 'aprovado' || !EMAIL.test(e.revisao.revisor || '') || !ISO.test(e.revisao.data || ''))
+    p(ctx, 'revisao {status:"aprovado", revisor, data} obrigatória');
+  if (!Array.isArray(e.etapas) || !e.etapas.length) { p(ctx, 'etapas[] vazio'); continue; }
+  const etapaIds = new Set();
+  e.etapas.forEach((et, i) => {
+    const ectx = `${ctx}.etapas[${i}]`;
+    if (typeof et.id !== 'string' || !KEBAB.test(et.id)) p(ectx, 'id ausente ou fora do kebab-case');
+    if (etapaIds.has(et.id)) p(ectx, 'id de etapa duplicado dentro do escopo');
+    etapaIds.add(et.id);
+    if (et.ordem !== i + 1) p(ectx, `ordem ${et.ordem} não corresponde à posição ${i + 1}`);
+    if (typeof et.nome !== 'string' || !et.nome) p(ectx, 'sem nome');
+    if (!isStrArr(et.ferramentas)) p(ectx, 'ferramentas[] precisa ser lista de ids');
+    for (const fid of et.ferramentas || []) if (!ids.has(fid)) p(ectx, `ferramenta "${fid}" não existe em ferramentas.json`);
+    if (et.entregaveis !== undefined && !isStrArr(et.entregaveis)) p(ectx, 'entregaveis[] precisa ser lista de strings');
+  });
+}
+check(!problemas_.some((x) => x.startsWith('escopos')),
+  `escopos.json  ${escopos.length} escopos, ${escopos.reduce((n, e) => n + (e.etapas?.length || 0), 0)} etapas`,
+  'escopos.json com erros de schema');
+
+// ---------------------------------------------------------------- problemas
+const pkeys = new Set();
+for (const pr of problemas) {
+  const ctx = `problemas[${pr.key ?? '?'}]`;
+  if (typeof pr.key !== 'string' || !pr.key) p(ctx, 'sem key');
+  if (pkeys.has(pr.key)) p(ctx, 'key duplicada');
+  pkeys.add(pr.key);
+  if (typeof pr.label !== 'string' || !pr.label) p(ctx, 'sem label');
+  if (!isStrArr(pr.ids, 1)) p(ctx, 'ids[] vazio');
+  for (const id of pr.ids || []) if (!ids.has(id)) p(ctx, `ferramenta "${id}" não existe`);
+  for (const id of pr.escopoIds || []) if (!escopoIds.has(id)) p(ctx, `escopo "${id}" não existe`);
+}
+check(!problemas_.some((x) => x.startsWith('problemas')), `problemas.json  ${problemas.length} problemas, todas as referências resolvem`, 'problemas.json com referências quebradas');
+
+// ---------------------------------------------------------------- modelos
+const mids = new Set();
+for (const m of modelos) {
+  const ctx = `modelos[${m.id ?? '?'}]`;
+  if (typeof m.id !== 'string' || !m.id) p(ctx, 'sem id');
+  if (mids.has(m.id)) p(ctx, 'id duplicado');
+  mids.add(m.id);
+  if (m.toolId !== null && !ids.has(m.toolId)) p(ctx, `toolId "${m.toolId}" não existe em ferramentas.json`);
+  if (!['canvas', 'grid'].includes(m.layout)) p(ctx, `layout "${m.layout}" precisa ser canvas|grid`);
+  if (!Array.isArray(m.blocos) || !m.blocos.length) p(ctx, 'blocos[] vazio');
+  for (const [i, b] of (m.blocos || []).entries()) {
+    if (typeof b.titulo !== 'string' || !b.titulo) p(`${ctx}.blocos[${i}]`, 'sem titulo');
+    if (m.layout === 'canvas' && (typeof b.gc !== 'string' || typeof b.gr !== 'string')) p(`${ctx}.blocos[${i}]`, 'layout canvas exige gc e gr');
+  }
+}
+check(!problemas_.some((x) => x.startsWith('modelos')), `modelos.json  ${modelos.length} modelos, toolId resolve`, 'modelos.json com erros');
+
+// ---------------------------------------------------------------- documento-padrao
+{
+  const d = documentoPadrao; const ctx = 'documento-padrao';
+  if (!['metodologia', 'manual', 'modelo'].includes(d.type)) p(ctx, `type "${d.type}" inválido`);
+  for (const c of ['nome', 'sigla', 'subtitulo', 'categoria', 'intro']) if (typeof d[c] !== 'string' || !d[c]) p(ctx, `campo "${c}" ausente`);
+  if (!Array.isArray(d.secoes) || !d.secoes.length) p(ctx, 'secoes[] vazio');
+  for (const [i, s] of (d.secoes || []).entries()) {
+    if (!enumDe(T.gruposDoc).includes(s.grupo)) p(`${ctx}.secoes[${i}]`, `grupo "${s.grupo}" fora de taxonomia.gruposDoc`);
+    if (typeof s.titulo !== 'string' || typeof s.descricao !== 'string') p(`${ctx}.secoes[${i}]`, 'titulo/descricao ausentes');
+    if (!isStrArr(s.perguntas, 1)) p(`${ctx}.secoes[${i}]`, 'perguntas[] vazio');
+  }
+  check(!problemas_.some((x) => x.startsWith(ctx)), `documento-padrao.json  ${d.sigla} com ${d.secoes.length} seções`, 'documento-padrao.json com erros');
+}
+
+for (const msg of problemas_) console.log(`    ${msg}`);
+if (legados && T.legadoPermitido) aviso(`${legados} item(ns) legado(s) do MVP ainda em ferramentas.json — sem lastro no acervo, removidos na promoção`);
+
+// ================================================================ dist
 function parseBundle(path) {
   const html = readFileSync(path, 'utf8');
   const tag = (type) => {
@@ -38,14 +212,12 @@ function parseBundle(path) {
     if (a === -1) throw new Error(`${path}: bloco ausente ${type}`);
     return html.slice(a + open.length, html.indexOf('</script>', a)).trim();
   };
-
   const manifest = JSON.parse(tag('__bundler/manifest'));
   const assets = {};
   for (const [uuid, e] of Object.entries(manifest)) {
     const raw = Buffer.from(e.data, 'base64');
     assets[uuid] = { mime: e.mime, bytes: e.compressed ? gunzipSync(raw) : raw };
   }
-
   const template = JSON.parse(tag('__bundler/template'));
   const si = template.indexOf(SCRIPT_OPEN);
   return {
@@ -56,83 +228,55 @@ function parseBundle(path) {
 }
 
 /**
- * Avalia a classe do bundle do mesmo jeito que o dc-runtime faz (`new Function`)
- * e devolve as estruturas de dados que ela expõe. É a checagem que importa:
- * roda o código de verdade, em vez de comparar texto.
+ * Avalia o script do bundle do mesmo jeito que o dc-runtime faz (`new Function`):
+ * devolve o DADOS embutido e instancia a classe para provar que ela constrói.
  */
 function extrairDados(logic) {
-  class DCLogic {
-    setState() {}
-  }
-  const Component = new Function(
-    'DCLogic', 'StreamableLogic', 'React',
-    logic + '\n;return Component;'
-  )(DCLogic, DCLogic, {});
-
+  class DCLogic { setState() {} }
+  const { DADOS, Component } = new Function(
+    'DCLogic', 'StreamableLogic', 'React', 'window',
+    logic + '\n;return { DADOS, Component };'
+  )(DCLogic, DCLogic, {}, undefined);
   const c = new Component();
-  return {
-    ferramentas: c.DATA,
-    problemas: c.PROBLEMAS,
-    modelos: c.defaultModelos(),
-    documentoPadrao: c.defaultDoc(),
-    estilos: { TIPO_STYLE: c.TIPO_STYLE, COMPLEX_STYLE: c.COMPLEX_STYLE, STATUS_COLOR: c.STATUS_COLOR, ANEXO_STYLE: c.ANEXO_STYLE },
-  };
+  c.renderVals();
+  return DADOS;
 }
 
-const a = parseBundle(join(ROOT, 'original/Biblioteca_CIEP.html'));
-const b = parseBundle(join(ROOT, 'dist/Biblioteca_CIEP.html'));
+let dist;
+try { dist = parseBundle(join(ROOT, 'dist/Biblioteca_CIEP.html')); }
+catch (e) { check(false, '', `dist/Biblioteca_CIEP.html ilegível: ${e.message} — rode node tools/pack.mjs`); }
 
-// Assets deliberadamente acrescentados depois do bundle original, com o motivo.
-// Qualquer outra diferença de asset continua sendo falha.
-const ADICIONADOS = {
-  '7c1f0a52-9d38-4b61-a0e2-3f5c8d1147a1': 'react.production.min.js (embutido: mata o unpkg)',
-  '7c1f0a52-9d38-4b61-a0e2-3f5c8d1147a2': 'react-dom.production.min.js (embutido: mata o unpkg)',
-};
-
-// ---------------------------------------------------------------- assets
-for (const uuid of new Set([...Object.keys(a.assets), ...Object.keys(b.assets)])) {
-  const x = a.assets[uuid], y = b.assets[uuid];
-  const label = `${uuid.slice(0, 8)} ${x?.mime || y?.mime}`;
-
-  if (!x && y && ADICIONADOS[uuid]) {
-    check(y.bytes.length > 0, `asset ${label}  +${y.bytes.length} bytes  ${ADICIONADOS[uuid]}`,
-      `asset ${label} acrescentado porém vazio`);
-    continue;
+if (dist) {
+  // ---------------------------------------------------------------- assets
+  const index = JSON.parse(readFileSync(join(ROOT, 'assets/index.json'), 'utf8'));
+  for (const a of index.assets) {
+    const esperado = readFileSync(join(ROOT, a.path));
+    const y = dist.assets[a.uuid];
+    check(y && y.bytes.equals(esperado), `asset ${a.uuid.slice(0, 8)} ${a.mime}  ${esperado.length} bytes  sha ${sha(esperado)}`,
+      `asset ${a.path} ausente ou DIVERGENTE no bundle`);
   }
-  if (!x || !y) { check(false, '', `asset ${label} existe em só um dos bundles`); continue; }
-  check(x.bytes.equals(y.bytes), `asset ${label}  ${x.bytes.length} bytes  sha ${sha(x.bytes)}`,
-    `asset ${label} DIVERGENTE (${x.bytes.length} vs ${y.bytes.length})`);
+  const extras = Object.keys(dist.assets).filter((u) => !index.assets.some((a) => a.uuid === u));
+  check(extras.length === 0, 'nenhum asset fora de assets/index.json', `assets no bundle sem origem em assets/index.json: ${extras.join(', ')}`);
+
+  // ---------------------------------------------------------------- markup
+  const srcMarkup = readFileSync(join(ROOT, 'src/index.html'), 'utf8');
+  check(dist.markup === srcMarkup, `markup = src/index.html  (${srcMarkup.length} chars, sha ${sha(srcMarkup)})`,
+    'markup do bundle DIVERGE de src/index.html — dist/ foi editado à mão ou o pack está desatualizado');
+
+  // ---------------------------------------------------------------- round-trip
+  let dados;
+  try { dados = extrairDados(dist.logic); }
+  catch (e) { check(false, '', `o script do bundle não avalia: ${e.message}`); }
+  if (dados) {
+    const pares = [['ferramentas', ferramentas], ['escopos', escopos], ['taxonomia', T], ['problemas', problemas], ['modelos', modelos], ['documentoPadrao', documentoPadrao]];
+    for (const [chave, esperado] of pares) {
+      const n = Array.isArray(esperado) ? `${esperado.length} itens` : 'ok';
+      check(isDeepStrictEqual(dados[chave], esperado), `dist carrega DADOS.${chave}  ${n}`, `DADOS.${chave} no bundle DIVERGE de src/data — rode node tools/pack.mjs`);
+    }
+  }
 }
 
-// ---------------------------------------------------------------- markup
-// A única alteração aceita na marcação é a inclusão dos <script> do React. Removendo
-// essas linhas, o resultado tem de bater com o original caractere a caractere — assim a
-// checagem continua apertada em vez de virar "mudou, tudo bem".
-const markupNormalizado = b.markup
-  .replace(/<!-- React embutido\.[\s\S]*?-->\n/, '')
-  .replace(/<script src="7c1f0a52-[^"]*"><\/script>\n/g, '');
-
-check(a.markup === markupNormalizado,
-  `markup idêntico ao original, exceto os <script> do React  (${a.markup.length} chars, sha ${sha(a.markup)})`,
-  `markup DIVERGENTE além da inclusão do React (${a.markup.length} vs ${markupNormalizado.length})`);
-
-// ---------------------------------------------------------------- dados
-const da = extrairDados(a.logic);
-const db = extrairDados(b.logic);
-
-for (const chave of Object.keys(da)) {
-  const igual = isDeepStrictEqual(da[chave], db[chave]);
-  const n = Array.isArray(da[chave]) ? `${da[chave].length} itens` : 'ok';
-  check(igual, `dados.${chave}  ${n}`, `dados.${chave} DIVERGENTE entre original e dist`);
-}
-
-// Os JSON em src/data/ são a fonte: precisam bater com o que o original continha.
-const json = (nome) => JSON.parse(readFileSync(join(ROOT, `src/data/${nome}.json`), 'utf8'));
-for (const [chave, arquivo] of [['ferramentas', 'ferramentas'], ['problemas', 'problemas'], ['modelos', 'modelos'], ['documentoPadrao', 'documento-padrao']]) {
-  check(isDeepStrictEqual(da[chave], json(arquivo)),
-    `src/data/${arquivo}.json fiel ao original`,
-    `src/data/${arquivo}.json DIVERGE do bundle original`);
-}
-
-if (fail.length) { console.error(`\n${fail.length} divergência(s).`); process.exit(1); }
-console.log('\nÍntegro: dist/ preserva assets, marcação e dados do bundle original.');
+console.log('');
+if (warn.length) console.log(`${warn.length} aviso(s).`);
+if (fail.length) { console.error(`${fail.length} falha(s).`); process.exit(1); }
+console.log('tudo certo.');

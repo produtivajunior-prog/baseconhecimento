@@ -1,0 +1,38 @@
+# id: 10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ
+# nome: Cronograma Base Plano de Marketing - Thiago Melo
+# mimeType: application/vnd.google-apps.spreadsheet
+# dono: thiagomelo@produtivajunior.com.br
+# url: https://docs.google.com/spreadsheets/d/10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ/edit?usp=drivesdk&ouid=100327922083657613631
+# extraidoEm: 2026-09-07
+# uso: escopo
+---
+|  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+|  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] Cliente | \[merged\] Cliente |  |  |  |  |  |  |  |
+|  | \[merged\] Serviço | \[merged\] Serviço | Plano de Marketing |  |  |  |  |  |  |
+|  | \[merged\] Equipe de Venda | \[merged\] Equipe de Venda |  |  |  |  |  |  |  |
+|  | \[merged\] Gerente | \[merged\] Gerente | Thiago Melo |  |  |  |  |  |  |
+|  | \[merged\] Dias padrão | \[merged\] Dias padrão | 45 |  |  |  |  |  |  |
+|  | \[merged\] Dias totais | \[merged\] Dias totais | 65 |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |
+|  | \[merged\] Iniciação  | \[merged\] Iniciação  | \[merged\] Iniciação  | \[merged\] Iniciação  | \[merged\] Iniciação  | 1 | 5 | RAC  Coleta de informações | BMC  |
+|  | \[merged\] Diagnóstico do marketing da empresa + Entendimento | \[merged\] Diagnóstico do marketing da empresa + Entendimento | \[merged\] Diagnóstico do marketing da empresa + Entendimento | \[merged\] Diagnóstico do marketing da empresa + Entendimento | \[merged\] Diagnóstico do marketing da empresa + Entendimento | 1 | 5 | Entrevista com gestores + Entendimento das formas de captação, setor de marketing da empresa | 8 P's do marketing |
+|  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | 2 | 10 |  |  |
+|  | \[merged\] ETAPA 02 - PLANO DE MARKETING | \[merged\] ETAPA 02 - PLANO DE MARKETING | \[merged\] ETAPA 02 - PLANO DE MARKETING | \[merged\] ETAPA 02 - PLANO DE MARKETING | \[merged\] ETAPA 02 - PLANO DE MARKETING | \[merged\] ETAPA 02 - PLANO DE MARKETING | \[merged\] ETAPA 02 - PLANO DE MARKETING | \[merged\] ETAPA 02 - PLANO DE MARKETING | \[merged\] ETAPA 02 - PLANO DE MARKETING |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |
+|  | \[merged\] Análise de mercado + Estudo de tendências e concorrentes + Entendimeno de clientes potenciais e públicos alvos + "Definição de pesquisa" | \[merged\] Análise de mercado + Estudo de tendências e concorrentes + Entendimeno de clientes potenciais e públicos alvos + "Definição de pesquisa" | \[merged\] Análise de mercado + Estudo de tendências e concorrentes + Entendimeno de clientes potenciais e públicos alvos + "Definição de pesquisa" | \[merged\] Análise de mercado + Estudo de tendências e concorrentes + Entendimeno de clientes potenciais e públicos alvos + "Definição de pesquisa" | \[merged\] Análise de mercado + Estudo de tendências e concorrentes + Entendimeno de clientes potenciais e públicos alvos + "Definição de pesquisa" | 2 | 10 | Pesquisa de dados secundários pelo MANUS E PERPLEXITY, COLETA DE INFOS, CLIENTE OCULTO |  SWOT + PESTAL + Matriz de concorrentes, etc. |
+|  | \[merged\] "Pesquisa de mercado" (Coleta de dados) | \[merged\] "Pesquisa de mercado" (Coleta de dados) | \[merged\] "Pesquisa de mercado" (Coleta de dados) | \[merged\] "Pesquisa de mercado" (Coleta de dados) | \[merged\] "Pesquisa de mercado" (Coleta de dados) | 4 | 20 | Coleta de dados primários | Dashboard e relatório com compliado das respostas |
+|  | \[merged\] Construção do ICP e BP da empresa | \[merged\] Construção do ICP e BP da empresa | \[merged\] Construção do ICP e BP da empresa | \[merged\] Construção do ICP e BP da empresa | \[merged\] Construção do ICP e BP da empresa | 1 | 5 | Construção interna + Apresentação | ICP E BP |
+|  | \[merged\] Definição dos canais de tração + Elaboração da jornada do cliente  | \[merged\] Definição dos canais de tração + Elaboração da jornada do cliente  | \[merged\] Definição dos canais de tração + Elaboração da jornada do cliente  | \[merged\] Definição dos canais de tração + Elaboração da jornada do cliente  | \[merged\] Definição dos canais de tração + Elaboração da jornada do cliente  | 1 | 5 | Construção interna + Apresentação | Bullseye Framework + Jornada do cliente |
+|  | \[merged\] Criação de estratégias de marketing e ferramenta de acompanhamento | \[merged\] Criação de estratégias de marketing e ferramenta de acompanhamento | \[merged\] Criação de estratégias de marketing e ferramenta de acompanhamento | \[merged\] Criação de estratégias de marketing e ferramenta de acompanhamento | \[merged\] Criação de estratégias de marketing e ferramenta de acompanhamento | 2 | 10 | Construção interna + Apresentação | Relatório de estratégias + Ferramenta de suporte |
+|  |  |  |  |  |  | 10 | 50 |  |  |
+|  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |
+|  | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | 1 | 5 | RAF | \- |
+|  | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \- | 6 | Visita e acompanhamento dos processos/ ajustes necessários nas ferramentas | Relatório quinzenal do andamento |
+|  |  |  |  |  |  |  | 11 |  |  |

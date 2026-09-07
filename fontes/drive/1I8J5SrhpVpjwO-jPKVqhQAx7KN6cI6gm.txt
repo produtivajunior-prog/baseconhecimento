@@ -1,0 +1,80 @@
+# id: 1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm
+# nome: [CIEP] Metodologia de Mapa de Contexto.pdf
+# mimeType: application/pdf
+# dono: carloseduardo@produtivajunior.com.br
+# url: https://drive.google.com/file/d/1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm/view?usp=drivesdk
+# extraidoEm: 2026-09-07
+# uso: ferramenta:mapa-de-contexto
+---
+\[CIEP\] Metodologia de Mapa de Contexto
+
+METODOLOGIA MAPA DE CONTEXTO
+
+INTRODUÇÃO INTRODUÇÃO
+
+O Mapa de Contexto é uma ferramenta utilizada para apresentar de forma esquemática e visual as funções presentes em uma organização, bem como a relação do cliente com o fornecedor existente entre essas funções.
+
+Essa ferramenta proporciona uma visão geral da empresa antes que se inicie a identificação dos processos para depois ocorrer o mapeamento dos mesmos. Ele destaca as principais entidades (como sistemas, processos, atores ou eventos) e suas interconexões, proporcionando uma visão geral clara da situação.
+
+INTRODUÇÃO
+
+MAPAS DE CONTEXTO REFERÊNCIA:
+
+BRITA POTIGUAR ACELERABIT
+
+PRINCIPAIS PONTOS
+
+01\. O que é?
+
+É uma ferramenta utilizada para representar de forma simplificada um sistema, que mostra:
+
+O sistema em que está sendo feita a análise; Os agentes externos que se relacionam com ele( como pessoas, empresas, órgãos, sistemas, etc.); Os fluxos de informação ou de materiais que entram e saem do sistema.
+
+02\. Importância
+
+A utilização do mapa de contexto é essencial por diversos motivos:
+
+Compreensão global: Fornece uma visão geral do sistema e de seu contexto, ajudando a compre- ender as interações entre diferentes partes; Identificação de limites: Ajuda a definir clara- mente os limites do sistema em estudo, distin- guindo o que está dentro e fora do escopo; Comunicação eficaz: Facilita a comunicação entre as partes interessadas, permitindo que todos tenham uma compreensão comum do sistema e de seu ambiente; Tomada de decisão: Facilita a identificação de oportunidades e desafios, auxiliando na tomada de decisões informadas.
+
+CONSTRUÇÃO
+
+01\. Identificar elementos chave:
+
+Liste as principais áreas ou departamentos da empresa; Identifique partes interessadas internas e exter- nas, como: clientes, acionistas, parceiros, etc; Destaque processos operacionais e estratégicos essenciais.
+
+02\. Definir relações:
+
+Indique as relações e interações entre diferentes áreas da empresa. Represente como a empresa interage com clien- tes, acionistas, parceiros e outros stakeholders; Mostre como a comunicação flui dentro da orga- nização e com partes externas.
+
+03\. Adicionar contexto externo:
+
+Inclua fatores externos que afetam a empresa, como regulamentações, concorrentes, tendências de mercado, etc; Represente a cadeia de suprimentos, se aplicável, mostrando conexões com fornecedores e distri- buidores.
+
+CONSTRUÇÃO
+
+04\. Mapear Fluxos e Limites:
+
+Identifique as entradas (inputs) e saídas (outputs) de informações e materiais entre a empresa e os agentes externos; Delimite a fronteira do sistema, esclarecendo o que pertence ao processo interno e o que pertence ao ambiente externo; Estabeleça a direção dos fluxos para garantir que a troca de valor entre as partes esteja lógica antes da desenhar.
+
+5\. Apresentar de forma visual
+
+Utilize gráficos, setas e rótulos para tornar o mapa visualmente compreensível; Considere o uso de cores para diferenciar diferentes elementos ou destacar áreas críticas.
+
+BENEFÍCIOS
+
+Clareza na definição do escopo: Mostra em determinado processo o que está dentro e fora do sistema, evitando retrabalho e confusão sobre res- ponsabilidades.
+
+Comunicação simples e eficiente: Facilita o entendimento entre diferentes áreas pela sua apresentação visual.
+
+Identificação dos stakeholders e suas interações: Através do mapa é possível visualizar quem interage com o sistema e também auxilia no entendimento de quem é dependente dele.
+
+Suporte à modelagens de processos: Funciona como uma primeira etapa antes de se iniciar os fluxogramas e outras ferramentas de mapea- mento. É importante pois evita perder tempo detalhando o que ainda não está bem com- preendido.
+
+Análise de Interfaces e Vulnerabilidades: Permi- te identificar gargalos ou riscos justamente nos pontos de contato entre a empresa e o am-biente externo. É nessas interfaces que ocorrem a maioria das falhas de comunicação e gargalos opera- cionais.
+
+PRODUZIDO POR
+
+PRODUTIVA J U N I O R
+
+<https://drive.google.com/file/d/1ottT8XkK5ONNEN3WG2dHtC6aeaXHon-u/view?usp=sharing>
+<https://drive.google.com/file/d/18Jw49EPK34F6W4bk_5lpmTP5UWF7wYGa/view?usp=sharing>

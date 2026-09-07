@@ -1,0 +1,61 @@
+{
+  "_comentario": "Fonte única da taxonomia. app.js, o validador e o formulário derivam daqui. Chaves marcadas 'legado' existem só para o conteúdo herdado do MVP e saem quando o acervo real for promovido.",
+  "tipos": {
+    "Ferramenta":  { "bg": "#EAF6F9", "color": "#1E7C92", "visual": "#E4F3F7", "label": "Ferramentas" },
+    "Metodologia": { "bg": "#EFEDFB", "color": "#6A5FB0", "visual": "#EEEBFA", "label": "Metodologias" },
+    "Template":    { "bg": "#E9F4EE", "color": "#39795B", "visual": "#E7F4ED", "label": "Templates" },
+    "Checklist":   { "bg": "#FBF0E7", "color": "#A5632B", "visual": "#FBF0E6", "label": "Checklists" },
+    "Escopo":      { "bg": "#ECEFF7", "color": "#4E5E96", "visual": "#EAEEF7", "label": "Escopos", "legado": true }
+  },
+  "categorias": {
+    "Metodologias":         { "cor": "#6A5FB0" },
+    "Entendimento":         { "cor": "#1E7C92" },
+    "Pesquisas de cultura": { "cor": "#A5632B" },
+    "Processos":            { "cor": "#39795B" },
+    "Sistema PJ":           { "cor": "#4E5E96" },
+    "Estratégia":           { "cor": "#1E7C92", "legado": true },
+    "Financeiro":           { "cor": "#39795B", "legado": true },
+    "Marketing":            { "cor": "#A5632B", "legado": true },
+    "Pessoas":              { "cor": "#6A5FB0", "legado": true },
+    "Operações":            { "cor": "#4E5E96", "legado": true },
+    "Comercial":            { "cor": "#1E7C92", "legado": true },
+    "Inovação":             { "cor": "#6A5FB0", "legado": true },
+    "Gestão":               { "cor": "#39795B", "legado": true }
+  },
+  "gruposEscopo": {
+    "PRODUÇÃO":   { "cor": "#39795B", "bg": "#E9F4EE", "label": "Produção" },
+    "FINANCEIRO": { "cor": "#1E7C92", "bg": "#EAF6F9", "label": "Financeiro" },
+    "ESTRATÉGIA": { "cor": "#6A5FB0", "bg": "#EFEDFB", "label": "Estratégia" }
+  },
+  "complexidade": {
+    "Baixo": { "bg": "#E7F4EC", "color": "#2E7D52" },
+    "Médio": { "bg": "#FBF1E0", "color": "#9A6B17" },
+    "Alto":  { "bg": "#FBE9EA", "color": "#B23B47" }
+  },
+  "status": {
+    "Ativo":          "#2E9D5B",
+    "Em revisão":     "#C9942A",
+    "Em construção":  "#7C9097",
+    "Arquivado":      "#9DAEB4"
+  },
+  "freq": ["Alta", "Média", "Baixa"],
+  "anexos": {
+    "Metodologia (PDF)":     { "bg": "#FBE9EA", "color": "#B23B47", "ext": "PDF" },
+    "Modelo padrão":         { "bg": "#E9F4EE", "color": "#39795B", "ext": "PDF" },
+    "Planilha":              { "bg": "#E7F4EC", "color": "#2E7D52", "ext": "XLSX" },
+    "Exemplo real":          { "bg": "#EAF6F9", "color": "#1E7C92", "ext": "PDF" },
+    "Material complementar": { "bg": "#EFEDFB", "color": "#6A5FB0", "ext": "PDF" },
+    "Template editável":     { "bg": "#E9F4EE", "color": "#39795B", "ext": "DOCX", "legado": true },
+    "Exemplo preenchido":    { "bg": "#EAF6F9", "color": "#1E7C92", "ext": "PDF", "legado": true },
+    "PDF explicativo":       { "bg": "#FBE9EA", "color": "#B23B47", "ext": "PDF", "legado": true }
+  },
+  "gruposDoc": {
+    "Entradas":  "#1E7C92",
+    "Processos": "#6A5FB0",
+    "Saídas":    "#39795B",
+    "Suporte":   "#A5632B",
+    "Controle":  "#B23B47"
+  },
+  "etapasLegado": ["Diagnóstico", "Coleta", "Análise", "Planejamento", "Execução", "Validação", "Entrega Final"],
+  "legadoPermitido": true
+}

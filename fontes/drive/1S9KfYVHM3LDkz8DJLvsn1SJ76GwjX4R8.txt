@@ -1,0 +1,237 @@
+# id: 1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8
+# nome: _Metodologia - SWOT .pdf
+# mimeType: application/pdf
+# dono: gabrielapalma@produtivajunior.com.br
+# url: https://drive.google.com/file/d/1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8/view?usp=drivesdk
+# extraidoEm: 2026-09-07
+# uso: ferramenta:swot
+---
+Metodologia - SWOT
+
+METODOLOGIA MATRIZ SWOT
+
+INTRODUÇÃO
+
+SWOT Quantitativa Referência: SWOT Qualitativa Referência:
+
+MULTCOM MULTCOM
+
+O QUE É A MATRIZ SWOT?
+
+1\. Definição
+
+A Matriz SWOT é uma ferramenta de análise estratégica utilizada para compreender o ambiente interno e externo de uma organização, projeto ou até mesmo uma pessoa. O nome é um acrônimo formado pelas iniciais de quatro elementos:
+
+S – Strengths (Forças): pontos fortes internos, como recursos, competências, diferenciais competitivos e capacidades da organização. W – Weaknesses (Fraquezas): pontos fracos internos que prejudicam o desempenho, como limitações operacionais, falhas nos processos ou falta de recursos. O – Opportunities (Oportunidades): fatores externos positivos que podem ser aproveitados, como tendências de mercado, novas tecnologias ou mudanças na legislação. T – Threats (Ameaças): fatores externos negativos que podem afetar negativamente a organização, como concorrência, crises econômicas ou alterações regulatórias. Essa matriz permite uma visão clara da situação atual, facilitando o planejamento estratégico e a tomada de decisões, ao alinhar as forças e fraquezas internas com as oportunidades e ameaças externas.
+
+TIPOS DE MATRIZ SWOT
+
+2\. Matriz SWOT Qualitativa
+
+A matriz SWOT qualitativa é a forma mais comum e simples da matriz SWOT. Nela, os elementos (forças, fraquezas, oportunidades e ameaças) são listados e descritos de forma subjetiva em uma matriz estruturada nos quatro quadrantes básicos, com base na percepção dos envolvidos.
+
+Características:
+
+Usa descrições e observações. Não envolve números nem pesos. Fácil e rápida de aplicar. Muito usada em brainstormings, análises iniciais ou em pequenos negócios.
+
+3\. Matriz SWOT Quantitativa
+
+A matriz SWOT quantitativa é uma abordagem mais técnica e estruturada, que envolve a atribuição de pesos e notas para cada item da matriz. Isso permite mensurar o impacto de cada fator e priorizar ações com base em dados. Essa matriz depende da análise qualitativa da SWOT para ser elaborada.
+
+Características:
+
+Usa números, escalas ou pontuações. Mais objetiva e comparável. Facilita análises mais profundas e estratégicas. Exige mais tempo e dados para ser construída.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+2\. Estruturação
+
+A matriz SWOT qualitativa é frequentemente representada em forma de tabela, com quatro quadrantes (forças, fraquezas, oportunidades e ameaças), nos quais são listados características da empresa, as quais se encaixam nessas 4 categorias, e são relevantes para a análise.
+
+FORÇAS FRAQUEZAS
+
+SWOT
+
+OPORTUNIDADES OPORTUNIDADES
+
+Já a matriz SWOT quantitativa mantém a estrutura dos quatro quadrantes da versão qualitativa, mas é apresentada de forma mais matricial, feita em Excel ou Google Sheets. Nessa abordagem, cada item de um quadrante é relacionado a itens dos outros, permitindo medir numericamente a correlação entre os fatores — como, por exemplo, o quanto uma força específica contribui para aproveitar uma oportunidade. Essa análise cruzada ajuda a identificar combinações estratégicas com maior impacto.
+
+3\. Construção da SWOT qualitativa
+
+3.1 - Definição dos objetivos Antes de iniciar a coleta, é fundamental definir claramente qual é o foco da análise. A matriz SWOT pode ser elaborada para diferentes propósitos, como:
+
+A empresa como um todo; Um projeto específico; Um setor ou área da organização; Uma nova iniciativa ou estratégia. Ter clareza sobre o objetivo garante que as informações levantadas sejam direcionadas e relevantes para o contexto analisado.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+3.2 - Seleção dos participantes A coleta de dados para a matriz SWOT deve ser feita com pessoas que possuam visões complementares sobre a organização. A diversidade de perfis é essencial para alcançar uma análise robusta e fidedigna. Recomenda-se incluir participantes de diferentes níveis e áreas, como:
+
+Diretores e gestores; Coordenadores de áreas; Colaboradores operacionais; Setores administrativo, financeiro, comercial, produção e atendimento; Quando aplicável, fornecedores, parceiros ou clientes estratégicos podem enriquecer a visão externa da empresa.
+
+3.3 - Coleta de informações Estrutura das Entrevistas As entrevistas podem ser realizadas de forma individual ou em pequenos grupos, conforme a realidade da empresa e o nível de aprofundamento desejado. O ambiente deve ser aberto, colaborativo e propício ao compartilhamento de percepções, sem julgamentos.
+
+COMO CONSTRUIR A MATRIZ RACI
+
+Roteiro de Perguntas para Condução Forças:
+
+Quais são nossos maiores diferenciais? O que fazemos muito bem? Quais competências, recursos ou processos são reconhecidos como pontos fortes? O que os clientes costumam elogiar?
+
+Fraquezas:
+
+Onde estão nossas maiores dificuldades? Que limitações internas prejudicam nosso desempenho? O que precisa ser aprimorado em processos, recursos ou competências? Existem reclamações recorrentes dos clientes?
+
+Oportunidades:
+
+Quais tendências do mercado podem beneficiar nosso negócio? Existem mudanças tecnológicas, econômicas, sociais ou regulatórias que representam oportunidades? Quais demandas dos clientes ainda não estão sendo plenamente atendidas?
+
+COMO CONSTRUIR A MATRIZ RACI
+
+Ameaças:
+
+Quais fatores externos podem prejudicar nosso desempenho? Quais são os riscos relacionados ao mercado, economia, concorrência ou legislação? Existem movimentos da concorrência que preocupam?
+
+O papel do facilitador é registrar todas as contribuições de forma fiel, sem filtragem ou julgamento prévio, garantindo o máximo aproveitamento do brainstorming.
+
+3.3 - Organização dos dados e validação Após as entrevistas, todas as respostas devem ser organizadas e agrupadas. É importante:
+
+Eliminar duplicações; Agrupar itens semelhantes; Refinar as descrições para garantir clareza e objetividade; Categorizar corretamente cada item no quadrante adequado da matriz (Forças, Fraquezas, Oportunidades ou Ameaças). Este é o momento de transformar as informações brutas em uma base estruturada para análise. E antes de formalizar a matriz SWOT, é essencial realizar uma etapa de validação dos pontos com os participantes ou com a liderança da empresa.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+4\. Construção da SWOT quantitativa
+
+4.1 - Priorização dos pontos Ainda na fase qualitativa, pode-se realizar uma priorização inicial dos itens, baseada na frequência das citações, no consenso entre os participantes ou na percepção de impacto. Isso não substitui a análise quantitativa, mas pode orientar as primeiras reflexões estratégicas.
+
+4.2 - Estruturação do cruzamento Monte uma matriz cruzada, onde os elementos de cada quadrante são correlacionados com os elementos dos quadrantes opostos e relacionados. Essa matriz é composta pelos seguintes cruzamentos:
+
+Forças x Oportunidades (FO) Forças x Ameaças (FA) Fraquezas x Oportunidades (DO) Fraquezas x Ameaças (DA) Forças x Fraquezas (Análise Interna) A matriz deve ser estruturada de forma que linhas e colunas representem os elementos SWOT, permitindo que cada interação entre eles seja avaliada numericamente.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+4.3 - Atribuição de pesos Cada interação entre os elementos deve ser avaliada atribuindo um peso de acordo com o grau de influência que um fator exerce sobre o outro.
+
+Escala recomendada: 0 = Nenhuma relação 1 = Relação moderada 2 = Relação forte e significativa As perguntas que devem ser feitas ao cruzar cada ponto são:
+
+Forças X Oportunidades: Quais forças podem ser utilizadas para maximizar as oportunidades identificadas? Forças X Ameaças: Quais forças podem ser utilizadas para minimizar as ameças identificadas? Fraquezas X Oportunidades: Quais ações podem ser tomadas para minimizar as fraquezas, aproveitando as oportunidades Fraquezas X Ameaças: Como minimizar as fraquezas para identificar as ameaças identificadas Essa avaliação pode ser feita individualmente ou em grupo, preferencialmente com os mesmos participantes da etapa qualitativa ou com especialistas na organização.
+
+COMO CONSTRUIR A MATRIZ SWOT 4.4 - Explicação das somas e diferenças Na construção da Matriz SWOT Quantitativa, a aplicação das operações matemáticas — soma e diferença — ocorre de acordo com a lógica de como os fatores internos (forças e fraquezas) se relacionam com os fatores externos (oportunidades e ameaças).
+
+Operação de Soma A operação de soma é utilizada quando o objetivo da análise é compreender o peso total dos fatores internos sobre o ambiente externo de forma isolada, ou seja, observar como as forças, de maneira geral, impactam tanto nas oportunidades quanto nas ameaças, e como as fraquezas também exercem influência sobre esses elementos externos. Neste caso, realiza-se:
+
+A soma dos cruzamentos das forças com as oportunidades (FO) e das forças com as ameaças (FA).
+
+Essa soma representa o quanto as forças da organização são relevantes no contexto externo, tanto para potencializar oportunidades quanto para se proteger das ameaças. Da mesma forma, faz-se a soma dos cruzamentos das fraquezas com as oportunidades (DO) e das fraquezas com as ameaças (DA).
+
+Este valor reflete o quanto as fraquezas internas impactam negativamente na capacidade de aproveitar oportunidades e no agravamento das ameaças.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+Quando utilizamos a soma, estamos interessados em entender o peso absoluto que cada força ou fraqueza tem no contexto estratégico, independentemente do equilíbrio entre elas. É uma visão de acúmulo de impacto.
+
+Operação de Diferença A operação de diferença é aplicada quando o foco da análise é avaliar o equilíbrio entre forças e fraquezas em relação aos fatores externos. Ou seja, aqui não basta saber se existe impacto, mas sim se a empresa está mais preparada (com mais forças) ou mais vulnerável (com mais fraquezas) frente às oportunidades e ameaças. Neste caso, realiza-se:
+
+Diferença entre o cruzamento das oportunidades com as forças e o cruzamento das oportunidades com as fraquezas.
+
+Fórmula: (Oportunidades x Forças) - (Oportunidades x Fraquezas).
+
+Esse cálculo indica se, diante de cada oportunidade, a organização possui mais capacidade de aproveitá-la (resultado positivo) ou se as fraquezas internas comprometem essa exploração (resultado negativo). Diferença entre o cruzamento das ameaças com as forças e o cruzamento das ameaças com as fraquezas.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+Fórmula: (Ameaças x Forças) - (Ameaças x Fraquezas). Aqui o objetivo é entender se a organização tem força suficiente para se proteger das ameaças (resultado positivo) ou se está vulnerável devido às fraquezas (resultado negativo).
+
+Quando aplicamos a diferença, o foco está em avaliar a capacidade líquida da organização frente ao ambiente externo, considerando o saldo entre seus pontos fortes e fracos. Essa análise é mais orientada à capacidade de enfrentamento, preparo e competitividade.
+
+4.5 - Interpretação dos resultados
+
+Na soma, quanto maior o valor, maior é o impacto daquele fator (força ou fraqueza) no contexto externo, indicando quais elementos internos demandam mais atenção, seja para serem fortalecidos (no caso das forças) ou mitigados (no caso das fraquezas). Na diferença, quanto mais positivo o valor, mais a organização está preparada para aquela oportunidade ou protegida daquela ameaça. Quanto mais negativo, maior é a vulnerabilidade, ou seja, as fraquezas superam as forças nesse contexto.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+4.5 - Ordenação e priorização A priorização dos itens na Matriz SWOT Quantitativa não segue uma única lógica. Ela varia conforme o tipo de análise — se estamos avaliando oportunidades, ameaças, forças ou fraquezas.
+
+Oportunidades A análise das oportunidades é feita pela diferença entre o impacto das forças e das fraquezas sobre cada oportunidade.
+
+Fórmula: (Oportunidades x Forças) - (Oportunidades x Fraquezas) Interpretação:
+
+Quanto maior o valor, mais preparada está a organização para aproveitar aquela oportunidade. Oportunidades com os maiores valores são priorizadas, pois indicam cenários favoráveis, com mais forças do que fraquezas.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+Ameaças A lógica aqui é inversa. A análise também é feita pela diferença: (Ameaças x Forças) - (Ameaças x Fraquezas) Interpretação:
+
+Quanto menor o valor (mais próximo de zero ou negativo), maior é o risco, ou seja, a organização tem menos força e mais fraqueza para enfrentar aquela ameaça. Portanto, ameaças com os menores valores são priorizadas, pois representam os maiores riscos.
+
+Forças e Fraquezas (Soma)
+
+Forças: Soma de (Forças x Oportunidades) + (Forças x Ameaças). Quanto maior a soma, mais relevante é aquela força, pois ela amplia oportunidades e protege contra ameaças.
+
+Fraquezas: Soma de (Fraquezas x Oportunidades) + (Fraquezas x Ameaças). Quanto maior a soma, mais crítica é aquela fraqueza, pois ela dificulta o aproveitamento das oportunidades e agrava as ameaças.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+5\. Construção dos cenários estratégicos
+
+5.1 - O que são os cenários? Os cenários estratégicos na SWOT Quantitativa são combinações dos fatores internos (Forças e Fraquezas) com os fatores externos (Oportunidades e Ameaças). Eles representam diferentes contextos que ajudam a empresa a entender sua situação atual e projetar estratégias. Cada cenário reflete uma condição específica do negócio, sendo fundamental para a formulação dos planos de ação.
+
+5.2 - Quais são os cenários?
+
+1\. Cenário de Sobrevivência
+
+Cruzamento: Fraquezas x Ameaças Significado: Situação em que as fraquezas internas aumentam a exposição às ameaças externas. Foco Estratégico: Minimizar riscos e proteger a operação. 2. Cenário de Manutenção
+
+Cruzamento: Forças x Ameaças Significado: Avalia o quanto as forças internas conseguem proteger a empresa contra ameaças externas. Foco Estratégico: Manter a estabilidade e proteger o negócio dos riscos.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+3\. Cenário de Crescimento
+
+Cruzamento: Fraquezas x Oportunidades Significado: Mede o quanto as fraquezas internas dificultam o aproveitamento das oportunidades. Foco Estratégico: Resolver limitações internas para possibilitar crescimento.
+
+4\. Cenário de Desenvolvimento
+
+Cruzamento: Forças x Oportunidades Significado: Avalia a capacidade da empresa em utilizar suas forças para aproveitar as oportunidades externas. Foco Estratégico: Expandir, inovar e desenvolver o negócio.
+
+5.3 - Cálculo da pontuação total
+
+A Pontuação Total é a soma de todos os valores preenchidos naquela matriz de cruzamento específica. Isso representa o impacto consolidado daquele cruzamento. Exemplo: No cenário de sobrevivência serão somados todas as interações onde as Fraquezas estão nas linhas e as Ameaças nas colunas.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+5.3 - Cálculo da pontuação máxima A Pontuação Máxima corresponde ao cenário hipotético em que todas as interações possíveis são máximas, ou seja, todas com peso 2. Como calcular: Fórmula:
+
+Nº de Linhas (itens no quadrante da linha) × Nº de Colunas (itens no quadrante da coluna) × 2 Exemplo:
+
+Se há 5 fraquezas e 4 ameaças: 5 × 4 × 2 = 40 (Pontuação Máxima)
+
+5.4 - Cálculo da porcentagem de cada cenário A porcentagem serve para padronizar a comparação dos cenários, independentemente da quantidade de itens em cada quadrante. Fórmula: (Pontuação Total ÷ Pontuação Máxima) × 100
+
+5.5 - Interpretação dos cenários De acordo com as porcentagens, será definido em qual cenário aquela organização se encontra, para que a partir disso, seja possível traçar um planejamento estratégico assertivo. Possíveis estratégias para cada cenário são:
+
+Cenário de Sobrevivência alto: Foco em reduzir riscos e corrigir fraquezas críticas.
+
+COMO CONSTRUIR A MATRIZ SWOT
+
+Cenário de Manutenção alto: Fortalecer e manter os pontos fortes que ajudam a enfrentar ameaças. Cenário de Crescimento alto: Corrigir fraquezas que estão impedindo o crescimento. Cenário de Desenvolvimento alto: Aproveitar forças e oportunidades para expansão, inovação e evolução.
+
+6\. Benefícios
+
+A construção da matriz SWOT traz uma visão clara da empresa, transformando percepções em dados para decisões mais assertivas. Principais benefícios:
+
+Visão clara da empresa, com mapeamento dos fatores internos e externos. Diagnóstico preciso, saindo da percepção subjetiva e indo para dados concretos. Priorização estratégica, identificando quais forças, fraquezas, oportunidades e ameaças são mais relevantes. Melhor tomada de decisão, baseada em dados e não apenas em opiniões. Uso eficiente de recursos, focando no que realmente importa. Planos de ação mais direcionados e eficazes.
+
+7\. Modelo Padrão Modelo Padrão - Matriz SWOT Qualitativa Modelo Padrão - Matriz SWOT Quantitativa
+
+PRODUZIDO POR:
+
+PRODUTIVA
+
+JÚNIOR
+
+<https://drive.google.com/file/d/1qSi64vOty81PllSZkUnpLROruymCRxJv/view?usp=drivesdk>
+<https://drive.google.com/file/d/1PSoYnWyT4jkoOy4cVAFB3H1L5msUldsY/view?usp=drivesdk>
+<https://www.canva.com/design/DAGr2pdDtZc/8poizNNqkIY7iIAE6yr9UA/edit?utm_content=DAGr2pdDtZc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton>
+<https://www.canva.com/design/DAGr2pdDtZc/8poizNNqkIY7iIAE6yr9UA/edit?utm_content=DAGr2pdDtZc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton>
+<https://docs.google.com/spreadsheets/d/1xSiqIc7gthAaUHSa3RBs1_BMoqQMZRAWU7zQg-xBWUw/edit?usp=sharing>

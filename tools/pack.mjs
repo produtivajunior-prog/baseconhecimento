@@ -30,10 +30,13 @@ for (const a of assets) {
 // O acervo vive em src/data/*.json para poder ser revisado e versionado como dado,
 // não como código. Aqui ele volta para dentro do bundle: o distribuível continua
 // sendo um arquivo único, que abre em file:// sem servidor e sem fetch.
+// src/data/rascunhos/ NUNCA entra aqui: só conteúdo promovido (tools/promover.mjs).
 const dados = (nome) => JSON.parse(readFileSync(join(ROOT, `src/data/${nome}.json`), 'utf8'));
 
 const DADOS = {
+  taxonomia: dados('taxonomia'),
   ferramentas: dados('ferramentas'),
+  escopos: dados('escopos'),
   problemas: dados('problemas'),
   modelos: dados('modelos'),
   documentoPadrao: dados('documento-padrao'),

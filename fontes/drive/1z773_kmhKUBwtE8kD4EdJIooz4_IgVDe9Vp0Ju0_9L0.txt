@@ -1,0 +1,52 @@
+# id: 1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0
+# nome: Resumão dos escopos
+# mimeType: application/vnd.google-apps.spreadsheet
+# dono: thiagomelo@produtivajunior.com.br
+# url: https://docs.google.com/spreadsheets/d/1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0/edit?usp=drivesdk&ouid=100327922083657613631
+# extraidoEm: 2026-09-07
+# uso: escopo
+---
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| \[merged\] PRODUÇÃO | \[merged\] PRODUÇÃO | \[merged\] PRODUÇÃO | \[merged\] PRODUÇÃO | \[merged\] PRODUÇÃO | \[merged\] PRODUÇÃO | \[merged\] PRODUÇÃO | \[merged\] FINANCEIRO | \[merged\] FINANCEIRO | \[merged\] FINANCEIRO | \[merged\] FINANCEIRO | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA | \[merged\] ESTRATÉGIA |
+| GESTÃO A VISTA | PCP | CAPACIDADE PRODUTIVA | LAYOUT | PREVISÃO DE  DEMANDA | GESTÃO DE  ESTOQUE | Map e model | GERENCIAMENTO | PLANEJAMENTO | Custeio e precificação | EVE | DCO + PROSEL | GAMIFICAÇÃO | MAPEAMENTO  DE CULTURA | ESTRUTURAÇÃO COMERCIAL | PLANO DE MKT | PLANEJAMENTO  ESTRATÉGICO | IDEALIZAÇÃO DE NOVOS PRODUTOS | ESTRUTURAÇÃO DE  MODELO DE NEGÓCIO | PESQUISA DE MERCADO |  |  |  |  |  |  |
+| ENTENDIMENTO | ENTENDIMENTO DA PRODUÇÃO | Estudo sobre o serviço | ENTENDIMENTO | Alinhar objetivo da  previsão | Entendimento do negócio | Entendimento | Entendimento | Levantar e tratar dados | Mapeamento | Entendimento | Entendimento do Negócio  | Estudo interno da empresa | ENTENDIMENTO | ENTENDIMENTO | Entendimento de negócio | ENTENDIMENTO | ENTENDIMENTO | ANALISE DE MERCADO | Análise de mercado |  |  |  |  |  |  |
+| MAPEAMENTO | IDENTIFICAÇÃO E  CLASSIFICAÇÃO  DOS SISTEMAS  DE PRODUÇÃO | Entendimento da empresa | MAPEAMENTO | Coleta/análise de  dados históricos | Entendimento da estrutura do estoque | Mapeamento | Mapeamento  dos processos financeiros | Criar cenários | Coletar dados e tratar | Análise de mercado | Análise de Contexto  | Alinhamento de expectativas | APLICAÇÃO DE  PESQUISAS | ANÁLISE DE  MERCADO | Análise de ambiente | Análise do MVV  | ANALISE DE MERCADO | ESTUDO DE CONCORRENTES | Definição da pesquisa |  |  |  |  |  |  |
+| RELATÓRIO DE  MELHORIAS | PLANEJAMENTO DA PRODUÇÃO | Mapeamento dos processos | LEVANTAR RESTRIÇÕES | Definir horizonte de tempo | Mapeamento dos processos AS IS de ressuprimento e armazenagem | Relatório de análise | Coleta de dados/ gastos/entradas | Levantar investimentos | Curva ABC | Levantamento de  Investimentos | Entrevistas com os colaboradores | Entendimento do perfil dos colaboradores | ANÁLISE DAS  RESPOSTAS | MAPEAMENTO | Pesquisa de mercado | Analise do ambiente | CONSTRUÇÃO E PRIORIZAÇÃO DE IDEIAS (ICP, BP, CVP, SWOT | ENTENDER O CLIENTE | Definição da metodologia |  |  |  |  |  |  |
+| MODELAGEM | MAPEAMENTO | Modelagem dos processos | FERRAMENTA DE  ANÁLISE DOS PROCESSOS | Definir método da previsão | Análise das necessidades dos clientes | Modelagens | Análise desses dados | Indicadores financeiros | Classificar gastos | Levantamento de premissas | Identificação e Analíse Crítica dos cargos | Mapemaneto dos processos | FORMULAÇÃO DE ESTRATÉGIAS DE ENGAJAMENTO | JORNADA DO CLIENTE AS IS | Construção do público alvo e Buyer Persona | Pesquisa de mercado | CONSTRUÇÃO DE NOVO PRODUTO | DEFINIR RECURSOS, PROCESSOS E  STAKEHOLDERS | Elaboração das ferramentas |  |  |  |  |  |  |
+| ELABORAÇÃO DE  ROTINA | ANÁLISE DE TEMPO | Construção de ferramenta | MODELAGENS | Construir ferramenta/ cálculo  da previsão | Análise e tratamento de dados sobre o estoque | Ferramenta de rotina e  rotina das modelagens | Construir ferramentas  financeiras (DRE, FLUXO) | Fazer D.R.E | Método de custeio | Projeções financeiras | Definição da configuração do Descritivo de Cargo | Modelagem dos processos | PLANOS DE AÇÃO | CONSTRUÇÃO DO ICP | Elaboração da Jornada do Cliente | Estruturar metas e objetivos e acompanhamento estratégico | ESTRUTURAÇÃO E LANÇAMENTO |  | Coleta de respostas |  |  |  |  |  |  |
+| FERRAMENTA DE  ROTINA | MODELAGEM | Definir os elementos | DESENHO DE OPÇÕES  | Construir MAD | Análise da curva ABC e priorização dos produtos | DCO | Indicadores  | Ferramenta visual | Rateio/rastreio | Indicadores  | Identificação e Analíse Crítica das Atribuições | Construção dos critérios, pontuações e tema da gamificação  | ACOMPANHAMENTO | FERRAMENTAS COMERCIAIS | Definir os canais de tração | Planos de ação |  |  | Análise e interpretação dos dados (Dashboard |  |  |  |  |  |  |
+| ESTRUTURAR LAYOUT DA  GESTAO A VISTA | CONTROLE DO PCP (FERRAMENTA) | Cálculo do N | SIMULAÇÃO | Manual de implementação e documentação  | Entendimento dos custos de armazenagem | Documentação Treinamento | Analise de indicadores | Planos de ação | DRE (por produto | Estudo de viabilidade | Montagem do Descritivo de Cargo | Construção da ferramenta de acompanhamento |  | JORNADA DO CLIENTE TO BE | Traçar estratégias de marketing |  |  |  | Relatório Final com ICP, planos de ação, Swot, etc |  |  |  |  |  |  |
+| GUIA DE  IMPLEMENTAÇÃO | PROGRAMAÇÃO DA  PRODUÇÃO | Cronometragem | INDICADORES | Treinamento e acompanhamento | Organização da área de materiais | Acompanhamento | Dashboard | Manualização | Markup (por produto) |  | Construção do Organograma  | Estratégias de engajamento |  | MODELAGENS | Constuir ferramentas de suporte |  |  |  |  |  |  |  |  |  |  |
+|  | CONTROLE DA  PRODUÇÃO | Tempo médio, velocidade e FT |  |  | Definição do método de controle do estoque |  | Modelagens |  | Análise de mercado\* |  | Implementação  | Plano de ação |  |  | Definir indicadores de acompanhamento e controle |  |  |  |  |  |  |  |  |  |  |
+|  |  | DEFINIÇÃO DO TN E TP |  |  | Estabelecer o armazenamento de materiais\* |  | Planos de ação |  | Indicadores |  | Monitoramento frente à rotina  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  | Capacidade produtiva |  |  | Definição dos indicadores para o gerenciamento do estoque |  |  |  | Planos de ação |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  | Construção de ferramenta de acompanhamento e mensuração |  |  | Modelagens dos processos TO BE |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  | Relatório de capacidade produtiva + análise crítica |  |  | Construção da ferramenta de acompanhamento de estoque |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  | Criação de planos de ação |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| PCP |  | CAPACIDADE PRODUTIVA |  |  |  | ESTOQUE |  |  | layout |  |  |  | Previsão  |
+| Recursos essenciais |  | QUANTOS PRODUTOS |  |  |  | Tem forma de identificação |  |  | tem a planta baixa? |  |  |  | Objetivo da previsão (principal métrica) |
+| Principal objetivo do planejamento |  | Tempo de produção |  |  |  | Como é o controle hoje |  |  | tem alguma restrição física ou orçamentária |  |  |  | Tem dados históricos confiáveis? |
+| Faz uso de sistemas? |  | Se falta produto para vender ou atrasa |  |  |  | Quantos produtos (familias) |  |  | quais os processos envolvidos com o layout |  |  |  | Ele quer prever a demanda de quanto tempo |
+|  |  | Se produção fica parada por falta de material |  |  |  | organização do estoque  |  |  | tem algo específico que ele sente dificuldade no layout atual |  |  |  | Tem sazonalidade |
+|  |  | quantas familias de produtos |  |  |  | ferramentas ou sistema |  |  |  |  |  |  | faz promoções |
+|  |  | produção puxada ou empurrada |  |  |  | sazonalidade? |  |  |  |  |  |  | Familias de produtos |
+|  |  |  |  |  |  | tem dados históricos ? |  |  |  |  |  |  |  |
+|  |  |  |  |  |  | já tem uma priorização de produtos? |  |  |  |  |  |  |  |
+| Gerenciamento financeiro |  |  |  |  |  | ele sabe o momento de repor? |  |  |  |  |  |  |  |
+| Como é a classificação de gastos |  |  |  |  |  | indicadores? |  |  |  |  |  |  |  |
+| acompanha indicadores? |  |  | custeio e preci |  | EVE | Como é integração, vendas, compras,  produção, estoque  |  |  | Mapeamento de cultura |  |  |  |  |
+| tem dados desde quando |  |  | Quantos produtos |  | Qual intuito do estudo |  |  |  | Para que ele quer isso |  |  |  |  |
+| onde ficam esses dados |  |  | Como é feito hj em dia |  | Tem alguma ideia inicial desse investimento |  |  |  | Pensa em bonificações |  |  |  |  |
+| Tem dre/fluxo? |  |  | Sabe o lucro unitário? |  | Tem noção de locais, concorrentes, gostos dos clientes? |  |  |  | Entender como é o comportamento dos colaboradores |  |  |  |  |
+| Usa sistema ou planilha |  |  | Esses produtos é padronizado? |  |  |  |  |  |  |  |  |  |  |
+| Comentou sobre dashboard? |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Como é a rotina financeira |  |  |  |  | Estruturação comercial |  |  | P.E |  |  | Plano de marketing |  |  |
+|  |  |  |  |  | Como é o processo hoje |  |  | Tem algum acompanhamento de metas ? |  |  | Intuio dele |  |  |
+|  |  |  |  |  | Utiliza de alguma ferramenta |  |  | Tem MVV |  |  | Ja fez algo antes |  |  |
+|  |  |  |  |  | Sofre com inadimplencia |  |  |  |  |  | Tem gestor de midia |  |  |
+|  |  |  |  |  |  |  |  |  |  |  | Tem alguma estrategia de divulgação sendo usada |  |  |
