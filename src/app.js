@@ -6,6 +6,13 @@ class Component extends DCLogic {
     cardStyle: 'detalhado',
     selId: null,
     escopoId: null,
+    caseId: null,
+    caseQuery: '',
+    caseFilters: { escopo: [], segmento: [], ano: [], ferramenta: [] },
+    casesLocais: this.carregarLocal('hangar.casesLocais', []),
+    formCase: this.formCaseVazio(),
+    caseErro: '',
+    caseFiltroFerr: '',
     open: {},
     rating: null,
     feedback: '',
@@ -13,7 +20,7 @@ class Component extends DCLogic {
     recoKey: null,
     toast: '',
     form: this.formVazio(),
-    extra: [],
+    extra: this.carregarLocal('hangar.extra', []),
     doc: null,
     aiDocInput: '',
     aiLoading: false,
@@ -51,6 +58,170 @@ class Component extends DCLogic {
 
   // Escopos (linhas de serviço) com etapas ordenadas — src/data/escopos.json.
   ESCOPOS = DADOS.escopos;
+
+  // Banco de cases — src/data/cases.json (publicados) + os que este navegador cadastrou (localStorage).
+  CASES = DADOS.cases;
+
+  // Persistência local: sem backend, o que o membro cadastra fica neste navegador. Tudo em try/catch:
+  // sem localStorage (modo privado, file:// bloqueado) o app segue funcionando, só não lembra.
+  carregarLocal(chave, padrao) { try { const v = (typeof localStorage !== 'undefined') && localStorage.getItem(chave); return v ? JSON.parse(v) : padrao; } catch (e) { return padrao; } }
+  salvarLocal(chave, valor) { try { if (typeof localStorage !== 'undefined') localStorage.setItem(chave, JSON.stringify(valor)); } catch (e) {} }
+  allCases() { return this.state.casesLocais.map(c => ({ ...c, local: true })).concat(this.CASES); }
+
+  // Link de vídeo → URL embutível. YouTube e Drive; qualquer outro fica só como link.
+  embedDe(url) {
+    const u = String(url || '').trim();
+    let m = /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/.exec(u);
+    if (m) return 'https://www.youtube.com/embed/' + m[1];
+    m = /drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/.exec(u);
+    if (m) return 'https://drive.google.com/file/d/' + m[1] + '/preview';
+    return '';
+  }
+  slugDe(t) { return this.normaliza(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  linhas(t) { return String(t || '').split('\n').map(x => x.trim()).filter(Boolean); }
+  fmtMes(s) { const m = /^(\d{4})-(\d{2})$/.exec(s || ''); if (!m) return s || ''; const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']; return meses[+m[2]-1] + ' ' + m[1]; }
+
+  formCaseVazio() {
+    const eu = this.carregarLocal('hangar.eu', {});
+    return { cliente:'', segmento:'', porte:'', cidade:'', escopoId:'', escopoNome:'', inicio:'', fim:'', duracaoDias:'',
+      gerenteNome:'', gerenteEmail:'', c1Nome:'', c1Email:'', c2Nome:'', c2Email:'',
+      resumo:'', desafio:'', solucao:'', resultados:'', aprendizados:'', depoimento:'', tags:'',
+      ferramentas:[], documentos:[{ nome:'', tipo:(DADOS.taxonomia.documentosCase||[])[3] || 'Outro', url:'' }],
+      videoUrl:'', videoQuem:'Gerente e consultores', videoDuracao:'',
+      meuNome: eu.nome || '', meuEmail: eu.email || '' };
+  }
+  validarCase(f) {
+    if (!f.cliente.trim()) return 'Informe o nome do cliente.';
+    if (!f.segmento.trim()) return 'Informe o segmento do cliente.';
+    if (!f.escopoId && !f.escopoNome.trim()) return 'Escolha o escopo do projeto (ou descreva em "Outro").';
+    if (!f.gerenteNome.trim() || !f.c1Nome.trim() || !f.c2Nome.trim()) return 'A equipe precisa de 1 gerente e 2 consultores com nome.';
+    if (f.resumo.trim().length < 20) return 'Escreva um resumo do projeto com pelo menos duas frases.';
+    const emails = [f.gerenteEmail, f.c1Email, f.c2Email, f.meuEmail].filter(Boolean);
+    if (emails.some(e => !/^[^@\s]+@produtivajunior\.com\.br$/.test(e.trim()))) return 'Use e-mails @produtivajunior.com.br na equipe.';
+    for (const d of f.documentos) { if ((d.nome || d.url) && !/^https:\/\//.test(d.url || '')) return 'Cada documento precisa de um link https (Drive).'; }
+    if (f.videoUrl && !/^https:\/\//.test(f.videoUrl.trim())) return 'O link do vídeo precisa começar com https://.';
+    if (!f.meuNome.trim()) return 'Diga quem está cadastrando (seu nome).';
+    return '';
+  }
+  montarCase(f) {
+    const ano = (f.fim || f.inicio || this.hoje()).slice(0, 4);
+    const escopo = this.ESCOPOS.find(e => e.id === f.escopoId);
+    const pessoa = (n, e) => ({ nome: n.trim(), email: (e || '').trim() });
+    return {
+      id: [this.slugDe(f.cliente), ano, this.slugDe(escopo ? escopo.nome : f.escopoNome)].filter(Boolean).join('-'),
+      cliente: f.cliente.trim(), segmento: f.segmento.trim(), porte: f.porte || '', cidade: f.cidade.trim(),
+      escopoId: escopo ? escopo.id : null, escopoNome: escopo ? escopo.nome : f.escopoNome.trim(),
+      periodo: { inicio: f.inicio || '', fim: f.fim || '' }, duracaoDias: f.duracaoDias ? Number(f.duracaoDias) : null,
+      equipe: { gerente: pessoa(f.gerenteNome, f.gerenteEmail), consultores: [pessoa(f.c1Nome, f.c1Email), pessoa(f.c2Nome, f.c2Email)] },
+      resumo: f.resumo.trim(), desafio: f.desafio.trim(), solucao: f.solucao.trim(),
+      resultados: this.linhas(f.resultados), aprendizados: this.linhas(f.aprendizados),
+      ferramentas: f.ferramentas.slice(),
+      documentos: f.documentos.filter(d => d.url).map(d => ({ nome: d.nome.trim() || d.url, tipo: d.tipo, url: d.url.trim() })),
+      video: f.videoUrl.trim() ? { url: f.videoUrl.trim(), quem: f.videoQuem.trim(), duracao: f.videoDuracao.trim() } : null,
+      depoimentoCliente: f.depoimento.trim(), tags: f.tags.split(',').map(x => x.trim()).filter(Boolean),
+      cadastradoPor: pessoa(f.meuNome, f.meuEmail), atualizado: this.hoje(),
+    };
+  }
+  publishCase() {
+    const f = this.state.formCase;
+    const erro = this.validarCase(f);
+    if (erro) { this.setState({ caseErro: erro }); return; }
+    const c = this.montarCase(f);
+    const casesLocais = [c].concat(this.state.casesLocais.filter(x => x.id !== c.id));
+    this.salvarLocal('hangar.casesLocais', casesLocais);
+    this.salvarLocal('hangar.eu', { nome: f.meuNome.trim(), email: f.meuEmail.trim() });
+    this.setState({ casesLocais, caseErro: '', formCase: this.formCaseVazio() });
+    this.showToast('Case salvo neste navegador. Baixe o arquivo e envie ao CIEP para publicar para todos.');
+    this.openCase(c.id);
+  }
+  // Gera o arquivo do case para enviar ao CIEP. Guarda o último em window para o smoke conferir.
+  baixarJson(c) {
+    const { local, ...limpo } = c;
+    const json = JSON.stringify(limpo, null, 2);
+    const nome = 'case-' + limpo.id + '.json';
+    if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json };
+    if (typeof document === 'undefined') return;
+    try {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
+      a.download = nome; document.body.appendChild(a); a.click();
+      setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      this.showToast('Arquivo ' + nome + ' gerado. Envie ao CIEP.');
+    } catch (e) { this.showToast('Não consegui gerar o arquivo aqui. Use "Copiar JSON".'); }
+  }
+  copiarJson(c) {
+    const { local, ...limpo } = c;
+    const json = JSON.stringify(limpo, null, 2);
+    const ok = () => this.showToast('JSON do case copiado. Cole numa mensagem para o CIEP.');
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard) navigator.clipboard.writeText(json).then(ok, () => this.showToast('Não consegui copiar automaticamente.'));
+      else ok();
+    } catch (e) { this.showToast('Não consegui copiar automaticamente.'); }
+  }
+  openCase(id) { this.setState({ screen:'case', caseId:id }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+  openNovoCase() { this.setState({ screen:'novo-case', caseErro:'' }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+
+  decorateCase(c) {
+    const escopo = c.escopoId ? this.ESCOPOS.find(e => e.id === c.escopoId) : null;
+    const escopoNome = escopo ? escopo.nome : (c.escopoNome || 'Escopo não informado');
+    const g = escopo ? (this.TAXONOMIA.gruposEscopo[escopo.grupo] || {}) : {};
+    const eq = c.equipe || {}; const cons = eq.consultores || [];
+    const equipe = [{ ...(eq.gerente||{}), papel:'Gerente' }].concat(cons.map(x => ({ ...x, papel:'Consultor' })))
+      .filter(x => x.nome).map(x => ({ ...x, iniciais: this.initials(x.nome) }));
+    const ferramentas = (c.ferramentas || []).map(fid => this.allData().find(d => d.id === fid)).filter(Boolean).map(d => this.decorate(d));
+    const docs = (c.documentos || []).map(d => ({ ...d, ext: this.extOf(d), abrir: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); if (typeof window!=='undefined') window.open(d.url, '_blank', 'noopener'); } }));
+    const video = c.video && c.video.url ? c.video : null;
+    const embed = video ? this.embedDe(video.url) : '';
+    const periodoFmt = [this.fmtMes((c.periodo||{}).inicio), this.fmtMes((c.periodo||{}).fim)].filter(Boolean).join(' – ');
+    const ano = ((c.periodo||{}).fim || (c.periodo||{}).inicio || c.atualizado || '').slice(0, 4);
+    return { ...c, escopoNome, escopoCor: g.cor || '#4E5E96', escopoBg: g.bg || '#ECEFF7', hasEscopo: !!escopo,
+      abrirEscopo: () => { if (escopo) this.openEscopo(escopo.id); },
+      equipe, equipeResumo: equipe.map(x => x.nome.split(' ')[0]).join(', '),
+      ferramentas, hasFerramentas: ferramentas.length > 0, docs, nDocs: docs.length, hasDocs: docs.length > 0,
+      video, hasVideo: !!video, videoEmbed: embed, hasVideoEmbed: !!embed, videoLink: video ? video.url : '',
+      abrirVideo: () => { if (video && typeof window!=='undefined') window.open(video.url, '_blank', 'noopener'); },
+      periodoFmt: periodoFmt || (ano ? String(ano) : ''), ano, duracaoFmt: c.duracaoDias ? c.duracaoDias + ' dias' : '',
+      resultados: c.resultados || [], hasResultados: !!(c.resultados && c.resultados.length), resultadoDestaque: (c.resultados && c.resultados[0]) || c.resumo,
+      aprendizados: c.aprendizados || [], hasAprendizados: !!(c.aprendizados && c.aprendizados.length),
+      hasDesafio: !!c.desafio, hasSolucao: !!c.solucao, hasDepoimento: !!c.depoimentoCliente,
+      tags: c.tags || [], hasTags: !!(c.tags && c.tags.length), local: !!c.local,
+      cadastradoTexto: 'Cadastrado por ' + ((c.cadastradoPor||{}).nome || '—') + ' · ' + this.fmtData(c.atualizado),
+      open: () => this.openCase(c.id), baixar: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.baixarJson(c); }, copiar: () => this.copiarJson(c) };
+  }
+  computeCases() {
+    const f = this.state.caseFilters; const q = this.normaliza(this.state.caseQuery.trim());
+    return this.allCases().filter(c => {
+      const escopoKey = c.escopoId || ('outro:' + (c.escopoNome || ''));
+      const ano = ((c.periodo||{}).fim || (c.periodo||{}).inicio || c.atualizado || '').slice(0, 4);
+      if (f.escopo.length && !f.escopo.includes(escopoKey)) return false;
+      if (f.segmento.length && !f.segmento.includes(c.segmento)) return false;
+      if (f.ano.length && !f.ano.includes(ano)) return false;
+      if (f.ferramenta.length && !(c.ferramentas||[]).some(x => f.ferramenta.includes(x))) return false;
+      if (q) {
+        const escopo = c.escopoId ? this.ESCOPOS.find(e => e.id === c.escopoId) : null;
+        const eq = c.equipe || {};
+        const hay = this.normaliza([c.cliente, c.segmento, c.porte, c.cidade, escopo ? escopo.nome : c.escopoNome, c.resumo, c.desafio, c.solucao, c.depoimentoCliente,
+          ...(c.resultados||[]), ...(c.aprendizados||[]), ...(c.tags||[]), (eq.gerente||{}).nome, ...((eq.consultores||[]).map(x=>x.nome)),
+          ...((c.ferramentas||[]).map(fid => (this.allData().find(d=>d.id===fid)||{}).nome)), ...((c.documentos||[]).map(d=>d.nome))].join(' '));
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+  }
+  buildCaseFilters() {
+    const todos = this.allCases(); const f = this.state.caseFilters;
+    const conta = (lista, chave) => { const m = new Map(); for (const c of lista) for (const v of chave(c)) if (v) m.set(v, (m.get(v)||0)+1); return m; };
+    const grupos = [
+      { key:'escopo', label:'Escopo', conta: conta(todos, c => [c.escopoId || ('outro:' + (c.escopoNome||''))]), rotulo: v => v.startsWith('outro:') ? v.slice(6) : ((this.ESCOPOS.find(e=>e.id===v)||{}).nome || v) },
+      { key:'segmento', label:'Segmento', conta: conta(todos, c => [c.segmento]), rotulo: v => v },
+      { key:'ano', label:'Ano', conta: conta(todos, c => [((c.periodo||{}).fim || (c.periodo||{}).inicio || c.atualizado || '').slice(0,4)]), rotulo: v => v },
+      { key:'ferramenta', label:'Ferramenta usada', conta: conta(todos, c => c.ferramentas||[]), rotulo: v => (this.allData().find(d=>d.id===v)||{}).nome || v },
+    ];
+    return grupos.map(g => ({ key:g.key, label:g.label, options: [...g.conta.entries()].sort((a,b)=>b[1]-a[1]).map(([v,n]) => {
+      const active = f[g.key].includes(v);
+      return { value:v, label:g.rotulo(v), count:n, active, inactive:!active, toggle: () => this.setState(s => { const arr = s.caseFilters[g.key]; return { caseFilters: { ...s.caseFilters, [g.key]: arr.includes(v) ? arr.filter(x=>x!==v) : arr.concat(v) } }; }) };
+    }) })).filter(g => g.options.length);
+  }
 
   // Enums e estilos vêm de src/data/taxonomia.json. Nenhuma lista literal aqui:
   // filtro, formulário, chips, cores e o schema do prompt derivam de TAXONOMIA.
@@ -154,7 +325,7 @@ class Component extends DCLogic {
       this.setState({ applyLoading:false, applyError:'Não consegui preencher agora. Tente refinar os insumos e gerar de novo.' });
     }
   }
-  nav(screen) { this.setState({ screen, escopoId: screen==='escopos' ? null : this.state.escopoId }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+  nav(screen) { this.setState({ screen, escopoId: screen==='escopos' ? null : this.state.escopoId, caseId: screen==='cases' ? null : this.state.caseId }); if(typeof window!=='undefined') window.scrollTo(0,0); }
   openEscopo(id) { this.setState({ screen:'escopos', escopoId:id }); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
   toggleFilter(group, value) {
@@ -250,7 +421,7 @@ class Component extends DCLogic {
       entradas:['—'], saidas:['—'], passos:['Conteúdo gerado automaticamente a partir do cadastro.'],
       perguntas:['—'], cuidados:['—'], exemplos:['—'], anexos:[]
     };
-    this.setState(s => ({ extra:[item, ...s.extra], toast:'Conteúdo publicado! Página gerada automaticamente.', form:this.formVazio() }));
+    this.setState(s => { const extra = [item, ...s.extra]; this.salvarLocal('hangar.extra', extra); return { extra, toast:'Conteúdo publicado! Página gerada automaticamente.', form:this.formVazio() }; });
     setTimeout(()=>{ this.openContent(id); this.setState({toast:''}); }, 1100);
   }
 
@@ -412,9 +583,9 @@ class Component extends DCLogic {
     const dec = (it) => it ? this.decorate(it) : null;
 
     // nav
-    const navDef = [{key:'home',label:'Início'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
+    const navDef = [{key:'home',label:'Início'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
     const navItems = navDef.map(n => {
-      const active = s.screen===n.key || (n.key==='biblioteca' && s.screen==='conteudo');
+      const active = s.screen===n.key || (n.key==='biblioteca' && s.screen==='conteudo') || (n.key==='cases' && (s.screen==='case' || s.screen==='novo-case'));
       return { label:n.label, go: n.key==='docs' ? ()=>this.goDocs() : ()=>this.nav(n.key), bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
     });
 
@@ -433,7 +604,39 @@ class Component extends DCLogic {
 
     const quickChips = this.vivos(this.TAXONOMIA.tipos)
       .map(t => ({ label:this.TAXONOMIA.tipos[t].label||t, tipo:t, dot:this.TAXONOMIA.tipos[t].color, go:()=>this.setState({ screen:'biblioteca', filters:{...s.filters, tipo:[t]} }) }))
-      .concat([{ label:'Escopos', dot:'#4E5E96', go:()=>this.nav('escopos') }]);
+      .concat([{ label:'Escopos', dot:'#4E5E96', go:()=>this.nav('escopos') }, { label:'Cases', dot:'#B23B47', go:()=>this.nav('cases') }]);
+
+    // cases
+    const decCase = (c) => this.decorateCase(c);
+    const casesTodos = this.allCases();
+    const casesList = this.computeCases().sort((a,b)=>String(b.atualizado||'').localeCompare(String(a.atualizado||''))).map(decCase);
+    const casesRecentes = casesTodos.slice().sort((a,b)=>String(b.atualizado||'').localeCompare(String(a.atualizado||''))).slice(0,3).map(decCase);
+    const caseFilterGroups = this.buildCaseFilters();
+    const caseActiveChips = [];
+    caseFilterGroups.forEach(g => g.options.filter(o=>o.active).forEach(o => caseActiveChips.push({ label:o.label, remove:o.toggle })));
+    const caseRaw = s.caseId ? casesTodos.find(c => c.id === s.caseId) : null;
+    const caseSel = caseRaw ? decCase(caseRaw) : null;
+    // formulário de case
+    const fcase = s.formCase;
+    const setFC = (k) => (e) => this.setState(st => ({ formCase: { ...st.formCase, [k]: e.target.value }, caseErro:'' }));
+    const fc = {}; for (const k of ['cliente','segmento','porte','cidade','escopoId','escopoNome','inicio','fim','duracaoDias','gerenteNome','gerenteEmail','c1Nome','c1Email','c2Nome','c2Email','resumo','desafio','solucao','resultados','aprendizados','depoimento','tags','videoUrl','videoQuem','videoDuracao','meuNome','meuEmail']) fc[k] = setFC(k);
+    const escopoOptions = [{ value:'', label:'Escolha o escopo…' }].concat(this.ESCOPOS.map(e => ({ value:e.id, label:e.nome }))).concat([{ value:'', label:'Outro (descrever abaixo)' }]);
+    const porteOptions = [{ value:'', label:'Porte…' }].concat(this.vivos(this.TAXONOMIA.portes || []).map(v => ({ value:v, label:v })));
+    const docTipoOptions = this.vivos(this.TAXONOMIA.documentosCase || []).map(v => ({ value:v, label:v }));
+    const filtroFerr = this.normaliza(s.caseFiltroFerr);
+    const ferrChips = data.filter(d => !filtroFerr || this.normaliza(d.nome).includes(filtroFerr)).map(d => {
+      const ativo = fcase.ferramentas.includes(d.id);
+      return { id:d.id, nome:d.nome, ativo, inativo:!ativo, bg: ativo?'#EAF6F9':'#fff', border: ativo?'#3DAFC7':'#DCE7EB', color: ativo?'#1E7C92':'#3C545B',
+        toggle: () => this.setState(st => ({ formCase: { ...st.formCase, ferramentas: ativo ? st.formCase.ferramentas.filter(x=>x!==d.id) : st.formCase.ferramentas.concat(d.id) } })) };
+    });
+    const docsRows = fcase.documentos.map((d, i) => ({ ...d, idx:i, n:i+1,
+      setNome: (e) => this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.map((x,j)=>j===i?{...x,nome:e.target.value}:x) } })),
+      setTipo: (e) => this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.map((x,j)=>j===i?{...x,tipo:e.target.value}:x) } })),
+      setUrl: (e) => this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.map((x,j)=>j===i?{...x,url:e.target.value}:x) } })),
+      remove: () => this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.filter((_,j)=>j!==i) } })),
+      tipoOptions: docTipoOptions.map(o => ({ ...o, selected: o.value===d.tipo })) }));
+    const videoPreview = this.embedDe(fcase.videoUrl);
+    const casePreview = (() => { try { return this.validarCase(fcase) ? null : this.montarCase(fcase); } catch (e) { return null; } })();
 
     // escopos
     const gruposEscopo = this.TAXONOMIA.gruposEscopo;
@@ -442,7 +645,7 @@ class Component extends DCLogic {
       escopos:this.ESCOPOS.filter(e=>e.grupo===g).sort((a,b)=>(a.status==='ativo'?0:1)-(b.status==='ativo'?0:1)).map(decEscopo),
     })).filter(g => g.escopos.length);
     const escopoRaw = s.escopoId ? this.ESCOPOS.find(e=>e.id===s.escopoId) : null;
-    const escopoSel = escopoRaw ? decEscopo(escopoRaw) : null;
+    const escopoSel = escopoRaw ? { ...decEscopo(escopoRaw), cases: casesTodos.filter(c => c.escopoId === escopoRaw.id).map(decCase), hasCases: casesTodos.some(c => c.escopoId === escopoRaw.id) } : null;
     const escopoEtapas = escopoRaw ? (escopoRaw.etapas||[]).map((et,i,arr) => {
       const ferramentas = (et.ferramentas||[]).map(fid=>dec(data.find(d=>d.id===fid))).filter(Boolean);
       return { ...et, num:(et.ordem<10?'0':'')+et.ordem, ferramentas, hasFerramentas:ferramentas.length>0, semFerramentas:ferramentas.length===0,
@@ -481,7 +684,7 @@ class Component extends DCLogic {
       return 'Rascunho · aguardando revisão';
     };
     const sel = selRaw ? { ...dec(selRaw), respInitials:this.initials(this.respNome(selRaw.responsavel)), anexos:(selRaw.anexos||[]).map(decAnexo), revisaoTexto:revisaoTexto(selRaw),
-      pendencias:selRaw.pendencias||[], hasPendencias:!!(selRaw.pendencias&&selRaw.pendencias.length) } : null;
+      pendencias:selRaw.pendencias||[], hasPendencias:!!(selRaw.pendencias&&selRaw.pendencias.length), cases: casesTodos.filter(c => (c.ferramentas||[]).includes(selRaw.id)).map(decCase), hasCases: casesTodos.some(c => (c.ferramentas||[]).includes(selRaw.id)) } : null;
     const blocks = selRaw ? this.buildBlocks(selRaw) : [];
 
     // anexos modal
@@ -561,6 +764,19 @@ class Component extends DCLogic {
       // routing
       isHome: s.screen==='home', isBiblioteca: s.screen==='biblioteca', isConteudo: s.screen==='conteudo',
       isCadastro: s.screen==='cadastro', isRecomendar: s.screen==='recomendar', isEscopos: s.screen==='escopos',
+      isCases: s.screen==='cases', isCase: s.screen==='case', isNovoCase: s.screen==='novo-case',
+      goCases:()=>this.nav('cases'), goNovoCase:()=>this.openNovoCase(),
+      // banco de cases
+      casesList, casesCount: casesList.length, semCases: casesTodos.length===0, semResultadoCases: casesTodos.length>0 && casesList.length===0,
+      caseFilterGroups, caseActiveChips, hasCaseFilters: caseActiveChips.length>0, clearCaseFilters:()=>this.setState({ caseFilters:{ escopo:[], segmento:[], ano:[], ferramenta:[] } }),
+      caseQuery: s.caseQuery, onCaseQuery:(e)=>this.setState({ caseQuery:e.target.value }),
+      caseSel, hasCaseSel: !!caseSel, casesRecentes, hasCasesRecentes: casesRecentes.length>0,
+      // formulário de case
+      formCase: fcase, fc, escopoOptions, porteOptions, docTipoOptions, ferrChips, caseFiltroFerr: s.caseFiltroFerr, onCaseFiltroFerr:(e)=>this.setState({ caseFiltroFerr:e.target.value }),
+      nFerrEscolhidas: fcase.ferramentas.length, docsRows, addDoc:()=>this.setState(st=>({ formCase:{ ...st.formCase, documentos: st.formCase.documentos.concat([{ nome:'', tipo:docTipoOptions[0]?docTipoOptions[0].value:'Outro', url:'' }]) } })),
+      videoPreview, hasVideoPreview: !!videoPreview, caseErro: s.caseErro, hasCaseErro: !!s.caseErro,
+      publishCase:()=>this.publishCase(), baixarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.baixarJson(this.montarCase(fcase)); }, copiarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.copiarJson(this.montarCase(fcase)); },
+      casePronto: !!casePreview, limparCase:()=>this.setState({ formCase:this.formCaseVazio(), caseErro:'' }),
       goHome:()=>this.nav('home'), goBiblioteca:()=>this.nav('biblioteca'), goRecomendar:()=>this.nav('recomendar'), goEscopos:()=>this.nav('escopos'),
       // escopos
       escoposPorGrupo, hasEscopoSel: !!escopoSel, noEscopoSel: !escopoSel, escopoSel, escopoEtapas,

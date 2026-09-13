@@ -16,7 +16,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 // --com-rascunhos: bundle de PRÉ-VISUALIZAÇÃO com os rascunhos de src/data/rascunhos/ (status "Em revisão"),
 // gravado em outro arquivo. O distribuível de verdade só leva conteúdo promovido.
 const PREVIEW = process.argv.includes('--com-rascunhos');
-const OUT = join(ROOT, PREVIEW ? 'dist/Biblioteca_CIEP.preview.html' : 'dist/Biblioteca_CIEP.html');
+const OUT = join(ROOT, PREVIEW ? 'dist/Hangar.preview.html' : 'dist/Hangar.html');
 const SCRIPT_OPEN = '<script type="text/x-dc" data-dc-script="">';
 
 const { assets, extResources } = JSON.parse(readFileSync(join(ROOT, 'assets/index.json'), 'utf8'));
@@ -43,6 +43,7 @@ const DADOS = {
   problemas: dados('problemas'),
   modelos: dados('modelos'),
   documentoPadrao: dados('documento-padrao'),
+  cases: dados('cases'),
 };
 
 // `evalDcLogic` do dc-runtime envolve a fonte inteira num `new Function`, então o
@@ -50,7 +51,8 @@ const DADOS = {
 if (PREVIEW) {
   const dir = join(ROOT, 'src/data/rascunhos');
   const rascunhos = existsSync(dir) ? readdirSync(dir).filter((n) => n.endsWith('.json')).map((n) => JSON.parse(readFileSync(join(dir, n), 'utf8'))) : [];
-  const ferr = rascunhos.filter((r) => !r.id.startsWith('escopo-') && r.etapas === undefined);
+  const casos = rascunhos.filter((r) => r.cliente !== undefined);
+  const ferr = rascunhos.filter((r) => !r.id.startsWith('escopo-') && r.etapas === undefined && r.cliente === undefined);
   const esc = rascunhos.filter((r) => r.etapas !== undefined);
   const emRevisao = (r) => ({ ...r, status: r.status === 'Em construção' ? r.status : 'Em revisão' });
   // rascunho substitui o item promovido de mesmo id; os legados do MVP saem da prévia
@@ -59,7 +61,8 @@ if (PREVIEW) {
   for (const r of ferr) if (r.modelo) DADOS.modelos = DADOS.modelos.filter((m) => m.id !== r.modelo.id).concat([r.modelo]);
   DADOS.modelos = DADOS.modelos.filter((m) => m.toolId === null || DADOS.ferramentas.some((f) => f.id === m.toolId));
   DADOS.problemas = DADOS.problemas.map((p) => ({ ...p, ids: p.ids.filter((id) => DADOS.ferramentas.some((f) => f.id === id)) })).filter((p) => p.ids.length);
-  console.log(`prévia: ${ferr.length} ferramenta(s) e ${esc.length} escopo(s) em rascunho`);
+  DADOS.cases = DADOS.cases.filter((c) => !casos.some((r) => r.id === c.id)).concat(casos);
+  console.log(`prévia: ${ferr.length} ferramenta(s), ${esc.length} escopo(s) e ${casos.length} case(s) em rascunho`);
 }
 
 const preludio =

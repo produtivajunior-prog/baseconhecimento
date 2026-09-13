@@ -166,12 +166,12 @@
       <div onclick="{{ goHome }}" style="display:flex;align-items:center;gap:11px;cursor:pointer;flex:none">
         <img src="3ef4b086-390f-48b4-b543-ba27789b2a30" alt="Produtiva Júnior" style="height:30px;width:auto;display:block">
         <div style="display:flex;flex-direction:column;line-height:1.05">
-          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:16px;color:#163B45;letter-spacing:-0.01em">Biblioteca CIEP</span>
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:16px;color:#163B45;letter-spacing:-0.01em">Hangar</span>
           <span style="font-size:11px;color:#8AA0A7;font-weight:500;letter-spacing:0.04em">PRODUTIVA JÚNIOR</span>
         </div>
       </div>
       <nav style="display:flex;align-items:center;gap:4px;margin-left:6px">
-        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
           <button onclick="{{ n.go }}" style="border:none;background:{{ n.bg }};color:{{ n.color }};font-size:14.5px;font-weight:{{ n.weight }};padding:8px 14px;border-radius:9px;cursor:pointer">{{ n.label }}</button>
         </sc-for>
       </nav>
@@ -191,7 +191,7 @@
       <div style="max-width:920px;margin:0 auto;padding:74px 28px 64px;text-align:center">
         <div style="display:inline-flex;align-items:center;gap:8px;background:#EAF6F9;color:#1E7C92;font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:100px;margin-bottom:22px;letter-spacing:0.02em">
           <span style="width:6px;height:6px;border-radius:50%;background:#3DAFC7"></span>
-          Central de ferramentas, metodologias e escopos do CIEP
+          Ferramentas, escopos e cases da Produtiva
         </div>
         <h1 style="font-size:46px;line-height:1.08;font-weight:700;color:#163B45;letter-spacing:-0.025em;max-width:780px;margin:0 auto;text-wrap:balance">Tudo que o projeto precisa, <br>num só lugar.</h1>
         <p style="font-size:18px;color:#5E747B;margin:18px auto 0;max-width:560px;line-height:1.5">Encontre a ferramenta certa em poucos cliques — sem montar página, sem perder tempo procurando.</p>
@@ -241,10 +241,50 @@
         <div style="background:#fff;border:1px dashed #C9DBE0;border-radius:16px;padding:26px;text-align:center;color:#8AA0A7;font-size:14px">Os escopos ainda não foram cadastrados. Veja <b>fontes/README.md</b> para gerar o rascunho a partir do Resumão dos escopos.</div>
       </sc-if>
 
+      <!-- Cases recentes -->
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin:54px 0 20px">
+        <div>
+          <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">Banco de cases</h2>
+          <p style="font-size:14.5px;color:#7C9097;margin:5px 0 0">Projetos finalizados, contados por quem fez: história, resultados, documentos e vídeo da equipe.</p>
+        </div>
+        <button onclick="{{ goCases }}" style="border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer">Ver todos os cases →</button>
+      </div>
+      <sc-if value="{{ hasCasesRecentes }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+        <sc-for list="{{ casesRecentes }}" as="c" hint-placeholder-count="3">
+              <article onclick="{{ c.open }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:12px" style-hover="border-color:#C6E4EC;box-shadow:0 12px 30px -18px rgba(22,59,69,0.25)">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                  <span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }}">{{ c.escopoNome }}</span>
+                  <span style="font-size:12px;color:#9DAEB4;white-space:nowrap">{{ c.periodoFmt }}</span>
+                </div>
+                <div>
+                  <h3 style="font-size:18px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25">{{ c.cliente }}</h3>
+                  <p style="font-size:13px;color:#7C9097;margin:3px 0 0">{{ c.segmento }} · {{ c.cidade }}</p>
+                  <p style="font-size:13.5px;color:#3C545B;margin:8px 0 0;line-height:1.5">{{ c.resultadoDestaque }}</p>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:4px;gap:8px">
+                  <span style="font-size:12.5px;color:#5E747B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.equipeResumo }}</span>
+                  <span style="font-size:12px;color:#9DAEB4;white-space:nowrap">{{ c.nDocs }} docs<sc-if value="{{ c.hasVideo }}" hint-placeholder-val="{{ false }}"> · ▶ vídeo</sc-if></span>
+                </div>
+                <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:3px 9px;border-radius:6px;align-self:flex-start">Só neste navegador · envie ao CIEP</span></sc-if>
+              </article>
+        </sc-for>
+      </div>
+      </sc-if>
+      <sc-if value="{{ semCases }}" hint-placeholder-val="{{ true }}">
+        <div style="background:linear-gradient(155deg,#1B4651 0%,#28697A 100%);border-radius:18px;padding:24px 26px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+          <div style="max-width:620px">
+            <div style="font-size:17px;font-weight:700;font-family:'Schibsted Grotesk'">Fechou um projeto que deu certo? Registre o case.</div>
+            <p style="font-size:14px;color:#BFE2EA;margin:6px 0 0;line-height:1.5">Cliente, escopo, equipe, o que foi feito e os resultados, com os documentos e um vídeo da equipe contando a história. Vira referência para o próximo projeto parecido.</p>
+          </div>
+          <button onclick="{{ goNovoCase }}" style="border:none;background:#7FD3E3;color:#0C3540;font-size:14px;font-weight:700;padding:12px 20px;border-radius:10px;cursor:pointer;white-space:nowrap" style-hover="background:#6AC7D9">Cadastrar o primeiro case</button>
+        </div>
+      </sc-if>
+
       <!-- Novidades + Recomendados -->
       <div style="display:grid;grid-template-columns:1.55fr 1fr;gap:26px;margin-top:54px">
         <div>
-          <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin-bottom:18px">Novidades do CIEP</h2>
+          <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin-bottom:18px">Novidades</h2>
           <div style="display:flex;flex-direction:column;gap:12px">
             <sc-for list="{{ novidades }}" as="item" hint-placeholder-count="3">
               <article onclick="{{ item.open }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:14px;padding:16px 18px;cursor:pointer;display:flex;align-items:center;gap:16px" style-hover="border-color:#C6E4EC">
@@ -289,7 +329,7 @@
   <main style="max-width:1200px;margin:0 auto;padding:34px 28px 80px">
     <div style="margin-bottom:24px">
       <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em">Biblioteca</h1>
-      <p style="font-size:15px;color:#7C9097;margin:6px 0 0">Navegue por todos os conteúdos cadastrados pelo CIEP.</p>
+      <p style="font-size:15px;color:#7C9097;margin:6px 0 0">Todas as ferramentas, metodologias e templates do acervo.</p>
     </div>
 
     <div style="display:grid;grid-template-columns:248px 1fr;gap:28px;align-items:start">
@@ -487,6 +527,22 @@
             <p style="font-size:13.5px;color:#8AA0A7;margin:0">Ainda não vinculada a uma etapa de escopo. O vínculo é definido no Cronograma Base do escopo, não na ferramenta.</p>
           </sc-if>
         </div>
+
+        <sc-if value="{{ sel.hasCases }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:22px 24px;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:10px">Cases que usaram esta ferramenta</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ sel.cases }}" as="c" hint-placeholder-count="2">
+              <div onclick="{{ c.open }}" style="display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid #EEF3F5;border-radius:11px;cursor:pointer" style-hover="border-color:#C6E4EC;background:#FAFCFC">
+                <span style="font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:6px;background:{{ c.escopoBg }};color:{{ c.escopoCor }};flex:none">{{ c.escopoNome }}</span>
+                <span style="font-size:14px;font-weight:600;color:#163B45">{{ c.cliente }}</span>
+                <span style="font-size:12.5px;color:#7C9097;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.resultadoDestaque }}</span>
+                <span style="font-size:12px;color:#9DAEB4;flex:none">{{ c.periodoFmt }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
 
         <sc-if value="{{ sel.hasPendencias }}" hint-placeholder-val="{{ false }}">
         <div style="background:#FFFBF2;border:1px solid #F1DFB0;border-radius:16px;padding:18px 22px;margin-bottom:14px">
@@ -694,7 +750,7 @@
   <sc-if value="{{ isCadastro }}" hint-placeholder-val="{{ false }}">
   <main style="max-width:880px;margin:0 auto;padding:34px 28px 90px">
     <div style="margin-bottom:8px"><span style="font-size:12.5px;font-weight:600;color:#1E7C92;background:#EAF6F9;padding:5px 11px;border-radius:7px">Painel do CIEP</span></div>
-    <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em;margin-top:12px">Cadastrar na biblioteca</h1>
+    <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em;margin-top:12px">Cadastrar no Hangar</h1>
     <p style="font-size:15px;color:#7C9097;margin:6px 0 0;line-height:1.5;max-width:680px">Adicione novas ferramentas, metodologias e escopos à biblioteca — manualmente ou com a IA. Você também pode cadastrar o <b style="color:#3C545B;font-weight:600">modelo-padrão</b> de uma ferramenta a partir de um anexo, para a IA seguir esse formato ao preencher.</p>
 
     <div style="display:inline-flex;background:#EEF3F5;border-radius:11px;padding:3px;gap:2px;margin:22px 0 0;flex-wrap:wrap">
@@ -976,6 +1032,32 @@
         </div>
       </div>
 
+      <sc-if value="{{ escopoSel.hasCases }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-bottom:22px">
+        <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px">Cases deste escopo</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+          <sc-for list="{{ escopoSel.cases }}" as="c" hint-placeholder-count="3">
+              <article onclick="{{ c.open }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:12px" style-hover="border-color:#C6E4EC;box-shadow:0 12px 30px -18px rgba(22,59,69,0.25)">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                  <span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }}">{{ c.escopoNome }}</span>
+                  <span style="font-size:12px;color:#9DAEB4;white-space:nowrap">{{ c.periodoFmt }}</span>
+                </div>
+                <div>
+                  <h3 style="font-size:18px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25">{{ c.cliente }}</h3>
+                  <p style="font-size:13px;color:#7C9097;margin:3px 0 0">{{ c.segmento }} · {{ c.cidade }}</p>
+                  <p style="font-size:13.5px;color:#3C545B;margin:8px 0 0;line-height:1.5">{{ c.resultadoDestaque }}</p>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:4px;gap:8px">
+                  <span style="font-size:12.5px;color:#5E747B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.equipeResumo }}</span>
+                  <span style="font-size:12px;color:#9DAEB4;white-space:nowrap">{{ c.nDocs }} docs<sc-if value="{{ c.hasVideo }}" hint-placeholder-val="{{ false }}"> · ▶ vídeo</sc-if></span>
+                </div>
+                <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:3px 9px;border-radius:6px;align-self:flex-start">Só neste navegador · envie ao CIEP</span></sc-if>
+              </article>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
       <!-- Linha do tempo das etapas -->
       <sc-for list="{{ escopoEtapas }}" as="et" hint-placeholder-count="4">
         <div style="display:grid;grid-template-columns:52px 1fr;gap:16px">
@@ -1015,6 +1097,331 @@
         </div>
       </sc-for>
     </sc-if>
+  </main>
+  </sc-if>
+
+  <!-- ============ CASES (lista) ============ -->
+  <sc-if value="{{ isCases }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:1200px;margin:0 auto;padding:34px 28px 80px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap">
+      <div>
+        <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em">Banco de cases</h1>
+        <p style="font-size:15px;color:#7C9097;margin:6px 0 0;max-width:640px;line-height:1.5">Projetos finalizados da Produtiva, contados por quem fez. Procure por cliente, segmento, escopo, ferramenta ou resultado.</p>
+      </div>
+      <button onclick="{{ goNovoCase }}" style="display:flex;align-items:center;gap:8px;border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">+ Cadastrar case</button>
+    </div>
+
+    <sc-if value="{{ semCases }}" hint-placeholder-val="{{ true }}">
+      <div style="background:#fff;border:1px dashed #C9DBE0;border-radius:16px;padding:40px;text-align:center">
+        <div style="font-size:17px;font-weight:600;color:#3C545B">Nenhum case ainda.</div>
+        <p style="font-size:14px;color:#8AA0A7;margin:8px auto 18px;max-width:520px;line-height:1.5">Fechou um projeto que deu certo? Registre cliente, escopo, equipe, resultados, documentos e o vídeo da equipe. Leva uns 15 minutos.</p>
+        <button onclick="{{ goNovoCase }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 20px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">Cadastrar o primeiro case</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasCasesRecentes }}" hint-placeholder-val="{{ false }}">
+    <div style="display:grid;grid-template-columns:248px 1fr;gap:28px;align-items:start">
+      <aside style="position:sticky;top:88px;background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:6px 4px;max-height:calc(100vh - 110px);overflow:auto" class="ciep-scroll">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px">
+          <span style="font-size:14px;font-weight:700;color:#163B45">Filtros</span>
+          <button onclick="{{ clearCaseFilters }}" style="border:none;background:transparent;color:#1E7C92;font-size:12.5px;font-weight:600;cursor:pointer">Limpar</button>
+        </div>
+        <sc-for list="{{ caseFilterGroups }}" as="g" hint-placeholder-count="4">
+          <div style="padding:10px 16px;border-top:1px solid #F0F4F5">
+            <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:9px">{{ g.label }}</div>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <sc-for list="{{ g.options }}" as="opt" hint-placeholder-count="3">
+                <label onclick="{{ opt.toggle }}" style="display:flex;align-items:center;gap:9px;cursor:pointer;padding:5px 4px;border-radius:7px" style-hover="background:#F6F9FA">
+                  <sc-if value="{{ opt.active }}" hint-placeholder-val="{{ false }}"><span style="width:17px;height:17px;border-radius:5px;background:#3DAFC7;display:flex;align-items:center;justify-content:center;flex:none"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 7" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></sc-if>
+                  <sc-if value="{{ opt.inactive }}" hint-placeholder-val="{{ true }}"><span style="width:17px;height:17px;border-radius:5px;border:1.6px solid #D4E0E4;flex:none"></span></sc-if>
+                  <span style="flex:1;font-size:13.5px;color:#3C545B">{{ opt.label }}</span>
+                  <span style="font-size:12px;color:#B6C4C9;font-weight:500">{{ opt.count }}</span>
+                </label>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </aside>
+
+      <div>
+        <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #DCE7EB;border-radius:11px;padding:9px 14px;margin-bottom:14px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" style="flex:none"><circle cx="11" cy="11" r="7" stroke="#9DAEB4" stroke-width="1.8"></circle><path d="M20 20l-3.2-3.2" stroke="#9DAEB4" stroke-width="1.8" stroke-linecap="round"></path></svg>
+          <input value="{{ caseQuery }}" oninput="{{ onCaseQuery }}" placeholder="Cliente, segmento, escopo, ferramenta, resultado, consultor…" style="flex:1;border:none;outline:none;font-size:14.5px;background:transparent">
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <span style="font-size:13.5px;color:#7C9097"><b style="color:#163B45">{{ casesCount }}</b> cases</span>
+          <sc-if value="{{ hasCaseFilters }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ caseActiveChips }}" as="ch" hint-placeholder-count="2">
+                <button onclick="{{ ch.remove }}" style="display:flex;align-items:center;gap:6px;border:none;background:#EAF6F9;color:#1E7C92;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;cursor:pointer">{{ ch.label }} <span style="font-size:14px;line-height:1">×</span></button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+          <sc-for list="{{ casesList }}" as="c" hint-placeholder-count="4">
+              <article onclick="{{ c.open }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:12px" style-hover="border-color:#C6E4EC;box-shadow:0 12px 30px -18px rgba(22,59,69,0.25)">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                  <span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }}">{{ c.escopoNome }}</span>
+                  <span style="font-size:12px;color:#9DAEB4;white-space:nowrap">{{ c.periodoFmt }}</span>
+                </div>
+                <div>
+                  <h3 style="font-size:18px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25">{{ c.cliente }}</h3>
+                  <p style="font-size:13px;color:#7C9097;margin:3px 0 0">{{ c.segmento }} · {{ c.cidade }}</p>
+                  <p style="font-size:13.5px;color:#3C545B;margin:8px 0 0;line-height:1.5">{{ c.resultadoDestaque }}</p>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:4px;gap:8px">
+                  <span style="font-size:12.5px;color:#5E747B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.equipeResumo }}</span>
+                  <span style="font-size:12px;color:#9DAEB4;white-space:nowrap">{{ c.nDocs }} docs<sc-if value="{{ c.hasVideo }}" hint-placeholder-val="{{ false }}"> · ▶ vídeo</sc-if></span>
+                </div>
+                <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:3px 9px;border-radius:6px;align-self:flex-start">Só neste navegador · envie ao CIEP</span></sc-if>
+              </article>
+          </sc-for>
+        </div>
+        <sc-if value="{{ semResultadoCases }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center;padding:60px 20px;color:#8AA0A7"><div style="font-size:17px;font-weight:600;color:#5E747B">Nenhum case encontrado</div><p style="font-size:14px;margin:8px 0 0">Tente outra palavra ou limpe os filtros.</p></div>
+        </sc-if>
+      </div>
+    </div>
+    </sc-if>
+  </main>
+  </sc-if>
+
+  <!-- ============ CASE (ficha) ============ -->
+  <sc-if value="{{ isCase }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:1180px;margin:0 auto;padding:22px 28px 80px">
+    <button onclick="{{ goCases }}" style="display:flex;align-items:center;gap:7px;border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;margin-bottom:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#1E7C92" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Banco de cases</button>
+    <sc-if value="{{ hasCaseSel }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid;grid-template-columns:1fr 312px;gap:30px;align-items:start">
+      <div>
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;margin-bottom:18px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+            <button onclick="{{ caseSel.abrirEscopo }}" style="border:none;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:7px;background:{{ caseSel.escopoBg }};color:{{ caseSel.escopoCor }};cursor:pointer">{{ caseSel.escopoNome }}</button>
+            <span style="font-size:12.5px;color:#5E747B;background:#EFF4F5;padding:5px 11px;border-radius:7px">{{ caseSel.segmento }}</span>
+            <sc-if value="{{ caseSel.local }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:5px 11px;border-radius:7px">Só neste navegador</span></sc-if>
+          </div>
+          <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">{{ caseSel.cliente }}</h1>
+          <p style="font-size:16.5px;color:#5E747B;margin:12px 0 0;line-height:1.55;max-width:720px">{{ caseSel.resumo }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:20px;padding-top:18px;border-top:1px solid #F0F4F5">
+            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Período</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.periodoFmt }}</div></div>
+            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Duração</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.duracaoFmt }}</div></div>
+            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Porte</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.porte }}</div></div>
+            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Cidade</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.cidade }}</div></div>
+          </div>
+        </div>
+
+        <sc-if value="{{ caseSel.hasVideo }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px;margin-bottom:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px;flex-wrap:wrap">
+            <div><div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.04em;text-transform:uppercase">A equipe conta o projeto</div><div style="font-size:13px;color:#8AA0A7;margin-top:2px">{{ caseSel.video.quem }} · {{ caseSel.video.duracao }}</div></div>
+            <button onclick="{{ caseSel.abrirVideo }}" style="border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer" style-hover="border-color:#9FD7E2">Abrir o vídeo</button>
+          </div>
+          <sc-if value="{{ caseSel.hasVideoEmbed }}" hint-placeholder-val="{{ false }}">
+            <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#0E1A1E">
+              <iframe src="{{ caseSel.videoEmbed }}" allowfullscreen="true" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+            </div>
+          </sc-if>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ caseSel.hasDesafio }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:22px 24px;margin-bottom:14px">
+          <div style="display:flex;gap:22px;flex-wrap:wrap">
+            <div style="flex:1;min-width:240px"><div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px">Desafio</div><p style="font-size:14.5px;color:#3C545B;line-height:1.55;margin:0;white-space:pre-line">{{ caseSel.desafio }}</p></div>
+            <sc-if value="{{ caseSel.hasSolucao }}" hint-placeholder-val="{{ false }}"><div style="flex:1;min-width:240px"><div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px">O que foi feito</div><p style="font-size:14.5px;color:#3C545B;line-height:1.55;margin:0;white-space:pre-line">{{ caseSel.solucao }}</p></div></sc-if>
+          </div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ caseSel.hasResultados }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:22px 24px;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#2E7D52;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:10px">Resultados</div>
+          <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ caseSel.resultados }}" as="r" hint-placeholder-count="3"><li style="display:flex;gap:10px;font-size:14.5px;color:#3C545B;line-height:1.5"><span style="color:#2E7D52;font-weight:700;flex:none">✓</span><span>{{ r }}</span></li></sc-for>
+          </ul>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ caseSel.hasAprendizados }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:22px 24px;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#9A6B17;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:10px">Aprendizados para o próximo projeto</div>
+          <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ caseSel.aprendizados }}" as="r" hint-placeholder-count="2"><li style="display:flex;gap:10px;font-size:14.5px;color:#3C545B;line-height:1.5"><span style="color:#9A6B17;font-weight:700;flex:none">!</span><span>{{ r }}</span></li></sc-for>
+          </ul>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ caseSel.hasDepoimento }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#F6F9FA;border:1px solid #E7EEF1;border-radius:16px;padding:22px 24px;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px">O cliente disse</div>
+          <p style="font-size:15.5px;color:#163B45;line-height:1.6;margin:0;font-style:italic">“{{ caseSel.depoimentoCliente }}”</p>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ caseSel.hasFerramentas }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:22px 24px;margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:10px">Ferramentas usadas</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ caseSel.ferramentas }}" as="item" hint-placeholder-count="3">
+              <button onclick="{{ item.open }}" style="display:flex;align-items:center;gap:8px;border:1px solid #DCE7EB;background:#FAFCFC;color:#163B45;font-size:13.5px;padding:8px 12px;border-radius:10px;cursor:pointer" style-hover="border-color:#9FD7E2;background:#EAF6F9"><span style="width:8px;height:8px;border-radius:2px;background:{{ item.tipoColor }}"></span>{{ item.nome }}</button>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ caseSel.hasDocs }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:22px;margin-bottom:12px">
+          <h3 style="font-size:16px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk';margin-bottom:14px">Documentos do projeto</h3>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ caseSel.docs }}" as="d" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:13px;padding:11px 14px;border:1px solid #EEF3F5;border-radius:11px">
+                <span style="flex:none;width:38px;height:38px;border-radius:9px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">{{ d.ext }}</span>
+                <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600;color:#163B45">{{ d.nome }}</div><div style="font-size:12.5px;color:#8AA0A7">{{ d.tipo }}</div></div>
+                <button onclick="{{ d.abrir }}" style="flex:none;border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer" style-hover="border-color:#9FD7E2">Abrir no Drive</button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+
+      <aside style="position:sticky;top:88px;display:flex;flex-direction:column;gap:14px">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px">
+          <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:14px">Equipe do projeto</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ caseSel.equipe }}" as="m" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:11px">
+                <div style="width:34px;height:34px;border-radius:50%;background:#163B45;color:#fff;font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none">{{ m.iniciais }}</div>
+                <div><div style="font-size:11px;color:#9DAEB4;font-weight:600">{{ m.papel }}</div><div style="font-size:14px;font-weight:600;color:#163B45">{{ m.nome }}</div><div style="font-size:11.5px;color:#9DAEB4">{{ m.email }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ caseSel.hasTags }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;padding-top:14px;border-top:1px solid #F0F4F5">
+              <sc-for list="{{ caseSel.tags }}" as="t" hint-placeholder-count="3"><span style="font-size:12px;color:#5E747B;background:#EFF4F5;padding:4px 9px;border-radius:6px">{{ t }}</span></sc-for>
+            </div>
+          </sc-if>
+          <div style="font-size:12.5px;color:#8AA0A7;margin-top:16px;padding-top:14px;border-top:1px solid #F0F4F5">{{ caseSel.cadastradoTexto }}</div>
+        </div>
+        <sc-if value="{{ caseSel.local }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#FFFBF2;border:1px solid #F1DFB0;border-radius:16px;padding:18px 20px">
+          <div style="font-size:13.5px;font-weight:600;color:#5E4A1E">Este case ainda só existe neste navegador.</div>
+          <p style="font-size:12.5px;color:#7A6330;margin:6px 0 12px;line-height:1.5">Baixe o arquivo e envie ao CIEP; ele entra no Hangar de todos na próxima versão.</p>
+          <button onclick="{{ caseSel.baixar }}" style="width:100%;border:none;background:#3DAFC7;color:#fff;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer" style-hover="background:#2E9DB5">Baixar case (.json)</button>
+          <button onclick="{{ caseSel.copiar }}" style="width:100%;margin-top:8px;border:1px solid #DCE7EB;background:#fff;color:#5E747B;font-size:13px;font-weight:600;padding:9px;border-radius:10px;cursor:pointer">Copiar JSON</button>
+        </div>
+        </sc-if>
+      </aside>
+    </div>
+    </sc-if>
+  </main>
+  </sc-if>
+
+  <!-- ============ NOVO CASE ============ -->
+  <sc-if value="{{ isNovoCase }}" hint-placeholder-val="{{ false }}">
+  <main style="max-width:900px;margin:0 auto;padding:22px 28px 80px">
+    <button onclick="{{ goCases }}" style="display:flex;align-items:center;gap:7px;border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer;padding:8px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#1E7C92" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Banco de cases</button>
+    <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em;margin-top:12px">Cadastrar case de projeto</h1>
+    <p style="font-size:15px;color:#7C9097;margin:6px 0 24px;line-height:1.5;max-width:700px">Conte o projeto como você contaria para um consultor que vai fazer um parecido. Não inclua números sensíveis do cliente (faturamento, margem, salários): o case é visto por toda a Produtiva.</p>
+
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">1</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Projeto</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">Quem era o cliente e o que foi contratado</p></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Cliente *</label><input value="{{ formCase.cliente }}" oninput="{{ fc.cliente }}" placeholder="Ex.: Picuí Pizzas" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Segmento *</label><input value="{{ formCase.segmento }}" oninput="{{ fc.segmento }}" placeholder="Ex.: Alimentação, Contabilidade, Indústria" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Porte</label><select value="{{ formCase.porte }}" onchange="{{ fc.porte }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"><sc-for list="{{ porteOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Cidade / UF</label><input value="{{ formCase.cidade }}" oninput="{{ fc.cidade }}" placeholder="Ex.: Natal/RN" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Escopo *</label><select value="{{ formCase.escopoId }}" onchange="{{ fc.escopoId }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"><sc-for list="{{ escopoOptions }}" as="o" hint-placeholder-count="4"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Outro escopo (se não estiver na lista)</label><input value="{{ formCase.escopoNome }}" oninput="{{ fc.escopoNome }}" placeholder="Descreva o escopo" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Início</label><input type="month" value="{{ formCase.inicio }}" oninput="{{ fc.inicio }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Fim</label><input type="month" value="{{ formCase.fim }}" oninput="{{ fc.fim }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Duração (dias úteis)</label><input type="number" value="{{ formCase.duracaoDias }}" oninput="{{ fc.duracaoDias }}" placeholder="Ex.: 55" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">2</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Equipe</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">1 gerente e 2 consultores, como nos projetos da Produtiva</p></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Gerente *</label><input value="{{ formCase.gerenteNome }}" oninput="{{ fc.gerenteNome }}" placeholder="Nome" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">E-mail do gerente</label><input value="{{ formCase.gerenteEmail }}" oninput="{{ fc.gerenteEmail }}" placeholder="nome@produtivajunior.com.br" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Consultor 1 *</label><input value="{{ formCase.c1Nome }}" oninput="{{ fc.c1Nome }}" placeholder="Nome" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">E-mail</label><input value="{{ formCase.c1Email }}" oninput="{{ fc.c1Email }}" placeholder="nome@produtivajunior.com.br" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Consultor 2 *</label><input value="{{ formCase.c2Nome }}" oninput="{{ fc.c2Nome }}" placeholder="Nome" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">E-mail</label><input value="{{ formCase.c2Email }}" oninput="{{ fc.c2Email }}" placeholder="nome@produtivajunior.com.br" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">3</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">A história</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">Desafio, o que foi feito e o que mudou para o cliente</p></div></div>
+        <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Resumo em duas frases *</label><textarea value="{{ formCase.resumo }}" oninput="{{ fc.resumo }}" placeholder="O que o cliente precisava e o que a Produtiva entregou." style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;resize:vertical;line-height:1.5;color:#172A30" style-focus="border-color:#9FD7E2" rows="3"></textarea></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Desafio</label><textarea value="{{ formCase.desafio }}" oninput="{{ fc.desafio }}" placeholder="Como estava a situação quando o projeto começou?" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;resize:vertical;line-height:1.5;color:#172A30" style-focus="border-color:#9FD7E2" rows="5"></textarea></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">O que foi feito</label><textarea value="{{ formCase.solucao }}" oninput="{{ fc.solucao }}" placeholder="Etapas, decisões e entregas principais." style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;resize:vertical;line-height:1.5;color:#172A30" style-focus="border-color:#9FD7E2" rows="5"></textarea></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Resultados (um por linha)</label><textarea value="{{ formCase.resultados }}" oninput="{{ fc.resultados }}" placeholder="Ex.: Processo de pedidos reduzido de 6 para 3 etapas&#10;Gestor passou a acompanhar 5 indicadores por semana" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;resize:vertical;line-height:1.5;color:#172A30" style-focus="border-color:#9FD7E2" rows="5"></textarea></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Aprendizados (um por linha)</label><textarea value="{{ formCase.aprendizados }}" oninput="{{ fc.aprendizados }}" placeholder="O que você faria diferente ou repetiria." style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;resize:vertical;line-height:1.5;color:#172A30" style-focus="border-color:#9FD7E2" rows="5"></textarea></div>
+        </div>
+        <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Depoimento do cliente (opcional)</label><textarea value="{{ formCase.depoimento }}" oninput="{{ fc.depoimento }}" placeholder="Uma frase do gestor sobre o projeto." style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;resize:vertical;line-height:1.5;color:#172A30" style-focus="border-color:#9FD7E2" rows="2"></textarea></div>
+        <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Tags (separadas por vírgula)</label><input value="{{ formCase.tags }}" oninput="{{ fc.tags }}" placeholder="Ex.: delivery, precificação, família" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">4</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Ferramentas usadas</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">Clique para marcar. Elas aparecem na ficha do case e o case aparece na ficha da ferramenta.</p></div></div>
+        <input value="{{ caseFiltroFerr }}" oninput="{{ onCaseFiltroFerr }}" placeholder="Filtrar ferramentas…" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ ferrChips }}" as="f" hint-placeholder-count="8">
+            <button onclick="{{ f.toggle }}" style="border:1.5px solid {{ f.border }};background:{{ f.bg }};color:{{ f.color }};font-size:13px;font-weight:600;padding:7px 12px;border-radius:100px;cursor:pointer">{{ f.nome }}</button>
+          </sc-for>
+        </div>
+        <div style="font-size:12.5px;color:#8AA0A7">{{ nFerrEscolhidas }} selecionada(s)</div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">5</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Documentos</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">Suba os arquivos na pasta do Drive "Banco de Cases / cliente", com acesso para a Produtiva, e cole o link de cada um.</p></div></div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ docsRows }}" as="d" hint-placeholder-count="2">
+            <div style="display:grid;grid-template-columns:1.2fr 1fr 2fr auto;gap:10px;align-items:center">
+              <input value="{{ d.nome }}" oninput="{{ d.setNome }}" placeholder="Nome do arquivo" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
+              <select value="{{ d.tipo }}" onchange="{{ d.setTipo }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"><sc-for list="{{ d.tipoOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+              <input value="{{ d.url }}" oninput="{{ d.setUrl }}" placeholder="https://drive.google.com/…" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
+              <button onclick="{{ d.remove }}" title="Remover" style="border:1px solid #E2EBEE;background:#fff;color:#7C9097;width:38px;height:42px;border-radius:9px;cursor:pointer;font-size:18px">×</button>
+            </div>
+          </sc-for>
+        </div>
+        <button onclick="{{ addDoc }}" style="align-self:flex-start;border:1px dashed #C9DBE0;background:#FAFCFC;color:#1E7C92;font-size:13.5px;font-weight:600;padding:9px 14px;border-radius:10px;cursor:pointer">+ Adicionar documento</button>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">6</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Vídeo da equipe</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">Gerente e consultores contando o projeto em 3 a 8 minutos. Link do Drive ou do YouTube (não listado).</p></div></div>
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px">
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Link do vídeo</label><input value="{{ formCase.videoUrl }}" oninput="{{ fc.videoUrl }}" placeholder="https://drive.google.com/file/d/… ou https://youtu.be/…" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Quem aparece</label><input value="{{ formCase.videoQuem }}" oninput="{{ fc.videoQuem }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Duração</label><input value="{{ formCase.videoDuracao }}" oninput="{{ fc.videoDuracao }}" placeholder="Ex.: 6 min" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+        </div>
+        <sc-if value="{{ hasVideoPreview }}" hint-placeholder-val="{{ false }}">
+          <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#0E1A1E;max-width:640px"><iframe src="{{ videoPreview }}" allowfullscreen="true" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe></div>
+        </sc-if>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">7</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Você</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">Quem está cadastrando. Fica lembrado neste navegador.</p></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Seu nome *</label><input value="{{ formCase.meuNome }}" oninput="{{ fc.meuNome }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Seu e-mail</label><input value="{{ formCase.meuEmail }}" oninput="{{ fc.meuEmail }}" placeholder="nome@produtivajunior.com.br" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+        </div>
+      </div>
+
+      <sc-if value="{{ hasCaseErro }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#FCF3F4;border:1px solid #E6AFB5;border-radius:12px;padding:12px 16px;font-size:13.5px;color:#B23B47;font-weight:600">{{ caseErro }}</div>
+      </sc-if>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <button onclick="{{ publishCase }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:12px 22px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">Publicar no meu Hangar</button>
+        <button onclick="{{ baixarCaseForm }}" style="border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:14px;font-weight:600;padding:12px 18px;border-radius:11px;cursor:pointer" style-hover="border-color:#9FD7E2">Baixar case (.json)</button>
+        <button onclick="{{ copiarCaseForm }}" style="border:1px solid #DCE7EB;background:#fff;color:#5E747B;font-size:14px;font-weight:600;padding:12px 18px;border-radius:11px;cursor:pointer">Copiar JSON</button>
+        <button onclick="{{ limparCase }}" style="border:none;background:transparent;color:#9DAEB4;font-size:13.5px;font-weight:600;padding:12px 8px;cursor:pointer">Limpar</button>
+        <span style="font-size:12.5px;color:#8AA0A7;flex:1;min-width:220px">Publicar salva neste navegador. Para o case aparecer para toda a Produtiva, baixe o arquivo e envie ao CIEP.</span>
+      </div>
+    </div>
   </main>
   </sc-if>
 

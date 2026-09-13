@@ -46,6 +46,7 @@ const escopos = json('escopos');
 const problemas = json('problemas');
 const modelos = json('modelos');
 const documentoPadrao = json('documento-padrao');
+const cases = json('cases');
 
 const enumDe = (obj) => Array.isArray(obj) ? obj : Object.keys(obj);
 const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -200,6 +201,36 @@ check(!problemas_.some((x) => x.startsWith('modelos')), `modelos.json  ${modelos
   check(!problemas_.some((x) => x.startsWith(ctx)), `documento-padrao.json  ${d.sigla} com ${d.secoes.length} seções`, 'documento-padrao.json com erros');
 }
 
+// ---------------------------------------------------------------- cases
+const cids = new Set();
+const HTTPS = /^https:\/\//;
+for (const c of cases) {
+  const ctx = `cases[${c.id ?? '?'}]`;
+  if (typeof c.id !== 'string' || !KEBAB.test(c.id)) { p(ctx, 'id ausente ou fora do kebab-case'); continue; }
+  if (cids.has(c.id)) p(ctx, 'id duplicado');
+  cids.add(c.id);
+  for (const k of ['cliente', 'segmento', 'resumo']) if (typeof c[k] !== 'string' || !c[k]) p(ctx, `campo "${k}" ausente`);
+  if (c.escopoId !== null && c.escopoId !== undefined && !escopoIds.has(c.escopoId)) p(ctx, `escopoId "${c.escopoId}" não existe em escopos.json`);
+  if ((c.escopoId === null || c.escopoId === undefined) && !(typeof c.escopoNome === 'string' && c.escopoNome)) p(ctx, 'sem escopoId: informe escopoNome');
+  if (c.porte !== undefined && c.porte !== '' && !enumDe(T.portes).includes(c.porte)) p(ctx, `porte "${c.porte}" fora da taxonomia`);
+  const eq = c.equipe || {};
+  const pessoa = (x, quem) => { if (!x || typeof x.nome !== 'string' || !x.nome) p(ctx, `${quem}: nome ausente`); if (x && x.email && !EMAIL.test(x.email)) p(ctx, `${quem}: e-mail precisa ser @produtivajunior.com.br`); };
+  pessoa(eq.gerente, 'gerente');
+  if (!Array.isArray(eq.consultores) || eq.consultores.length !== 2) p(ctx, 'equipe.consultores precisa ter exatamente 2 consultores');
+  else eq.consultores.forEach((x, i) => pessoa(x, `consultor ${i + 1}`));
+  for (const k of ['resultados', 'aprendizados', 'tags', 'ferramentas']) if (c[k] !== undefined && !isStrArr(c[k])) p(ctx, `"${k}" precisa ser lista de strings`);
+  for (const fid of c.ferramentas || []) if (!ids.has(fid)) p(ctx, `ferramenta "${fid}" não existe em ferramentas.json`);
+  for (const [i, d] of (c.documentos || []).entries()) {
+    if (typeof d.nome !== 'string' || !d.nome) p(`${ctx}.documentos[${i}]`, 'sem nome');
+    if (!enumDe(T.documentosCase).includes(d.tipo)) p(`${ctx}.documentos[${i}]`, `tipo "${d.tipo}" fora da taxonomia`);
+    if (!HTTPS.test(d.url || '')) p(`${ctx}.documentos[${i}]`, 'url precisa ser https');
+  }
+  if (c.video && c.video.url && !HTTPS.test(c.video.url)) p(ctx, 'video.url precisa ser https');
+  if (!ISO.test(c.atualizado || '')) p(ctx, 'atualizado precisa ser YYYY-MM-DD');
+  if (!c.cadastradoPor || typeof c.cadastradoPor.nome !== 'string') p(ctx, 'cadastradoPor {nome, email} ausente');
+}
+check(!problemas_.some((x) => x.startsWith('cases')), `cases.json  ${cases.length} case(s), referências resolvem`, 'cases.json com erros');
+
 for (const msg of problemas_) console.log(`    ${msg}`);
 if (legados && T.legadoPermitido) aviso(`${legados} item(ns) legado(s) do MVP ainda em ferramentas.json — sem lastro no acervo, removidos na promoção`);
 
@@ -243,8 +274,8 @@ function extrairDados(logic) {
 }
 
 let dist;
-try { dist = parseBundle(join(ROOT, 'dist/Biblioteca_CIEP.html')); }
-catch (e) { check(false, '', `dist/Biblioteca_CIEP.html ilegível: ${e.message} — rode node tools/pack.mjs`); }
+try { dist = parseBundle(join(ROOT, 'dist/Hangar.html')); }
+catch (e) { check(false, '', `dist/Hangar.html ilegível: ${e.message} — rode node tools/pack.mjs`); }
 
 if (dist) {
   // ---------------------------------------------------------------- assets
@@ -268,7 +299,7 @@ if (dist) {
   try { dados = extrairDados(dist.logic); }
   catch (e) { check(false, '', `o script do bundle não avalia: ${e.message}`); }
   if (dados) {
-    const pares = [['ferramentas', ferramentas], ['escopos', escopos], ['taxonomia', T], ['problemas', problemas], ['modelos', modelos], ['documentoPadrao', documentoPadrao]];
+    const pares = [['ferramentas', ferramentas], ['escopos', escopos], ['taxonomia', T], ['problemas', problemas], ['modelos', modelos], ['documentoPadrao', documentoPadrao], ['cases', cases]];
     for (const [chave, esperado] of pares) {
       const n = Array.isArray(esperado) ? `${esperado.length} itens` : 'ok';
       check(isDeepStrictEqual(dados[chave], esperado), `dist carrega DADOS.${chave}  ${n}`, `DADOS.${chave} no bundle DIVERGE de src/data — rode node tools/pack.mjs`);

@@ -6,12 +6,14 @@
  *   node tools/promover.mjs escopo-map-e-model   escopos
  *   node tools/promover.mjs --aprovados          tudo que já está com revisao.status = "aprovado"
  *   node tools/promover.mjs --remover-legado     tira de ferramentas.json os itens herdados do MVP (sem `revisao`)
+ *   node tools/promover.mjs case-<id>            cases publicam direto (sem revisão) em cases.json
+ *   node tools/promover.mjs --cases-dir <pasta>   importa todos os *.json de cases que os membros enviaram
  *
  * Exige revisao.status === "aprovado", revisor @produtivajunior.com.br e data. Faz merge por id em
  * ferramentas.json / escopos.json, leva `modelo` para modelos.json, ordena e apaga o rascunho.
  * Depois: node tools/pack.mjs && node tools/verify.mjs
  */
-import { readFileSync, writeFileSync, readdirSync, unlinkSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, unlinkSync, existsSync, copyFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -29,7 +31,22 @@ if (!args.length) { console.log('uso: node tools/promover.mjs <id>… | --aprova
 let ferramentas = ler('ferramentas');
 let escopos = ler('escopos');
 let modelos = ler('modelos');
+let cases = ler('cases');
 let mudou = false;
+
+// --cases-dir <pasta>: copia os JSON enviados pelos membros para rascunhos/ e promove em seguida
+const di = args.indexOf('--cases-dir');
+if (di >= 0) {
+  const dir = args[di + 1];
+  if (!dir || !existsSync(dir)) { console.error('--cases-dir precisa de uma pasta existente'); process.exit(1); }
+  mkdirSync(RASC, { recursive: true });
+  for (const n of readdirSync(dir).filter((x) => x.endsWith('.json'))) {
+    let c; try { c = JSON.parse(readFileSync(join(dir, n), 'utf8')); } catch { console.error(`✗ ${n}: JSON inválido`); continue; }
+    if (!c || typeof c.id !== 'string' || c.cliente === undefined) { console.error(`✗ ${n}: não parece um case (sem id/cliente)`); continue; }
+    copyFileSync(join(dir, n), join(RASC, `case-${c.id}.json`));
+    args.push(`case-${c.id}`);
+  }
+}
 
 if (args.includes('--remover-legado')) {
   const antes = ferramentas.length;
@@ -44,12 +61,18 @@ if (args.includes('--remover-legado')) {
 
 const alvos = args.includes('--aprovados')
   ? readdirSync(RASC).filter((n) => n.endsWith('.json')).map((n) => n.replace(/\.json$/, ''))
-  : args.filter((a) => !a.startsWith('--'));
+  : args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--cases-dir');
 
 for (const nome of alvos) {
   const p = join(RASC, `${nome}.json`);
   if (!existsSync(p)) { console.error(`✗ ${nome}: rascunho não existe`); continue; }
   const r = JSON.parse(readFileSync(p, 'utf8'));
+  if (nome.startsWith('case-')) { // cases publicam direto, sem revisão
+    const { local, ...c } = r;
+    cases = cases.filter((x) => x.id !== c.id).concat([c]);
+    cases.sort((a, b) => String(b.atualizado || '').localeCompare(String(a.atualizado || '')));
+    unlinkSync(p); console.log(`✓ ${nome} publicado em cases.json`); mudou = true; continue;
+  }
   const rev = r.revisao || {};
   const motivo = rev.status !== 'aprovado' ? `revisao.status = "${rev.status}"` : !EMAIL.test(rev.revisor || '') ? 'revisor precisa ser e-mail @produtivajunior.com.br' : !ISO.test(rev.data || '') ? 'revisao.data precisa ser YYYY-MM-DD' : null;
   if (motivo) { if (!args.includes('--aprovados')) console.error(`✗ ${nome}: não promovido — ${motivo}`); continue; }
@@ -75,6 +98,6 @@ for (const nome of alvos) {
 }
 
 if (mudou) {
-  gravar('ferramentas', ferramentas); gravar('escopos', escopos); gravar('modelos', modelos);
+  gravar('ferramentas', ferramentas); gravar('escopos', escopos); gravar('modelos', modelos); gravar('cases', cases);
   console.log('\nagora: node tools/pack.mjs && node tools/verify.mjs');
 } else console.log('nada promovido.');

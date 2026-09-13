@@ -149,4 +149,26 @@ node tools/pack.mjs && node tools/verify.mjs
 `promover` faz o merge por `id` em `ferramentas.json` ou `escopos.json`, ordena e apaga o
 rascunho. `pack` nunca lê `src/data/rascunhos/`, então o bundle só contém conteúdo aprovado.
 Para um bundle de pré-visualização com os rascunhos, use `node tools/pack.mjs --com-rascunhos`
-(os itens entram com status "Em revisão" e o arquivo vai para `dist/Biblioteca_CIEP.preview.html`).
+(os itens entram com status "Em revisão" e o arquivo vai para `dist/Hangar.preview.html`).
+
+## 6. Cases de projeto
+
+Cases não passam por extração nem por revisão: quem viveu o projeto registra, o CIEP publica.
+
+**Quem cadastra (qualquer membro):**
+1. Suba os documentos e o vídeo da equipe numa pasta do Drive `Banco de Cases/<cliente>` com
+   acesso "qualquer pessoa da Produtiva" e copie os links. Vídeo pode ser Drive ou YouTube
+   (não listado).
+2. No Hangar, aba **Cases → Cadastrar case**: projeto, equipe (1 gerente + 2 consultores), história,
+   ferramentas usadas, documentos (link) e vídeo (link). **Publicar no meu Hangar** salva no seu
+   navegador; **Baixar case (.json)** gera o arquivo.
+3. Envie o `.json` ao CIEP. Não inclua números sensíveis do cliente (faturamento, margem, nomes de
+   funcionários): o case é visto por toda a Produtiva.
+
+**Quem publica (CIEP):**
+```bash
+node tools/promover.mjs --cases-dir ~/Downloads/cases   # todos os .json da pasta → src/data/cases.json
+node tools/pack.mjs && node tools/verify.mjs             # verify checa equipe, links https, escopo e ferramentas
+```
+O case aparece para todos na próxima versão do `dist/Hangar.html`. Quando houver backend, o mesmo
+JSON passa a ser gravado direto; ficha e busca não mudam.

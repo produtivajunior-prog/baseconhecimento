@@ -1,4 +1,4 @@
-# Diagnóstico — Biblioteca CIEP
+# Diagnóstico — Biblioteca CIEP (hoje, Hangar)
 
 > **Nota (set/2026):** este diagnóstico descreve o MVP herdado. Os pontos das seções 4, 6 (números
 > fictícios), 10 e 11.1–11.2 foram tratados na reconstrução do conteúdo: taxonomia em dois eixos

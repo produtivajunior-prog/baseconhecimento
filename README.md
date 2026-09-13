@@ -1,12 +1,12 @@
-# Biblioteca CIEP — Produtiva Júnior
+# Hangar — Produtiva Júnior
 
-Biblioteca interna de ferramentas, metodologias e escopos de consultoria, para uso dos
+Hangar: a base interna de ferramentas, escopos e cases de consultoria da Produtiva Júnior, para uso dos
 consultores de projeto.
 
 > **Estado atual:** estrutura reconstruída em dois eixos (Ferramentas × Escopos) e acervo real
 > extraído do Drive em **rascunho**, aguardando revisão dos donos de cada área. O bundle oficial
-> (`dist/Biblioteca_CIEP.html`) só recebe conteúdo aprovado; a prévia com os rascunhos fica em
-> `dist/Biblioteca_CIEP.preview.html`. Leia [fontes/README.md](fontes/README.md) para revisar e
+> (`dist/Hangar.html`) só recebe conteúdo aprovado; a prévia com os rascunhos fica em
+> `dist/Hangar.preview.html`. Leia [fontes/README.md](fontes/README.md) para revisar e
 > promover, e o [DIAGNOSTICO.md](DIAGNOSTICO.md) para o histórico.
 
 ---
@@ -45,8 +45,8 @@ O distribuível é um HTML único que abre com duplo clique, sem servidor e sem 
 Ele é **gerado**, nunca editado direto.
 
 ```bash
-node tools/pack.mjs                  # src/ + data/ + assets/ → dist/Biblioteca_CIEP.html (só conteúdo aprovado)
-node tools/pack.mjs --com-rascunhos  # prévia com src/data/rascunhos/ → dist/Biblioteca_CIEP.preview.html
+node tools/pack.mjs                  # src/ + data/ + assets/ → dist/Hangar.html (só conteúdo aprovado)
+node tools/pack.mjs --com-rascunhos  # prévia com src/data/rascunhos/ → dist/Hangar.preview.html
 node tools/verify.mjs                # valida schema, referências e revisão; prova que dist/ carrega src/data
 node tools/smoke.mjs [arquivo]       # abre no Chromium sem rede e navega (exige playwright)
 node tools/unpack.mjs                # só para reimportar um bundle de fora
