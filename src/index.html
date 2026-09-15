@@ -250,24 +250,21 @@
         <button onclick="{{ goCases }}" style="border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer">Ver todos os cases →</button>
       </div>
       <sc-if value="{{ hasCasesRecentes }}" hint-placeholder-val="{{ false }}">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px 18px">
         <sc-for list="{{ casesRecentes }}" as="c" hint-placeholder-count="3">
-              <article onclick="{{ c.open }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:12px" style-hover="border-color:#C6E4EC;box-shadow:0 12px 30px -18px rgba(22,59,69,0.25)">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
-                  <span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }}">{{ c.escopoNome }}</span>
-                  <span style="font-size:12px;color:#9DAEB4;white-space:nowrap">{{ c.periodoFmt }}</span>
-                </div>
-                <div>
-                  <h3 style="font-size:18px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25">{{ c.cliente }}</h3>
-                  <p style="font-size:13px;color:#7C9097;margin:3px 0 0">{{ c.segmento }} · {{ c.cidade }}</p>
-                  <p style="font-size:13.5px;color:#3C545B;margin:8px 0 0;line-height:1.5">{{ c.resultadoDestaque }}</p>
-                </div>
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:4px;gap:8px">
-                  <span style="font-size:12.5px;color:#5E747B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.equipeResumo }}</span>
-                  <span style="font-size:12px;color:#9DAEB4;white-space:nowrap">{{ c.nDocs }} docs<sc-if value="{{ c.hasVideo }}" hint-placeholder-val="{{ false }}"> · ▶ vídeo</sc-if></span>
-                </div>
-                <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:3px 9px;border-radius:6px;align-self:flex-start">Só neste navegador · envie ao CIEP</span></sc-if>
-              </article>
+          <article onclick="{{ c.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:11px;transition:transform .15s ease" style-hover="transform:translateY(-3px)">
+            <div style="position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#EEF3F5;border:1px solid #E7EEF1;box-shadow:0 10px 26px -18px rgba(22,59,69,0.35)">
+              <sc-if value="{{ c.hasFoto }}" hint-placeholder-val="{{ false }}"><img src="{{ c.fotoSrc }}" alt="{{ c.cliente }}" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+              <sc-if value="{{ c.semFoto }}" hint-placeholder-val="{{ true }}"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:{{ c.placeholderBg }}"><span style="font-family:'Schibsted Grotesk';font-size:46px;font-weight:700;letter-spacing:-0.02em;color:{{ c.escopoCor }};opacity:0.7">{{ c.inicial }}</span></div></sc-if>
+              <span style="position:absolute;top:10px;left:10px;max-width:calc(100% - 84px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }};box-shadow:0 1px 4px rgba(0,0,0,0.08)">{{ c.escopoNome }}</span>
+              <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:10px;right:10px;font-size:11px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:4px 8px;border-radius:6px" title="Só neste navegador · envie ao CIEP">Só aqui</span></sc-if>
+              <sc-if value="{{ c.hasVideo }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;right:10px;bottom:10px;background:rgba(14,26,30,0.72);color:#fff;font-size:11px;font-weight:600;padding:4px 8px;border-radius:6px">▶ vídeo</span></sc-if>
+            </div>
+            <div style="padding:0 4px">
+              <h3 style="font-size:16.5px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25">{{ c.cliente }}</h3>
+              <p style="font-size:13px;color:#7C9097;margin:3px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.segmento }} · {{ c.periodoFmt }}</p>
+            </div>
+          </article>
         </sc-for>
       </div>
       </sc-if>
@@ -1158,24 +1155,21 @@
             </div>
           </sc-if>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
-          <sc-for list="{{ casesList }}" as="c" hint-placeholder-count="4">
-              <article onclick="{{ c.open }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:12px" style-hover="border-color:#C6E4EC;box-shadow:0 12px 30px -18px rgba(22,59,69,0.25)">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
-                  <span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }}">{{ c.escopoNome }}</span>
-                  <span style="font-size:12px;color:#9DAEB4;white-space:nowrap">{{ c.periodoFmt }}</span>
-                </div>
-                <div>
-                  <h3 style="font-size:18px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25">{{ c.cliente }}</h3>
-                  <p style="font-size:13px;color:#7C9097;margin:3px 0 0">{{ c.segmento }} · {{ c.cidade }}</p>
-                  <p style="font-size:13.5px;color:#3C545B;margin:8px 0 0;line-height:1.5">{{ c.resultadoDestaque }}</p>
-                </div>
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:4px;gap:8px">
-                  <span style="font-size:12.5px;color:#5E747B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.equipeResumo }}</span>
-                  <span style="font-size:12px;color:#9DAEB4;white-space:nowrap">{{ c.nDocs }} docs<sc-if value="{{ c.hasVideo }}" hint-placeholder-val="{{ false }}"> · ▶ vídeo</sc-if></span>
-                </div>
-                <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:3px 9px;border-radius:6px;align-self:flex-start">Só neste navegador · envie ao CIEP</span></sc-if>
-              </article>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:24px 18px">
+          <sc-for list="{{ casesList }}" as="c" hint-placeholder-count="6">
+            <article onclick="{{ c.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:11px;transition:transform .15s ease" style-hover="transform:translateY(-3px)">
+              <div style="position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#EEF3F5;border:1px solid #E7EEF1;box-shadow:0 10px 26px -18px rgba(22,59,69,0.35)">
+                <sc-if value="{{ c.hasFoto }}" hint-placeholder-val="{{ false }}"><img src="{{ c.fotoSrc }}" alt="{{ c.cliente }}" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+                <sc-if value="{{ c.semFoto }}" hint-placeholder-val="{{ true }}"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:{{ c.placeholderBg }}"><span style="font-family:'Schibsted Grotesk';font-size:46px;font-weight:700;letter-spacing:-0.02em;color:{{ c.escopoCor }};opacity:0.7">{{ c.inicial }}</span></div></sc-if>
+                <span style="position:absolute;top:10px;left:10px;max-width:calc(100% - 84px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }};box-shadow:0 1px 4px rgba(0,0,0,0.08)">{{ c.escopoNome }}</span>
+                <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:10px;right:10px;font-size:11px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:4px 8px;border-radius:6px" title="Só neste navegador · envie ao CIEP">Só aqui</span></sc-if>
+                <sc-if value="{{ c.hasVideo }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;right:10px;bottom:10px;background:rgba(14,26,30,0.72);color:#fff;font-size:11px;font-weight:600;padding:4px 8px;border-radius:6px">▶ vídeo</span></sc-if>
+              </div>
+              <div style="padding:0 4px">
+                <h3 style="font-size:16.5px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25">{{ c.cliente }}</h3>
+                <p style="font-size:13px;color:#7C9097;margin:3px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ c.segmento }} · {{ c.periodoFmt }}</p>
+              </div>
+            </article>
           </sc-for>
         </div>
         <sc-if value="{{ semResultadoCases }}" hint-placeholder-val="{{ false }}">
@@ -1194,7 +1188,11 @@
     <sc-if value="{{ hasCaseSel }}" hint-placeholder-val="{{ true }}">
     <div style="display:grid;grid-template-columns:1fr 312px;gap:30px;align-items:start">
       <div>
-        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;margin-bottom:18px">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;margin-bottom:18px;overflow:hidden">
+          <sc-if value="{{ caseSel.hasFoto }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:-28px -28px 22px;background:#EEF3F5"><img src="{{ caseSel.fotoSrc }}" alt="{{ caseSel.cliente }}" style="width:100%;height:360px;object-fit:cover;display:block"></div>
+            <sc-if value="{{ caseSel.hasFotoLegenda }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;color:#8AA0A7;margin:-12px 0 16px">{{ caseSel.fotoLegenda }}</div></sc-if>
+          </sc-if>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
             <button onclick="{{ caseSel.abrirEscopo }}" style="border:none;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:7px;background:{{ caseSel.escopoBg }};color:{{ caseSel.escopoCor }};cursor:pointer">{{ caseSel.escopoNome }}</button>
             <span style="font-size:12.5px;color:#5E747B;background:#EFF4F5;padding:5px 11px;border-radius:7px">{{ caseSel.segmento }}</span>
@@ -1392,7 +1390,33 @@
       </div>
 
       <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
-        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">6</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Vídeo da equipe</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">Gerente e consultores contando o projeto em 3 a 8 minutos. Link do Drive ou do YouTube (não listado).</p></div></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">6</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Foto do projeto</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">Uma imagem que represente o projeto: a equipe com o cliente, o produto, a loja. É a capa do case na galeria e na ficha.</p></div></div>
+        <input id="hangar-foto-input" type="file" accept="image/*" onchange="{{ onFotoArquivo }}" style="display:none">
+        <sc-if value="{{ semFotoPreview }}" hint-placeholder-val="{{ true }}">
+          <div onclick="{{ abrirSeletorFoto }}" ondrop="{{ onFotoDrop }}" sc-camel-on-drag-over="{{ onFotoDragOver }}" style="border:2px dashed #C9DBE0;border-radius:14px;padding:30px 20px;text-align:center;cursor:pointer;background:#FAFCFC" style-hover="border-color:#9FD7E2;background:#F3FAFB">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" style="display:block;margin:0 auto 10px"><rect x="3" y="5" width="18" height="14" rx="3" stroke="#3DAFC7" stroke-width="1.7"></rect><circle cx="8.5" cy="10" r="1.6" fill="#3DAFC7"></circle><path d="M21 16l-5-5-8 8" stroke="#3DAFC7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <div style="font-size:14.5px;font-weight:600;color:#163B45">Arraste uma foto aqui ou clique para escolher</div>
+            <div style="font-size:12.5px;color:#8AA0A7;margin-top:4px">JPG, PNG ou WebP · a imagem é reduzida automaticamente e vai dentro do arquivo do case</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-size:13px;color:#8AA0A7;white-space:nowrap">ou cole o link de uma imagem no Drive:</span><input value="{{ formCase.fotoLink }}" oninput="{{ fc.fotoLink }}" placeholder="https://drive.google.com/file/d/…" style="flex:1;min-width:240px;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+        </sc-if>
+        <sc-if value="{{ hasFotoPreview }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">
+            <img src="{{ fotoPreview }}" alt="Pré-visualização da foto" style="width:300px;max-width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;border:1px solid #E7EEF1;background:#EEF3F5;display:block">
+            <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:12px">
+              <div style="font-size:13px;color:#5E747B;line-height:1.5">{{ fotoFonte }}</div>
+              <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Legenda (opcional)</label><input value="{{ formCase.fotoLegenda }}" oninput="{{ fc.fotoLegenda }}" placeholder="Ex.: Equipe com o gestor na entrega final" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button onclick="{{ abrirSeletorFoto }}" style="border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:8px 13px;border-radius:9px;cursor:pointer" style-hover="border-color:#9FD7E2">Trocar foto</button>
+                <button onclick="{{ removerFoto }}" style="border:none;background:transparent;color:#9DAEB4;font-size:13px;font-weight:600;padding:8px 6px;cursor:pointer">Remover</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">7</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Vídeo da equipe</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">Gerente e consultores contando o projeto em 3 a 8 minutos. Link do Drive ou do YouTube (não listado).</p></div></div>
         <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px">
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Link do vídeo</label><input value="{{ formCase.videoUrl }}" oninput="{{ fc.videoUrl }}" placeholder="https://drive.google.com/file/d/… ou https://youtu.be/…" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Quem aparece</label><input value="{{ formCase.videoQuem }}" oninput="{{ fc.videoQuem }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
@@ -1404,7 +1428,7 @@
       </div>
 
       <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
-        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">7</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Você</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">Quem está cadastrando. Fica lembrado neste navegador.</p></div></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">8</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Você</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">Quem está cadastrando. Fica lembrado neste navegador.</p></div></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Seu nome *</label><input value="{{ formCase.meuNome }}" oninput="{{ fc.meuNome }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Seu e-mail</label><input value="{{ formCase.meuEmail }}" oninput="{{ fc.meuEmail }}" placeholder="nome@produtivajunior.com.br" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>

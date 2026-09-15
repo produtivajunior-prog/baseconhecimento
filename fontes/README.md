@@ -160,15 +160,18 @@ Cases não passam por extração nem por revisão: quem viveu o projeto registra
    acesso "qualquer pessoa da Produtiva" e copie os links. Vídeo pode ser Drive ou YouTube
    (não listado).
 2. No Hangar, aba **Cases → Cadastrar case**: projeto, equipe (1 gerente + 2 consultores), história,
-   ferramentas usadas, documentos (link) e vídeo (link). **Publicar no meu Hangar** salva no seu
-   navegador; **Baixar case (.json)** gera o arquivo.
+   ferramentas usadas, documentos (link), **foto do projeto** e vídeo (link). **Publicar no meu Hangar**
+   salva no seu navegador; **Baixar case (.json)** gera o arquivo.
+   - A foto é a capa do case na galeria e na ficha. Arraste o arquivo (JPG/PNG/WebP): o app reduz para
+     1600px e grava dentro do JSON (`foto.url` como `data:image/jpeg;base64,…`, ~100–400 KB). Ou cole o
+     link de uma imagem no Drive; nesse caso quem abrir precisa ter acesso ao arquivo.
 3. Envie o `.json` ao CIEP. Não inclua números sensíveis do cliente (faturamento, margem, nomes de
    funcionários): o case é visto por toda a Produtiva.
 
 **Quem publica (CIEP):**
 ```bash
 node tools/promover.mjs --cases-dir ~/Downloads/cases   # todos os .json da pasta → src/data/cases.json
-node tools/pack.mjs && node tools/verify.mjs             # verify checa equipe, links https, escopo e ferramentas
+node tools/pack.mjs && node tools/verify.mjs             # verify checa equipe, links https, foto (≤ 1,5 MB), escopo e ferramentas
 ```
 O case aparece para todos na próxima versão do `dist/Hangar.html`. Quando houver backend, o mesmo
 JSON passa a ser gravado direto; ficha e busca não mudam.

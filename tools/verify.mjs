@@ -226,6 +226,12 @@ for (const c of cases) {
     if (!HTTPS.test(d.url || '')) p(`${ctx}.documentos[${i}]`, 'url precisa ser https');
   }
   if (c.video && c.video.url && !HTTPS.test(c.video.url)) p(ctx, 'video.url precisa ser https');
+  if (c.foto) {
+    const u = typeof c.foto.url === 'string' ? c.foto.url : '';
+    if (!HTTPS.test(u) && !/^data:image\/(jpeg|png|webp);base64,/.test(u)) p(ctx, 'foto.url precisa ser https (Drive) ou data:image/… (enviada pelo formulário)');
+    if (u.length > 1500000) p(ctx, `foto embutida com ${Math.round(u.length / 1024)} KB — acima de 1,5 MB; reduza a imagem`);
+    if (c.foto.legenda !== undefined && typeof c.foto.legenda !== 'string') p(ctx, 'foto.legenda precisa ser texto');
+  }
   if (!ISO.test(c.atualizado || '')) p(ctx, 'atualizado precisa ser YYYY-MM-DD');
   if (!c.cadastradoPor || typeof c.cadastradoPor.nome !== 'string') p(ctx, 'cadastradoPor {nome, email} ausente');
 }

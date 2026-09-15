@@ -11,7 +11,7 @@
  *   - Escopos → escopo → etapa → ferramenta → ficha abre e mostra "Usado em";
  *   - a busca por um termo de dentro dos passos encontra a ferramenta;
  *   - o botão do anexo abre uma URL do Drive numa aba nova;
- *   - Banco de cases: cadastro → publicar → ficha com vídeo e documento → JSON → busca após recarregar;
+ *   - Banco de cases: cadastro com foto → publicar → ficha com capa, vídeo e documento → JSON → galeria após recarregar;
  *   - screenshot em dist/<nome>-smoke.png (ignorado pelo git).
  *
  * Precisa do pacote playwright (npx playwright@1 …) e de um Chromium; sem os dois, sai com aviso.
@@ -135,6 +135,13 @@ await preencher('https://drive.google.com/…', 'https://drive.google.com/file/d
 await preencher(/youtu\.be/, 'https://youtu.be/dQw4w9WgXcQ');
 await page.waitForTimeout(200);
 check((await page.locator('iframe[src*="youtube.com/embed/dQw4w9WgXcQ"]').count()) > 0, 'pré-visualização do vídeo (iframe) apareceu no formulário');
+// foto: um PNG mínimo entra pelo input escondido; o app redimensiona no canvas e guarda como JPEG (data URL)
+const PNG_1PX = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64');
+await page.locator('#hangar-foto-input').setInputFiles({ name: 'foto.png', mimeType: 'image/png', buffer: PNG_1PX });
+await page.waitForSelector('img[alt="Pré-visualização da foto"]', { timeout: 5000 }).catch(() => {});
+const fotoPrev = await page.locator('img[alt="Pré-visualização da foto"]').first().getAttribute('src').catch(() => null);
+check(!!fotoPrev && /^data:image\/jpeg;base64,/.test(fotoPrev), 'foto enviada virou pré-visualização JPEG (data URL) no formulário');
+await page.getByPlaceholder('Ex.: Equipe com o gestor na entrega final').fill('Equipe na entrega');
 await page.getByText('Seu nome *').locator('..').locator('input').fill('Pessoa do Smoke');
 await page.getByRole('button', { name: 'Publicar no meu Hangar' }).click();
 await page.waitForTimeout(400);
@@ -142,12 +149,14 @@ let t = await texto();
 check(/Padaria Smoke/.test(t) && /Equipe do projeto/i.test(t), 'case publicado abriu a ficha');
 check((await page.locator('iframe[src*="youtube.com/embed/"]').count()) > 0, 'ficha do case embute o vídeo');
 check(/Relatório final\.pdf/.test(t) && /Abrir no Drive/.test(t), 'ficha lista o documento com botão do Drive');
+check((await page.locator('main img[alt="Padaria Smoke"][src^="data:image/jpeg"]').count()) > 0 && /Equipe na entrega/.test(t), 'ficha mostra a foto de capa com a legenda');
 check(/Só neste navegador/i.test(t), 'ficha avisa que o case só existe neste navegador');
 await page.getByRole('button', { name: 'Baixar case (.json)' }).first().click();
 await page.waitForTimeout(200);
 const dl = await page.evaluate(() => window.__hangarUltimoDownload);
 let caseJson = null; try { caseJson = dl && JSON.parse(dl.json); } catch {}
 check(!!caseJson && caseJson.cliente === 'Padaria Smoke' && caseJson.equipe.consultores.length === 2 && /^case-.*\.json$/.test(dl.nome), `"Baixar case" gerou ${dl ? dl.nome : 'nada'} com JSON válido`);
+check(!!caseJson && caseJson.foto && /^data:image\/jpeg;base64,/.test(caseJson.foto.url) && caseJson.foto.legenda === 'Equipe na entrega', 'JSON do case leva a foto embutida e a legenda');
 // busca e persistência
 await page.reload(); await page.waitForTimeout(1200);
 await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); await page.waitForTimeout(200);
@@ -155,6 +164,11 @@ await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke');
 await page.waitForTimeout(300);
 t = await texto();
 check(/Padaria Smoke/.test(t) && !/Nenhum case encontrado/.test(t), 'após recarregar, a busca "smoke" encontra o case (localStorage)');
+check((await page.locator('article img[alt="Padaria Smoke"]').count()) > 0, 'galeria mostra o case como foto com o nome embaixo');
+await page.locator('article img[alt="Padaria Smoke"]').first().click(); await page.waitForTimeout(300);
+check(/Equipe do projeto/i.test(await texto()), 'clicar na foto abre a ficha do case');
+await page.getByRole('button', { name: 'Banco de cases' }).first().click(); await page.waitForTimeout(200);
+await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
 await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('xyzinexistente'); await page.waitForTimeout(300);
 check(/Nenhum case encontrado/.test(await texto()), 'busca sem resultado mostra a mensagem certa');
 await page.evaluate(() => { try { localStorage.removeItem('hangar.casesLocais'); } catch {} });

@@ -65,7 +65,7 @@ class Component extends DCLogic {
   // Persistência local: sem backend, o que o membro cadastra fica neste navegador. Tudo em try/catch:
   // sem localStorage (modo privado, file:// bloqueado) o app segue funcionando, só não lembra.
   carregarLocal(chave, padrao) { try { const v = (typeof localStorage !== 'undefined') && localStorage.getItem(chave); return v ? JSON.parse(v) : padrao; } catch (e) { return padrao; } }
-  salvarLocal(chave, valor) { try { if (typeof localStorage !== 'undefined') localStorage.setItem(chave, JSON.stringify(valor)); } catch (e) {} }
+  salvarLocal(chave, valor) { try { if (typeof localStorage !== 'undefined') { localStorage.setItem(chave, JSON.stringify(valor)); return true; } } catch (e) {} return false; }
   allCases() { return this.state.casesLocais.map(c => ({ ...c, local: true })).concat(this.CASES); }
 
   // Link de vídeo → URL embutível. YouTube e Drive; qualquer outro fica só como link.
@@ -77,6 +77,53 @@ class Component extends DCLogic {
     if (m) return 'https://drive.google.com/file/d/' + m[1] + '/preview';
     return '';
   }
+  // Foto do case → URL que um <img> consegue mostrar. Data URL (enviada do computador) passa direto;
+  // link do Drive vira a miniatura pública do arquivo (precisa de acesso, como os documentos); outro https fica como está.
+  fotoSrc(url) {
+    const u = String(url || '').trim();
+    if (!u) return '';
+    if (/^data:image\//.test(u)) return u;
+    const m = /drive\.google\.com\/(?:file\/d\/|open\?(?:.*&)?id=|uc\?(?:.*&)?id=|thumbnail\?(?:.*&)?id=)([A-Za-z0-9_-]+)/.exec(u);
+    if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1600';
+    return u;
+  }
+  // Lê a foto escolhida, reduz para no máximo 1600px e devolve um JPEG em data URL (~100–400 KB).
+  // O case vira um JSON único, então a foto vai dentro dele; por isso o limite de tamanho.
+  lerFoto(file) {
+    return new Promise((resolve, reject) => {
+      if (!file || !/^image\//.test(file.type || '')) return reject(new Error('Escolha um arquivo de imagem (JPG, PNG ou WebP).'));
+      const r = new FileReader();
+      r.onerror = () => reject(new Error('Não consegui ler o arquivo.'));
+      r.onload = () => {
+        const img = new Image();
+        img.onerror = () => reject(new Error('Não consegui abrir essa imagem.'));
+        img.onload = () => {
+          try {
+            const MAX = 1600, esc = Math.min(1, MAX / Math.max(img.width, img.height, 1));
+            const w = Math.max(1, Math.round(img.width * esc)), h = Math.max(1, Math.round(img.height * esc));
+            const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+            const ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); ctx.drawImage(img, 0, 0, w, h);
+            let q = 0.85, out = cv.toDataURL('image/jpeg', q);
+            while (out.length > 700000 && q > 0.45) { q -= 0.1; out = cv.toDataURL('image/jpeg', q); }
+            resolve(out);
+          } catch (e) { reject(new Error('Não consegui processar a imagem.')); }
+        };
+        img.src = String(r.result);
+      };
+      r.readAsDataURL(file);
+    });
+  }
+  receberFoto(file) {
+    this.lerFoto(file).then(
+      (dados) => { this.setState(st => ({ formCase: { ...st.formCase, fotoDados: dados }, caseErro: '' })); this.showToast('Foto pronta. Ela vai junto no arquivo do case.'); },
+      (err) => this.setState({ caseErro: err.message }));
+  }
+  onFotoArquivo(e) { const f = e && e.target && e.target.files && e.target.files[0]; if (f) this.receberFoto(f); try { e.target.value = ''; } catch (x) {} }
+  onFotoDrop(e) { if (e && e.preventDefault) e.preventDefault(); const f = e && e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) this.receberFoto(f); }
+  onFotoDragOver(e) { if (e && e.preventDefault) e.preventDefault(); }
+  abrirSeletorFoto() { if (typeof document === 'undefined') return; const el = document.getElementById('hangar-foto-input'); if (el) el.click(); }
+  removerFoto() { this.setState(st => ({ formCase: { ...st.formCase, fotoDados: '', fotoLink: '', fotoLegenda: '' } })); }
+
   slugDe(t) { return this.normaliza(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   linhas(t) { return String(t || '').split('\n').map(x => x.trim()).filter(Boolean); }
   fmtMes(s) { const m = /^(\d{4})-(\d{2})$/.exec(s || ''); if (!m) return s || ''; const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']; return meses[+m[2]-1] + ' ' + m[1]; }
@@ -87,6 +134,7 @@ class Component extends DCLogic {
       gerenteNome:'', gerenteEmail:'', c1Nome:'', c1Email:'', c2Nome:'', c2Email:'',
       resumo:'', desafio:'', solucao:'', resultados:'', aprendizados:'', depoimento:'', tags:'',
       ferramentas:[], documentos:[{ nome:'', tipo:(DADOS.taxonomia.documentosCase||[])[3] || 'Outro', url:'' }],
+      fotoDados:'', fotoLink:'', fotoLegenda:'',
       videoUrl:'', videoQuem:'Gerente e consultores', videoDuracao:'',
       meuNome: eu.nome || '', meuEmail: eu.email || '' };
   }
@@ -100,6 +148,7 @@ class Component extends DCLogic {
     if (emails.some(e => !/^[^@\s]+@produtivajunior\.com\.br$/.test(e.trim()))) return 'Use e-mails @produtivajunior.com.br na equipe.';
     for (const d of f.documentos) { if ((d.nome || d.url) && !/^https:\/\//.test(d.url || '')) return 'Cada documento precisa de um link https (Drive).'; }
     if (f.videoUrl && !/^https:\/\//.test(f.videoUrl.trim())) return 'O link do vídeo precisa começar com https://.';
+    if (!f.fotoDados && f.fotoLink && !/^https:\/\//.test(f.fotoLink.trim())) return 'O link da foto precisa começar com https:// (Drive).';
     if (!f.meuNome.trim()) return 'Diga quem está cadastrando (seu nome).';
     return '';
   }
@@ -117,6 +166,7 @@ class Component extends DCLogic {
       resultados: this.linhas(f.resultados), aprendizados: this.linhas(f.aprendizados),
       ferramentas: f.ferramentas.slice(),
       documentos: f.documentos.filter(d => d.url).map(d => ({ nome: d.nome.trim() || d.url, tipo: d.tipo, url: d.url.trim() })),
+      foto: (f.fotoDados || f.fotoLink.trim()) ? { url: f.fotoDados || f.fotoLink.trim(), legenda: (f.fotoLegenda || '').trim() } : null,
       video: f.videoUrl.trim() ? { url: f.videoUrl.trim(), quem: f.videoQuem.trim(), duracao: f.videoDuracao.trim() } : null,
       depoimentoCliente: f.depoimento.trim(), tags: f.tags.split(',').map(x => x.trim()).filter(Boolean),
       cadastradoPor: pessoa(f.meuNome, f.meuEmail), atualizado: this.hoje(),
@@ -128,10 +178,11 @@ class Component extends DCLogic {
     if (erro) { this.setState({ caseErro: erro }); return; }
     const c = this.montarCase(f);
     const casesLocais = [c].concat(this.state.casesLocais.filter(x => x.id !== c.id));
-    this.salvarLocal('hangar.casesLocais', casesLocais);
+    const guardou = this.salvarLocal('hangar.casesLocais', casesLocais);
     this.salvarLocal('hangar.eu', { nome: f.meuNome.trim(), email: f.meuEmail.trim() });
     this.setState({ casesLocais, caseErro: '', formCase: this.formCaseVazio() });
-    this.showToast('Case salvo neste navegador. Baixe o arquivo e envie ao CIEP para publicar para todos.');
+    // Sem espaço no navegador (fotos grandes) o case fica só nesta sessão: avisa para baixar já.
+    this.showToast(guardou ? 'Case salvo neste navegador. Baixe o arquivo e envie ao CIEP para publicar para todos.' : 'O navegador não guardou o case (sem espaço). Baixe o arquivo agora para não perder.');
     this.openCase(c.id);
   }
   // Gera o arquivo do case para enviar ao CIEP. Guarda o último em window para o smoke conferir.
@@ -172,6 +223,11 @@ class Component extends DCLogic {
     const docs = (c.documentos || []).map(d => ({ ...d, ext: this.extOf(d), abrir: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); if (typeof window!=='undefined') window.open(d.url, '_blank', 'noopener'); } }));
     const video = c.video && c.video.url ? c.video : null;
     const embed = video ? this.embedDe(video.url) : '';
+    const foto = c.foto && c.foto.url ? c.foto : null;
+    const fotoSrc = foto ? this.fotoSrc(foto.url) : '';
+    // Sem foto, a galeria mostra um cartão na cor do grupo do escopo com as iniciais do cliente.
+    const inicial = this.initials(c.cliente || '?');
+    const placeholderBg = 'linear-gradient(150deg,' + (g.bg || '#ECEFF7') + ' 0%,' + (g.cor || '#4E5E96') + ' 160%)';
     const periodoFmt = [this.fmtMes((c.periodo||{}).inicio), this.fmtMes((c.periodo||{}).fim)].filter(Boolean).join(' – ');
     const ano = ((c.periodo||{}).fim || (c.periodo||{}).inicio || c.atualizado || '').slice(0, 4);
     return { ...c, escopoNome, escopoCor: g.cor || '#4E5E96', escopoBg: g.bg || '#ECEFF7', hasEscopo: !!escopo,
@@ -179,6 +235,7 @@ class Component extends DCLogic {
       equipe, equipeResumo: equipe.map(x => x.nome.split(' ')[0]).join(', '),
       ferramentas, hasFerramentas: ferramentas.length > 0, docs, nDocs: docs.length, hasDocs: docs.length > 0,
       video, hasVideo: !!video, videoEmbed: embed, hasVideoEmbed: !!embed, videoLink: video ? video.url : '',
+      foto, hasFoto: !!fotoSrc, semFoto: !fotoSrc, fotoSrc, fotoLegenda: foto ? (foto.legenda || '') : '', hasFotoLegenda: !!(foto && foto.legenda), inicial, placeholderBg,
       abrirVideo: () => { if (video && typeof window!=='undefined') window.open(video.url, '_blank', 'noopener'); },
       periodoFmt: periodoFmt || (ano ? String(ano) : ''), ano, duracaoFmt: c.duracaoDias ? c.duracaoDias + ' dias' : '',
       resultados: c.resultados || [], hasResultados: !!(c.resultados && c.resultados.length), resultadoDestaque: (c.resultados && c.resultados[0]) || c.resumo,
@@ -619,7 +676,7 @@ class Component extends DCLogic {
     // formulário de case
     const fcase = s.formCase;
     const setFC = (k) => (e) => this.setState(st => ({ formCase: { ...st.formCase, [k]: e.target.value }, caseErro:'' }));
-    const fc = {}; for (const k of ['cliente','segmento','porte','cidade','escopoId','escopoNome','inicio','fim','duracaoDias','gerenteNome','gerenteEmail','c1Nome','c1Email','c2Nome','c2Email','resumo','desafio','solucao','resultados','aprendizados','depoimento','tags','videoUrl','videoQuem','videoDuracao','meuNome','meuEmail']) fc[k] = setFC(k);
+    const fc = {}; for (const k of ['cliente','segmento','porte','cidade','escopoId','escopoNome','inicio','fim','duracaoDias','gerenteNome','gerenteEmail','c1Nome','c1Email','c2Nome','c2Email','resumo','desafio','solucao','resultados','aprendizados','depoimento','tags','fotoLink','fotoLegenda','videoUrl','videoQuem','videoDuracao','meuNome','meuEmail']) fc[k] = setFC(k);
     const escopoOptions = [{ value:'', label:'Escolha o escopo…' }].concat(this.ESCOPOS.map(e => ({ value:e.id, label:e.nome }))).concat([{ value:'', label:'Outro (descrever abaixo)' }]);
     const porteOptions = [{ value:'', label:'Porte…' }].concat(this.vivos(this.TAXONOMIA.portes || []).map(v => ({ value:v, label:v })));
     const docTipoOptions = this.vivos(this.TAXONOMIA.documentosCase || []).map(v => ({ value:v, label:v }));
@@ -636,6 +693,8 @@ class Component extends DCLogic {
       remove: () => this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.filter((_,j)=>j!==i) } })),
       tipoOptions: docTipoOptions.map(o => ({ ...o, selected: o.value===d.tipo })) }));
     const videoPreview = this.embedDe(fcase.videoUrl);
+    const fotoPreview = this.fotoSrc(fcase.fotoDados || fcase.fotoLink);
+    const fotoFonte = fcase.fotoDados ? 'Foto enviada do seu computador · vai dentro do arquivo do case (' + Math.round(fcase.fotoDados.length * 0.75 / 1024) + ' KB)' : (fcase.fotoLink ? 'Foto pelo link do Drive · quem abrir precisa ter acesso ao arquivo' : '');
     const casePreview = (() => { try { return this.validarCase(fcase) ? null : this.montarCase(fcase); } catch (e) { return null; } })();
 
     // escopos
@@ -775,6 +834,8 @@ class Component extends DCLogic {
       formCase: fcase, fc, escopoOptions, porteOptions, docTipoOptions, ferrChips, caseFiltroFerr: s.caseFiltroFerr, onCaseFiltroFerr:(e)=>this.setState({ caseFiltroFerr:e.target.value }),
       nFerrEscolhidas: fcase.ferramentas.length, docsRows, addDoc:()=>this.setState(st=>({ formCase:{ ...st.formCase, documentos: st.formCase.documentos.concat([{ nome:'', tipo:docTipoOptions[0]?docTipoOptions[0].value:'Outro', url:'' }]) } })),
       videoPreview, hasVideoPreview: !!videoPreview, caseErro: s.caseErro, hasCaseErro: !!s.caseErro,
+      fotoPreview, hasFotoPreview: !!fotoPreview, semFotoPreview: !fotoPreview, fotoFonte,
+      onFotoArquivo:(e)=>this.onFotoArquivo(e), onFotoDrop:(e)=>this.onFotoDrop(e), onFotoDragOver:(e)=>this.onFotoDragOver(e), abrirSeletorFoto:()=>this.abrirSeletorFoto(), removerFoto:()=>this.removerFoto(),
       publishCase:()=>this.publishCase(), baixarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.baixarJson(this.montarCase(fcase)); }, copiarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.copiarJson(this.montarCase(fcase)); },
       casePronto: !!casePreview, limparCase:()=>this.setState({ formCase:this.formCaseVazio(), caseErro:'' }),
       goHome:()=>this.nav('home'), goBiblioteca:()=>this.nav('biblioteca'), goRecomendar:()=>this.nav('recomendar'), goEscopos:()=>this.nav('escopos'),
