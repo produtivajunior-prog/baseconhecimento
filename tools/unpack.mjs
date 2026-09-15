@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * unpack.mjs — explode o bundle self-extracting da Biblioteca CIEP em fontes legíveis.
+ * unpack.mjs — explode o bundle self-extracting do Hangar (ex-Biblioteca CIEP) em fontes legíveis.
  *
  * O HTML original guarda ~98% do conteúdo em duas linhas gigantes:
  *   <script type="__bundler/manifest">  → assets em base64 (alguns gzipados)

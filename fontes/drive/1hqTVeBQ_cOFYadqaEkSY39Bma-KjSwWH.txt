@@ -1,0 +1,77 @@
+# id: 1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH
+# nome: Metodologia - Teoria da Saliência .pdf
+# mimeType: application/pdf
+# dono: viniciusmoraes@produtivajunior.com.br
+# url: https://drive.google.com/file/d/1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH/view?usp=drivesdk
+# extraidoEm: 2026-09-07
+# uso: ferramenta:teoria-da-saliencia
+---
+Metodologia - Teoria da Saliência
+
+METODOLOGIA TEORIA DA TEORIA DA SALIÊNCIA SALIÊNCIA
+
+INTRODUÇÃO
+
+Em um ambiente organizacional cada vez mais dinâmico e competitivo, a construção de estratégias de marketing eficazes exige não apenas o entendimento do mercado, mas também a identificação e priorização dos stakeholders envolvidos no processo. Nesse contexto, este Plano de Marketing tem como objetivo estruturar ações estratégicas a partir de uma análise criteriosa dos principais atores que influenciam e são impactados pelas decisões da organização.
+
+A proposta baseia-se no modelo de saliência dos stakeholders, considerando três atributos fundamentais — poder, legitimidade e urgência — como critérios para classificação e definição de prioridades. Essa abordagem permite direcionar esforços de forma mais assertiva, garantindo que as demandas mais relevantes sejam atendidas com maior eficiência.
+
+Além disso, o plano busca estabelecer uma visão clara das relações entre os stakeholders, utilizando ferramentas analíticas que facilitam a tomada de decisão e o alinhamento estratégico. A partir dessa estrutura, torna-se possível desenvolver ações de marketing mais coerentes, sustentáveis e orientadas a resultados, fortalecendo o posicionamento da organização e ampliando seu impacto no mercado.
+
+ANÁLISE DO ESTADO ATUAL
+
+Atualmente, há necessidade de estruturar melhor a relação com stakeholders, cujo impacto afeta decisões estratégicas e ações de marketing. O cenário revela atenção desigual a esses públicos, gerando falhas de comunicação e perda de oportunidades.
+
+Situação Atual
+
+A análise usa poder, legitimidade e urgência para classificar stakeholders, mas faltam sistematização, tabela e diagrama para priorizar demandas de forma objetiva. Stakeholders definitivos exigem atenção prioritária; expectantes e latentes, monitoramento diferenciado.
+
+Principais Desafios
+
+Ausência de visualização estruturada compromete decisões gerenciais e ações assertivas. A organização transita de percepções dispersas para gestão estratégica, essencial para um plano de marketing sólido.
+
+COMO FUNCIONA A FERRAMENTA
+
+A ferramenta é utilizada como um método de apoio à tomada de decisão dentro do plano de marketing, permitindo identificar, analisar e priorizar os stakeholders de forma estruturada.
+
+Inicialmente, são mapeados todos os stakeholders que possuem relação com a organização ou com o problema analisado. Em seguida, cada um desses agentes é avaliado com base em três atributos fundamentais: poder (capacidade de influência), legitimidade (grau de relevância e adequação da relação) e urgência (necessidade de resposta imediata).
+
+A partir dessa avaliação, os stakeholders são classificados conforme a combinação desses atributos, o que define seu nível de saliência. Essa classificação permite distinguir, por exemplo, quais stakeholders exigem atenção imediata e prioritária e quais podem ser monitorados com menor intensidade.
+
+Na prática, essa ferramenta orienta diretamente a definição das estratégias de marketing, pois possibilita direcionar ações, comunicação e recursos para os públicos mais relevantes em cada contexto. Além disso, a organização dos dados em tabelas e diagramas facilita a visualização das relações e apoia os gestores na tomada de decisões mais assertivas e fundamentadas.
+
+PASSO A PASSO
+
+Passo 1: Identificação e Definição dos Atributos Fundamentais Definição dos Atributos de Saliência Cada stakeholder identificado será avaliado em relação a estes três atributos: a) Poder (Power) Definição: A capacidade de um stakeholder de impor sua vontade na relação com a organização, mesmo contra a resistência. b) Legitimidade (Legitimacy) Definição: A percepção generalizada de que as ações de uma entidade são desejáveis, apropriadas ou adequadas dentro de um sistema socialmente construído de normas, valores, crenças e definições. c) Urgência (Urgency) Definição: O grau em que as reivindicações do stakeholder exigem atenção imediata. Possui duas características: sensibilidade ao tempo (o atraso na atenção à reivindicação é inaceitável para o stakeholder) e criticidade (a importância da reivindicação para o stakeholder).
+
+Ao final desta etapa, teremos uma lista de stakeholders e uma compreensão clara dos critérios pelos quais eles serão avaliados. O próximo passo será aplicar esses atributos para classificar os stakeholders em diferentes tipos de saliência.
+
+PASSO A PASSO
+
+Passo 2: Classificação e Tipologia dos Stakeholders Com os stakeholders identificados e os atributos definidos, o próximo passo é avaliar cada grupo em relação à presença ou ausência de Poder, Legitimidade e Urgência. A combinação desses atributos determina a "saliência" do stakeholder, ou seja, o grau em que os gestores dão prioridade às suas reivindicações. Stakeholders Expectantes (Possuem 2 atributos) Estes stakeholders possuem saliência moderada. Eles "esperam" algo da empresa e os gestores geralmente os reconhecem e respondem às suas demandas.
+
+1.Stakeholder Dominante: Possui Poder e Legitimidade. Sua influência na empresa é garantida. Eles formam a "coalizão dominante" e têm mecanismos formais para agir sobre suas reivindicações.
+
+2.Stakeholder Dependente (Dependent): Possui Legitimidade e Urgência. Têm reivindicações legítimas e urgentes, mas dependem de outros stakeholders (com poder) ou da gestão da empresa para que suas demandas sejam atendidas.
+
+3.Stakeholder Perigoso (Dangerous): Possui Poder e Urgência.
+
+•Características: Têm poder e urgência, mas não têm legitimidade. Podem ser coercitivos e até violentos para alcançar seus objetivos.
+
+PASSO A PASSO
+
+Stakeholders Definitivos (Possuem os 3 atributos) Estes stakeholders possuem alta saliência. Os gestores devem dar prioridade máxima às suas reivindicações.
+
+Stakeholder Definitivo (Definitive): Possui Poder, Legitimidade e Urgência.
+
+•Características: Qualquer stakeholder expectante pode se tornar definitivo ao adquirir o terceiro atributo. Suas demandas requerem atenção imediata e prioritária da gestão.
+
+Não-Stakeholders (Possuem 0 atributos) Indivíduos ou grupos que não possuem nenhum dos três atributos não são considerados stakeholders em relação à questão específica em análise.
+
+Passo 3: Estabelecer as relações entre os stakeholders e os atributos. Fazer uma tabela para entender as classificações dos stakeholders, e por último fazer um diagrama de Venn para apresentar aos gestores
+
+PRODUZIDO POR:
+
+PRODUTIVA
+
+JÚNIOR

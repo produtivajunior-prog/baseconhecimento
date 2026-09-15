@@ -1,0 +1,49 @@
+# id: 1sjp_K3sv-IFSORfI7IbqAd7PUGY1aQ2c
+# nome: Modelo Padrão - Teoria da Salliência.pdf
+# mimeType: application/pdf
+# dono: viniciusmoraes@produtivajunior.com.br
+# url: https://drive.google.com/file/d/1sjp_K3sv-IFSORfI7IbqAd7PUGY1aQ2c/view?usp=drivesdk
+# extraidoEm: 2026-09-07
+# uso: ferramenta:teoria-da-saliencia
+---
+Modelo Padrão - Teoria da Salliência
+
+Produzido por Produtiva JR (03/2026)
+
+LOGO
+
+Teoria da Saliência Modelo da ferramenta padrão Tabela de relações e Diagrama de Venn
+
+Modelo de tabela Matriz Teoria da Saliência
+
+PODER URGÊNCIA LEGITIMIDADE SALIÊNCIA CLASSIFICAÇÃO
+
+Stakeholder 1
+
+Stakeholder 2
+
+Stakeholder 3
+
+Stakeholder 4
+
+Stakeholder 5
+
+Modelo Diagrama de Venn
+
+A
+
+D
+
+G
+
+B E C
+
+D Perigoso A Poder F B Urgência
+
+C Legetimidade
+
+E Dependente
+
+F Dominante
+
+G Definitivo

@@ -1,0 +1,48 @@
+# id: 1LIe3FcON0dRXcErSfzRFVg-aZTcPUlbe0S2UAf-Unbw
+# nome:   Cronograma Base Custeio e Precificação - Thiago Melo
+# mimeType: application/vnd.google-apps.spreadsheet
+# dono: thiagomelo@produtivajunior.com.br
+# url: https://docs.google.com/spreadsheets/d/1LIe3FcON0dRXcErSfzRFVg-aZTcPUlbe0S2UAf-Unbw/edit?usp=drivesdk&ouid=100327922083657613631
+# extraidoEm: 2026-09-07
+# uso: escopo
+---
+|  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] Cliente | \[merged\] Cliente |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] Serviço | \[merged\] Serviço | Custeio e Precificação |  |  |  |  |  |  |  |  |
+|  | \[merged\] Equipe de Venda | \[merged\] Equipe de Venda |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] Gerente | \[merged\] Gerente | Thiago Melo |  |  |  |  |  |  |  |  |
+|  | \[merged\] Dias padrão | \[merged\] Dias padrão | 65 |  |  |  |  |  |  |  |  |
+|  | \[merged\] Dias totais | \[merged\] Dias totais | 75 |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL |  |  |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |  |  |
+|  | \[merged\] Iniciação +  Levantamento dos gastos  | \[merged\] Iniciação +  Levantamento dos gastos  | \[merged\] Iniciação +  Levantamento dos gastos  | \[merged\] Iniciação +  Levantamento dos gastos  | \[merged\] Iniciação +  Levantamento dos gastos  | 1 | 5 | RAC  Coleta de informações | BMC + Gastos do projeto |  | \[merged\] ATENÇÃO |
+|  | \[merged\] Imersão na empresa + Mapeamento dos processos dos produtos/serviços a serem custeados + Coleta de dados de custo | \[merged\] Imersão na empresa + Mapeamento dos processos dos produtos/serviços a serem custeados + Coleta de dados de custo | \[merged\] Imersão na empresa + Mapeamento dos processos dos produtos/serviços a serem custeados + Coleta de dados de custo | \[merged\] Imersão na empresa + Mapeamento dos processos dos produtos/serviços a serem custeados + Coleta de dados de custo | \[merged\] Imersão na empresa + Mapeamento dos processos dos produtos/serviços a serem custeados + Coleta de dados de custo | 2 | 10 | Visualização e análise de processos | Fluxograms AS IS (Destacando custos) |  | \[merged\] O que está entre aspas: "        " e pintado de azulsão coisas que podem ocorrer nas demandas dos serviços, mas nem sempre ocorrem. Não será contado nos "Dias - Padrão" Mas será nos "Dias totais" |
+|  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | 3 | 15 |  |  |  | \[merged\] Em alguns casos, terá uma amplitude na quantidade de sprints a depender do escopo em alguns sentido. mas nunca será muito larga |
+|  | \[merged\] ETAPA 02 -  Custeio | \[merged\] ETAPA 02 -  Custeio | \[merged\] ETAPA 02 -  Custeio | \[merged\] ETAPA 02 -  Custeio | \[merged\] ETAPA 02 -  Custeio | \[merged\] ETAPA 02 -  Custeio | \[merged\] ETAPA 02 -  Custeio | \[merged\] ETAPA 02 -  Custeio | \[merged\] ETAPA 02 -  Custeio |  | \[merged\] Em alguns casos, terá uma amplitude na quantidade de sprints a depender do escopo em alguns sentido. mas nunca será muito larga |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |  | \[merged\]  |
+|  | \[merged\] Continuação da coleta de dados +Classificação/revisão dos gastos  | \[merged\] Continuação da coleta de dados +Classificação/revisão dos gastos  | \[merged\] Continuação da coleta de dados +Classificação/revisão dos gastos  | \[merged\] Continuação da coleta de dados +Classificação/revisão dos gastos  | \[merged\] Continuação da coleta de dados +Classificação/revisão dos gastos  | 1 | 5 | Construção interna + Validação | Gastos classificados |  | \[merged\]  |
+|  | \[merged\] "Priorização de produtos/serviços pela curva ABC "+ Definição do método de custeio | \[merged\] "Priorização de produtos/serviços pela curva ABC "+ Definição do método de custeio | \[merged\] "Priorização de produtos/serviços pela curva ABC "+ Definição do método de custeio | \[merged\] "Priorização de produtos/serviços pela curva ABC "+ Definição do método de custeio | \[merged\] "Priorização de produtos/serviços pela curva ABC "+ Definição do método de custeio | 1 | 5 | Construção interna + Validação | Curva ABC + Método custeio |  | \[merged\]  |
+|  | \[merged\] Criação de planilha para cálculos + Rateio/ Rastreio dos custos | \[merged\] Criação de planilha para cálculos + Rateio/ Rastreio dos custos | \[merged\] Criação de planilha para cálculos + Rateio/ Rastreio dos custos | \[merged\] Criação de planilha para cálculos + Rateio/ Rastreio dos custos | \[merged\] Criação de planilha para cálculos + Rateio/ Rastreio dos custos | 3 | 15 | Construção interna + Validação | Rateio/Rastreio |  | \[merged\]  |
+|  | \[merged\] Criação de DRE por produto/ serviço | \[merged\] Criação de DRE por produto/ serviço | \[merged\] Criação de DRE por produto/ serviço | \[merged\] Criação de DRE por produto/ serviço | \[merged\] Criação de DRE por produto/ serviço | 2 | 10 | Construção interna + Validação | DRE dos produtos |  |  |
+|  |  |  |  |  |  | 7 | 35 |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] ETAPA 02 -  Precificação | \[merged\] ETAPA 02 -  Precificação | \[merged\] ETAPA 02 -  Precificação | \[merged\] ETAPA 02 -  Precificação | \[merged\] ETAPA 02 -  Precificação | \[merged\] ETAPA 02 -  Precificação | \[merged\] ETAPA 02 -  Precificação | \[merged\] ETAPA 02 -  Precificação | \[merged\] ETAPA 02 -  Precificação |  |  |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |  |  |
+|  | \[merged\] Determinação/cálculo de markup por produto + Precificação dos produtos/serviços | \[merged\] Determinação/cálculo de markup por produto + Precificação dos produtos/serviços | \[merged\] Determinação/cálculo de markup por produto + Precificação dos produtos/serviços | \[merged\] Determinação/cálculo de markup por produto + Precificação dos produtos/serviços | \[merged\] Determinação/cálculo de markup por produto + Precificação dos produtos/serviços | 1 | 5 | Construção interna + Validação | Markup dos produtos |  |  |
+|  | \[merged\] Comparação com mercado e concorrentes ( Análise de mercado) | \[merged\] Comparação com mercado e concorrentes ( Análise de mercado) | \[merged\] Comparação com mercado e concorrentes ( Análise de mercado) | \[merged\] Comparação com mercado e concorrentes ( Análise de mercado) | \[merged\] Comparação com mercado e concorrentes ( Análise de mercado) | 1 | 5 | Construção interna + Validação | Matriz de concorrentes  |  |  |
+|  | \[merged\] Construção de indicadores de custo e indicadores financeiros | \[merged\] Construção de indicadores de custo e indicadores financeiros | \[merged\] Construção de indicadores de custo e indicadores financeiros | \[merged\] Construção de indicadores de custo e indicadores financeiros | \[merged\] Construção de indicadores de custo e indicadores financeiros | 1 | 5 | Construção interna + Validação | Indicadores financeiros |  |  |
+|  | \[merged\] Planos de ação + Estratégias com novo custo e preços | \[merged\] Planos de ação + Estratégias com novo custo e preços | \[merged\] Planos de ação + Estratégias com novo custo e preços | \[merged\] Planos de ação + Estratégias com novo custo e preços | \[merged\] Planos de ação + Estratégias com novo custo e preços | 1 | 5 | Construção interna + Validação | Planos de ação + Estratégias |  |  |
+|  |  |  |  |  |  | 4 | 20 |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO |  |  |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |  |  |
+|  | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | 1 | 5 | RAF | \- |  |  |
+|  | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \- | 6 | Visita e acompanhamento dos processos/ ajustes necessários nas ferramentas | Relatório quinzenal do andamento |  |  |
+|  |  |  |  |  |  |  | 11 |  |  |  |  |

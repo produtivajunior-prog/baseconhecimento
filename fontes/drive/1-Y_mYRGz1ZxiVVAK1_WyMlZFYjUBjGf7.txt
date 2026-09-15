@@ -1,0 +1,23 @@
+# id: 1-Y_mYRGz1ZxiVVAK1_WyMlZFYjUBjGf7
+# nome: [SWOT] Modelo padrão.pdf
+# mimeType: application/pdf
+# dono: gabrielapalma@produtivajunior.com.br
+# url: https://drive.google.com/file/d/1-Y_mYRGz1ZxiVVAK1_WyMlZFYjUBjGf7/view?usp=drivesdk
+# extraidoEm: 2026-09-07
+# uso: ferramenta:swot
+---
+\[SWOT\] Modelo padrão
+
+PRODUTIVA & \[NOME DA EMPRESA\]
+
+MATRIZ SWOT
+
+O que é uma Matriz SWOT? MATRIZ SWOT
+
+O Business Model Canvas (BMC) é uma ferramenta de entendimento do modelo de negócio e gerenciamento estratégico, que nos permite enxergar, de maneira clara e visual, 9 Blocos- Chave, fornecendo uma visão panorâmica e acessível de todos os elementos críticos do seu modelo de negócios.
+
+FORÇAS FRAQUEZAS
+
+SWOT
+
+OPORTUNIDADES AMEAÇAS

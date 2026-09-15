@@ -1,0 +1,27 @@
+# id: 1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE
+# nome: Checklist Escopos
+# mimeType: application/vnd.google-apps.document
+# dono: thiagomelo@produtivajunior.com.br
+# url: https://docs.google.com/document/d/1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE/edit?usp=drivesdk&ouid=100327922083657613631
+# extraidoEm: 2026-09-07
+# uso: escopo
+---
+  - Pesquisa de mercado
+  - Gerenciamento Financeiro
+  - Custeio e precificação
+  - Estruturação comercial (2 ways)
+  - Plano de marketing e vendas (2 ways)
+  - Planejamento estratégico
+  - Mapeamento de cultura
+  - Gamificação
+  - Mapeamento e modelagem de processos
+
+
+
+  - Capacidade Produtiva - Sai muito pouco, despriorizando, pode ser feito
+  - Gestão de estoque - Escopo de pouco domínio da PJ, arriscado fazer
+  - Layout - Quase não sai e pouco domínio
+  - Previsão de demanda - Quase não sai, pouco domínio
+  - Planejamento Financeiro - Escopo deve ser reformulado ?, Pode ser feito
+
+

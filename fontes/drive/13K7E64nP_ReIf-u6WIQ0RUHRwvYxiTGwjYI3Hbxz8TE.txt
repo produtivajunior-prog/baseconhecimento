@@ -1,0 +1,37 @@
+# id: 13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE
+# nome:  Cronograma Base Mapeamento e modelagem - Thiago Melo
+# mimeType: application/vnd.google-apps.spreadsheet
+# dono: thiagomelo@produtivajunior.com.br
+# url: https://docs.google.com/spreadsheets/d/13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE/edit?usp=drivesdk&ouid=100327922083657613631
+# extraidoEm: 2026-09-07
+# uso: escopo
+---
+|  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+|  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] Cliente | \[merged\] Cliente |  |  |  |  |  |  |  |
+|  | \[merged\] Serviço | \[merged\] Serviço | Mapeamento e modelagem |  |  |  |  |  |  |
+|  | \[merged\] Equipe de Venda | \[merged\] Equipe de Venda |  |  |  |  |  |  |  |
+|  | \[merged\] Gerente | \[merged\] Gerente | Thiago Melo |  |  |  |  |  |  |
+|  | \[merged\] Data  | \[merged\] Data  |  |  |  |  |  |  |  |
+|  | \[merged\] Dias | \[merged\] Dias | 85 |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |
+|  | \[merged\] Iniciação + Entendimento do macroprocesso | \[merged\] Iniciação + Entendimento do macroprocesso | \[merged\] Iniciação + Entendimento do macroprocesso | \[merged\] Iniciação + Entendimento do macroprocesso | \[merged\] Iniciação + Entendimento do macroprocesso | 1 | 5 | RAC  Coleta de informações | BMC + Macroprocesso |
+|  | \[merged\] Imersão na empresa + Entendimento inicial do setor/ área da empresa a ser mapeado | \[merged\] Imersão na empresa + Entendimento inicial do setor/ área da empresa a ser mapeado | \[merged\] Imersão na empresa + Entendimento inicial do setor/ área da empresa a ser mapeado | \[merged\] Imersão na empresa + Entendimento inicial do setor/ área da empresa a ser mapeado | \[merged\] Imersão na empresa + Entendimento inicial do setor/ área da empresa a ser mapeado | 1 | 5 | Entrevista com lideres do setor/área  | Process map model canvas |
+|  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | 2 | 10 |  |  |
+|  | \[merged\] ETAPA 02 - Mapeamento e Modelagem | \[merged\] ETAPA 02 - Mapeamento e Modelagem | \[merged\] ETAPA 02 - Mapeamento e Modelagem | \[merged\] ETAPA 02 - Mapeamento e Modelagem | \[merged\] ETAPA 02 - Mapeamento e Modelagem | \[merged\] ETAPA 02 - Mapeamento e Modelagem | \[merged\] ETAPA 02 - Mapeamento e Modelagem | \[merged\] ETAPA 02 - Mapeamento e Modelagem | \[merged\] ETAPA 02 - Mapeamento e Modelagem |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |
+|  | \[merged\] Mapeamento dos processos + Entendimento das ferramentas usadas | \[merged\] Mapeamento dos processos + Entendimento das ferramentas usadas | \[merged\] Mapeamento dos processos + Entendimento das ferramentas usadas | \[merged\] Mapeamento dos processos + Entendimento das ferramentas usadas | \[merged\] Mapeamento dos processos + Entendimento das ferramentas usadas | 7 | 35 | Visualização dos processos + Entrevistas | Fluxogramas AS IS |
+|  | \[merged\] Apresentação de relatório de causas raizes e oportunidades de melhoria | \[merged\] Apresentação de relatório de causas raizes e oportunidades de melhoria | \[merged\] Apresentação de relatório de causas raizes e oportunidades de melhoria | \[merged\] Apresentação de relatório de causas raizes e oportunidades de melhoria | \[merged\] Apresentação de relatório de causas raizes e oportunidades de melhoria | 1 | 5 | Construção interna + apresentação | Relatório de causas raízes e oportunidades de melhoria |
+|  | \[merged\] Modelagem dos processos + Implementação das melhorias | \[merged\] Modelagem dos processos + Implementação das melhorias | \[merged\] Modelagem dos processos + Implementação das melhorias | \[merged\] Modelagem dos processos + Implementação das melhorias | \[merged\] Modelagem dos processos + Implementação das melhorias | 4 | 20 | Construção interna + Implementação | Modelagens dos processos + Implementação + Treinamentos  |
+|  | \[merged\] Documentação da área/setor + Gestão da transição de rotina  | \[merged\] Documentação da área/setor + Gestão da transição de rotina  | \[merged\] Documentação da área/setor + Gestão da transição de rotina  | \[merged\] Documentação da área/setor + Gestão da transição de rotina  | \[merged\] Documentação da área/setor + Gestão da transição de rotina  | 2 | 10 | Construção interna + apresentação | Manual do setor + DCO  |
+|  |  |  |  |  |  | 14 | 70 |  |  |
+|  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |
+|  | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | 1 | 5 | RAF | \- |
+|  | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \- | 6 | Visita e acompanhamento dos processos/ ajustes necessários nas ferramentas | Relatório quinzenal do andamento |
+|  |  |  |  |  |  |  | 11 |  |  |

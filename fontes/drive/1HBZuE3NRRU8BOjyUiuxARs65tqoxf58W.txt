@@ -1,0 +1,39 @@
+# id: 1HBZuE3NRRU8BOjyUiuxARs65tqoxf58W
+# nome: _Modelo Padrão - Matriz Francisco Gracioso.pdf
+# mimeType: application/pdf
+# dono: viniciusmoraes@produtivajunior.com.br
+# url: https://drive.google.com/file/d/1HBZuE3NRRU8BOjyUiuxARs65tqoxf58W/view?usp=drivesdk
+# extraidoEm: 2026-09-07
+# uso: ferramenta:matriz-gracioso
+---
+Modelo Padrão - Matriz Francisco Gracioso
+
+Produzido por Produtiva JR (03/2026)
+
+LOGO
+
+Teoria Francisco Gracioso Modelo da ferramenta padrão Tabela de relações
+
+Matriz Francisco Gracioso
+
+Métrica 1
+
+Métrica 2
+
+Métrica 3
+
+Métrica 4 METRICAS SÓ A
+
+EMPRESA EMPRESA TÊM
+
+ALGUNS MENOS A EMPRESA TÊM
+
+TODOS MENOS A EMPRESA TÊM
+
+Métrica 5
+
+E MAIS ALGUMAS
+
+TODOS TÊM
+
+NÍNGUEM TEM
