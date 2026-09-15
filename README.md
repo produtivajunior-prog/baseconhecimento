@@ -80,6 +80,15 @@ escapada dentro do HTML.
 Itens herdados do MVP (sem `revisao`) passam com aviso enquanto `taxonomia.legadoPermitido`
 for `true`; `node tools/promover.mjs --remover-legado` os tira quando o acervo real entrar.
 
+## Navegação e uso
+
+- **URL acompanha a tela**: `#/biblioteca`, `#/ferramenta/<id>`, `#/escopos`, `#/escopo/<id>`, `#/cases`,
+  `#/case/<id>`, `#/cases/novo`, `#/cadastrar`, `#/docs`, `#/recomendar`. Dá para compartilhar o link de
+  uma ferramenta ou case, usar o botão "voltar" do navegador e recarregar sem perder a tela. Funciona em `file://`.
+- **Teclado**: `/` foca a busca da tela; `Esc` fecha a janela de anexos; foco visível em todos os controles.
+- **Celular**: menu em segunda linha rolável, filtros da Biblioteca e dos Cases atrás de um botão "Filtros",
+  grades e formulários em uma coluna. Nada rola na horizontal.
+
 ## Limitações conhecidas
 
 | | |

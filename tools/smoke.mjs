@@ -48,6 +48,7 @@ await page.waitForFunction(() => document.body && /Hangar/.test(document.body.in
 const texto = async () => page.evaluate(() => document.body.innerText);
 
 check(!/\{\{/.test(await texto()), 'nenhum "{{" cru na tela (runtime subiu sem unpkg)');
+check((await page.locator('#__bundler_err').count()) === 0, 'sem painel vermelho de erro do bundle na tela');
 check(/Por escopo|Escopos/.test(await texto()), 'home renderizou a seção "Por escopo"');
 
 // Escopos → escopo → etapa → ferramenta
@@ -167,7 +168,14 @@ check(/Padaria Smoke/.test(t) && !/Nenhum case encontrado/.test(t), 'após recar
 check((await page.locator('article img[alt="Padaria Smoke"]').count()) > 0, 'galeria mostra o case como foto com o nome embaixo');
 await page.locator('article img[alt="Padaria Smoke"]').first().click(); await page.waitForTimeout(300);
 check(/Equipe do projeto/i.test(await texto()), 'clicar na foto abre a ficha do case');
-await page.getByRole('button', { name: 'Banco de cases' }).first().click(); await page.waitForTimeout(200);
+check(/^#\/case\//.test(await page.evaluate(() => location.hash)), `URL acompanha a tela (${await page.evaluate(() => location.hash)})`);
+await page.goBack(); await page.waitForTimeout(400);
+check(/Banco de cases/i.test(await texto()) && !/Equipe do projeto/i.test(await texto()), 'botão "voltar" do navegador volta para a lista de cases');
+await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(400);
+check(/^Biblioteca/m.test(await texto()) || (await page.getByPlaceholder(/Buscar por nome/).count()) > 0, 'mudar o hash na URL troca de tela (#/biblioteca)');
+await page.keyboard.press('/'); await page.waitForTimeout(100);
+check(await page.evaluate(() => document.activeElement && document.activeElement.tagName === 'INPUT'), 'tecla "/" foca a busca');
+await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); await page.waitForTimeout(300);
 await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
 await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('xyzinexistente'); await page.waitForTimeout(300);
 check(/Nenhum case encontrado/.test(await texto()), 'busca sem resultado mostra a mensagem certa');

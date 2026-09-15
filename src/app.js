@@ -13,6 +13,8 @@ class Component extends DCLogic {
     formCase: this.formCaseVazio(),
     caseErro: '',
     caseFiltroFerr: '',
+    filtrosAbertos: false,
+    eu: this.carregarLocal('hangar.eu', {}),
     open: {},
     rating: null,
     feedback: '',
@@ -179,8 +181,9 @@ class Component extends DCLogic {
     const c = this.montarCase(f);
     const casesLocais = [c].concat(this.state.casesLocais.filter(x => x.id !== c.id));
     const guardou = this.salvarLocal('hangar.casesLocais', casesLocais);
-    this.salvarLocal('hangar.eu', { nome: f.meuNome.trim(), email: f.meuEmail.trim() });
-    this.setState({ casesLocais, caseErro: '', formCase: this.formCaseVazio() });
+    const eu = { nome: f.meuNome.trim(), email: f.meuEmail.trim() };
+    this.salvarLocal('hangar.eu', eu);
+    this.setState({ casesLocais, eu, caseErro: '', formCase: this.formCaseVazio() });
     // Sem espaço no navegador (fotos grandes) o case fica só nesta sessão: avisa para baixar já.
     this.showToast(guardou ? 'Case salvo neste navegador. Baixe o arquivo e envie ao CIEP para publicar para todos.' : 'O navegador não guardou o case (sem espaço). Baixe o arquivo agora para não perder.');
     this.openCase(c.id);
@@ -332,7 +335,8 @@ class Component extends DCLogic {
       categoriaCor: (this.TAXONOMIA.categorias[it.categoria]||{}).cor || '#1E7C92',
       initial: (it.nome||'?')[0].toUpperCase(),
       quandoResumo: (it.quandoUsar && it.quandoUsar[0]) || '',
-      anexosCount: (it.anexos||[]).length,
+      hasQuando: !!(it.quandoUsar && it.quandoUsar[0] && it.quandoUsar[0] !== '—'),
+      anexosCount: (it.anexos||[]).length, hasAnexos: (it.anexos||[]).length > 0,
       respNome: this.respNome(it.responsavel), respEmail: this.respEmail(it.responsavel),
       atualizadoFmt: this.fmtData(it.atualizado),
       usoEmEscopos: uso, usoCount: uso.length, hasUso: uso.length>0, semUso: uso.length===0,
@@ -383,6 +387,62 @@ class Component extends DCLogic {
     }
   }
   nav(screen) { this.setState({ screen, escopoId: screen==='escopos' ? null : this.state.escopoId, caseId: screen==='cases' ? null : this.state.caseId }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+
+  // ---- Rotas na URL (#/biblioteca, #/ferramenta/pmmc, #/escopo/<id>, #/case/<id>…)
+  // Dá botão "voltar" do navegador, link compartilhável e F5 que volta para a mesma tela. Funciona em file://.
+  hashDe(s) {
+    switch (s.screen) {
+      case 'biblioteca': return '#/biblioteca';
+      case 'conteudo': return s.selId ? '#/ferramenta/' + s.selId : '#/biblioteca';
+      case 'escopos': return s.escopoId ? '#/escopo/' + s.escopoId : '#/escopos';
+      case 'cases': return '#/cases';
+      case 'case': return s.caseId ? '#/case/' + s.caseId : '#/cases';
+      case 'novo-case': return '#/cases/novo';
+      case 'cadastro': return '#/cadastrar';
+      case 'docs': return '#/docs';
+      case 'recomendar': return '#/recomendar';
+      default: return '#/';
+    }
+  }
+  aplicarHash() {
+    if (typeof location === 'undefined') return;
+    const h = decodeURIComponent(location.hash || '').replace(/^#\/?/, '');
+    const [tela, id] = h.split('/');
+    const idOk = (lista, x) => x && lista.some(i => i.id === x);
+    if (tela === 'biblioteca') this.nav('biblioteca');
+    else if (tela === 'ferramenta' && idOk(this.allData(), id)) this.openContent(id);
+    else if (tela === 'escopos') this.nav('escopos');
+    else if (tela === 'escopo' && idOk(this.ESCOPOS, id)) this.openEscopo(id);
+    else if (tela === 'cases' && id === 'novo') this.openNovoCase();
+    else if (tela === 'cases') this.nav('cases');
+    else if (tela === 'case' && idOk(this.allCases(), id)) this.openCase(id);
+    else if (tela === 'cadastrar') this.nav('cadastro');
+    else if (tela === 'docs') this.goDocs();
+    else if (tela === 'recomendar') this.nav('recomendar');
+    else if (this.state.screen !== 'home') this.nav('home');
+  }
+  componentDidMount() {
+    if (typeof window === 'undefined') return;
+    this._onHash = () => { if (this._hashPropria) { this._hashPropria = false; return; } this.aplicarHash(); };
+    window.addEventListener('hashchange', this._onHash);
+    // "/" foca a busca da tela; Esc fecha a janela de anexos
+    this._onKey = (e) => {
+      const alvo = e.target || {}; const digitando = /^(INPUT|TEXTAREA|SELECT)$/.test(alvo.tagName || '') || alvo.isContentEditable;
+      if (e.key === 'Escape' && this.state.anexosId) this.setState({ anexosId: null });
+      if (e.key === '/' && !digitando) { const el = document.querySelector('main input[placeholder]'); if (el) { e.preventDefault(); el.focus(); } }
+    };
+    window.addEventListener('keydown', this._onKey);
+    if (location.hash && location.hash !== '#/') this.aplicarHash();
+  }
+  componentDidUpdate() {
+    if (typeof location === 'undefined') return;
+    const h = this.hashDe(this.state);
+    if (location.hash !== h && !(h === '#/' && !location.hash)) { this._hashPropria = true; location.hash = h; }
+  }
+  componentWillUnmount() {
+    if (typeof window === 'undefined') return;
+    window.removeEventListener('hashchange', this._onHash); window.removeEventListener('keydown', this._onKey);
+  }
   openEscopo(id) { this.setState({ screen:'escopos', escopoId:id }); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
   toggleFilter(group, value) {
@@ -825,6 +885,9 @@ class Component extends DCLogic {
       isCadastro: s.screen==='cadastro', isRecomendar: s.screen==='recomendar', isEscopos: s.screen==='escopos',
       isCases: s.screen==='cases', isCase: s.screen==='case', isNovoCase: s.screen==='novo-case',
       goCases:()=>this.nav('cases'), goNovoCase:()=>this.openNovoCase(),
+      // filtros no celular (biblioteca e cases) e iniciais de quem usa
+      filtrosClass: s.filtrosAbertos ? 'hg-open' : '', filtrosLabel: s.filtrosAbertos ? 'Ocultar filtros' : 'Filtros', toggleFiltros:()=>this.setState(st=>({ filtrosAbertos: !st.filtrosAbertos })),
+      hasEu: !!(s.eu && s.eu.nome), euNome: (s.eu && s.eu.nome) || '', euIniciais: s.eu && s.eu.nome ? this.initials(s.eu.nome) : '',
       // banco de cases
       casesList, casesCount: casesList.length, semCases: casesTodos.length===0, semResultadoCases: casesTodos.length>0 && casesList.length===0,
       caseFilterGroups, caseActiveChips, hasCaseFilters: caseActiveChips.length>0, clearCaseFilters:()=>this.setState({ caseFilters:{ escopo:[], segmento:[], ano:[], ferramenta:[] } }),
@@ -850,7 +913,12 @@ class Component extends DCLogic {
       runSearch:()=>this.nav('biblioteca'),
       quickChips,
       // home
-      porEscopo, hasPorEscopo: porEscopo.length>0, novidades, recomendados,
+      porEscopo, hasPorEscopo: porEscopo.length>0, novidades, recomendados, hasRecomendados: recomendados.length>0, semRecomendados: recomendados.length===0,
+      atalhos: [
+        { label:'Qual ferramenta usar?', hint:'Escolha o problema e veja as sugestões', go:()=>this.nav('recomendar') },
+        { label:'Registrar um case', hint:'Projeto finalizado vira referência', go:()=>this.openNovoCase() },
+        { label:'Ver os escopos', hint:'Etapas e ferramentas de cada linha de serviço', go:()=>this.nav('escopos') },
+      ],
       // biblioteca
       filtered, filterGroups, cardStyles,
       resultCount: filtered.length, noResults: filtered.length===0,
