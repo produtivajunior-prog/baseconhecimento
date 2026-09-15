@@ -1,66 +1,227 @@
 [
   {
-    "id": "bmc",
-    "toolId": "bmc",
-    "nome": "Business Model Canvas",
-    "sigla": "BMC",
-    "fonte": "[CIEP] Modelo - BMC.pdf",
+    "id": "cpv",
+    "toolId": "cpv",
+    "nome": "Canvas de Proposta de Valor (CPV)",
+    "sigla": "CPV",
+    "fonte": {
+      "driveId": "1QK6lIIWR589W8HG0xWhknAENBw8cwwYD",
+      "nome": "[CIEP] Proposta de Valor (Modelo Padrão)"
+    },
     "layout": "canvas",
-    "registrado": "Lido do anexo",
+    "registrado": "Extraído do Modelo Padrão",
     "blocos": [
       {
-        "titulo": "Parceiros",
+        "titulo": "Produtos e serviços",
+        "gc": "1 / 2",
+        "gr": "1 / 4",
+        "dica": "O que a empresa oferece para o segmento."
+      },
+      {
+        "titulo": "Aliviadores de dores",
+        "gc": "2 / 3",
+        "gr": "1 / 2",
+        "dica": "Como a oferta reduz ou elimina as dores do cliente."
+      },
+      {
+        "titulo": "Criadores de ganhos",
+        "gc": "2 / 3",
+        "gr": "2 / 4",
+        "dica": "Como a oferta gera os ganhos que o cliente espera."
+      },
+      {
+        "titulo": "Tarefas do cliente",
+        "gc": "3 / 4",
+        "gr": "1 / 4",
+        "dica": "O que o cliente está tentando realizar."
+      },
+      {
+        "titulo": "Dores",
+        "gc": "4 / 5",
+        "gr": "1 / 2",
+        "dica": "Frustrações, riscos e obstáculos que o cliente enfrenta."
+      },
+      {
+        "titulo": "Ganhos",
+        "gc": "4 / 5",
+        "gr": "2 / 4",
+        "dica": "Resultados e benefícios que o cliente deseja."
+      }
+    ]
+  },
+  {
+    "id": "mapa-perceptual",
+    "toolId": "mapa-perceptual",
+    "nome": "Mapa Perceptual",
+    "sigla": "MP",
+    "fonte": {
+      "driveId": "1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg",
+      "nome": "Modelo Padrão - Mapa Perceptual.pdf"
+    },
+    "layout": "grid",
+    "registrado": "Extraído do Modelo Padrão",
+    "blocos": [
+      {
+        "titulo": "Eixo horizontal",
+        "dica": "Atributo e seu oposto (ex.: simples ↔ complexo)."
+      },
+      {
+        "titulo": "Eixo vertical",
+        "dica": "Atributo e seu oposto (ex.: gratuito ↔ pago)."
+      },
+      {
+        "titulo": "Marcas plotadas",
+        "dica": "Até 6 marcas com a posição percebida em cada eixo."
+      },
+      {
+        "titulo": "Leitura",
+        "dica": "Clusters, espaços em branco, marca isolada e posicionamento da empresa."
+      }
+    ]
+  },
+  {
+    "id": "pmmc",
+    "toolId": "pmmc",
+    "nome": "Process Map Model Canvas (PMMC)",
+    "sigla": "PMMC",
+    "fonte": {
+      "driveId": "1sfzv1hNxzuRhD0NDe9ekpxfNE2EDsqOB",
+      "nome": "[CIEP] Process Map Model Canvas.pdf"
+    },
+    "layout": "canvas",
+    "registrado": "Extraído do Modelo Padrão",
+    "blocos": [
+      {
+        "titulo": "Principais Fornecedores",
+        "gc": "1 / 2",
+        "gr": "1 / 2",
+        "dica": "De onde são retirados os insumos envolvidos no processo?"
+      },
+      {
+        "titulo": "Principais Insumos",
+        "gc": "2 / 3",
+        "gr": "1 / 2",
+        "dica": "Inputs (físicos ou de ordem intelectual) que serão processados até o resultado final."
+      },
+      {
+        "titulo": "Principais Atividades",
+        "gc": "3 / 4",
+        "gr": "1 / 2",
+        "dica": "Quais atividades são desempenhadas desde o repasse dos insumos até a finalização da proposta de valor?"
+      },
+      {
+        "titulo": "Principais Produtos",
+        "gc": "4 / 5",
+        "gr": "1 / 2",
+        "dica": "Informações de saída resultantes do processo (resultados)."
+      },
+      {
+        "titulo": "Principais Clientes",
+        "gc": "5 / 6",
+        "gr": "1 / 2",
+        "dica": "Beneficiários do processo. Aqueles a quem o produto é destinado."
+      },
+      {
+        "titulo": "Recursos Humanos",
         "gc": "1 / 3",
-        "gr": "1 / 3",
-        "dica": "Fornecedores, patrocinadores, terceirizados, quem indica o trabalho."
-      },
-      {
-        "titulo": "Atividades-chave",
-        "gc": "3 / 5",
-        "gr": "1 / 2",
-        "dica": "Atividades internas e externas que sustentam a operação."
-      },
-      {
-        "titulo": "Recursos-chave",
-        "gc": "3 / 5",
         "gr": "2 / 3",
-        "dica": "Matéria-prima, pessoas, softwares, ferramentas, infraestrutura."
+        "dica": "Quem e quantos são responsáveis pelo processo? Funções e cargos podem ser importantes."
       },
       {
-        "titulo": "Proposta de Valor",
-        "gc": "5 / 7",
-        "gr": "1 / 3",
-        "dica": "A dor solucionada e por que o cliente escolhe o seu serviço."
-      },
-      {
-        "titulo": "Relacionamento com Cliente",
-        "gc": "7 / 9",
-        "gr": "1 / 2",
-        "dica": "Fidelidade, atendimento, brindes, medida de satisfação."
-      },
-      {
-        "titulo": "Canais",
-        "gc": "7 / 9",
+        "titulo": "Recursos Tecnológicos",
+        "gc": "3 / 4",
         "gr": "2 / 3",
-        "dica": "Redes sociais, e-mail, meios de comunicação, pontos de contato."
+        "dica": "Equipamentos e sistemas utilizados."
       },
       {
-        "titulo": "Segmento de Cliente",
-        "gc": "9 / 11",
-        "gr": "1 / 3",
-        "dica": "Perfil, características, hábitos de consumo e dores solucionadas."
+        "titulo": "Finalidade e Melhorias",
+        "gc": "4 / 6",
+        "gr": "2 / 3",
+        "dica": "Qual o objetivo desse processo? Existem melhorias propostas ou em andamento?"
       },
       {
-        "titulo": "Estrutura de Custos",
-        "gc": "1 / 6",
+        "titulo": "Indicadores de Performance",
+        "gc": "1 / 3",
         "gr": "3 / 4",
-        "dica": "Custos fixos e variáveis, folha, fornecedores, softwares."
+        "dica": "Indicadores (quantitativos) utilizados para apuração de resultados na empresa."
       },
       {
-        "titulo": "Fontes de Receita",
-        "gc": "6 / 11",
+        "titulo": "Ferramentas de Controle",
+        "gc": "3 / 6",
         "gr": "3 / 4",
-        "dica": "Produtos, assinaturas, serviços adicionais, comissões."
+        "dica": "Quais os controles utilizados para o acompanhamento do processo?"
+      }
+    ]
+  },
+  {
+    "id": "porter",
+    "toolId": "porter",
+    "nome": "5 Forças de Porter",
+    "sigla": "5F",
+    "fonte": {
+      "driveId": "19FF6AvSQ5YzYieFjahDTW5ShIX9h3qCq",
+      "nome": "Modelo - 5 Forças de Porter.pdf"
+    },
+    "layout": "grid",
+    "registrado": "Extraído do Modelo Padrão",
+    "blocos": [
+      {
+        "titulo": "Rivalidade entre os concorrentes",
+        "dica": "Quantos concorrentes, com que intensidade disputam preço e cliente."
+      },
+      {
+        "titulo": "Poder de barganha dos fornecedores",
+        "dica": "Quantos fornecedores existem e quanto ditam preço e prazo."
+      },
+      {
+        "titulo": "Poder de barganha dos clientes",
+        "dica": "Quanto os clientes pressionam preço e condições."
+      },
+      {
+        "titulo": "Ameaça de novos entrantes",
+        "dica": "Barreiras de entrada e facilidade de novos concorrentes surgirem."
+      },
+      {
+        "titulo": "Ameaça de produtos substitutos",
+        "dica": "Alternativas que resolvem a mesma necessidade do cliente."
+      }
+    ]
+  },
+  {
+    "id": "swot",
+    "toolId": "swot",
+    "nome": "Matriz SWOT",
+    "sigla": "SWOT",
+    "fonte": {
+      "driveId": "1-Y_mYRGz1ZxiVVAK1_WyMlZFYjUBjGf7",
+      "nome": "[SWOT] Modelo padrão.pdf"
+    },
+    "layout": "canvas",
+    "registrado": "Extraído do Modelo Padrão",
+    "blocos": [
+      {
+        "titulo": "Forças",
+        "gc": "1 / 2",
+        "gr": "1 / 2",
+        "dica": "Fatores internos positivos que a empresa controla."
+      },
+      {
+        "titulo": "Fraquezas",
+        "gc": "2 / 3",
+        "gr": "1 / 2",
+        "dica": "Fatores internos negativos que a empresa controla."
+      },
+      {
+        "titulo": "Oportunidades",
+        "gc": "1 / 2",
+        "gr": "2 / 3",
+        "dica": "Fatores externos favoráveis, fora do controle da empresa."
+      },
+      {
+        "titulo": "Ameaças",
+        "gc": "2 / 3",
+        "gr": "2 / 3",
+        "dica": "Fatores externos desfavoráveis, fora do controle da empresa."
       }
     ]
   }

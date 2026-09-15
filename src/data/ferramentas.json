@@ -1,903 +1,2310 @@
 [
   {
-    "id": "swot",
-    "nome": "Matriz SWOT",
+    "id": "porter",
+    "nome": "5 Forças de Porter",
     "tipo": "Ferramenta",
-    "categoria": "Estratégia",
-    "etapa": "Análise",
-    "complexidade": "Baixo",
-    "tempo": "1–2h",
-    "status": "Ativo",
-    "freq": "Alta",
-    "acessos": 312,
-    "nota": "4.8",
-    "responsavel": "Núcleo CIEP",
-    "atualizado": "12 mai 2026",
-    "descricao": "Análise das Forças, Fraquezas, Oportunidades e Ameaças do cliente em uma única visão.",
-    "objetivo": "Consolidar uma leitura estratégica do cenário interno e externo do cliente para orientar decisões e priorizações.",
-    "problema": "Times de projeto começam recomendações sem um diagnóstico estratégico estruturado, perdendo de vista riscos e oportunidades.",
-    "quandoUsar": [
-      "No início do diagnóstico estratégico",
-      "Para alinhar a leitura de cenário com o cliente",
-      "Antes de definir prioridades de um plano de ação"
-    ],
-    "quandoNao": [
-      "Quando o problema é puramente operacional/processual",
-      "Como única ferramenta de decisão sem dados de apoio"
-    ],
-    "entradas": [
-      "Entrevistas com gestores",
-      "Dados de mercado e concorrência",
-      "Indicadores internos do cliente"
-    ],
-    "saidas": [
-      "Quadrante SWOT preenchido",
-      "Lista de prioridades estratégicas",
-      "Insumos para o plano de ação"
-    ],
-    "passos": [
-      "Reúna dados internos e externos previamente",
-      "Conduza um workshop com o cliente",
-      "Preencha cada quadrante com o time",
-      "Cruze forças×oportunidades e fraquezas×ameaças",
-      "Priorize 3 a 5 movimentos estratégicos"
-    ],
-    "perguntas": [
-      "O que fazemos melhor que os concorrentes?",
-      "Quais fraquezas mais limitam o crescimento?",
-      "Que mudanças no mercado podemos aproveitar?",
-      "O que ameaça o negócio nos próximos 12 meses?"
-    ],
-    "cuidados": [
-      "Evite listas genéricas — seja específico e baseado em evidências",
-      "Não confunda fraqueza interna com ameaça externa",
-      "SWOT sem priorização vira só uma lista bonita"
-    ],
-    "exemplos": [
-      "Diagnóstico de uma rede de farmácias regional",
-      "Reposicionamento de uma marca de alimentos"
-    ],
-    "anexos": [
-      {
-        "nome": "Template SWOT.pptx",
-        "tipo": "Template editável",
-        "descricao": "Slide pronto com os 4 quadrantes e legenda.",
-        "versao": "v2.1",
-        "data": "12 mai 2026"
-      },
-      {
-        "nome": "Exemplo preenchido — Varejo.pdf",
-        "tipo": "Exemplo preenchido",
-        "descricao": "Aplicação real em projeto de varejo (anonimizado).",
-        "versao": "v1.0",
-        "data": "03 mar 2026"
-      },
-      {
-        "nome": "Guia de facilitação.pdf",
-        "tipo": "PDF explicativo",
-        "descricao": "Como conduzir o workshop em 90 minutos.",
-        "versao": "v1.2",
-        "data": "20 abr 2026"
-      }
-    ]
-  },
-  {
-    "id": "bpmn",
-    "nome": "Modelagem de Processos (BPMN)",
-    "tipo": "Metodologia",
-    "categoria": "Processos",
-    "etapa": "Análise",
-    "complexidade": "Alto",
-    "tempo": "1–2 semanas",
-    "status": "Ativo",
-    "freq": "Alta",
-    "acessos": 268,
-    "nota": "4.6",
-    "responsavel": "Lucas Moreira",
-    "atualizado": "28 abr 2026",
-    "descricao": "Notação padrão para desenhar o fluxo atual (as-is) e proposto (to-be) dos processos do cliente.",
-    "objetivo": "Tornar visível como o trabalho realmente acontece, identificar gargalos e desenhar o processo otimizado.",
-    "problema": "Processos existem só na cabeça das pessoas — retrabalho, gargalos e responsabilidades difusas passam despercebidos.",
-    "quandoUsar": [
-      "Projetos de redesenho ou padronização de processos",
-      "Quando há muito retrabalho ou atrasos",
-      "Antes de automatizar qualquer fluxo"
-    ],
-    "quandoNao": [
-      "Para problemas estratégicos de alto nível",
-      "Quando o processo muda toda semana e ainda não estabilizou"
-    ],
-    "entradas": [
-      "Entrevistas com executores do processo",
-      "Observação direta da operação",
-      "Documentos e sistemas envolvidos"
-    ],
-    "saidas": [
-      "Diagrama as-is validado",
-      "Diagrama to-be proposto",
-      "Lista de gargalos e melhorias"
-    ],
-    "passos": [
-      "Defina início e fim do processo (escopo)",
-      "Liste os atores e raias",
-      "Mapeie o fluxo as-is com quem executa",
-      "Valide o desenho com o cliente",
-      "Identifique gargalos e desperdícios",
-      "Desenhe o processo to-be otimizado"
-    ],
-    "perguntas": [
-      "Onde o trabalho mais espera ou trava?",
-      "Quais atividades não agregam valor?",
-      "Quem decide o quê em cada ponto?",
-      "O que pode ser eliminado, simplificado ou automatizado?"
-    ],
-    "cuidados": [
-      "Não modele o processo \"ideal\" no lugar do real no as-is",
-      "Cuidado com o nível de detalhe — comece macro",
-      "Sempre valide com quem executa, não só com o gestor"
-    ],
-    "exemplos": [
-      "Processo de faturamento de uma indústria",
-      "Onboarding de clientes de um SaaS"
-    ],
-    "anexos": [
-      {
-        "nome": "Notação BPMN — referência.pdf",
-        "tipo": "PDF explicativo",
-        "descricao": "Símbolos essenciais e quando usar cada um.",
-        "versao": "v1.0",
-        "data": "28 abr 2026"
-      },
-      {
-        "nome": "Template BPMN.drawio",
-        "tipo": "Template editável",
-        "descricao": "Arquivo base para diagramar no draw.io.",
-        "versao": "v1.1",
-        "data": "15 abr 2026"
-      }
-    ]
-  },
-  {
-    "id": "5porques",
-    "nome": "5 Porquês",
-    "tipo": "Ferramenta",
-    "categoria": "Operações",
-    "etapa": "Diagnóstico",
-    "complexidade": "Baixo",
-    "tempo": "30–60min",
-    "status": "Ativo",
-    "freq": "Alta",
-    "acessos": 241,
-    "nota": "4.7",
-    "responsavel": "Núcleo CIEP",
-    "atualizado": "05 mai 2026",
-    "descricao": "Técnica de perguntar \"por quê?\" sucessivamente até chegar à causa-raiz de um problema.",
-    "objetivo": "Sair do sintoma e descobrir a verdadeira causa de um problema, evitando soluções superficiais.",
-    "problema": "Times resolvem o efeito visível e o problema volta, porque a causa-raiz nunca foi tratada.",
-    "quandoUsar": [
-      "Quando um problema específico se repete",
-      "Em conjunto com Ishikawa",
-      "Para investigar uma falha pontual rapidamente"
-    ],
-    "quandoNao": [
-      "Problemas com múltiplas causas complexas e interdependentes",
-      "Quando faltam dados e tudo vira achismo"
-    ],
-    "entradas": [
-      "Descrição clara do problema",
-      "Pessoas que conhecem o processo",
-      "Dados que confirmem o problema"
-    ],
-    "saidas": [
-      "Causa-raiz identificada",
-      "Ação corretiva direcionada à causa"
-    ],
-    "passos": [
-      "Descreva o problema de forma específica",
-      "Pergunte \"por que isso acontece?\"",
-      "Para cada resposta, pergunte \"por quê?\" de novo",
-      "Repita ~5 vezes até a causa-raiz",
-      "Defina ação sobre a causa, não o sintoma"
-    ],
-    "perguntas": [
-      "O problema está descrito de forma factual?",
-      "Cada \"porquê\" é causa do anterior?",
-      "A causa-raiz é acionável pelo time?"
-    ],
-    "cuidados": [
-      "Não pare no primeiro porquê confortável",
-      "Evite respostas que culpam pessoas em vez de processos",
-      "Nem todo problema tem exatamente 5 níveis"
-    ],
-    "exemplos": [
-      "Atrasos recorrentes na entrega de pedidos",
-      "Reclamações repetidas de um mesmo defeito"
-    ],
-    "anexos": [
-      {
-        "nome": "Template 5 Porquês.xlsx",
-        "tipo": "Template editável",
-        "descricao": "Planilha guiada para registrar a investigação.",
-        "versao": "v1.3",
-        "data": "05 mai 2026"
-      }
-    ]
-  },
-  {
-    "id": "bmc",
-    "nome": "Business Model Canvas",
-    "tipo": "Ferramenta",
-    "categoria": "Inovação",
-    "etapa": "Planejamento",
+    "categoria": "Entendimento",
     "complexidade": "Médio",
     "tempo": "2–3h",
     "status": "Ativo",
     "freq": "Média",
-    "acessos": 198,
-    "nota": "4.5",
-    "responsavel": "Marina Costa",
-    "atualizado": "18 abr 2026",
-    "descricao": "Mapa visual de 9 blocos que descreve como um negócio cria, entrega e captura valor.",
-    "objetivo": "Visualizar e questionar o modelo de negócio do cliente de ponta a ponta em uma única página.",
-    "problema": "Discussões sobre o negócio ficam fragmentadas; não há uma visão integrada de como tudo se conecta.",
-    "quandoUsar": [
-      "Para entender o modelo atual do cliente",
-      "Ao estruturar um novo produto ou unidade",
-      "Em projetos de inovação e expansão"
-    ],
-    "quandoNao": [
-      "Quando o foco é só um processo interno",
-      "Para análises financeiras detalhadas"
-    ],
+    "responsavel": {
+      "nome": "Gabriela Palma",
+      "email": "gabrielapalma@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "O modelo das 5 Forças de Porter é uma estrutura de análise da competitividade setorial que examina cinco fatores chave do ambiente externo, determinando como o valor econômico é dividido entre os atores de uma empresa.",
+    "objetivo": "Em suma, a ferramenta serve para dissecar o ambiente competitivo de empresas já atuantes no mercado, provendo insights sobre pressões externas que afetam a rentabilidade e embasando decisões estratégicas fundamentadas.",
+    "problema": null,
+    "quandoUsar": null,
+    "quandoNao": null,
     "entradas": [
-      "Entrevistas com a liderança",
-      "Dados de clientes e receita",
-      "Mapa de parceiros e custos"
+      "Dados do setor: concorrentes, fornecedores, clientes, substitutos",
+      "Entrevista com o gestor sobre o mercado"
     ],
     "saidas": [
-      "Canvas preenchido",
-      "Hipóteses a validar",
-      "Oportunidades de modelo de negócio"
+      "Nota de intensidade de cada força",
+      "Leitura da atratividade do setor para o planejamento"
     ],
     "passos": [
-      "Comece pelos segmentos de clientes",
-      "Defina a proposta de valor para cada um",
-      "Mapeie canais e relacionamento",
-      "Identifique receitas e recursos-chave",
-      "Liste atividades, parceiros e custos",
-      "Revise a coerência entre os blocos"
+      "Analise as questões determinantes: cada força tem questões padrões específicas que ajudam  — a determinar a intensidade dessa força no mercado.",
+      "Atribuição de notas de 0 a 5 — Para cada uma dessas questões, você vai atribuir uma nota de 0 a 5, conforme a intensidade da força: 5 = Muito Alta, 4 = Alta, 3 = Média, 2 = Baixa, 1 = Muito Baixa, 0 = Zero. *Quando uma força recebe alta pontuação significa dizer que ela é uma grande ameaça para a organização, então vamos inverter a nota quando a questão determinante for favorável à empresa, ou seja: Se o fator determinante for favorável a capacidade de combater a ameaça (ex.: “grau de desenvolvimento de novos produtos/serviços pela empresa”) iremos inverter a nota... seguindo essa lógica se der “Muito Alta” significa que a empresa tem alta capacidade de combater produtos substitutos, então ao invés de atribuirmos a nota 5, iremos inverter e atribuir a nota 0.",
+      "Cálculo das — Médias: depois de atribuir notas para cada questão determinante em cada uma das 5 forças, você deve calcular a média das notas de cada força para ver qual delas tem maior impacto na empresa.",
+      "Resumo das análises: por fim, traga de forma visual em um quadro um resumo das análises fe — itas, este resumo visual ajuda a compartilhar os insights de maneira clara e objetiva, facilitando a tomada de decisões estratégicas."
     ],
-    "perguntas": [
-      "Quem são os clientes que mais importam?",
-      "Que valor entregamos que ninguém mais entrega?",
-      "As receitas cobrem a estrutura de custos?"
-    ],
-    "cuidados": [
-      "Não preencha por preencher — questione cada bloco",
-      "Valide hipóteses com o cliente real",
-      "Canvas é ponto de partida, não plano final"
-    ],
-    "exemplos": [
-      "Modelo de uma foodtech em expansão",
-      "Nova linha de serviços de uma consultoria"
-    ],
+    "perguntas": null,
+    "cuidados": null,
+    "exemplos": null,
     "anexos": [
       {
-        "nome": "Canvas A3.pdf",
-        "tipo": "Template editável",
-        "descricao": "Versão imprimível em A3 para workshop.",
-        "versao": "v2.0",
-        "data": "18 abr 2026"
+        "nome": "Metodologia - 5 Forças de Porter.pdf",
+        "tipo": "Metodologia (PDF)",
+        "descricao": "Definição, as 5 forças com 'como coletar', construção e modelo padrão.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h",
+        "url": "https://drive.google.com/file/d/1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h/view"
       },
       {
-        "nome": "Exemplo — Startup.pdf",
-        "tipo": "Exemplo preenchido",
-        "descricao": "Canvas completo de um caso real.",
+        "nome": "Modelo - 5 Forças de Porter.pdf",
+        "tipo": "Modelo padrão",
+        "descricao": "Diagrama das 5 forças com as perguntas-guia.",
         "versao": "v1.0",
-        "data": "02 fev 2026"
+        "data": "2026-09-07",
+        "driveId": "19FF6AvSQ5YzYieFjahDTW5ShIX9h3qCq",
+        "url": "https://drive.google.com/file/d/19FF6AvSQ5YzYieFjahDTW5ShIX9h3qCq/view"
+      },
+      {
+        "nome": "Modelo Padrão - 5 Forças de Porter",
+        "tipo": "Planilha",
+        "descricao": "Planilha com questões determinantes, avaliação e nota por força, e gráfico.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY",
+        "url": "https://docs.google.com/spreadsheets/d/1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY/edit"
       }
+    ],
+    "fontes": [
+      {
+        "tipo": "drive-pdf",
+        "id": "1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h",
+        "nome": "Metodologia - 5 Forças de Porter.pdf",
+        "hash": "122911069556e09f569ad1dc761263b655c0cddaf9d72482996ddb03c87d4dc5"
+      },
+      {
+        "tipo": "drive-pdf",
+        "id": "19FF6AvSQ5YzYieFjahDTW5ShIX9h3qCq",
+        "nome": "Modelo - 5 Forças de Porter.pdf",
+        "hash": "775c063ce9e032dd33ddc45e2355dbdaa595d8bb28fb6543f9d097c9c8d1ca00"
+      },
+      {
+        "tipo": "drive-sheet",
+        "id": "1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY",
+        "nome": "Modelo Padrão - 5 Forças de Porter",
+        "hash": "c0d9ccc25dc2f1021f9401ac0b65aa203aadbbc2bf10587845de8e85368e27f0"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:gabrielapalma@produtivajunior.com.br",
+      "tipo": "manual:gabrielapalma@produtivajunior.com.br",
+      "categoria": "manual:gabrielapalma@produtivajunior.com.br",
+      "complexidade": "manual:gabrielapalma@produtivajunior.com.br",
+      "tempo": "manual:gabrielapalma@produtivajunior.com.br",
+      "freq": "manual:gabrielapalma@produtivajunior.com.br",
+      "responsavel": "manual:gabrielapalma@produtivajunior.com.br",
+      "descricao": "drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#introducao/definicao",
+      "objetivo": "drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#introducao/definicao",
+      "passos": "drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/analise-as-questoes-determinantes-cada-forca-tem-questoes-padroes-especificas-que-ajudam drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/atribuicao-de-notas-de-0-a-5 drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/calculo-das drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/resumo-das-analises-por-fim-traga-de-forma-visual-em-um-quadro-um-resumo-das-analises-fe",
+      "entradas": "manual:gabrielapalma@produtivajunior.com.br",
+      "saidas": "manual:gabrielapalma@produtivajunior.com.br",
+      "anexos": "manual:gabrielapalma@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): problema, quandoUsar, quandoNao, perguntas, cuidados, exemplos"
     ]
   },
   {
-    "id": "gut",
-    "nome": "Matriz GUT",
+    "id": "pestel",
+    "nome": "Análise PESTEL",
     "tipo": "Ferramenta",
-    "categoria": "Gestão",
-    "etapa": "Análise",
+    "categoria": "Entendimento",
     "complexidade": "Baixo",
-    "tempo": "1h",
+    "tempo": "1–2h",
+    "status": "Em construção",
+    "freq": "Média",
+    "responsavel": {
+      "nome": "Gabriela Palma",
+      "email": "gabrielapalma@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Análise do ambiente macro: fatores políticos, econômicos, sociais, tecnológicos, ecológicos e legais.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "gabrielapalma@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:gabrielapalma@produtivajunior.com.br",
+      "tipo": "manual:gabrielapalma@produtivajunior.com.br",
+      "categoria": "manual:gabrielapalma@produtivajunior.com.br",
+      "complexidade": "manual:gabrielapalma@produtivajunior.com.br",
+      "tempo": "manual:gabrielapalma@produtivajunior.com.br",
+      "freq": "manual:gabrielapalma@produtivajunior.com.br",
+      "responsavel": "manual:gabrielapalma@produtivajunior.com.br",
+      "descricao": "manual:gabrielapalma@produtivajunior.com.br",
+      "anexos": "manual:gabrielapalma@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Entregável em Plano de Marketing e Planejamento Estratégico; sem metodologia no Drive."
+    ]
+  },
+  {
+    "id": "bmc",
+    "nome": "Business Model Canvas (BMC)",
+    "tipo": "Ferramenta",
+    "categoria": "Entendimento",
+    "complexidade": "Baixo",
+    "tempo": "1–2h",
+    "status": "Em construção",
+    "freq": "Alta",
+    "responsavel": {
+      "nome": "Gabriela Palma",
+      "email": "gabrielapalma@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Canvas de 9 blocos que descreve o modelo de negócio da empresa: segmentos, proposta de valor, canais, relacionamento, receitas, recursos, atividades, parcerias e custos.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "gabrielapalma@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:gabrielapalma@produtivajunior.com.br",
+      "tipo": "manual:gabrielapalma@produtivajunior.com.br",
+      "categoria": "manual:gabrielapalma@produtivajunior.com.br",
+      "complexidade": "manual:gabrielapalma@produtivajunior.com.br",
+      "tempo": "manual:gabrielapalma@produtivajunior.com.br",
+      "freq": "manual:gabrielapalma@produtivajunior.com.br",
+      "responsavel": "manual:gabrielapalma@produtivajunior.com.br",
+      "descricao": "manual:gabrielapalma@produtivajunior.com.br",
+      "anexos": "manual:gabrielapalma@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Sem PDF de metodologia no Drive: só a página do Hangar e o modelo '[CIEP] Modelo - BMC.pdf' citado no MVP. Pedir a gabrielapalma@ a metodologia ou colar a página do Hangar em fontes/hangar/bmc.md."
+    ]
+  },
+  {
+    "id": "buyer-persona",
+    "nome": "Buyer Persona",
+    "tipo": "Ferramenta",
+    "categoria": "Entendimento",
+    "complexidade": "Baixo",
+    "tempo": "1–2h",
+    "status": "Em construção",
+    "freq": "Média",
+    "responsavel": {
+      "nome": "Vinícius Moraes",
+      "email": "viniciusmoraes@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Representação semi-fictícia do cliente típico, com contexto, objetivos e dores.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "viniciusmoraes@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+      "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+      "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+      "descricao": "manual:viniciusmoraes@produtivajunior.com.br",
+      "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Citada no Resumão (Plano de MKT, Idealização de Novos Produtos) sem metodologia no Drive."
+    ]
+  },
+  {
+    "id": "cpv",
+    "nome": "Canvas de Proposta de Valor (CPV)",
+    "tipo": "Ferramenta",
+    "categoria": "Entendimento",
+    "complexidade": "Baixo",
+    "tempo": "1–2h",
+    "status": "Ativo",
+    "freq": "Média",
+    "responsavel": {
+      "nome": "Laura Rodrigues",
+      "email": "laurarodrigues@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Lançar um produto, serviço ou marca no mercado exige mais do que uma boa ideia — é necessário entender profundamente quem é o cliente, o que ele valoriza e quais problemas realmente precisam ser resolvidos.",
+    "objetivo": "Nesse cenário, o Canvas de Proposta de Valor surge como uma ferramenta estratégica que permite alinhar o que sua solução oferece com as necessidades reais do público-alvo.",
+    "problema": null,
+    "quandoUsar": null,
+    "quandoNao": null,
+    "entradas": [
+      "Segmento de cliente definido (ICP ou persona)",
+      "Entrevistas ou pesquisa com clientes"
+    ],
+    "saidas": [
+      "Canvas com perfil do cliente e mapa de valor encaixados"
+    ],
+    "passos": null,
+    "perguntas": null,
+    "cuidados": null,
+    "exemplos": [
+      "PROJETO REFERÊNCIA: Bee Delivery"
+    ],
+    "anexos": [
+      {
+        "nome": "Metodologia - CPV.pdf",
+        "tipo": "Metodologia (PDF)",
+        "descricao": "Definição, perfil do cliente (tarefas, dores, ganhos) e mapa de valor, com dicas e projeto de referência.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb",
+        "url": "https://drive.google.com/file/d/1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb/view"
+      },
+      {
+        "nome": "[CIEP] Proposta de Valor (Modelo Padrão)",
+        "tipo": "Modelo padrão",
+        "descricao": "Canvas em branco com os 6 blocos.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1QK6lIIWR589W8HG0xWhknAENBw8cwwYD",
+        "url": "https://drive.google.com/file/d/1QK6lIIWR589W8HG0xWhknAENBw8cwwYD/view"
+      }
+    ],
+    "fontes": [
+      {
+        "tipo": "drive-pdf",
+        "id": "1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb",
+        "nome": "Metodologia - CPV.pdf",
+        "hash": "73933dff45f79517ea7b1313a744b78eeabd63949cbb6fda528b17fcb7e23355"
+      },
+      {
+        "tipo": "drive-pdf",
+        "id": "1QK6lIIWR589W8HG0xWhknAENBw8cwwYD",
+        "nome": "[CIEP] Proposta de Valo( Modelo Padrão)",
+        "hash": "d05a0dc1fb9f068818fabd555f75c26e7e3facbe04b432146a33cc6f8babb101"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:laurarodrigues@produtivajunior.com.br",
+      "tipo": "manual:laurarodrigues@produtivajunior.com.br",
+      "categoria": "manual:laurarodrigues@produtivajunior.com.br",
+      "complexidade": "manual:laurarodrigues@produtivajunior.com.br",
+      "tempo": "manual:laurarodrigues@produtivajunior.com.br",
+      "freq": "manual:laurarodrigues@produtivajunior.com.br",
+      "responsavel": "manual:laurarodrigues@produtivajunior.com.br",
+      "descricao": "drive:1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb#introducao/definicao",
+      "objetivo": "drive:1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb#introducao/definicao",
+      "exemplos": "drive:1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb#link-de-referencia/projeto-referencia-bee-delivery",
+      "entradas": "manual:laurarodrigues@produtivajunior.com.br",
+      "saidas": "manual:laurarodrigues@produtivajunior.com.br",
+      "anexos": "manual:laurarodrigues@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): problema, quandoUsar, quandoNao, passos, perguntas, cuidados"
+    ]
+  },
+  {
+    "id": "estudo-de-segmento",
+    "nome": "Estudo de Segmento",
+    "tipo": "Checklist",
+    "categoria": "Entendimento",
+    "complexidade": "Baixo",
+    "tempo": "2–4h de pesquisa",
     "status": "Ativo",
     "freq": "Alta",
-    "acessos": 223,
-    "nota": "4.6",
-    "responsavel": "Rafael Tonon",
-    "atualizado": "30 abr 2026",
-    "descricao": "Prioriza problemas por Gravidade, Urgência e Tendência, gerando um ranking objetivo.",
-    "objetivo": "Transformar uma lista de problemas em uma fila de prioridades baseada em critérios claros.",
-    "problema": "Times tentam resolver tudo ao mesmo tempo e gastam energia no que tem menor impacto.",
+    "responsavel": {
+      "nome": "Carlos Eduardo",
+      "email": "carloseduardo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Checklist do que levantar sobre a empresa e o segmento antes de iniciar o projeto: informações básicas, contexto de mercado e materiais de coleta.",
+    "objetivo": "Chegar à RAC e à RAP já conhecendo porte, produtos, clientes, concorrentes, tendências e regulamentação do segmento.",
+    "problema": "Consultor entrava no cliente sem estudo prévio e gastava as primeiras reuniões descobrindo o básico.",
     "quandoUsar": [
-      "Quando há muitos problemas e pouco tempo",
-      "Para priorizar o backlog de melhorias",
-      "Em comitês de decisão com o cliente"
+      "Sempre, antes da primeira reunião com o gestor",
+      "Ao receber o repasse comercial de um cliente novo"
     ],
-    "quandoNao": [
-      "Quando há apenas 1 ou 2 itens a decidir",
-      "Sem alinhamento prévio sobre os critérios"
-    ],
+    "quandoNao": null,
     "entradas": [
-      "Lista de problemas levantados",
-      "Critérios de pontuação acordados"
+      "Nome e CNPJ da empresa",
+      "Site, LinkedIn, Reclame Aqui, Instagram"
     ],
     "saidas": [
-      "Ranking de prioridades (G×U×T)",
-      "Foco definido para o plano de ação"
+      "Ficha do segmento preenchida antes da RAC/RAP"
     ],
     "passos": [
-      "Liste os problemas a priorizar",
-      "Pontue Gravidade de 1 a 5",
-      "Pontue Urgência de 1 a 5",
-      "Pontue Tendência de 1 a 5",
-      "Multiplique G×U×T e ordene"
+      "Informações básicas: Nome, Localização, Porte (micro, pequena, média, grande)",
+      "MVV: Número de Colaboradores, Principais Produtos/Serviços, Principais Clientes, Segmentos Atendidos, Fornecedores e Parceiros Estratégicos, Canais de Comunicação",
+      "Contexto DE mercado: Principais Concorrentes, Participação de Mercado, Posicionamento da Marca, Tendências e Inovações do Setor, Regulamentações e Normas, Barreiras de Entrada, Desafios do Setor, Indicadores Utéis (Banco de Indicadores)",
+      "Materiais DE coleta E estudo: Site Institucional, Busca por CNPJ, Linkedin, Reclame Aqui, Instagram, Perplexity, ChatGPT"
     ],
     "perguntas": [
-      "Qual o impacto se não resolvermos?",
-      "Qual a pressa real para agir?",
-      "O problema tende a piorar com o tempo?"
+      "Qual o porte e quantos colaboradores?",
+      "Quem são os principais concorrentes e qual a participação de mercado?",
+      "Há regulamentações ou normas que limitam o setor?",
+      "Quais indicadores do Banco de Indicadores se aplicam ao segmento?"
     ],
-    "cuidados": [
-      "Alinhe a escala antes de pontuar",
-      "Evite que uma só pessoa pontue tudo",
-      "Reavalie o ranking conforme surgem dados"
-    ],
-    "exemplos": [
-      "Priorização de gargalos operacionais",
-      "Fila de melhorias de um processo comercial"
-    ],
+    "cuidados": null,
+    "exemplos": null,
     "anexos": [
       {
-        "nome": "Matriz GUT.xlsx",
-        "tipo": "Template editável",
-        "descricao": "Planilha com cálculo automático do score.",
-        "versao": "v1.4",
-        "data": "30 abr 2026"
+        "nome": "[CIEP] Checklist do Estudo de Segmento.pdf",
+        "tipo": "Modelo padrão",
+        "descricao": "Checklist: informações básicas, contexto de mercado e materiais de coleta.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1KcKyCTQceifhm4btNwmzvW43BEFbQ-Kh",
+        "url": "https://drive.google.com/file/d/1KcKyCTQceifhm4btNwmzvW43BEFbQ-Kh/view"
+      },
+      {
+        "nome": "Banco de Indicadores",
+        "tipo": "Planilha",
+        "descricao": "Indicadores úteis por segmento e escopo.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+        "url": "https://docs.google.com/spreadsheets/d/1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A/edit"
       }
+    ],
+    "fontes": [
+      {
+        "tipo": "drive-pdf",
+        "id": "1KcKyCTQceifhm4btNwmzvW43BEFbQ-Kh",
+        "nome": "[CIEP] Checklist do Estudo de Segmento.pdf",
+        "hash": "509e6af5042f27f33f84780b01438c0b302b2d81e1ae9d97e0502298c4bd0c86"
+      },
+      {
+        "tipo": "drive-sheet",
+        "id": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+        "nome": "Planilha de indicadores [PROCESSOS]",
+        "hash": "f2f33ad986991b7399b762cc48e83ceca4d492bdc175929298b157b2332273ce"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:carloseduardo@produtivajunior.com.br",
+      "tipo": "manual:carloseduardo@produtivajunior.com.br",
+      "categoria": "manual:carloseduardo@produtivajunior.com.br",
+      "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+      "tempo": "manual:carloseduardo@produtivajunior.com.br",
+      "freq": "manual:carloseduardo@produtivajunior.com.br",
+      "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+      "passos": "drive:1KcKyCTQceifhm4btNwmzvW43BEFbQ-Kh#informacoes-basicas/nome",
+      "descricao": "manual:carloseduardo@produtivajunior.com.br",
+      "objetivo": "manual:carloseduardo@produtivajunior.com.br",
+      "problema": "manual:carloseduardo@produtivajunior.com.br",
+      "quandoUsar": "manual:carloseduardo@produtivajunior.com.br",
+      "entradas": "manual:carloseduardo@produtivajunior.com.br",
+      "saidas": "manual:carloseduardo@produtivajunior.com.br",
+      "perguntas": "manual:carloseduardo@produtivajunior.com.br",
+      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): quandoNao, cuidados, exemplos"
     ]
   },
   {
-    "id": "esforcoimpacto",
-    "nome": "Matriz Esforço × Impacto",
+    "id": "icp",
+    "nome": "ICP (Ideal Customer Profile)",
     "tipo": "Ferramenta",
-    "categoria": "Estratégia",
-    "etapa": "Planejamento",
+    "categoria": "Entendimento",
     "complexidade": "Baixo",
-    "tempo": "1h",
+    "tempo": "1–2h",
+    "status": "Em construção",
+    "freq": "Alta",
+    "responsavel": {
+      "nome": "Vinícius Moraes",
+      "email": "viniciusmoraes@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Perfil do cliente ideal da empresa: quem compra mais, com menos esforço e mais margem.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "viniciusmoraes@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+      "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+      "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+      "descricao": "manual:viniciusmoraes@produtivajunior.com.br",
+      "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Citado nos Cronogramas Base (Plano de Marketing, Estruturação Comercial, Pesquisa de Mercado) sem metodologia no Drive."
+    ]
+  },
+  {
+    "id": "mapa-de-contexto",
+    "nome": "Mapa de Contexto",
+    "tipo": "Ferramenta",
+    "categoria": "Entendimento",
+    "complexidade": "Baixo",
+    "tempo": "2–3h",
     "status": "Ativo",
     "freq": "Média",
-    "acessos": 176,
-    "nota": "4.5",
-    "responsavel": "Núcleo CIEP",
-    "atualizado": "22 abr 2026",
-    "descricao": "Plota iniciativas por esforço e impacto para revelar os ganhos rápidos.",
-    "objetivo": "Decidir o que fazer primeiro priorizando alto impacto com baixo esforço.",
-    "problema": "Iniciativas são escolhidas por preferência, não por retorno sobre o esforço.",
+    "responsavel": {
+      "nome": "Carlos Eduardo",
+      "email": "carloseduardo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "O Mapa de Contexto é uma ferramenta utilizada para apresentar de forma esquemática e visual as funções presentes em uma organização, bem como a relação do cliente com o fornecedor existente entre essas funções.",
+    "objetivo": "Essa ferramenta proporciona uma visão geral da empresa antes que se inicie a identificação dos processos para depois ocorrer o mapeamento dos mesmos.",
+    "problema": "A utilização do mapa de contexto é essencial por diversos motivos: Compreensão global: Fornece uma visão geral do sistema e de seu contexto, ajudando a compreender as interações entre diferentes partes; Identificação de limites: Ajuda a definir claramente os limites do sistema em estudo, distinguindo o que está dentro e fora do escopo; Comunicação eficaz: Facilita a comunicação entre as partes interessadas, permitindo que todos tenham uma compreensão comum do sistema e de seu ambiente; Tomada de decisão: Facilita a identificação de oportunidades e desafios, auxiliando na tomada de decisões informadas.",
     "quandoUsar": [
-      "Ao montar um roadmap de ações",
-      "Para escolher quick wins",
-      "Em sessões de priorização com o cliente"
+      "A utilização do mapa de contexto é essencial por diversos motivos: Compreensão global: Fornece uma visão geral do sistema e de seu contexto, ajudando a compreender as interações entre diferentes partes; Identificação de limites: Ajuda a definir claramente os limites do sistema em estudo, distinguindo o que está dentro e fora do escopo; Comunicação eficaz: Facilita a comunicação entre as partes interessadas, permitindo que todos tenham uma compreensão comum do sistema e de seu ambiente; Tomada de decisão: Facilita a identificação de oportunidades e desafios, auxiliando na tomada de decisões informadas",
+      "Clareza na definição do escopo: Mostra em determinado processo o que está dentro e fora do sistema, evitando retrabalho e confusão sobre responsabilidades",
+      "Comunicação simples e eficiente: Facilita o entendimento entre diferentes áreas pela sua apresentação visual",
+      "Identificação dos stakeholders e suas interações: Através do mapa é possível visualizar quem interage com o sistema e também auxilia no entendimento de quem é dependente dele",
+      "Suporte à modelagens de processos: Funciona como uma primeira etapa antes de se iniciar os fluxogramas e outras ferramentas de mapeamento",
+      "É importante pois evita perder tempo detalhando o que ainda não está bem compreendido"
     ],
-    "quandoNao": [
-      "Quando faltam estimativas de esforço",
-      "Para decisões que exigem análise financeira profunda"
-    ],
+    "quandoNao": null,
     "entradas": [
-      "Lista de iniciativas",
-      "Estimativa de esforço e impacto"
+      "Lista de áreas e departamentos da empresa",
+      "Partes interessadas internas e externas"
     ],
     "saidas": [
-      "Matriz 2×2 preenchida",
-      "Lista de quick wins priorizados"
+      "Mapa visual do sistema, agentes externos e fluxos",
+      "Fronteira clara do que está dentro e fora do escopo"
     ],
     "passos": [
-      "Liste as iniciativas candidatas",
-      "Estime o esforço de cada uma",
-      "Estime o impacto esperado",
-      "Posicione no quadrante",
-      "Comece pelos alto impacto / baixo esforço"
+      "Identificar elementos chave — Liste as principais áreas ou departamentos da empresa; Identifique partes interessadas internas e externas, como: clientes, acionistas, parceiros, etc; Destaque processos operacionais e estratégicos essenciais.",
+      "Definir relações — Indique as relações e interações entre diferentes áreas da empresa.",
+      "Adicionar contexto externo — Inclua fatores externos que afetam a empresa, como regulamentações, concorrentes, tendências de mercado, etc; Represente a cadeia de suprimentos, se aplicável, mostrando conexões com fornecedores e distribuidores.",
+      "Mapear Fluxos e Limites — Identifique as entradas (inputs) e saídas (outputs) de informações e materiais entre a empresa e os agentes externos; Delimite a fronteira do sistema, esclarecendo o que pertence ao processo interno e o que pertence ao ambiente externo; Estabeleça a direção dos fluxos para garantir que a troca de valor entre as partes esteja lógica antes da desenhar.",
+      "Apresentar de forma visual — Utilize gráficos, setas e rótulos para tornar o mapa visualmente compreensível; Considere o uso de cores para diferenciar diferentes elementos ou destacar áreas críticas."
     ],
-    "perguntas": [
-      "Quais ganhos rápidos podemos entregar já?",
-      "O que tem alto impacto mas exige planejamento?",
-      "O que deveríamos descartar?"
-    ],
-    "cuidados": [
-      "Esforço e impacto são estimativas — revise depois",
-      "Não ignore \"grandes apostas\" só por exigirem esforço"
-    ],
-    "exemplos": [
-      "Roadmap de melhorias de um e-commerce",
-      "Priorização de ações de redução de custos"
-    ],
+    "perguntas": null,
+    "cuidados": null,
+    "exemplos": null,
     "anexos": [
       {
-        "nome": "Matriz Esforço×Impacto.pptx",
-        "tipo": "Template editável",
-        "descricao": "Quadrante pronto para arrastar os post-its.",
-        "versao": "v1.1",
-        "data": "22 abr 2026"
+        "nome": "[CIEP] Metodologia de Mapa de Contexto.pdf",
+        "tipo": "Metodologia (PDF)",
+        "descricao": "O que é, importância, construção em 5 passos e benefícios.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm",
+        "url": "https://drive.google.com/file/d/1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm/view"
+      },
+      {
+        "nome": "[CIEP] Modelo PPT Mapa de Contexto.pdf",
+        "tipo": "Modelo padrão",
+        "descricao": "Slides-modelo para apresentar o mapa ao cliente.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "161BO5wQ10MHub_X-9ngOWOKkG1pd3ga1",
+        "url": "https://drive.google.com/file/d/161BO5wQ10MHub_X-9ngOWOKkG1pd3ga1/view"
       }
+    ],
+    "fontes": [
+      {
+        "tipo": "drive-pdf",
+        "id": "1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm",
+        "nome": "[CIEP] Metodologia de Mapa de Contexto.pdf",
+        "hash": "fdc631fbd1372cef243f22a0bb018a8c9aaf2f8feb4e695953d05317b264785b"
+      },
+      {
+        "tipo": "drive-pdf",
+        "id": "161BO5wQ10MHub_X-9ngOWOKkG1pd3ga1",
+        "nome": "[CIEP] Modelo PPT Mapa de Contexto.pdf",
+        "hash": "ac21d3db4576b2e53df8ad0c777f681af4cb3f88f972090143a4bb5c8e140929"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:carloseduardo@produtivajunior.com.br",
+      "tipo": "manual:carloseduardo@produtivajunior.com.br",
+      "categoria": "manual:carloseduardo@produtivajunior.com.br",
+      "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+      "tempo": "manual:carloseduardo@produtivajunior.com.br",
+      "freq": "manual:carloseduardo@produtivajunior.com.br",
+      "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+      "descricao": "drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#introducao",
+      "objetivo": "drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#introducao",
+      "problema": "drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#principais-pontos/importancia",
+      "quandoUsar": "drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#principais-pontos/importancia drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#beneficios",
+      "passos": "drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#construcao/identificar-elementos-chave drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#construcao/definir-relacoes drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#construcao/adicionar-contexto-externo drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#construcao/mapear-fluxos-e-limites drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#construcao/apresentar-de-forma-visual",
+      "entradas": "manual:carloseduardo@produtivajunior.com.br",
+      "saidas": "manual:carloseduardo@produtivajunior.com.br",
+      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): quandoNao, perguntas, cuidados, exemplos"
     ]
   },
   {
-    "id": "ishikawa",
-    "nome": "Diagrama de Ishikawa",
+    "id": "matriz-de-concorrentes",
+    "nome": "Matriz de Concorrentes",
     "tipo": "Ferramenta",
-    "categoria": "Processos",
-    "etapa": "Diagnóstico",
+    "categoria": "Entendimento",
+    "complexidade": "Baixo",
+    "tempo": "2h",
+    "status": "Em construção",
+    "freq": "Alta",
+    "responsavel": {
+      "nome": "Vinícius Moraes",
+      "email": "viniciusmoraes@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Comparação estruturada da empresa com os concorrentes diretos em critérios definidos com o cliente.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "viniciusmoraes@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+      "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+      "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+      "descricao": "manual:viniciusmoraes@produtivajunior.com.br",
+      "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Entregável recorrente nos Cronogramas Base; sem metodologia própria (ver Matriz de Comparativo de Marcas)."
+    ]
+  },
+  {
+    "id": "swot",
+    "nome": "Matriz SWOT",
+    "tipo": "Ferramenta",
+    "categoria": "Entendimento",
     "complexidade": "Médio",
-    "tempo": "1–2h",
+    "tempo": "Qualitativa 1–2h · Quantitativa +2h",
     "status": "Ativo",
-    "freq": "Média",
-    "acessos": 154,
-    "nota": "4.4",
-    "responsavel": "Lucas Moreira",
-    "atualizado": "10 abr 2026",
-    "descricao": "Espinha de peixe que organiza as possíveis causas de um problema por categoria (6M).",
-    "objetivo": "Mapear de forma estruturada todas as causas possíveis de um efeito indesejado.",
-    "problema": "A discussão sobre causas fica desorganizada e algumas categorias importantes ficam de fora.",
+    "freq": "Alta",
+    "responsavel": {
+      "nome": "Gabriela Palma",
+      "email": "gabrielapalma@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "A Matriz SWOT é uma ferramenta de análise estratégica utilizada para compreender o ambiente interno e externo de uma organização, projeto ou até mesmo uma pessoa.",
+    "objetivo": "Essa matriz permite uma visão clara da situação atual, facilitando o planejamento estratégico e a tomada de decisões, ao alinhar as forças e fraquezas internas com as oportunidades e ameaças externas.",
+    "problema": null,
     "quandoUsar": [
-      "Para investigar um problema com várias causas",
-      "Antes dos 5 Porquês, para abrir o leque",
-      "Em sessões de brainstorming estruturado"
+      "A construção da matriz SWOT traz uma visão clara da empresa, transformando percepções em dados para decisões mais assertivas",
+      "Principais benefícios: Visão clara da empresa, com mapeamento dos fatores internos e externos",
+      "Diagnóstico preciso, saindo da percepção subjetiva e indo para dados concretos",
+      "Priorização estratégica, identificando quais forças, fraquezas, oportunidades e ameaças são mais relevantes",
+      "Melhor tomada de decisão, baseada em dados e não apenas em opiniões",
+      "Uso eficiente de recursos, focando no que realmente importa"
     ],
-    "quandoNao": [
-      "Para problemas triviais de causa óbvia",
-      "Quando não há tempo para uma sessão em grupo"
-    ],
+    "quandoNao": null,
     "entradas": [
-      "Definição clara do efeito/problema",
-      "Time multidisciplinar para a sessão"
+      "Entrevistas com participantes de níveis e áreas diferentes",
+      "Dados secundários sobre mercado e concorrência"
     ],
     "saidas": [
-      "Diagrama com causas por categoria",
-      "Causas prováveis a investigar"
+      "Matriz SWOT qualitativa validada",
+      "Matriz quantitativa com priorização e cenário estratégico"
     ],
     "passos": [
-      "Escreva o efeito na \"cabeça do peixe\"",
-      "Defina as categorias (Método, Máquina, Mão de obra, Material, Medida, Meio)",
-      "Levante causas em cada categoria",
-      "Aprofunde com perguntas",
-      "Marque as causas mais prováveis"
+      "Seleção dos participantes — A coleta de dados para a matriz SWOT deve ser feita com pessoas que possuam visões complementares sobre a organização.",
+      "Coleta de informações — Estrutura das Entrevistas As entrevistas podem ser realizadas de forma individual ou em pequenos grupos, conforme a realidade da empresa e o nível de aprofundamento desejado.",
+      "Organização dos dados e validação — Após as entrevistas, todas as respostas devem ser organizadas e agrupadas.",
+      "Priorização dos pontos — Ainda na fase qualitativa, pode-se realizar uma priorização inicial dos itens, baseada na frequência das citações, no consenso entre os participantes ou na percepção de impacto.",
+      "Estruturação do cruzamento — Monte uma matriz cruzada, onde os elementos de cada quadrante são correlacionados com os elementos dos quadrantes opostos e relacionados.",
+      "Atribuição de pesos — Cada interação entre os elementos deve ser avaliada atribuindo um peso de acordo com o grau de influência que um fator exerce sobre o outro.",
+      "Interpretação dos resultados — Na soma, quanto maior o valor, maior é o impacto daquele fator (força ou fraqueza) no contexto externo, indicando quais elementos internos demandam mais atenção, seja para serem fortalecidos (no caso das forças) ou mitigados (no caso das fraquezas).",
+      "Ordenação e priorização — A priorização dos itens na Matriz SWOT Quantitativa não segue uma única lógica.",
+      "O que são os cenários? Os cenários estratégicos na — SWOT Quantitativa são combinações dos fatores internos (Forças e Fraquezas) com os fatores externos (Oportunidades e Ameaças).",
+      "Quais são os cenários?",
+      "Cálculo da pontuação total — A Pontuação Total é a soma de todos os valores preenchidos naquela matriz de cruzamento específica.",
+      "Cálculo da pontuação máxima — A Pontuação Máxima corresponde ao cenário hipotético em que todas as interações possíveis são máximas, ou seja, todas com peso 2.",
+      "Cálculo da porcentagem de cada cenário — A porcentagem serve para padronizar a comparação dos cenários, independentemente da quantidade de itens em cada quadrante.",
+      "Interpretação dos cenários — De acordo com as porcentagens, será definido em qual cenário aquela organização se encontra, para que a partir disso, seja possível traçar um planejamento estratégico assertivo."
     ],
     "perguntas": [
-      "Quais fatores de processo contribuem?",
-      "Há causas ligadas a pessoas ou treinamento?",
-      "Materiais ou equipamentos influenciam?"
+      "Quais são nossos maiores diferenciais?",
+      "O que fazemos muito bem?",
+      "Quais competências, recursos ou processos são reconhecidos como pontos fortes?",
+      "O que os clientes costumam elogiar?"
     ],
-    "cuidados": [
-      "Não pule direto para soluções",
-      "Garanta diversidade de perspectivas na sala",
-      "Categorias podem ser adaptadas ao contexto"
-    ],
+    "cuidados": null,
     "exemplos": [
-      "Causas de refugo em uma linha de produção",
-      "Origem de atrasos em um processo de atendimento"
+      "SWOT Quantitativa Referência: SWOT Qualitativa Referência"
     ],
     "anexos": [
       {
-        "nome": "Template Ishikawa.pptx",
-        "tipo": "Template editável",
-        "descricao": "Espinha de peixe com as 6 categorias.",
+        "nome": "Metodologia - SWOT.pdf",
+        "tipo": "Metodologia (PDF)",
+        "descricao": "Definição, SWOT qualitativa e quantitativa, roteiro de perguntas e cenários estratégicos.",
         "versao": "v1.0",
-        "data": "10 abr 2026"
-      }
-    ]
-  },
-  {
-    "id": "stakeholders",
-    "nome": "Mapa de Stakeholders",
-    "tipo": "Ferramenta",
-    "categoria": "Pessoas",
-    "etapa": "Coleta",
-    "complexidade": "Médio",
-    "tempo": "1–2h",
-    "status": "Em revisão",
-    "freq": "Média",
-    "acessos": 131,
-    "nota": "4.3",
-    "responsavel": "Marina Costa",
-    "atualizado": "02 abr 2026",
-    "descricao": "Mapeia os envolvidos no projeto por poder e interesse para guiar a comunicação.",
-    "objetivo": "Identificar quem influencia o projeto e definir como engajar cada grupo.",
-    "problema": "Projetos travam por resistência de pessoas que não foram envolvidas no momento certo.",
-    "quandoUsar": [
-      "No início de qualquer projeto",
-      "Quando há mudança organizacional envolvida",
-      "Para planejar a comunicação do projeto"
-    ],
-    "quandoNao": [
-      "Projetos muito pequenos e de um único interlocutor"
-    ],
-    "entradas": [
-      "Lista de pessoas e áreas envolvidas",
-      "Conversas iniciais com o cliente"
-    ],
-    "saidas": [
-      "Matriz poder × interesse",
-      "Plano de engajamento por stakeholder"
-    ],
-    "passos": [
-      "Liste todos os envolvidos",
-      "Avalie poder e interesse de cada um",
-      "Posicione na matriz 2×2",
-      "Defina a estratégia para cada quadrante",
-      "Atualize ao longo do projeto"
-    ],
-    "perguntas": [
-      "Quem pode bloquear ou acelerar o projeto?",
-      "Quem é impactado mas tem pouca voz?",
-      "Como cada grupo prefere ser comunicado?"
-    ],
-    "cuidados": [
-      "Stakeholders mudam ao longo do projeto",
-      "Não subestime influenciadores informais"
-    ],
-    "exemplos": [
-      "Projeto de mudança de processo em uma cooperativa",
-      "Implantação de sistema em uma indústria"
-    ],
-    "anexos": [
+        "data": "2026-09-07",
+        "driveId": "1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8",
+        "url": "https://drive.google.com/file/d/1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8/view"
+      },
       {
-        "nome": "Mapa de Stakeholders.xlsx",
-        "tipo": "Template editável",
-        "descricao": "Matriz com plano de engajamento.",
+        "nome": "[SWOT] Modelo padrão.pdf",
+        "tipo": "Modelo padrão",
+        "descricao": "Matriz em branco com os 4 quadrantes.",
         "versao": "v1.0",
-        "data": "02 abr 2026"
+        "data": "2026-09-07",
+        "driveId": "1-Y_mYRGz1ZxiVVAK1_WyMlZFYjUBjGf7",
+        "url": "https://drive.google.com/file/d/1-Y_mYRGz1ZxiVVAK1_WyMlZFYjUBjGf7/view"
+      },
+      {
+        "nome": "Matriz SWOT Quantitativa - MODELO PADRÃO",
+        "tipo": "Planilha",
+        "descricao": "Planilha de cruzamento com pesos, somas, ordem e cálculo dos 4 cenários.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1xSiqIc7gthAaUHSa3RBs1_BMoqQMZRAWU7zQg-xBWUw",
+        "url": "https://docs.google.com/spreadsheets/d/1xSiqIc7gthAaUHSa3RBs1_BMoqQMZRAWU7zQg-xBWUw/edit"
       }
+    ],
+    "fontes": [
+      {
+        "tipo": "drive-pdf",
+        "id": "1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8",
+        "nome": "_Metodologia - SWOT .pdf",
+        "hash": "9f6ab4a2c94745e113bce8c5a2298121238fb0e2620293c1fa9e87db9d215130"
+      },
+      {
+        "tipo": "drive-pdf",
+        "id": "1-Y_mYRGz1ZxiVVAK1_WyMlZFYjUBjGf7",
+        "nome": "[SWOT] Modelo padrão.pdf",
+        "hash": "42b90f59317e9334a09eef2b0f81dd2225363e9cb7ffd4fbf003b1710dafe043"
+      },
+      {
+        "tipo": "drive-sheet",
+        "id": "1xSiqIc7gthAaUHSa3RBs1_BMoqQMZRAWU7zQg-xBWUw",
+        "nome": "Matriz SWOT Quantitativa - MODELO PADRÃO",
+        "hash": "7923f5a03352dc4e414518e632c330473aab4a0b7ed8df47655c2466487e576e"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:gabrielapalma@produtivajunior.com.br",
+      "tipo": "manual:gabrielapalma@produtivajunior.com.br",
+      "categoria": "manual:gabrielapalma@produtivajunior.com.br",
+      "complexidade": "manual:gabrielapalma@produtivajunior.com.br",
+      "tempo": "manual:gabrielapalma@produtivajunior.com.br",
+      "freq": "manual:gabrielapalma@produtivajunior.com.br",
+      "responsavel": "manual:gabrielapalma@produtivajunior.com.br",
+      "descricao": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#o-que-e-a-matriz-swot/definicao",
+      "objetivo": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#o-que-e-a-matriz-swot/definicao",
+      "quandoUsar": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/beneficios",
+      "passos": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/selecao-dos-participantes drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/coleta-de-informacoes drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-raci/organizacao-dos-dados-e-validacao drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/priorizacao-dos-pontos drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/estruturacao-do-cruzamento drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/atribuicao-de-pesos drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/interpretacao-dos-resultados drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/ordenacao-e-priorizacao drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/o-que-sao-os-cenarios-os-cenarios-estrategicos-na drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/quais-sao-os-cenarios drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/calculo-da-pontuacao-total drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/calculo-da-pontuacao-maxima drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/calculo-da-porcentagem-de-cada-cenario drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/interpretacao-dos-cenarios",
+      "perguntas": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-raci/roteiro-de-perguntas-para-conducao-forcas",
+      "exemplos": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#introducao/swot-quantitativa-referencia-swot-qualitativa-referencia",
+      "entradas": "manual:gabrielapalma@produtivajunior.com.br",
+      "saidas": "manual:gabrielapalma@produtivajunior.com.br",
+      "anexos": "manual:gabrielapalma@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): problema, quandoNao, cuidados"
     ]
   },
   {
-    "id": "entrevista",
-    "nome": "Roteiro de Entrevista de Diagnóstico",
+    "id": "banco-de-indicadores",
+    "nome": "Banco de Indicadores",
     "tipo": "Template",
-    "categoria": "Comercial",
-    "etapa": "Coleta",
+    "categoria": "Metodologias",
     "complexidade": "Baixo",
-    "tempo": "30min prep",
+    "tempo": "Consulta",
     "status": "Ativo",
     "freq": "Alta",
-    "acessos": 209,
-    "nota": "4.7",
-    "responsavel": "Núcleo CIEP",
-    "atualizado": "08 mai 2026",
-    "descricao": "Roteiro base para conduzir entrevistas de diagnóstico com gestores e equipes do cliente.",
-    "objetivo": "Padronizar a coleta de informações qualitativas garantindo profundidade e comparabilidade.",
-    "problema": "Entrevistas sem roteiro geram dados rasos e difíceis de comparar entre interlocutores.",
+    "responsavel": {
+      "nome": "Carlos Eduardo",
+      "email": "carloseduardo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Planilha com 139 indicadores classificados por hierarquia (estratégico, tático, operacional), tipo (KPI ou suporte), segmento, escopo sugerido, medida, direção (maior ou menor é melhor), fórmula e método de aplicação.",
+    "objetivo": "Dar ao consultor um ponto de partida para escolher indicadores no PMMC, no gerenciamento financeiro, em processos e nos demais escopos, sem inventar métrica do zero.",
+    "problema": "Cada projeto reinventava indicadores; a planilha padroniza nome, fórmula e forma de coleta.",
     "quandoUsar": [
-      "Na fase de coleta do diagnóstico",
-      "Para entrevistar diferentes áreas do cliente",
-      "Antes de mapear processos ou problemas"
+      "Ao preencher o bloco Indicadores de Performance do PMMC",
+      "Ao definir indicadores em Gerenciamento Financeiro, Custeio, Comercial ou Estoque",
+      "Quando o gestor pede 'um indicador' e não sabe qual"
     ],
     "quandoNao": [
-      "Quando uma pesquisa quantitativa é mais adequada",
-      "Para validação rápida de uma única hipótese"
+      "Quando o cliente já tem indicadores maduros e consistentes: nesse caso, revise os dele"
     ],
     "entradas": [
-      "Objetivos do diagnóstico",
-      "Lista de entrevistados",
-      "Contexto prévio do cliente"
+      "Escopo do projeto e setor do cliente"
     ],
     "saidas": [
-      "Respostas estruturadas por tema",
-      "Insumos para análise e priorização"
+      "Lista curta de indicadores com fórmula e método de coleta"
     ],
     "passos": [
-      "Defina os objetivos da entrevista",
-      "Adapte os blocos do roteiro ao entrevistado",
-      "Comece por perguntas abertas e de contexto",
-      "Aprofunde nos pontos críticos",
-      "Feche com prioridades e expectativas",
-      "Registre e organize as respostas"
+      "Filtre a aba 1 pelo escopo sugerido e pelo setor",
+      "Escolha poucos indicadores, misturando estratégico, tático e operacional",
+      "Confira na aba 2 a fórmula e o método de aplicação",
+      "Valide com o gestor se o dado existe ou pode ser coletado"
     ],
     "perguntas": [
-      "Como funciona a sua área hoje?",
-      "Quais são as maiores dores do dia a dia?",
-      "O que você mudaria se pudesse?",
-      "Como o sucesso desse projeto se parece para você?"
+      "O dado necessário para a fórmula já é coletado hoje?",
+      "O indicador é KPI ou apenas suporte?",
+      "Maior ou menor é melhor para este indicador?"
     ],
     "cuidados": [
-      "Não transforme entrevista em interrogatório",
-      "Ouça mais do que fale",
-      "Garanta confidencialidade para respostas sinceras"
+      "Não leve 15 indicadores ao cliente: escolha os que ele consegue acompanhar",
+      "Confirme a unidade de medida antes de montar dashboard"
     ],
     "exemplos": [
-      "Diagnóstico de uma operação logística",
-      "Entrevistas com líderes de uma rede de lojas"
+      "Gerenciamento Financeiro: 12 indicadores sugeridos na aba 2",
+      "Mapeamento e Modelagem: 17 indicadores sugeridos na aba 2"
     ],
     "anexos": [
       {
-        "nome": "Roteiro de Entrevista.docx",
-        "tipo": "Template editável",
-        "descricao": "Blocos de perguntas por tipo de entrevistado.",
-        "versao": "v2.2",
-        "data": "08 mai 2026"
-      },
-      {
-        "nome": "Como conduzir.pdf",
-        "tipo": "PDF explicativo",
-        "descricao": "Boas práticas de condução e escuta ativa.",
-        "versao": "v1.1",
-        "data": "14 abr 2026"
+        "nome": "Planilha de indicadores [PROCESSOS]",
+        "tipo": "Planilha",
+        "descricao": "Aba 1: indicador, hierarquia, tipo, segmento, escopo, medida, melhor, como calcular, o que é. Aba 2: escopo sugerido, setor, fórmula e método.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+        "url": "https://docs.google.com/spreadsheets/d/1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A/edit"
       }
+    ],
+    "fontes": [
+      {
+        "tipo": "drive-sheet",
+        "id": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+        "nome": "Planilha de indicadores [PROCESSOS]",
+        "hash": "f2f33ad986991b7399b762cc48e83ceca4d492bdc175929298b157b2332273ce"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:carloseduardo@produtivajunior.com.br",
+      "tipo": "manual:carloseduardo@produtivajunior.com.br",
+      "categoria": "manual:carloseduardo@produtivajunior.com.br",
+      "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+      "tempo": "manual:carloseduardo@produtivajunior.com.br",
+      "freq": "manual:carloseduardo@produtivajunior.com.br",
+      "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+      "descricao": "manual:carloseduardo@produtivajunior.com.br",
+      "objetivo": "manual:carloseduardo@produtivajunior.com.br",
+      "problema": "manual:carloseduardo@produtivajunior.com.br",
+      "quandoUsar": "manual:carloseduardo@produtivajunior.com.br",
+      "quandoNao": "manual:carloseduardo@produtivajunior.com.br",
+      "entradas": "manual:carloseduardo@produtivajunior.com.br",
+      "saidas": "manual:carloseduardo@produtivajunior.com.br",
+      "passos": "manual:carloseduardo@produtivajunior.com.br",
+      "perguntas": "manual:carloseduardo@produtivajunior.com.br",
+      "cuidados": "manual:carloseduardo@produtivajunior.com.br",
+      "exemplos": "manual:carloseduardo@produtivajunior.com.br",
+      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+    }
+  },
+  {
+    "id": "curva-abc",
+    "nome": "Curva ABC",
+    "tipo": "Ferramenta",
+    "categoria": "Metodologias",
+    "complexidade": "Baixo",
+    "tempo": "1h com os dados em mãos",
+    "status": "Em construção",
+    "freq": "Média",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Classificação de produtos, clientes ou materiais pela participação acumulada no faturamento ou no gasto.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "thiagomelo@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "tipo": "manual:thiagomelo@produtivajunior.com.br",
+      "categoria": "manual:thiagomelo@produtivajunior.com.br",
+      "complexidade": "manual:thiagomelo@produtivajunior.com.br",
+      "tempo": "manual:thiagomelo@produtivajunior.com.br",
+      "freq": "manual:thiagomelo@produtivajunior.com.br",
+      "responsavel": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "anexos": "manual:thiagomelo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Etapa do Custeio e Precificação e da Gestão de Estoque; sem metodologia no Drive."
     ]
   },
   {
-    "id": "valueprop",
-    "nome": "Canvas de Proposta de Valor",
-    "tipo": "Ferramenta",
-    "categoria": "Marketing",
-    "etapa": "Planejamento",
+    "id": "dco",
+    "nome": "DCO (Descritivo de Cargo e Ordem de serviço)",
+    "tipo": "Template",
+    "categoria": "Metodologias",
     "complexidade": "Médio",
+    "tempo": "1–2 sprints",
+    "status": "Em construção",
+    "freq": "Alta",
+    "responsavel": {
+      "nome": "Laura Rodrigues",
+      "email": "laurarodrigues@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Documento que formaliza atribuições, responsabilidades e rotina de cada cargo após a modelagem.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "laurarodrigues@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:laurarodrigues@produtivajunior.com.br",
+      "tipo": "manual:laurarodrigues@produtivajunior.com.br",
+      "categoria": "manual:laurarodrigues@produtivajunior.com.br",
+      "complexidade": "manual:laurarodrigues@produtivajunior.com.br",
+      "tempo": "manual:laurarodrigues@produtivajunior.com.br",
+      "freq": "manual:laurarodrigues@produtivajunior.com.br",
+      "responsavel": "manual:laurarodrigues@produtivajunior.com.br",
+      "descricao": "manual:laurarodrigues@produtivajunior.com.br",
+      "anexos": "manual:laurarodrigues@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Só decks de treinamento ([PTPJ 26.1] DCO.pdf, [Mechanics] DCO.pdf); falta metodologia e modelo padrão."
+    ]
+  },
+  {
+    "id": "dre",
+    "nome": "DRE (Demonstrativo de Resultado)",
+    "tipo": "Template",
+    "categoria": "Metodologias",
+    "complexidade": "Médio",
+    "tempo": "1 sprint",
+    "status": "Em construção",
+    "freq": "Alta",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Demonstrativo padronizado de receitas, custos, despesas e resultado, geral ou por produto.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "thiagomelo@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "tipo": "manual:thiagomelo@produtivajunior.com.br",
+      "categoria": "manual:thiagomelo@produtivajunior.com.br",
+      "complexidade": "manual:thiagomelo@produtivajunior.com.br",
+      "tempo": "manual:thiagomelo@produtivajunior.com.br",
+      "freq": "manual:thiagomelo@produtivajunior.com.br",
+      "responsavel": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "anexos": "manual:thiagomelo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Entregável de Gerenciamento Financeiro e Custeio; falta o modelo padrão da planilha no Drive."
+    ]
+  },
+  {
+    "id": "jornada-do-cliente",
+    "nome": "Jornada do Cliente (AS IS / TO BE)",
+    "tipo": "Ferramenta",
+    "categoria": "Metodologias",
+    "complexidade": "Médio",
+    "tempo": "2–3h",
+    "status": "Em construção",
+    "freq": "Alta",
+    "responsavel": {
+      "nome": "Vinícius Moraes",
+      "email": "viniciusmoraes@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Mapa das etapas, pontos de contato e emoções do cliente com a empresa, hoje e como deveria ser.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "viniciusmoraes@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+      "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+      "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+      "descricao": "manual:viniciusmoraes@produtivajunior.com.br",
+      "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Só aplicações em cliente (Jornada do Cliente To Be / As Is); falta metodologia e modelo padrão."
+    ]
+  },
+  {
+    "id": "gamificacao",
+    "nome": "Manual de Gamificação",
+    "tipo": "Metodologia",
+    "categoria": "Metodologias",
+    "complexidade": "Alto",
+    "tempo": "2 sprints",
+    "status": "Em construção",
+    "freq": "Baixa",
+    "responsavel": {
+      "nome": "Laura Rodrigues",
+      "email": "laurarodrigues@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Critérios, pontuações, tema e ferramenta de acompanhamento que transformam metas em jogo para a equipe.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "laurarodrigues@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:laurarodrigues@produtivajunior.com.br",
+      "tipo": "manual:laurarodrigues@produtivajunior.com.br",
+      "categoria": "manual:laurarodrigues@produtivajunior.com.br",
+      "complexidade": "manual:laurarodrigues@produtivajunior.com.br",
+      "tempo": "manual:laurarodrigues@produtivajunior.com.br",
+      "freq": "manual:laurarodrigues@produtivajunior.com.br",
+      "responsavel": "manual:laurarodrigues@produtivajunior.com.br",
+      "descricao": "manual:laurarodrigues@produtivajunior.com.br",
+      "anexos": "manual:laurarodrigues@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Só decks de treinamento (Gamificação - PTPJ) e um manual de cliente ([CT] Manual da Gamificação - Meta Concreta); falta metodologia padrão."
+    ]
+  },
+  {
+    "id": "mapa-perceptual",
+    "nome": "Mapa Perceptual",
+    "tipo": "Ferramenta",
+    "categoria": "Metodologias",
+    "complexidade": "Baixo",
+    "tempo": "1–2h",
+    "status": "Ativo",
+    "freq": "Média",
+    "responsavel": {
+      "nome": "Vinícius Moraes",
+      "email": "viniciusmoraes@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "No marketing estratégico, tão importante quanto saber como sua marca se compara à concorrência é entender como ela é percebida — e essas duas coisas nem sempre coincidem.",
+    "objetivo": "É exatamente essa distinção que torna o Mapa Perceptual uma ferramenta indispensável: em vez de avaliar atributos objetivos, ela captura a opinião e o sentimento do consumidor sobre cada marca, traduzindo percepções em posições visuais dentro de um mercado.",
+    "problema": "O desafio central é substituir suposições sobre posicionamento por evidências visuais concretas.",
+    "quandoUsar": null,
+    "quandoNao": null,
+    "entradas": [
+      "Lista de marcas concorrentes",
+      "Dois atributos relevantes para o consumidor-alvo"
+    ],
+    "saidas": [
+      "Mapa com as marcas plotadas nos eixos",
+      "Leitura de clusters, espaços em branco e posicionamento"
+    ],
+    "passos": [
+      "Os 4 Conceitos-Chave — Cluster — quando várias marcas aparecem agrupadas no mesmo quadrante, significa que o consumidor as percebe de forma muito parecida."
+    ],
+    "perguntas": null,
+    "cuidados": null,
+    "exemplos": null,
+    "anexos": [
+      {
+        "nome": "Metodologia - Mapa Perceptual.pdf",
+        "tipo": "Metodologia (PDF)",
+        "descricao": "Estado atual, estrutura do mapa, 4 conceitos-chave, escolha dos eixos e exemplo prático.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K",
+        "url": "https://drive.google.com/file/d/1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K/view"
+      },
+      {
+        "nome": "Modelo Padrão - Mapa Perceptual.pdf",
+        "tipo": "Modelo padrão",
+        "descricao": "Plano cartesiano em branco com dois eixos de atributos e até 6 marcas.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg",
+        "url": "https://drive.google.com/file/d/1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg/view"
+      }
+    ],
+    "fontes": [
+      {
+        "tipo": "drive-pdf",
+        "id": "1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K",
+        "nome": "Metodologia - Mapa Perceptual.pdf",
+        "hash": "932dc2e8eec74ce19b109edc0c0da123831e0f5b16c322dabaa4d3f6028394b9"
+      },
+      {
+        "tipo": "drive-pdf",
+        "id": "1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg",
+        "nome": "Modelo Padrão - Mapa Perceptual.pdf",
+        "hash": "55806c6ecac24cca0a480136987f41a92b608bc2e17f2cf4d5c07c9546f5fb22"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+      "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+      "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+      "descricao": "drive:1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K#introducao",
+      "objetivo": "drive:1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K#introducao",
+      "problema": "drive:1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K#analise-do-estado-atual/principais-desafios",
+      "passos": "drive:1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K#como-funciona-a-ferramenta/os-4-conceitos-chave",
+      "entradas": "manual:viniciusmoraes@produtivajunior.com.br",
+      "saidas": "manual:viniciusmoraes@produtivajunior.com.br",
+      "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): quandoUsar, quandoNao, perguntas, cuidados, exemplos"
+    ]
+  },
+  {
+    "id": "markup",
+    "nome": "Markup e Margem de Contribuição",
+    "tipo": "Ferramenta",
+    "categoria": "Metodologias",
+    "complexidade": "Médio",
+    "tempo": "1 sprint",
+    "status": "Em construção",
+    "freq": "Média",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Cálculo do preço de venda a partir do custo, das despesas e da margem desejada por produto.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "thiagomelo@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "tipo": "manual:thiagomelo@produtivajunior.com.br",
+      "categoria": "manual:thiagomelo@produtivajunior.com.br",
+      "complexidade": "manual:thiagomelo@produtivajunior.com.br",
+      "tempo": "manual:thiagomelo@produtivajunior.com.br",
+      "freq": "manual:thiagomelo@produtivajunior.com.br",
+      "responsavel": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "anexos": "manual:thiagomelo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Etapa do Custeio e Precificação; sem metodologia no Drive."
+    ]
+  },
+  {
+    "id": "comparativo-de-marcas",
+    "nome": "Matriz de Comparativo de Marcas",
+    "tipo": "Ferramenta",
+    "categoria": "Metodologias",
+    "complexidade": "Baixo",
     "tempo": "2h",
     "status": "Ativo",
     "freq": "Média",
-    "acessos": 142,
-    "nota": "4.4",
-    "responsavel": "Marina Costa",
-    "atualizado": "15 abr 2026",
-    "descricao": "Conecta as dores e ganhos do cliente às características da oferta.",
-    "objetivo": "Garantir que o produto ou serviço resolve dores reais e gera ganhos percebidos pelo cliente.",
-    "problema": "Ofertas são construídas a partir do produto, não das necessidades reais do cliente.",
-    "quandoUsar": [
-      "Ao definir ou ajustar uma oferta",
-      "Em conjunto com o Business Model Canvas",
-      "Para projetos de marketing e posicionamento"
-    ],
-    "quandoNao": [
-      "Antes de entender o segmento de clientes",
-      "Para decisões puramente operacionais"
-    ],
+    "responsavel": {
+      "nome": "Vinícius Moraes",
+      "email": "viniciusmoraes@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "No marketing estratégico, saber o que uma marca oferece é apenas metade do trabalho — a outra metade é entender como essa oferta se compara à da concorrência.",
+    "objetivo": "É exatamente para isso que serve a Matriz de Comparativo de Marcas: uma ferramenta que permite visualizar, de forma organizada e lado a lado, como diferentes marcas se posicionam em relação a critérios previamente definidos.",
+    "problema": "A gestão da marca no ambiente competitivo atual exige mais do que intuição — exige comparação estruturada.",
+    "quandoUsar": null,
+    "quandoNao": null,
     "entradas": [
-      "Perfil do cliente / persona",
-      "Pesquisa de dores e ganhos",
-      "Descrição da oferta atual"
+      "Marcas a analisar (a empresa + até 4 concorrentes)",
+      "Critérios de avaliação definidos com o cliente"
     ],
     "saidas": [
-      "Mapa de valor preenchido",
-      "Ajustes recomendados na oferta"
+      "Tabela pontuada por critério e total por marca",
+      "Leitura de onde a empresa ganha e perde"
     ],
     "passos": [
-      "Mapeie as tarefas do cliente",
-      "Liste dores e ganhos",
-      "Descreva produtos e serviços",
-      "Conecte aliviadores de dor e geradores de ganho",
-      "Avalie o encaixe (fit)"
+      "Sistema de avaliação — Como você vai pontuar cada critério."
     ],
     "perguntas": [
-      "Que tarefa o cliente está tentando realizar?",
-      "Quais dores mais o incomodam?",
-      "Que ganho faria ele escolher a gente?"
+      "Onde minha marca é mais forte que a concorrência? Onde estou perdendo espaço? Existe algum atributo que nenhuma marca está ocupando bem? (gap de mercado) Como o consumidor percebe minha marca versus as outras?"
     ],
     "cuidados": [
-      "Baseie-se em evidências, não em suposições",
-      "Priorize as dores mais relevantes, não todas"
+      "Escolher critérios irrelevantes — os critérios precisam ser importantes para o consumidor-alvo, não apenas fáceis de medir."
     ],
-    "exemplos": [
-      "Reposicionamento de um serviço B2B",
-      "Lançamento de um produto digital"
-    ],
+    "exemplos": null,
     "anexos": [
       {
-        "nome": "Value Proposition Canvas.pdf",
-        "tipo": "Template editável",
-        "descricao": "Mapa de valor e perfil do cliente.",
+        "nome": "Metodologia - Matriz de Comparativo de Marcas.pdf",
+        "tipo": "Metodologia (PDF)",
+        "descricao": "Para que serve, os 3 pilares, estrutura visual, tipos e erros comuns.",
         "versao": "v1.0",
-        "data": "15 abr 2026"
-      }
-    ]
-  },
-  {
-    "id": "5w2h",
-    "nome": "Plano de Ação 5W2H",
-    "tipo": "Template",
-    "categoria": "Gestão",
-    "etapa": "Planejamento",
-    "complexidade": "Baixo",
-    "tempo": "1h",
-    "status": "Ativo",
-    "freq": "Alta",
-    "acessos": 231,
-    "nota": "4.7",
-    "responsavel": "Rafael Tonon",
-    "atualizado": "06 mai 2026",
-    "descricao": "Estrutura cada ação respondendo What, Why, Where, When, Who, How e How much.",
-    "objetivo": "Transformar decisões em um plano de ação claro, com responsáveis e prazos.",
-    "problema": "Boas ideias não saem do papel porque ninguém define quem faz o quê e quando.",
-    "quandoUsar": [
-      "Ao final de um diagnóstico ou priorização",
-      "Para detalhar o plano de implementação",
-      "No acompanhamento de execução"
-    ],
-    "quandoNao": [
-      "Para reflexões estratégicas abertas",
-      "Quando ainda não há decisão sobre o que fazer"
-    ],
-    "entradas": [
-      "Lista de ações priorizadas",
-      "Responsáveis disponíveis",
-      "Prazos e recursos"
-    ],
-    "saidas": [
-      "Plano de ação completo",
-      "Responsáveis e prazos definidos"
-    ],
-    "passos": [
-      "Liste as ações a executar",
-      "Para cada uma, responda os 5W",
-      "Defina o \"How\" e o \"How much\"",
-      "Atribua responsável e prazo",
-      "Acompanhe o status periodicamente"
-    ],
-    "perguntas": [
-      "O que precisa ser feito exatamente?",
-      "Por que essa ação é necessária?",
-      "Quem é o responsável e até quando?",
-      "Quanto vai custar?"
-    ],
-    "cuidados": [
-      "Cada ação precisa de um único responsável",
-      "Prazos sem acompanhamento não se cumprem"
-    ],
-    "exemplos": [
-      "Plano de implementação de melhorias",
-      "Cronograma de ações de um projeto comercial"
-    ],
-    "anexos": [
-      {
-        "nome": "Plano de Ação 5W2H.xlsx",
-        "tipo": "Template editável",
-        "descricao": "Planilha com colunas e acompanhamento de status.",
-        "versao": "v1.5",
-        "data": "06 mai 2026"
-      }
-    ]
-  },
-  {
-    "id": "escopo",
-    "nome": "Escopo de Projeto de Consultoria",
-    "tipo": "Escopo",
-    "categoria": "Gestão",
-    "etapa": "Planejamento",
-    "complexidade": "Alto",
-    "tempo": "1 semana",
-    "status": "Ativo",
-    "freq": "Média",
-    "acessos": 167,
-    "nota": "4.5",
-    "responsavel": "Núcleo CIEP",
-    "atualizado": "25 abr 2026",
-    "descricao": "Documento que define objetivos, entregáveis, etapas, prazos e limites de um projeto.",
-    "objetivo": "Alinhar expectativas com o cliente e dar uma base clara para a execução e o controle do projeto.",
-    "problema": "Projetos sofrem com scope creep e desalinhamento porque o combinado nunca foi formalizado.",
-    "quandoUsar": [
-      "No fechamento da proposta com o cliente",
-      "Antes do kickoff do projeto",
-      "Como base do contrato de trabalho"
-    ],
-    "quandoNao": [
-      "Para tarefas pontuais sem entregáveis claros"
-    ],
-    "entradas": [
-      "Diagnóstico inicial",
-      "Expectativas do cliente",
-      "Capacidade e prazo da equipe"
-    ],
-    "saidas": [
-      "Documento de escopo aprovado",
-      "Cronograma macro",
-      "Definição de entregáveis e limites"
-    ],
-    "passos": [
-      "Defina objetivo e contexto do projeto",
-      "Liste os entregáveis e o que NÃO está incluso",
-      "Quebre em etapas e marcos",
-      "Estime prazos e equipe",
-      "Defina critérios de sucesso",
-      "Valide e formalize com o cliente"
-    ],
-    "perguntas": [
-      "Qual o resultado esperado ao final?",
-      "O que está fora do escopo?",
-      "Quais marcos e prazos assumimos?",
-      "Como mediremos o sucesso?"
-    ],
-    "cuidados": [
-      "Deixe explícito o que está fora do escopo",
-      "Inclua processo de mudança de escopo",
-      "Não prometa prazos sem validar capacidade"
-    ],
-    "exemplos": [
-      "Escopo de um projeto de redução de custos",
-      "Escopo de redesenho de processos comerciais"
-    ],
-    "anexos": [
-      {
-        "nome": "Modelo de Escopo.docx",
-        "tipo": "Template editável",
-        "descricao": "Estrutura completa de documento de escopo.",
-        "versao": "v3.0",
-        "data": "25 abr 2026"
+        "data": "2026-09-07",
+        "driveId": "1buWpAxUMmWGr7YSVrCZ2hrp5NsLbdJIN",
+        "url": "https://drive.google.com/file/d/1buWpAxUMmWGr7YSVrCZ2hrp5NsLbdJIN/view"
       },
       {
-        "nome": "Exemplo aprovado.pdf",
-        "tipo": "Exemplo preenchido",
-        "descricao": "Escopo real de projeto concluído.",
+        "nome": "Modelo Padrão - Comparativo de Marcas.pdf",
+        "tipo": "Modelo padrão",
+        "descricao": "Tabela em branco: critérios × marcas com escala de 1 a 5.",
         "versao": "v1.0",
-        "data": "19 jan 2026"
+        "data": "2026-09-07",
+        "driveId": "1XDvv1MjcPEocNOzk0hgttg7lSmZhnWax",
+        "url": "https://drive.google.com/file/d/1XDvv1MjcPEocNOzk0hgttg7lSmZhnWax/view"
       }
+    ],
+    "fontes": [
+      {
+        "tipo": "drive-pdf",
+        "id": "1buWpAxUMmWGr7YSVrCZ2hrp5NsLbdJIN",
+        "nome": "Metodologia - Matriz de Comparativo de Marcas.pdf",
+        "hash": "881b71130b0e2cd83c6edc84e1b0bbd185fb1ff9d41ea1dfda316c06945af89d"
+      },
+      {
+        "tipo": "drive-pdf",
+        "id": "1XDvv1MjcPEocNOzk0hgttg7lSmZhnWax",
+        "nome": "Modelo Padrão - Matriz de Comparativo de Marcas.pdf",
+        "hash": "414b709f7f44823e973c39e31bfc29800fad76212d593b5580f13556155cd296"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+      "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+      "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+      "descricao": "drive:1buWpAxUMmWGr7YSVrCZ2hrp5NsLbdJIN#introducao",
+      "objetivo": "drive:1buWpAxUMmWGr7YSVrCZ2hrp5NsLbdJIN#introducao",
+      "problema": "drive:1buWpAxUMmWGr7YSVrCZ2hrp5NsLbdJIN#analise-do-estado-atual",
+      "passos": "drive:1buWpAxUMmWGr7YSVrCZ2hrp5NsLbdJIN#como-funciona-a-ferramenta/sistema-de-avaliacao",
+      "perguntas": "drive:1buWpAxUMmWGr7YSVrCZ2hrp5NsLbdJIN#introducao",
+      "cuidados": "drive:1buWpAxUMmWGr7YSVrCZ2hrp5NsLbdJIN#como-funciona-a-ferramenta/erros-comuns-de-quem-esta-comecando drive:1buWpAxUMmWGr7YSVrCZ2hrp5NsLbdJIN#como-funciona-a-ferramenta/erros-comuns-de-quem-esta-comecando",
+      "entradas": "manual:viniciusmoraes@produtivajunior.com.br",
+      "saidas": "manual:viniciusmoraes@produtivajunior.com.br",
+      "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): quandoUsar, quandoNao, exemplos"
     ]
   },
   {
-    "id": "kickoff",
-    "nome": "Checklist de Kickoff de Projeto",
-    "tipo": "Checklist",
-    "categoria": "Gestão",
-    "etapa": "Execução",
+    "id": "matriz-gracioso",
+    "nome": "Matriz Francisco Gracioso",
+    "tipo": "Ferramenta",
+    "categoria": "Metodologias",
     "complexidade": "Baixo",
-    "tempo": "45min",
-    "status": "Arquivado",
+    "tempo": "1–2h",
+    "status": "Ativo",
     "freq": "Baixa",
-    "acessos": 88,
-    "nota": "4.1",
-    "responsavel": "Rafael Tonon",
-    "atualizado": "11 fev 2026",
-    "descricao": "Lista de verificação para garantir que nada essencial foi esquecido na largada do projeto.",
-    "objetivo": "Padronizar o início de projetos e reduzir riscos de começar sem alinhamentos críticos.",
-    "problema": "Projetos começam com pendências de acesso, papéis e combinados que viram problema depois.",
-    "quandoUsar": [
-      "Na reunião de kickoff",
-      "Ao assumir um projeto em andamento",
-      "Para padronizar a abertura de projetos"
-    ],
-    "quandoNao": [
-      "Para reuniões de acompanhamento de rotina"
-    ],
+    "responsavel": {
+      "nome": "Vinícius Moraes",
+      "email": "viniciusmoraes@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "No campo do marketing estratégico, entender onde uma empresa está posicionada em relação à concorrência é tão importante quanto saber o que ela oferece.",
+    "objetivo": "É exatamente para isso que serve a Matriz de Gracioso — uma ferramenta criada pelo publicitário brasileiro Francisco Gracioso que traduz a análise competitiva em algo visual, direto e acionável.",
+    "problema": "Toda organização existe em uma rede de relações — e a qualidade com que ela gerencia esses vínculos determina, em grande parte, a eficácia de suas decisões estratégicas.",
+    "quandoUsar": null,
+    "quandoNao": null,
     "entradas": [
-      "Escopo aprovado",
-      "Equipe definida",
-      "Contatos do cliente"
+      "Atributos/métricas que importam para o cliente",
+      "Conhecimento sobre o que cada concorrente oferece"
     ],
     "saidas": [
-      "Checklist preenchido",
-      "Pendências de abertura resolvidas"
+      "Matriz de diferenciação: o que só a empresa tem, o que todos têm, o que falta"
     ],
     "passos": [
-      "Confirme objetivos e escopo com o cliente",
-      "Valide papéis e responsabilidades",
-      "Garanta acessos e canais de comunicação",
-      "Defina rituais e cadência",
-      "Registre riscos iniciais"
+      "Como interpretar os resultados desse exemplo — O blend exclusivo (coluna 1) é o ativo mais valioso — deve estar no centro da comunicação da marca."
     ],
-    "perguntas": [
-      "Todos sabem seu papel no projeto?",
-      "Os acessos necessários estão garantidos?",
-      "Qual a cadência de reuniões combinada?"
-    ],
-    "cuidados": [
-      "Adapte a lista ao porte do projeto",
-      "Não trate o checklist como burocracia — é alinhamento"
-    ],
+    "perguntas": null,
+    "cuidados": null,
     "exemplos": [
-      "Kickoff de um projeto de 3 meses",
-      "Abertura de um projeto com equipe nova"
+      "Como interpretar os resultados desse exemplo: O blend exclusivo (coluna 1) é o ativo mais valioso — deve estar no centro da comunicação da marca."
     ],
     "anexos": [
       {
-        "nome": "Checklist de Kickoff.pdf",
-        "tipo": "Material complementar",
-        "descricao": "Lista imprimível para a reunião.",
+        "nome": "Metodologia - Matriz Francisco Gracioso.pdf",
+        "tipo": "Metodologia (PDF)",
+        "descricao": "Como funciona, as 6 colunas de posse do atributo e passo a passo com exemplo.",
         "versao": "v1.0",
-        "data": "11 fev 2026"
+        "data": "2026-09-07",
+        "driveId": "1Qpmkh9Nc6RqzhLYeIIiGAnNG0j7ZfzWD",
+        "url": "https://drive.google.com/file/d/1Qpmkh9Nc6RqzhLYeIIiGAnNG0j7ZfzWD/view"
+      },
+      {
+        "nome": "Modelo Padrão - Matriz Francisco Gracioso.pdf",
+        "tipo": "Modelo padrão",
+        "descricao": "Matriz em branco: métricas × quem tem o atributo.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1HBZuE3NRRU8BOjyUiuxARs65tqoxf58W",
+        "url": "https://drive.google.com/file/d/1HBZuE3NRRU8BOjyUiuxARs65tqoxf58W/view"
       }
+    ],
+    "fontes": [
+      {
+        "tipo": "drive-pdf",
+        "id": "1Qpmkh9Nc6RqzhLYeIIiGAnNG0j7ZfzWD",
+        "nome": "Metodologia - Matriz Francisco Gracioso.pdf",
+        "hash": "b4948cac7c3235d32854791e670dc5138544abfcdfe1c3b36cc81ea8211d8b8b"
+      },
+      {
+        "tipo": "drive-pdf",
+        "id": "1HBZuE3NRRU8BOjyUiuxARs65tqoxf58W",
+        "nome": "_Modelo Padrão - Matriz Francisco Gracioso.pdf",
+        "hash": "b6c88eefd05f9917b8b6f3acc0b84234d13f6af679acc1f8de1d0713d972844d"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+      "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+      "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+      "descricao": "drive:1Qpmkh9Nc6RqzhLYeIIiGAnNG0j7ZfzWD#introducao",
+      "objetivo": "drive:1Qpmkh9Nc6RqzhLYeIIiGAnNG0j7ZfzWD#introducao",
+      "problema": "drive:1Qpmkh9Nc6RqzhLYeIIiGAnNG0j7ZfzWD#analise-do-estado-atual",
+      "passos": "drive:1Qpmkh9Nc6RqzhLYeIIiGAnNG0j7ZfzWD#como-funciona-a-ferramenta/como-interpretar-os-resultados-desse-exemplo",
+      "exemplos": "drive:1Qpmkh9Nc6RqzhLYeIIiGAnNG0j7ZfzWD#como-funciona-a-ferramenta/como-interpretar-os-resultados-desse-exemplo",
+      "entradas": "manual:viniciusmoraes@produtivajunior.com.br",
+      "saidas": "manual:viniciusmoraes@produtivajunior.com.br",
+      "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): quandoUsar, quandoNao, perguntas, cuidados"
+    ]
+  },
+  {
+    "id": "teoria-da-saliencia",
+    "nome": "Teoria da Saliência (Stakeholders)",
+    "tipo": "Ferramenta",
+    "categoria": "Metodologias",
+    "complexidade": "Médio",
+    "tempo": "2h",
+    "status": "Ativo",
+    "freq": "Baixa",
+    "responsavel": {
+      "nome": "Vinícius Moraes",
+      "email": "viniciusmoraes@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Em um ambiente organizacional cada vez mais dinâmico e competitivo, a construção de estratégias de marketing eficazes exige não apenas o entendimento do mercado, mas também a identificação e priorização dos stakeholders envolvidos no processo.",
+    "objetivo": "Nesse contexto, este Plano de Marketing tem como objetivo estruturar ações estratégicas a partir de uma análise criteriosa dos principais atores que influenciam e são impactados pelas decisões da organização.",
+    "problema": "Ausência de visualização estruturada compromete decisões gerenciais e ações assertivas.",
+    "quandoUsar": null,
+    "quandoNao": null,
+    "entradas": [
+      "Lista de stakeholders do projeto ou da empresa"
+    ],
+    "saidas": [
+      "Classificação de cada stakeholder (dominante, dependente, perigoso, definitivo…)",
+      "Prioridade de atenção por stakeholder"
+    ],
+    "passos": null,
+    "perguntas": null,
+    "cuidados": null,
+    "exemplos": null,
+    "anexos": [
+      {
+        "nome": "Metodologia - Teoria da Saliência.pdf",
+        "tipo": "Metodologia (PDF)",
+        "descricao": "Poder, legitimidade e urgência; tipologia dos stakeholders em 3 passos.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH",
+        "url": "https://drive.google.com/file/d/1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH/view"
+      },
+      {
+        "nome": "Modelo Padrão - Teoria da Saliência.pdf",
+        "tipo": "Modelo padrão",
+        "descricao": "Tabela de stakeholders × atributos e diagrama de Venn para classificação.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1sjp_K3sv-IFSORfI7IbqAd7PUGY1aQ2c",
+        "url": "https://drive.google.com/file/d/1sjp_K3sv-IFSORfI7IbqAd7PUGY1aQ2c/view"
+      }
+    ],
+    "fontes": [
+      {
+        "tipo": "drive-pdf",
+        "id": "1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH",
+        "nome": "Metodologia - Teoria da Saliência .pdf",
+        "hash": "05b198a4430c13b894291adae5f518f0f12b25ccea3eae90d1bb08e16928f8a2"
+      },
+      {
+        "tipo": "drive-pdf",
+        "id": "1sjp_K3sv-IFSORfI7IbqAd7PUGY1aQ2c",
+        "nome": "Modelo Padrão - Teoria da Salliência.pdf",
+        "hash": "9e15ef5843ff13e547e3c6e634e9f8b86c4f4aa60b49e53340b405fe1c48181c"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+      "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+      "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+      "descricao": "drive:1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH#introducao",
+      "objetivo": "drive:1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH#introducao",
+      "problema": "drive:1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH#analise-do-estado-atual/principais-desafios",
+      "entradas": "manual:viniciusmoraes@produtivajunior.com.br",
+      "saidas": "manual:viniciusmoraes@produtivajunior.com.br",
+      "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): quandoUsar, quandoNao, passos, perguntas, cuidados, exemplos"
+    ]
+  },
+  {
+    "id": "ux-research-canvas",
+    "nome": "UX Research Canvas",
+    "tipo": "Ferramenta",
+    "categoria": "Metodologias",
+    "complexidade": "Baixo",
+    "tempo": "1h",
+    "status": "Em construção",
+    "freq": "Baixa",
+    "responsavel": {
+      "nome": "Vinícius Moraes",
+      "email": "viniciusmoraes@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Canvas que define objetivo, hipóteses, público, método e métricas de uma pesquisa antes de aplicá-la.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "viniciusmoraes@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+      "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+      "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+      "descricao": "manual:viniciusmoraes@produtivajunior.com.br",
+      "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Método da etapa 'Definição da Pesquisa' no Cronograma Base de Pesquisa de Mercado; sem metodologia no Drive."
+    ]
+  },
+  {
+    "id": "fib",
+    "nome": "FIB (Felicidade Interna Bruta)",
+    "tipo": "Template",
+    "categoria": "Pesquisas de cultura",
+    "complexidade": "Médio",
+    "tempo": "1 sprint de aplicação",
+    "status": "Em construção",
+    "freq": "Baixa",
+    "responsavel": {
+      "nome": "Laura Rodrigues",
+      "email": "laurarodrigues@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Pesquisa de bem-estar dos colaboradores nas dimensões do FIB.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "laurarodrigues@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:laurarodrigues@produtivajunior.com.br",
+      "tipo": "manual:laurarodrigues@produtivajunior.com.br",
+      "categoria": "manual:laurarodrigues@produtivajunior.com.br",
+      "complexidade": "manual:laurarodrigues@produtivajunior.com.br",
+      "tempo": "manual:laurarodrigues@produtivajunior.com.br",
+      "freq": "manual:laurarodrigues@produtivajunior.com.br",
+      "responsavel": "manual:laurarodrigues@produtivajunior.com.br",
+      "descricao": "manual:laurarodrigues@produtivajunior.com.br",
+      "anexos": "manual:laurarodrigues@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Nada no Drive; conteúdo só no Hangar."
+    ]
+  },
+  {
+    "id": "ibaco",
+    "nome": "IBACO",
+    "tipo": "Template",
+    "categoria": "Pesquisas de cultura",
+    "complexidade": "Médio",
+    "tempo": "1 sprint de aplicação",
+    "status": "Em construção",
+    "freq": "Baixa",
+    "responsavel": {
+      "nome": "Laura Rodrigues",
+      "email": "laurarodrigues@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Inventário Brasileiro de Cultura Organizacional: questionário validado de valores e práticas.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "laurarodrigues@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:laurarodrigues@produtivajunior.com.br",
+      "tipo": "manual:laurarodrigues@produtivajunior.com.br",
+      "categoria": "manual:laurarodrigues@produtivajunior.com.br",
+      "complexidade": "manual:laurarodrigues@produtivajunior.com.br",
+      "tempo": "manual:laurarodrigues@produtivajunior.com.br",
+      "freq": "manual:laurarodrigues@produtivajunior.com.br",
+      "responsavel": "manual:laurarodrigues@produtivajunior.com.br",
+      "descricao": "manual:laurarodrigues@produtivajunior.com.br",
+      "anexos": "manual:laurarodrigues@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Só o formulário aplicado em cliente (CRN-Bio); sem metodologia."
+    ]
+  },
+  {
+    "id": "mlq",
+    "nome": "MLQ-6S (Liderança)",
+    "tipo": "Template",
+    "categoria": "Pesquisas de cultura",
+    "complexidade": "Médio",
+    "tempo": "1 sprint de aplicação",
+    "status": "Em construção",
+    "freq": "Baixa",
+    "responsavel": {
+      "nome": "Laura Rodrigues",
+      "email": "laurarodrigues@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Questionário multifatorial de liderança aplicado a gestores e equipes.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "laurarodrigues@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:laurarodrigues@produtivajunior.com.br",
+      "tipo": "manual:laurarodrigues@produtivajunior.com.br",
+      "categoria": "manual:laurarodrigues@produtivajunior.com.br",
+      "complexidade": "manual:laurarodrigues@produtivajunior.com.br",
+      "tempo": "manual:laurarodrigues@produtivajunior.com.br",
+      "freq": "manual:laurarodrigues@produtivajunior.com.br",
+      "responsavel": "manual:laurarodrigues@produtivajunior.com.br",
+      "descricao": "manual:laurarodrigues@produtivajunior.com.br",
+      "anexos": "manual:laurarodrigues@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Só o formulário aplicado em cliente (CRN-Bio); sem metodologia."
+    ]
+  },
+  {
+    "id": "pco",
+    "nome": "PCO (Pesquisa de Clima Organizacional)",
+    "tipo": "Template",
+    "categoria": "Pesquisas de cultura",
+    "complexidade": "Médio",
+    "tempo": "1 sprint de aplicação",
+    "status": "Em construção",
+    "freq": "Média",
+    "responsavel": {
+      "nome": "Laura Rodrigues",
+      "email": "laurarodrigues@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Questionário aplicado aos colaboradores para medir clima e engajamento.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "laurarodrigues@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:laurarodrigues@produtivajunior.com.br",
+      "tipo": "manual:laurarodrigues@produtivajunior.com.br",
+      "categoria": "manual:laurarodrigues@produtivajunior.com.br",
+      "complexidade": "manual:laurarodrigues@produtivajunior.com.br",
+      "tempo": "manual:laurarodrigues@produtivajunior.com.br",
+      "freq": "manual:laurarodrigues@produtivajunior.com.br",
+      "responsavel": "manual:laurarodrigues@produtivajunior.com.br",
+      "descricao": "manual:laurarodrigues@produtivajunior.com.br",
+      "anexos": "manual:laurarodrigues@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Existe o formulário '[2025] PCO' e respostas por empresa (thiagomelo@), sem metodologia de aplicação e análise."
+    ]
+  },
+  {
+    "id": "cadeia-de-valor",
+    "nome": "Cadeia de Valor",
+    "tipo": "Ferramenta",
+    "categoria": "Processos",
+    "complexidade": "Médio",
+    "tempo": "2h",
+    "status": "Em construção",
+    "freq": "Baixa",
+    "responsavel": {
+      "nome": "Carlos Eduardo",
+      "email": "carloseduardo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Visão macro das atividades primárias e de apoio que geram valor na empresa.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "carloseduardo@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:carloseduardo@produtivajunior.com.br",
+      "tipo": "manual:carloseduardo@produtivajunior.com.br",
+      "categoria": "manual:carloseduardo@produtivajunior.com.br",
+      "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+      "tempo": "manual:carloseduardo@produtivajunior.com.br",
+      "freq": "manual:carloseduardo@produtivajunior.com.br",
+      "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+      "descricao": "manual:carloseduardo@produtivajunior.com.br",
+      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Só aplicação em cliente ([MossoroCap] Cadeia de Valor.pdf); falta metodologia e modelo padrão."
+    ]
+  },
+  {
+    "id": "bpmn",
+    "nome": "Fluxograma de Processos (BPMN AS IS / TO BE)",
+    "tipo": "Metodologia",
+    "categoria": "Processos",
+    "complexidade": "Alto",
+    "tempo": "1 sprint por processo",
+    "status": "Em construção",
+    "freq": "Alta",
+    "responsavel": {
+      "nome": "Carlos Eduardo",
+      "email": "carloseduardo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Desenho dos processos como são (AS IS) e como devem ser (TO BE) em notação BPMN, base do Mapeamento e Modelagem.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "carloseduardo@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:carloseduardo@produtivajunior.com.br",
+      "tipo": "manual:carloseduardo@produtivajunior.com.br",
+      "categoria": "manual:carloseduardo@produtivajunior.com.br",
+      "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+      "tempo": "manual:carloseduardo@produtivajunior.com.br",
+      "freq": "manual:carloseduardo@produtivajunior.com.br",
+      "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+      "descricao": "manual:carloseduardo@produtivajunior.com.br",
+      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Sem metodologia no Drive: a notação e o padrão de desenho estão só no Hangar (Sistema PJ). Colar a página em fontes/hangar/bpmn.md."
+    ]
+  },
+  {
+    "id": "raci",
+    "nome": "Matriz RACI",
+    "tipo": "Ferramenta",
+    "categoria": "Processos",
+    "complexidade": "Baixo",
+    "tempo": "1h",
+    "status": "Em construção",
+    "freq": "Média",
+    "responsavel": {
+      "nome": "Carlos Eduardo",
+      "email": "carloseduardo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Matriz que define quem é Responsável, Aprovador, Consultado e Informado em cada atividade do processo.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "carloseduardo@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:carloseduardo@produtivajunior.com.br",
+      "tipo": "manual:carloseduardo@produtivajunior.com.br",
+      "categoria": "manual:carloseduardo@produtivajunior.com.br",
+      "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+      "tempo": "manual:carloseduardo@produtivajunior.com.br",
+      "freq": "manual:carloseduardo@produtivajunior.com.br",
+      "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+      "descricao": "manual:carloseduardo@produtivajunior.com.br",
+      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Só aplicações em cliente (ex.: Matriz RACI - PotiCode); falta metodologia e modelo padrão."
+    ]
+  },
+  {
+    "id": "pmmc",
+    "nome": "Process Map Model Canvas (PMMC)",
+    "tipo": "Metodologia",
+    "categoria": "Processos",
+    "complexidade": "Médio",
+    "tempo": "1 reunião de 2h + consolidação",
+    "status": "Ativo",
+    "freq": "Alta",
+    "responsavel": {
+      "nome": "Carlos Eduardo",
+      "email": "carloseduardo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "O Process Map Model Canvas (PMMC) é uma ferramenta visual projetada para simplificar a análise e o redesenho de processos.",
+    "objetivo": "Funcionando como um guia prático, ele condensa em uma única página os 10 blocos essenciais que compõem o fluxo de valor, garantindo uma visão sistêmica e facilitando a validação do entendimento junto ao gestor.",
+    "problema": null,
+    "quandoUsar": null,
+    "quandoNao": null,
+    "entradas": [
+      "Reunião ou brainstorming com o gestor e a equipe do processo",
+      "Documentos existentes: POPs, manuais, fluxogramas antigos"
+    ],
+    "saidas": [
+      "Canvas PMMC preenchido e validado com o gestor",
+      "Base para o mapeamento AS IS e para o relatório de melhorias"
+    ],
+    "passos": [
+      "Principais Fornecedores — Este é o ponto de partida lógico do mapeamento.",
+      "Principais Insumos — Os insumos representam a \"matéria-prima\" do processo.",
+      "Principais Atividades — Este é o motor da operação.",
+      "Principais Produtos — Os produtos são a materialização do valor gerado pelas atividades.",
+      "Principais Clientes — Nenhum processo existe sem um propósito ou um destinatário.",
+      "Recursos Humanos — Este quadrante foca nas pessoas.",
+      "Recursos Tecnológicos — Além das pessoas, a maioria dos processos modernos depende de uma base tecnológica para funcionar.",
+      "Finalidade e Melhorias — Este bloco conecta a operação à estratégia.",
+      "Indicadores de Performance — \"O que não é medido não é gerenciado\".",
+      "Ferramentas de Controle — Para fechar o canvas, temos a governança."
+    ],
+    "perguntas": [
+      "De onde são retirados os insumos envolvidos no processo?",
+      "O fornecedor é externo (outra empresa) ou interno (outro setor/processo)?",
+      "Quem é o responsável direto por disponibilizar o recurso no tempo certo?",
+      "Quais são os inputs (físicos ou intelectuais) que serão processados?",
+      "O que é indispensável receber para que a atividade possa começar?",
+      "Os insumos chegam no padrão ou formato correto para serem utilizados?",
+      "Quais atividades são desempenhadas desde o repasse dos insumos até a finalização da proposta de valor?",
+      "Quais são as etapas críticas de transformação que não podem faltar?",
+      "Existe uma sequência lógica clara entre as ações listadas?",
+      "Quais são as informações de saída ou resultados tangíveis resultantes do processo?",
+      "O que é efetivamente entregue ao final das atividades listadas?",
+      "O produto atende aos requisitos de qualidade esperados?",
+      "Quem são os beneficiários do processo?",
+      "Para quem o produto é destinado?",
+      "O cliente é o consumidor final ou uma etapa posterior interna?",
+      "Quem e quantos são os responsáveis pela execução do processo?",
+      "Quais funções e cargos específicos são exigidos para a operação?",
+      "A equipe alocada possui as competências necessárias para as atividades mapeadas?",
+      "Quais equipamentos e sistemas são utilizados durante o processo?",
+      "As ferramentas tecnológicas disponíveis atendem à demanda das atividades?",
+      "O processo é manual ou automatizado por algum software específico?",
+      "Qual o objetivo principal desse processo?",
+      "Existem melhorias propostas ou já em andamento?",
+      "O processo atual atende plenamente à sua finalidade estratégica?",
+      "Quais indicadores (quantitativos) são utilizados para apuração de resultados?",
+      "Como mensuramos o sucesso ou fracasso dessa operação?",
+      "Os indicadores atuais refletem a realidade da eficiência do processo?",
+      "Quais os controles utilizados para o acompanhamento do processo?",
+      "Como garantimos a padronização e evitamos desvios na execução?",
+      "A frequência de controle é adequada à criticidade do processo?"
+    ],
+    "cuidados": [
+      "Preparação e Contextualização — Levantamento Prévio: Antes da reunião, solicite ou pesquise se já existem documentos sobre o processo (POPs antigos, manuais ou fluxogramas).",
+      "Validação da Realidade (Real vs. Ideal) — Foco no \"As-Is\" (Como É): Questione sempre: \"Isso acontece 100% das vezes ou é o cenário ideal?\".",
+      "Atenção às Incongruências Comuns — Nível de Detalhe: Evite listar microtarefas (ex: \"clicar no botão salvar\").",
+      "Visão Sistêmica e Escrita — Interconexão: Entenda que os quadrantes não são gavetas isoladas; \"nada está solto\".",
+      "Dinâmica da Dupla de Consultoria Para otimizar a reunião e não perder informações, divida os papéis — Consultor A: Fica responsável por apresentar a ferramenta (BMC), conduzir a dinâmica e fazer as perguntas assertivas.",
+      "A Regra do 80/20 (Foco na Regra, não na Exceção) — Mapeie o fluxo padrão: O PMMC deve retratar o que acontece na maioria das vezes."
+    ],
+    "exemplos": null,
+    "anexos": [
+      {
+        "nome": "[CIEP] Metodologia - PMMC.pdf",
+        "tipo": "Metodologia (PDF)",
+        "descricao": "Metodologia completa: os 10 blocos, perguntas-chave e recomendações de condução.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr",
+        "url": "https://drive.google.com/file/d/16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr/view"
+      },
+      {
+        "nome": "[CIEP] Process Map Model Canvas.pdf",
+        "tipo": "Modelo padrão",
+        "descricao": "Canvas em branco com os 10 blocos e a pergunta-guia de cada um.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1sfzv1hNxzuRhD0NDe9ekpxfNE2EDsqOB",
+        "url": "https://drive.google.com/file/d/1sfzv1hNxzuRhD0NDe9ekpxfNE2EDsqOB/view"
+      },
+      {
+        "nome": "Banco de Indicadores",
+        "tipo": "Planilha",
+        "descricao": "139 indicadores por escopo, com fórmula e método, para o bloco Indicadores de Performance.",
+        "versao": "v1.0",
+        "data": "2026-09-07",
+        "driveId": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+        "url": "https://docs.google.com/spreadsheets/d/1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A/edit"
+      }
+    ],
+    "fontes": [
+      {
+        "tipo": "drive-pdf",
+        "id": "16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr",
+        "nome": "[CIEP] Metodologia - PMMC.pdf",
+        "hash": "d7e1804269b6b4559f548520dc6539d6752a88e2b92e616369ba82c9000e6ce4"
+      },
+      {
+        "tipo": "drive-pdf",
+        "id": "1sfzv1hNxzuRhD0NDe9ekpxfNE2EDsqOB",
+        "nome": "[CIEP] Process Map Model Canvas.pdf",
+        "hash": "1d24052d64964ce5daf821c893b9e779fd9bb3af172b02b957ac695301630e23"
+      },
+      {
+        "tipo": "drive-sheet",
+        "id": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+        "nome": "Planilha de indicadores [PROCESSOS]",
+        "hash": "f2f33ad986991b7399b762cc48e83ceca4d492bdc175929298b157b2332273ce"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:carloseduardo@produtivajunior.com.br",
+      "tipo": "manual:carloseduardo@produtivajunior.com.br",
+      "categoria": "manual:carloseduardo@produtivajunior.com.br",
+      "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+      "tempo": "manual:carloseduardo@produtivajunior.com.br",
+      "freq": "manual:carloseduardo@produtivajunior.com.br",
+      "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+      "descricao": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#introducao",
+      "objetivo": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#introducao",
+      "passos": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#entradas/principais-fornecedores drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#entradas/principais-insumos drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#processos/principais-atividades drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#saidas/principais-produtos drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#saidas/principais-clientes drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/recursos-humanos drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/recursos-tecnologicos drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/finalidade-e-melhorias drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/indicadores-de-performance drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/ferramentas-de-controle",
+      "perguntas": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#entradas/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#entradas/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#processos/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#saidas/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#saidas/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/perguntas-chave drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#suporte/perguntas-chave",
+      "cuidados": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/preparacao-e-contextualizacao drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/validacao-da-realidade-real-vs-ideal drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/atencao-as-incongruencias-comuns drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/visao-sistemica-e-escrita drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/dinamica-da-dupla-de-consultoria-para-otimizar-a-reuniao-e-nao-perder-informacoes-divida-os-papeis drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/a-regra-do-80-20-foco-na-regra-nao-na-excecao",
+      "entradas": "manual:carloseduardo@produtivajunior.com.br",
+      "saidas": "manual:carloseduardo@produtivajunior.com.br",
+      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): problema, quandoUsar, quandoNao, exemplos"
+    ]
+  },
+  {
+    "id": "sipoc",
+    "nome": "SIPOC",
+    "tipo": "Ferramenta",
+    "categoria": "Processos",
+    "complexidade": "Baixo",
+    "tempo": "1h por processo",
+    "status": "Em construção",
+    "freq": "Média",
+    "responsavel": {
+      "nome": "Carlos Eduardo",
+      "email": "carloseduardo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Tabela Suppliers–Inputs–Process–Outputs–Customers que delimita um processo antes de fluxogramar.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "carloseduardo@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:carloseduardo@produtivajunior.com.br",
+      "tipo": "manual:carloseduardo@produtivajunior.com.br",
+      "categoria": "manual:carloseduardo@produtivajunior.com.br",
+      "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+      "tempo": "manual:carloseduardo@produtivajunior.com.br",
+      "freq": "manual:carloseduardo@produtivajunior.com.br",
+      "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+      "descricao": "manual:carloseduardo@produtivajunior.com.br",
+      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Só existe PDF avulso aplicado em cliente (SIPOC.pdf); falta metodologia e modelo padrão."
     ]
   }
 ]

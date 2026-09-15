@@ -23,6 +23,10 @@ const RASC = join(DATA, 'rascunhos');
 const ler = (n) => JSON.parse(readFileSync(join(DATA, `${n}.json`), 'utf8'));
 const gravar = (n, v) => writeFileSync(join(DATA, `${n}.json`), JSON.stringify(v, null, 2) + '\n');
 const EMAIL = /^[^@\s]+@produtivajunior\.com\.br$/;
+// Quem pode aprovar: qualquer e-mail da Produtiva ou a conta institucional (dona do repositório).
+const REVISOR = /^[^@\s]+@produtivajunior\.com\.br$|^produtivajunior@gmail\.com$/;
+// Ritual trimestral: todo conteúdo aprovado ganha uma data de próxima revisão (3 meses).
+const maisMeses = (iso, n) => { const d = new Date(iso + 'T00:00:00Z'); d.setUTCMonth(d.getUTCMonth() + n); return d.toISOString().slice(0, 10); };
 const ISO = /^\d{4}-\d{2}-\d{2}$/;
 
 const args = process.argv.slice(2);
@@ -74,12 +78,13 @@ for (const nome of alvos) {
     unlinkSync(p); console.log(`✓ ${nome} publicado em cases.json`); mudou = true; continue;
   }
   const rev = r.revisao || {};
-  const motivo = rev.status !== 'aprovado' ? `revisao.status = "${rev.status}"` : !EMAIL.test(rev.revisor || '') ? 'revisor precisa ser e-mail @produtivajunior.com.br' : !ISO.test(rev.data || '') ? 'revisao.data precisa ser YYYY-MM-DD' : null;
+  const motivo = rev.status !== 'aprovado' ? `revisao.status = "${rev.status}"` : !REVISOR.test(rev.revisor || '') ? 'revisor precisa ser e-mail @produtivajunior.com.br (ou a conta institucional)' : !ISO.test(rev.data || '') ? 'revisao.data precisa ser YYYY-MM-DD' : null;
   if (motivo) { if (!args.includes('--aprovados')) console.error(`✗ ${nome}: não promovido — ${motivo}`); continue; }
   if (r.pendencias && r.pendencias.length && r.status !== 'Em construção') console.log(`! ${nome}: aprovado com ${r.pendencias.length} pendência(s) registrada(s)`);
 
   const { origem, pendencias, modelo, modeloLegadoId, ...item } = r;
   item.origem = origem; // fica no acervo: é a trilha de auditoria por campo
+  if (!item.revisao.proximaRevisao) item.revisao.proximaRevisao = maisMeses(rev.data, 3);
   if (pendencias && pendencias.length) item.pendencias = pendencias;
 
   if (nome.startsWith('escopo-')) {

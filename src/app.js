@@ -456,6 +456,18 @@ class Component extends DCLogic {
       this.setState({ applyLoading:false, applyError:'Não consegui preencher agora. Tente refinar os insumos e gerar de novo.' });
     }
   }
+  // Ritual trimestral: quem revisa o quê e até quando. Fonte: revisao.proximaRevisao (promover.mjs preenche).
+  revisoesVals() {
+    const hoje = this.hoje(); const em30 = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+    const itens = [...this.DATA.filter(f => f.revisao && f.revisao.proximaRevisao).map(f => ({ it: f, tipo: f.tipo, open: () => this.openContent(f.id) })),
+      ...this.ESCOPOS.filter(e => e.revisao && e.revisao.proximaRevisao).map(e => ({ it: e, tipo: 'Escopo', open: () => this.openEscopo(e.id) }))]
+      .map(({ it, tipo, open }) => { const px = it.revisao.proximaRevisao; const vencido = px < hoje; return { id: it.id, nome: it.nome, tipo, open, px, dataFmt: this.fmtData(px), vencido, proximo: !vencido && px <= em30,
+        respNome: this.respNome(it.responsavel), respEmail: this.respEmail(it.responsavel), cor: vencido ? '#B23B47' : (px <= em30 ? '#9A6B17' : '#2E7D52'), bg: vencido ? '#FCF3F4' : (px <= em30 ? '#FBF1E0' : '#E7F4EC'), rotulo: vencido ? 'vencida' : (px <= em30 ? 'vence em breve' : 'em dia') }; })
+      .sort((a, b) => a.px.localeCompare(b.px));
+    const vencidos = itens.filter(x => x.vencido).length, proximos = itens.filter(x => x.proximo).length;
+    return { revisoes: itens.slice(0, 8), hasRevisoes: itens.length > 0, revisoesTotal: itens.length, revisoesVencidas: vencidos, revisoesProximas: proximos,
+      revisoesResumo: itens.length ? (vencidos ? vencidos + ' com revisão vencida' : 'nada vencido') + ' · ' + proximos + ' vence' + (proximos === 1 ? '' : 'm') + ' nos próximos 30 dias · ' + itens.length + ' conteúdos com dono e data' : '' };
+  }
   trilhaVals(s, data, dec) {
     const feitos = new Set(s.trilhaFeitos || []);
     const passos = (this.TRILHA.passos || []).map((p, i) => {
@@ -893,7 +905,7 @@ class Component extends DCLogic {
     const revisaoTexto = (it) => {
       const r = it && it.revisao;
       if (!r) return 'Conteúdo herdado do MVP · sem revisão';
-      if (r.status==='aprovado') return 'Aprovado por '+(r.revisor||'').split('@')[0]+' · '+this.fmtData(r.data);
+      if (r.status==='aprovado') return 'Aprovado por '+(r.revisor||'').split('@')[0]+' · '+this.fmtData(r.data)+(r.proximaRevisao ? ' · revisar até '+this.fmtData(r.proximaRevisao) : '');
       return 'Rascunho · aguardando revisão';
     };
     const sel = selRaw ? { ...dec(selRaw), respInitials:this.initials(this.respNome(selRaw.responsavel)), anexos:(selRaw.anexos||[]).map(decAnexo), revisaoTexto:revisaoTexto(selRaw),
@@ -981,6 +993,8 @@ class Component extends DCLogic {
       isCadastro: s.screen==='cadastro', isRecomendar: s.screen==='recomendar', isEscopos: s.screen==='escopos',
       isCases: s.screen==='cases', isCase: s.screen==='case', isNovoCase: s.screen==='novo-case',
       goCases:()=>this.nav('cases'), goNovoCase:()=>this.openNovoCase(),
+      // ritual trimestral: painel do CIEP
+      ...this.revisoesVals(),
       // trilha do primeiro projeto + glossário
       isComece: s.screen==='comece', goComece:()=>this.nav('comece'), ...this.trilhaVals(s, data, dec),
       // filtros no celular (biblioteca e cases) e iniciais de quem usa

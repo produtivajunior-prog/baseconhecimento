@@ -807,6 +807,24 @@
     <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em;margin-top:12px">Cadastrar no Hangar</h1>
     <p style="font-size:15px;color:#7C9097;margin:6px 0 0;line-height:1.5;max-width:680px">Adicione novas ferramentas, metodologias e escopos à biblioteca — manualmente ou com a IA. Você também pode cadastrar o <b style="color:#3C545B;font-weight:600">modelo-padrão</b> de uma ferramenta a partir de um anexo, para a IA seguir esse formato ao preencher.</p>
 
+        <sc-if value="{{ hasRevisoes }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px;margin-top:22px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div><div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase">Revisão trimestral do acervo</div><div style="font-size:14px;color:#3C545B;margin-top:4px">{{ revisoesResumo }}</div></div>
+        <span style="font-size:12.5px;color:#8AA0A7">Agenda por dono: <code style="font-size:12px;background:#F6F9FA;padding:2px 6px;border-radius:5px">node tools/revisao.mjs</code></span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:14px">
+        <sc-for list="{{ revisoes }}" as="r" hint-placeholder-count="4">
+          <div onclick="{{ r.open }}" style="display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid #EEF3F5;border-radius:10px;cursor:pointer;flex-wrap:wrap" style-hover="border-color:#C6E4EC;background:#FAFCFC">
+            <span style="flex:1;min-width:160px;font-size:14px;font-weight:600;color:#163B45">{{ r.nome }} <span style="font-weight:500;color:#9DAEB4">· {{ r.tipo }}</span></span>
+            <span style="font-size:12.5px;color:#5E747B">{{ r.respNome }}</span>
+            <span style="font-size:12px;font-weight:600;color:{{ r.cor }};background:{{ r.bg }};padding:3px 9px;border-radius:6px;white-space:nowrap">{{ r.rotulo }} · {{ r.dataFmt }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
     <div style="display:inline-flex;background:#EEF3F5;border-radius:11px;padding:3px;gap:2px;margin:22px 0 0;flex-wrap:wrap">
       <button onclick="{{ setCadIA }}" style="display:flex;align-items:center;gap:7px;border:none;background:{{ cadIaBg }};color:{{ cadIaColor }};font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:8px;cursor:pointer;box-shadow:{{ cadIaShadow }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.9 4.6L18.5 9l-3.4 3 1 4.7L12 14.4 7.9 16.7l1-4.7L5.5 9l4.6-1.4L12 3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg>Criar com IA</button>
       <button onclick="{{ setCadModelo }}" style="display:flex;align-items:center;gap:7px;border:none;background:{{ cadModeloBg }};color:{{ cadModeloColor }};font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:8px;cursor:pointer;box-shadow:{{ cadModeloShadow }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5" stroke="currentColor" stroke-width="1.7"></rect><path d="M3.5 9.5h17M10 9.5V21" stroke="currentColor" stroke-width="1.7"></path></svg>Modelo-padrão de ferramenta</button>

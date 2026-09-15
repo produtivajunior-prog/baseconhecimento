@@ -53,6 +53,7 @@ const enumDe = (obj) => Array.isArray(obj) ? obj : Object.keys(obj);
 const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const ISO = /^\d{4}-\d{2}-\d{2}$/;
 const EMAIL = /^[^@\s]+@produtivajunior\.com\.br$/;
+const REVISOR = /^[^@\s]+@produtivajunior\.com\.br$|^produtivajunior@gmail\.com$/;
 const isStrArr = (v, min = 0) => Array.isArray(v) && v.length >= min && v.every((x) => typeof x === 'string');
 
 const problemas_ = [];
@@ -73,8 +74,17 @@ for (const it of ferramentas) {
   const legado = !it.revisao;
   if (legado) legados++;
 
-  for (const c of CAMPOS_TEXTO) if (typeof it[c] !== 'string' || !it[c]) p(ctx, `campo "${c}" ausente ou vazio`);
-  for (const c of CAMPOS_LISTA) if (!isStrArr(it[c])) p(ctx, `campo "${c}" precisa ser lista de strings`);
+  // Contrato do pipeline: campo não encontrado na fonte fica null (nunca inventado) e vai para pendencias[].
+  // Só a descrição é obrigatória sempre; o resto pode faltar enquanto a pendência estiver registrada.
+  const comPendencia = !legado && Array.isArray(it.pendencias) && it.pendencias.length > 0;
+  for (const c of CAMPOS_TEXTO) {
+    const vazio = it[c] === null || it[c] === undefined || it[c] === '';
+    if (vazio ? !(comPendencia && c !== 'descricao') : typeof it[c] !== 'string') p(ctx, `campo "${c}" ausente ou vazio${comPendencia ? '' : ' (sem pendência registrada)'}`);
+  }
+  for (const c of CAMPOS_LISTA) {
+    const vazio = it[c] === null || it[c] === undefined || (Array.isArray(it[c]) && !it[c].length);
+    if (vazio ? !comPendencia : !isStrArr(it[c])) p(ctx, `campo "${c}" precisa ser lista de strings${comPendencia ? '' : ' (ou pendência registrada)'}`);
+  }
   if (!Array.isArray(it.anexos)) p(ctx, 'campo "anexos" precisa ser lista');
 
   if (!enumDe(T.tipos).includes(it.tipo)) p(ctx, `tipo "${it.tipo}" fora da taxonomia`);
@@ -113,7 +123,7 @@ for (const it of ferramentas) {
   if (!it.origem || typeof it.origem !== 'object') p(ctx, 'origem{} (campo → fonte) ausente');
   const r = it.revisao;
   if (r.status !== 'aprovado') p(ctx, `revisao.status "${r.status}" — só itens aprovados entram em ferramentas.json (rascunhos ficam em src/data/rascunhos/)`);
-  if (!EMAIL.test(r.revisor || '')) p(ctx, 'revisao.revisor precisa ser e-mail @produtivajunior.com.br');
+  if (!REVISOR.test(r.revisor || '')) p(ctx, 'revisao.revisor precisa ser e-mail @produtivajunior.com.br (ou a conta institucional)');
   if (!ISO.test(r.data || '')) p(ctx, 'revisao.data precisa ser YYYY-MM-DD');
   if (it.status === 'Em construção' && !isStrArr(it.pendencias, 1)) p(ctx, 'item "Em construção" precisa listar pendencias[]');
   for (const [i, a] of (it.anexos || []).entries()) {
@@ -137,7 +147,7 @@ for (const e of escopos) {
   if (typeof e.descricao !== 'string') p(ctx, 'descricao ausente');
   if (!e.responsavel || !EMAIL.test(e.responsavel.email || '')) p(ctx, 'responsavel {nome,email} ausente');
   if (!Array.isArray(e.fontes) || !e.fontes.length) p(ctx, 'fontes[] vazio');
-  if (!e.revisao || e.revisao.status !== 'aprovado' || !EMAIL.test(e.revisao.revisor || '') || !ISO.test(e.revisao.data || ''))
+  if (!e.revisao || e.revisao.status !== 'aprovado' || !REVISOR.test(e.revisao.revisor || '') || !ISO.test(e.revisao.data || ''))
     p(ctx, 'revisao {status:"aprovado", revisor, data} obrigatória');
   if (!Array.isArray(e.etapas) || !e.etapas.length) { p(ctx, 'etapas[] vazio'); continue; }
   const etapaIds = new Set();
@@ -259,6 +269,24 @@ check(!problemas_.some((x) => x.startsWith('cases')), `cases.json  ${cases.lengt
   }
   const pend = (trilha.glossario || []).filter((g) => g.pendente).length;
   check(!problemas_.some((x) => x.startsWith('trilha')), `trilha.json  ${(trilha.passos || []).length} passos, ${(trilha.glossario || []).length} termos (${pend} a confirmar)`, 'trilha.json com erros');
+}
+
+// ---------------------------------------------------------------- ritual trimestral de revisão
+{
+  const hoje = new Date().toISOString().slice(0, 10);
+  const em30 = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+  const itens = [...ferramentas.filter((f) => f.revisao).map((f) => ({ ...f, _tipo: 'ferramenta' })), ...escopos.map((e) => ({ ...e, _tipo: 'escopo' }))];
+  const vencidos = [], proximos = [];
+  for (const it of itens) {
+    const ctx = `${it._tipo}s[${it.id}]`;
+    const px = it.revisao && it.revisao.proximaRevisao;
+    if (px !== undefined && !ISO.test(px || '')) p(ctx, 'revisao.proximaRevisao precisa ser YYYY-MM-DD');
+    if (it.revisao && it.revisao.nota !== undefined && typeof it.revisao.nota !== 'string') p(ctx, 'revisao.nota precisa ser texto');
+    if (px && px < hoje) vencidos.push(it); else if (px && px <= em30) proximos.push(it);
+  }
+  const rotulo = (it) => `${it.nome} (${(it.responsavel || {}).email || '?'}, ${it.revisao.proximaRevisao})`;
+  if (vencidos.length) aviso(`${vencidos.length} conteúdo(s) com revisão vencida: ${vencidos.slice(0, 5).map(rotulo).join('; ')}${vencidos.length > 5 ? '…' : ''} — rode node tools/revisao.mjs`);
+  check(true, `revisão trimestral  ${itens.length} conteúdos com data; ${vencidos.length} vencido(s), ${proximos.length} vence(m) em 30 dias`);
 }
 
 for (const msg of problemas_) console.log(`    ${msg}`);

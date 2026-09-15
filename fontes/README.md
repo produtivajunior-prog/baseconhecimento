@@ -72,13 +72,24 @@ o que falta e para quem pedir. O texto dessas páginas existe só no Hangar (se�
 
 ## 2. Colar do Hangar Academy
 
-O Hangar é um Google Sites (`https://sites.google.com/d/1kvmzQjCYMKkmhyunRMIceHjHQHyaSTyL/edit`,
-dono heitorqueiroz@). Não há exportação e o site não responde a leitura por rede a partir da
-sessão de desenvolvimento. Antes de colar, vale retestar: se a URL publicada responder `200`
-sem redirecionar para login (`curl -sI <url>`), a página pode ser lida direto.
+O Hangar Academy é um Google Sites: publicado em
+`https://sites.google.com/produtivajunior.com.br/hangaracademy/início`, edição em
+`https://sites.google.com/d/1kvmzQjCYMKkmhyunRMIceHjHQHyaSTyL/edit` (dono heitorqueiroz@).
+Testado em 2026-09-15: o proxy da sessão de desenvolvimento bloqueia `sites.google.com` e o Drive
+não exporta arquivos do Sites, então a leitura automática não é possível daqui.
 
-Enquanto isso, cada página vira um arquivo `fontes/hangar/<slug>.md`, colado por quem tem
-acesso, neste formato:
+**Caminho que funciona (5 minutos, por quem está logado no Google da Produtiva):**
+
+1. Abra a página inicial do site no Chrome, F12 → Console, cole o conteúdo de
+   `tools/hangar-extrator.js` e dê Enter. O script percorre todas as páginas do menu, converte em
+   Markdown e baixa um único `hangar-academy.txt` (ou copia para a área de transferência).
+2. No repositório: `node tools/hangar-importar.mjs ~/Downloads/hangar-academy.txt --por seu@produtivajunior.com.br`.
+   Cada página que casa com uma ferramenta do `ferramentas-mapa.json` vira `fontes/hangar/<id>.md`
+   com as seções normalizadas; o resto vai para `fontes/hangar/paginas/` para leitura.
+3. `node tools/rascunho.mjs --ferramentas` regenera os rascunhos com `origem: hangar:<id>#<seção>`;
+   depois aprove e promova (seções 4 e 5).
+
+Se preferir colar à mão, cada página vira um arquivo `fontes/hangar/<id>.md` neste formato:
 
 ```markdown
 ---
@@ -136,8 +147,22 @@ Quem revisa é o dono da área (tabela acima). Checklist:
 - [ ] nenhum campo `null` sem entrada correspondente em `pendencias`
 - [ ] `categoria` é um dos 5 grupos do Hangar
 
-Ao aprovar, preencha `revisao: { "status": "aprovado", "revisor": "<e-mail>", "data": "YYYY-MM-DD" }`.
-Se o dono não responder, gabrielapalma@ (dona da pasta CIEP) aprova.
+Ao aprovar, registre pela ferramenta (ela preenche `revisao` com revisor, data e a próxima revisão
+em 3 meses):
+
+```bash
+node tools/aprovar.mjs pmmc swot --revisor voce@produtivajunior.com.br --nota "Conferido contra o PDF"
+node tools/aprovar.mjs --todos --revisor ...        # tudo que está em rascunhos/
+```
+
+Se o dono não responder, gabrielapalma@ (dona da pasta CIEP) aprova. A conta institucional
+(`produtivajunior@gmail.com`) também pode aprovar; a `nota` diz o que foi conferido.
+
+**Primeira carga (2026-09-15):** os 31 rascunhos de ferramentas e os 20 de escopos foram aprovados
+pela conta institucional, a pedido do dono do repositório, após conferência automática contra as
+fontes (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em `pendencias`).
+Os 20 itens "Em construção" continuam com as pendências visíveis na ficha; os donos de área podem
+reabrir qualquer revisão editando `revisao.status`.
 
 ## 5. Promover
 
@@ -176,3 +201,23 @@ node tools/pack.mjs && node tools/verify.mjs             # verify checa equipe, 
 ```
 O case aparece para todos na próxima versão do `dist/Hangar.html`. Quando houver backend, o mesmo
 JSON passa a ser gravado direto; ficha e busca não mudam.
+
+## 7. Dono por conteúdo e ritual trimestral
+
+Todo item aprovado tem `responsavel` (dono) e `revisao.proximaRevisao` (3 meses após a aprovação;
+`promover.mjs` e `aprovar.mjs` preenchem). Escopos têm dono também (hoje thiagomelo@, dono dos
+Cronogramas Base). O painel do CIEP (tela **Cadastrar**) mostra o que venceu e o que vence em 30 dias,
+e `node tools/verify.mjs` avisa quando há revisão vencida.
+
+**A cada trimestre (CIEP):**
+
+```bash
+node tools/revisao.mjs            # agenda em Markdown, por dono: vencidos e a vencer em 30 dias
+node tools/revisao.mjs --tudo     # todas as datas
+```
+
+1. Mande a agenda para os donos (o texto já sai pronto para colar).
+2. Cada dono confere a fonte: `node tools/rascunho.mjs --inventario` mostra se o hash do arquivo do
+   Drive mudou. Se mudou, regenere o rascunho (`node tools/rascunho.mjs <id>`), revise, aprove e
+   promova. Se não mudou, basta renovar: `revisao.data` = hoje e `revisao.proximaRevisao` = +3 meses.
+3. Cases não têm data de revisão: são registro histórico.

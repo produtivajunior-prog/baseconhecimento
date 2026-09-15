@@ -27,7 +27,7 @@ src/
   tail.html        fechamento do documento
   data/            o acervo, como dado editável
     taxonomia.json          fonte única de tipos, categorias, grupos de escopo, status, cores
-    ferramentas.json        ferramentas promovidas (hoje: as 13 herdadas, marcadas como legado)
+    ferramentas.json        ferramentas promovidas (31 do acervo real; 20 ainda "Em construção")
     escopos.json            escopos promovidos, com etapas ordenadas e ferramentas por etapa
     problemas.json          problemas → ferramentas (tela "Recomendar")
     modelos.json            modelos-padrão (blocos que a IA preenche)
@@ -77,8 +77,8 @@ escapada dentro do HTML.
 - **round-trip** — o bundle em `dist/` carrega exatamente o que está em `src/data/`
 - **assets e markup** — bytes dos assets e a marcação batem com `assets/` e `src/index.html`
 
-Itens herdados do MVP (sem `revisao`) passam com aviso enquanto `taxonomia.legadoPermitido`
-for `true`; `node tools/promover.mjs --remover-legado` os tira quando o acervo real entrar.
+Os 13 itens herdados do MVP saíram em 2026-09-15 (`promover.mjs --remover-legado`); campos que a
+fonte não tinha ficam `null` com a pendência registrada, e o verify aceita isso.
 
 ## Navegação e uso
 
@@ -95,6 +95,15 @@ for `true`; `node tools/promover.mjs --remover-legado` os tira quando o acervo r
   escrita. O WhatsApp é opcional no cadastro.
 - **Celular**: menu em segunda linha rolável, filtros da Biblioteca e dos Cases atrás de um botão "Filtros",
   grades e formulários em uma coluna. Nada rola na horizontal.
+
+## Revisão do acervo
+
+- `node tools/aprovar.mjs <ids|--todos> --revisor <e-mail>` registra a aprovação de rascunhos (quem, quando,
+  próxima revisão em 3 meses). `node tools/promover.mjs --aprovados` leva para o acervo.
+- `node tools/revisao.mjs` imprime a agenda do ritual trimestral por dono; o painel do CIEP (tela
+  Cadastrar) mostra o que venceu; `verify` avisa. Detalhes em `fontes/README.md`, seção 7.
+- Hangar Academy: `tools/hangar-extrator.js` (roda no navegador de quem tem acesso) +
+  `node tools/hangar-importar.mjs` trazem as páginas para `fontes/hangar/`. Seção 2 de `fontes/README.md`.
 
 ## Limitações conhecidas
 
@@ -114,12 +123,15 @@ Detalhes e o resto do inventário no [DIAGNOSTICO.md](DIAGNOSTICO.md).
 
 ## Próximos passos
 
-1. **Revisar os rascunhos** em `src/data/rascunhos/` (31 ferramentas, 20 escopos). Cada dono
-   confere os itens da sua área pelo checklist de `fontes/README.md` e marca `revisao.aprovado`.
-2. **Promover**: `node tools/promover.mjs --aprovados --remover-legado`, depois `pack` + `verify`.
-3. **Colar do Hangar** as páginas das ferramentas sem PDF (BMC, BPMN, SIPOC, RACI, Jornada,
-   PCO, IBACO, FIB, MLQ, DCO, Gamificação…) em `fontes/hangar/`, e regerar o rascunho.
-4. Os 11 escopos despriorizados já têm rascunho; entram quando thiagomelo@ decidir.
+1. **Completar os 20 itens "Em construção"**: são as ferramentas sem PDF de metodologia no Drive
+   (BMC, BPMN, SIPOC, RACI, Jornada, PCO, IBACO, FIB, MLQ, DCO, Gamificação…). O caminho mais curto é
+   trazer as páginas do Hangar Academy com `tools/hangar-extrator.js` + `node tools/hangar-importar.mjs`
+   (seção 2 de `fontes/README.md`) e regerar os rascunhos.
+2. **Donos de área revisam a primeira carga**: os 51 conteúdos foram aprovados pela conta institucional
+   em 2026-09-15; cada dono confere os da sua área até 2026-12-15 (`node tools/revisao.mjs`).
+3. **Escopos despriorizados** (11) estão publicados sem ferramentas mapeadas, porque não têm Cronograma
+   Base; thiagomelo@ decide se entram na linha do tempo.
+4. **Glossário**: o CIEP confirma os termos "a confirmar" em `src/data/trilha.json`.
 
 Fora do escopo desta reconstrução e ainda abertos: backend para a IA, persistência, login e
 o aviso de LGPD no campo "Insumos do projeto" (ver DIAGNOSTICO.md §9 e §11).
