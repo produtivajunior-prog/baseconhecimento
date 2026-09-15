@@ -229,6 +229,7 @@
         </div>
         <h1 style="font-size:46px;line-height:1.08;font-weight:700;color:#163B45;letter-spacing:-0.025em;max-width:780px;margin:0 auto;text-wrap:balance">Tudo que o projeto precisa, <br>num só lugar.</h1>
         <p style="font-size:18px;color:#5E747B;margin:18px auto 0;max-width:560px;line-height:1.5">Encontre a ferramenta certa em poucos cliques — sem montar página, sem perder tempo procurando.</p>
+        <button onclick="{{ goComece }}" style="margin-top:14px;border:none;background:transparent;color:#1E7C92;font-size:14.5px;font-weight:600;cursor:pointer;padding:6px 10px;border-radius:8px" style-hover="background:#EAF6F9">Primeiro projeto na Produtiva? Comece aqui →</button>
 
         <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #DCE7EB;border-radius:16px;padding:8px 8px 8px 18px;max-width:620px;margin:34px auto 0;box-shadow:0 6px 24px -12px rgba(22,59,69,0.18)">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="flex:none"><circle cx="11" cy="11" r="7" stroke="#9DAEB4" stroke-width="1.8"></circle><path d="M20 20l-3.2-3.2" stroke="#9DAEB4" stroke-width="1.8" stroke-linecap="round"></path></svg>
@@ -689,7 +690,14 @@
             <div style="display:flex;justify-content:space-between;font-size:13.5px"><span style="color:#7C9097">Frequência de uso</span><span style="font-weight:600;color:#163B45;white-space:nowrap;padding-left:14px;text-align:right">{{ sel.freq }}</span></div>
             <div style="display:flex;justify-content:space-between;gap:10px;font-size:13.5px"><span style="color:#7C9097;flex:none">Revisão</span><span style="font-weight:600;color:#163B45;text-align:right;line-height:1.35">{{ sel.revisaoTexto }}</span></div>
           </div>
-          <button onclick="{{ openSelAnexos }}" style="width:100%;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px;border-radius:10px;cursor:pointer" style-hover="background:#2E9DB5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M16 8l-6.5 6.5a3 3 0 004.2 4.2L21 12a5 5 0 00-7-7L6.5 12.5" stroke="#fff" stroke-width="1.7" stroke-linecap="round"></path></svg>Acessar anexos ({{ sel.anexosCount }})</button>
+          <sc-if value="{{ sel.hasAnexos }}" hint-placeholder-val="{{ true }}"><button onclick="{{ openSelAnexos }}" style="width:100%;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px;border-radius:10px;cursor:pointer" style-hover="background:#2E9DB5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M16 8l-6.5 6.5a3 3 0 004.2 4.2L21 12a5 5 0 00-7-7L6.5 12.5" stroke="#fff" stroke-width="1.7" stroke-linecap="round"></path></svg>Acessar anexos ({{ sel.anexosCount }})</button></sc-if>
+        </div>
+
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px">
+          <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px">Para a reunião com o cliente</div>
+          <p style="font-size:13px;color:#5E747B;margin:0 0 12px;line-height:1.5">Uma página para imprimir: perguntas-chave com espaço para anotar, o que pedir ao cliente e o passo a passo<sc-if value="{{ sel.hasCanvas }}" hint-placeholder-val="{{ false }}">, mais o canvas em branco</sc-if>.</p>
+          <button onclick="{{ sel.abrirMaterial }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #3DAFC7;background:#EAF6F9;color:#1E7C92;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer" style-hover="background:#DCF0F4"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 9V4h12v5M6 18H4a1 1 0 01-1-1v-6a1 1 0 011-1h16a1 1 0 011 1v6a1 1 0 01-1 1h-2M6 14h12v6H6z" stroke="#1E7C92" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>Abrir material para imprimir</button>
+          <button onclick="{{ sel.baixarMaterial }}" style="width:100%;margin-top:8px;border:1px solid #DCE7EB;background:#fff;color:#5E747B;font-size:13px;font-weight:600;padding:9px;border-radius:10px;cursor:pointer" style-hover="border-color:#9FD7E2">Baixar (.html)</button>
         </div>
 
         <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px">
@@ -1344,6 +1352,25 @@
               </div>
             </sc-for>
           </div>
+          <sc-if value="{{ caseSel.hasContatos }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:16px;padding-top:14px;border-top:1px solid #F0F4F5">
+              <div style="font-size:13.5px;font-weight:600;color:#163B45">Pergunte a quem fez</div>
+              <p style="font-size:12.5px;color:#7C9097;margin:3px 0 10px;line-height:1.45">A mensagem já vai com o nome do case. Quem viveu o projeto responde melhor que qualquer documento.</p>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <sc-for list="{{ caseSel.equipe }}" as="m" hint-placeholder-count="3">
+                  <sc-if value="{{ m.hasContato }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;flex-direction:column;gap:5px;padding:8px 0;border-top:1px solid #F4F7F8">
+                    <span style="font-size:13px;font-weight:600;color:#3C545B">{{ m.nome }} <span style="font-weight:500;color:#9DAEB4">· {{ m.papel }}</span></span>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap">
+                    <sc-if value="{{ m.hasZap }}" hint-placeholder-val="{{ false }}"><button onclick="{{ m.abrirZap }}" style="display:flex;align-items:center;gap:6px;border:1px solid #BFE6CD;background:#EAF7EE;color:#2E7D52;font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:8px;cursor:pointer" style-hover="background:#DDF2E5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 20l1.3-3.8A8 8 0 1112 20a8 8 0 01-3.8-1L4 20z" stroke="#2E7D52" stroke-width="1.8" stroke-linejoin="round"></path></svg>WhatsApp</button></sc-if>
+                    <sc-if value="{{ m.hasEmail }}" hint-placeholder-val="{{ true }}"><button onclick="{{ m.abrirEmail }}" style="display:flex;align-items:center;gap:6px;border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:8px;cursor:pointer" style-hover="border-color:#9FD7E2"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#1E7C92" stroke-width="1.8"></rect><path d="M3 7l9 6 9-6" stroke="#1E7C92" stroke-width="1.8" stroke-linejoin="round"></path></svg>E-mail</button></sc-if>
+                    </div>
+                  </div>
+                  </sc-if>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
           <sc-if value="{{ caseSel.hasTags }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;padding-top:14px;border-top:1px solid #F0F4F5">
               <sc-for list="{{ caseSel.tags }}" as="t" hint-placeholder-count="3"><span style="font-size:12px;color:#5E747B;background:#EFF4F5;padding:4px 9px;border-radius:6px">{{ t }}</span></sc-for>
@@ -1389,14 +1416,17 @@
       </div>
 
       <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
-        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">2</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Equipe</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">1 gerente e 2 consultores, como nos projetos da Produtiva</p></div></div>
-        <div class="hg-g2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:30px;height:30px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">2</span><div><h2 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">Equipe</h2><p style="font-size:13px;color:#8AA0A7;margin:2px 0 0">1 gerente e 2 consultores, como nos projetos da Produtiva. O WhatsApp é opcional e alimenta o botão "Pergunte a quem fez" na ficha.</p></div></div>
+        <div class="hg-form" style="display:grid;grid-template-columns:1.2fr 1.2fr 0.9fr;gap:16px">
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Gerente *</label><input value="{{ formCase.gerenteNome }}" oninput="{{ fc.gerenteNome }}" placeholder="Nome" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
-          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">E-mail do gerente</label><input value="{{ formCase.gerenteEmail }}" oninput="{{ fc.gerenteEmail }}" placeholder="nome@produtivajunior.com.br" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">E-mail</label><input value="{{ formCase.gerenteEmail }}" oninput="{{ fc.gerenteEmail }}" placeholder="nome@produtivajunior.com.br" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">WhatsApp <span style="font-weight:500;color:#9DAEB4">(opcional)</span></label><input value="{{ formCase.gerenteZap }}" oninput="{{ fc.gerenteZap }}" placeholder="84 99999-0000" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Consultor 1 *</label><input value="{{ formCase.c1Nome }}" oninput="{{ fc.c1Nome }}" placeholder="Nome" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">E-mail</label><input value="{{ formCase.c1Email }}" oninput="{{ fc.c1Email }}" placeholder="nome@produtivajunior.com.br" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">WhatsApp <span style="font-weight:500;color:#9DAEB4">(opcional)</span></label><input value="{{ formCase.c1Zap }}" oninput="{{ fc.c1Zap }}" placeholder="84 99999-0000" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Consultor 2 *</label><input value="{{ formCase.c2Nome }}" oninput="{{ fc.c2Nome }}" placeholder="Nome" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">E-mail</label><input value="{{ formCase.c2Email }}" oninput="{{ fc.c2Email }}" placeholder="nome@produtivajunior.com.br" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">WhatsApp <span style="font-weight:500;color:#9DAEB4">(opcional)</span></label><input value="{{ formCase.c2Zap }}" oninput="{{ fc.c2Zap }}" placeholder="84 99999-0000" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
         </div>
       </div>
 
@@ -1496,6 +1526,83 @@
         <span style="font-size:12.5px;color:#8AA0A7;flex:1;min-width:220px">Publicar salva neste navegador. Para o case aparecer para toda a Produtiva, baixe o arquivo e envie ao CIEP.</span>
       </div>
     </div>
+  </main>
+  </sc-if>
+
+  <!-- ============ COMECE AQUI (trilha do primeiro projeto + glossário) ============ -->
+  <sc-if value="{{ isComece }}" hint-placeholder-val="{{ false }}">
+  <main class="hg-main" style="max-width:1000px;margin:0 auto;padding:34px 28px 80px">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:#EAF6F9;color:#1E7C92;font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:100px;margin-bottom:14px">Trilha do primeiro projeto</div>
+    <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">Seu primeiro projeto na Produtiva</h1>
+    <p style="font-size:15.5px;color:#5E747B;margin:10px 0 0;line-height:1.55;max-width:700px">Seis passos para chegar ao cliente sabendo o que fazer. Marque o que já fez; fica lembrado neste navegador.</p>
+
+    <div style="display:flex;align-items:center;gap:14px;margin:22px 0 26px;background:#fff;border:1px solid #E7EEF1;border-radius:14px;padding:14px 18px">
+      <div style="flex:1;height:8px;border-radius:100px;background:#EEF3F5;overflow:hidden"><div style="height:100%;width:{{ trilhaPct }}%;background:#3DAFC7;border-radius:100px;transition:width .3s ease"></div></div>
+      <span style="font-size:13.5px;font-weight:600;color:#163B45;white-space:nowrap">{{ trilhaFeitos }} de {{ trilhaTotal }}</span>
+    </div>
+    <sc-if value="{{ trilhaCompleta }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#EAF7EE;border:1px solid #BFE6CD;border-radius:14px;padding:14px 18px;margin:-12px 0 22px;font-size:14px;color:#2E7D52;font-weight:600">Trilha completa. Agora é projeto de verdade: bom trabalho.</div>
+    </sc-if>
+
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <sc-for list="{{ trilhaPassos }}" as="p" hint-placeholder-count="6">
+        <article style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+          <button onclick="{{ p.toggle }}" title="Marcar como feito" style="flex:none;width:34px;height:34px;border-radius:10px;border:1.6px solid #D4E0E4;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;color:#1E7C92" style-hover="border-color:#3DAFC7">
+            <sc-if value="{{ p.feito }}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 7" stroke="#2E7D52" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
+            <sc-if value="{{ p.pendente }}" hint-placeholder-val="{{ true }}">{{ p.n }}</sc-if>
+          </button>
+          <div style="flex:1;min-width:0">
+            <h3 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk';line-height:1.3">{{ p.titulo }}</h3>
+            <p style="font-size:14px;color:#5E747B;margin:6px 0 0;line-height:1.55">{{ p.texto }}</p>
+            <sc-if value="{{ p.listaFerramentas }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ hasEssenciais }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">
+                <sc-for list="{{ essenciais }}" as="item" hint-placeholder-count="5">
+                  <button onclick="{{ item.open }}" style="display:flex;align-items:center;gap:8px;border:1px solid #DCE7EB;background:#FAFCFC;color:#163B45;font-size:13.5px;padding:8px 12px;border-radius:10px;cursor:pointer" style-hover="border-color:#9FD7E2;background:#EAF6F9"><span style="width:8px;height:8px;border-radius:2px;background:{{ item.tipoColor }}"></span>{{ item.nome }}<span style="font-size:12px;color:#9DAEB4">· {{ item.usoResumo }}</span></button>
+                </sc-for>
+              </div>
+              </sc-if>
+            </sc-if>
+            <sc-if value="{{ p.hasAcao }}" hint-placeholder-val="{{ true }}">
+              <button onclick="{{ p.ir }}" style="margin-top:12px;border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer;padding:0">{{ p.acaoLabel }} →</button>
+            </sc-if>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ hasResponsaveis }}" hint-placeholder-val="{{ false }}">
+    <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin:44px 0 6px">Quem procurar</h2>
+    <p style="font-size:14.5px;color:#7C9097;margin:0 0 16px">Responsáveis pelos conteúdos do acervo. Dúvida sobre uma ferramenta? Comece por quem cuida dela.</p>
+    <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+      <sc-for list="{{ responsaveis }}" as="r" hint-placeholder-count="4">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px">
+          <div style="width:36px;height:36px;border-radius:50%;background:#163B45;color:#fff;font-weight:600;font-size:12.5px;display:flex;align-items:center;justify-content:center;flex:none">{{ r.iniciais }}</div>
+          <div style="min-width:0"><div style="font-size:14px;font-weight:600;color:#163B45">{{ r.nome }}</div><div style="font-size:12px;color:#8AA0A7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.resumo }}<sc-if value="{{ r.hasEmail }}" hint-placeholder-val="{{ false }}"> · {{ r.email }}</sc-if></div></div>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin:44px 0 6px">Glossário</h2>
+    <p style="font-size:14.5px;color:#7C9097;margin:0 0 14px">Siglas e nomes que aparecem nos cronogramas, nos escopos e nas conversas. Termos marcados "a confirmar" ainda não têm definição oficial do CIEP.</p>
+    <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #DCE7EB;border-radius:11px;padding:9px 14px;margin-bottom:14px;max-width:420px">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" style="flex:none"><circle cx="11" cy="11" r="7" stroke="#9DAEB4" stroke-width="1.8"></circle><path d="M20 20l-3.2-3.2" stroke="#9DAEB4" stroke-width="1.8" stroke-linecap="round"></path></svg>
+      <input value="{{ glossQuery }}" oninput="{{ onGlossQuery }}" placeholder="Buscar sigla ou termo…" style="flex:1;border:none;outline:none;font-size:14.5px;background:transparent">
+    </div>
+    <div class="hg-g2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+      <sc-for list="{{ glossario }}" as="g" hint-placeholder-count="8">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:14px;padding:16px 18px">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span style="font-family:'Schibsted Grotesk';font-size:16px;font-weight:700;color:#163B45">{{ g.sigla }}</span>
+            <sc-if value="{{ g.hasNome }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;color:#5E747B">{{ g.nome }}</span></sc-if>
+            <sc-if value="{{ g.pendente }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:3px 8px;border-radius:6px" title="Definição ainda não confirmada pelo CIEP">a confirmar</span></sc-if>
+          </div>
+          <p style="font-size:13.5px;color:#3C545B;margin:7px 0 0;line-height:1.5">{{ g.definicao }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ semGlossario }}" hint-placeholder-val="{{ false }}"><p style="font-size:14px;color:#8AA0A7;margin:8px 0 0">Nenhum termo com essa palavra.</p></sc-if>
   </main>
   </sc-if>
 

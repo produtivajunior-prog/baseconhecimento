@@ -44,6 +44,7 @@ const DADOS = {
   modelos: dados('modelos'),
   documentoPadrao: dados('documento-padrao'),
   cases: dados('cases'),
+  trilha: dados('trilha'),
 };
 
 // `evalDcLogic` do dc-runtime envolve a fonte inteira num `new Function`, então o

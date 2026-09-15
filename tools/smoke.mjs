@@ -71,6 +71,19 @@ if (temEscopos) {
   } else check(true, 'etapa sem ferramentas mapeadas — ficha não testada por aqui');
 }
 
+// material para a reunião: ficha da primeira ferramenta → abre uma aba (blob:) com o HTML imprimível
+await page.getByRole('button', { name: 'Biblioteca', exact: true }).first().click(); await page.waitForTimeout(200);
+await page.getByRole('button', { name: 'Abrir', exact: true }).first().click(); await page.waitForTimeout(300);
+await page.getByRole('button', { name: 'Abrir material para imprimir' }).first().click(); await page.waitForTimeout(300);
+{
+  const aba = await page.evaluate(() => window.__abertoNoDrive);
+  const mat = await page.evaluate(() => window.__hangarUltimoMaterial);
+  const nomeFerr = await page.locator('main h1').first().innerText();
+  check(!!aba && /^blob:/.test(aba), 'material da reunião abriu numa aba nova (blob:)');
+  check(!!mat && mat.html.includes(nomeFerr.trim()) && /material para a reunião/i.test(mat.html) && /Cliente:/.test(mat.html), `material traz o nome da ferramenta e os campos da reunião (${mat ? mat.nome : 'nada'})`);
+  await page.evaluate(() => { window.__abertoNoDrive = null; });
+}
+
 // anexo → Drive: procura na Biblioteca a primeira ferramenta com botão "Abrir no Drive"
 if (!(await page.getByRole('button', { name: 'Abrir no Drive' }).count())) {
   await page.getByRole('button', { name: 'Biblioteca', exact: true }).first().click();
@@ -115,6 +128,17 @@ if (passoTermo) {
   check(!/Nenhum conteúdo encontrado/.test(await texto()), `busca por "${passoTermo}" (palavra de um passo) encontrou resultado`);
 } else check(true, 'sem passos no bundle para testar a busca');
 
+// ---- comece aqui: trilha marcável (localStorage) + glossário com busca
+await page.getByRole('button', { name: 'Comece aqui', exact: true }).first().click(); await page.waitForTimeout(300);
+check(/Seu primeiro projeto/i.test(await texto()) && /Glossário/i.test(await texto()), 'tela "Comece aqui" abriu com a trilha e o glossário');
+await page.getByTitle('Marcar como feito').first().click(); await page.waitForTimeout(200);
+check(/1 de \d/.test(await texto()), 'marcar um passo da trilha atualiza o progresso');
+await page.reload(); await page.waitForTimeout(1200);
+check(/^#\/comece/.test(await page.evaluate(() => location.hash)) && /1 de \d/.test(await texto()), 'após recarregar, a trilha continua na tela e com o passo marcado');
+await page.getByPlaceholder(/Buscar sigla/).fill('rac'); await page.waitForTimeout(250);
+check(/\bRAC\b/.test(await texto()) && !/\bPMMC\b.*Process Map/s.test(await texto()), 'busca do glossário filtra os termos');
+await page.evaluate(() => { try { localStorage.removeItem('hangar.trilha'); } catch {} });
+
 // ---- banco de cases: cadastrar → publicar (localStorage) → buscar → ficha com vídeo → recarregar → JSON
 await page.getByRole('button', { name: 'Cases', exact: true }).first().click();
 await page.waitForTimeout(200);
@@ -129,6 +153,7 @@ const escopoSel = page.locator('select').filter({ has: page.locator('option', { 
 const opcoes = await escopoSel.locator('option').allTextContents();
 if (opcoes.length > 2) await escopoSel.selectOption({ index: 1 }); else await preencher('Descreva o escopo', 'Plano de Marketing');
 const nomes = page.getByPlaceholder('Nome', { exact: true }); await nomes.nth(0).fill('Gerente Teste'); await nomes.nth(1).fill('Consultora Um'); await nomes.nth(2).fill('Consultor Dois');
+await page.getByPlaceholder('84 99999-0000').nth(0).fill('(84) 99999-0000');
 await preencher('O que o cliente precisava e o que a Produtiva entregou.', 'A padaria não sabia o custo de cada produto. Montamos o custeio e o markup por item.');
 await preencher(/Processo de pedidos reduzido/, 'Preço dos 12 produtos revisto com margem conhecida');
 await preencher('Nome do arquivo', 'Relatório final.pdf');
@@ -152,12 +177,20 @@ check((await page.locator('iframe[src*="youtube.com/embed/"]').count()) > 0, 'fi
 check(/Relatório final\.pdf/.test(t) && /Abrir no Drive/.test(t), 'ficha lista o documento com botão do Drive');
 check((await page.locator('main img[alt="Padaria Smoke"][src^="data:image/jpeg"]').count()) > 0 && /Equipe na entrega/.test(t), 'ficha mostra a foto de capa com a legenda');
 check(/Só neste navegador/i.test(t), 'ficha avisa que o case só existe neste navegador');
+check(/Pergunte a quem fez/.test(t), 'ficha tem o bloco "Pergunte a quem fez"');
+await page.getByRole('button', { name: 'WhatsApp' }).first().click(); await page.waitForTimeout(200);
+{
+  const url = await page.evaluate(() => window.__abertoNoDrive);
+  check(!!url && /^https:\/\/wa\.me\/5584999990000\?text=/.test(url) && /Padaria/.test(decodeURIComponent(url)), `botão WhatsApp abre wa.me com a mensagem do case (${url ? url.slice(0, 48) : 'nada'})`);
+  await page.evaluate(() => { window.__abertoNoDrive = null; });
+}
 await page.getByRole('button', { name: 'Baixar case (.json)' }).first().click();
 await page.waitForTimeout(200);
 const dl = await page.evaluate(() => window.__hangarUltimoDownload);
 let caseJson = null; try { caseJson = dl && JSON.parse(dl.json); } catch {}
 check(!!caseJson && caseJson.cliente === 'Padaria Smoke' && caseJson.equipe.consultores.length === 2 && /^case-.*\.json$/.test(dl.nome), `"Baixar case" gerou ${dl ? dl.nome : 'nada'} com JSON válido`);
 check(!!caseJson && caseJson.foto && /^data:image\/jpeg;base64,/.test(caseJson.foto.url) && caseJson.foto.legenda === 'Equipe na entrega', 'JSON do case leva a foto embutida e a legenda');
+check(!!caseJson && caseJson.equipe.gerente.whatsapp === '84999990000', 'JSON do case guarda o WhatsApp só com dígitos');
 // busca e persistência
 await page.reload(); await page.waitForTimeout(1200);
 await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); await page.waitForTimeout(200);

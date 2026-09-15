@@ -47,6 +47,7 @@ const problemas = json('problemas');
 const modelos = json('modelos');
 const documentoPadrao = json('documento-padrao');
 const cases = json('cases');
+const trilha = json('trilha');
 
 const enumDe = (obj) => Array.isArray(obj) ? obj : Object.keys(obj);
 const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -214,7 +215,7 @@ for (const c of cases) {
   if ((c.escopoId === null || c.escopoId === undefined) && !(typeof c.escopoNome === 'string' && c.escopoNome)) p(ctx, 'sem escopoId: informe escopoNome');
   if (c.porte !== undefined && c.porte !== '' && !enumDe(T.portes).includes(c.porte)) p(ctx, `porte "${c.porte}" fora da taxonomia`);
   const eq = c.equipe || {};
-  const pessoa = (x, quem) => { if (!x || typeof x.nome !== 'string' || !x.nome) p(ctx, `${quem}: nome ausente`); if (x && x.email && !EMAIL.test(x.email)) p(ctx, `${quem}: e-mail precisa ser @produtivajunior.com.br`); };
+  const pessoa = (x, quem) => { if (!x || typeof x.nome !== 'string' || !x.nome) p(ctx, `${quem}: nome ausente`); if (x && x.email && !EMAIL.test(x.email)) p(ctx, `${quem}: e-mail precisa ser @produtivajunior.com.br`); if (x && x.whatsapp && !/^\d{10,13}$/.test(x.whatsapp)) p(ctx, `${quem}: whatsapp precisa ter só dígitos com DDD (10 a 13)`); };
   pessoa(eq.gerente, 'gerente');
   if (!Array.isArray(eq.consultores) || eq.consultores.length !== 2) p(ctx, 'equipe.consultores precisa ter exatamente 2 consultores');
   else eq.consultores.forEach((x, i) => pessoa(x, `consultor ${i + 1}`));
@@ -236,6 +237,29 @@ for (const c of cases) {
   if (!c.cadastradoPor || typeof c.cadastradoPor.nome !== 'string') p(ctx, 'cadastradoPor {nome, email} ausente');
 }
 check(!problemas_.some((x) => x.startsWith('cases')), `cases.json  ${cases.length} case(s), referências resolvem`, 'cases.json com erros');
+
+// ---------------------------------------------------------------- trilha (Comece aqui)
+{
+  const ctx = 'trilha';
+  if (!Array.isArray(trilha.passos) || !trilha.passos.length) p(ctx, 'passos precisa ser lista não vazia');
+  const pids = new Set();
+  for (const [i, t] of (trilha.passos || []).entries()) {
+    if (typeof t.id !== 'string' || !KEBAB.test(t.id)) p(`${ctx}.passos[${i}]`, 'id ausente ou fora do kebab-case');
+    if (pids.has(t.id)) p(`${ctx}.passos[${i}]`, 'id duplicado'); pids.add(t.id);
+    for (const k of ['titulo', 'texto']) if (typeof t[k] !== 'string' || !t[k]) p(`${ctx}.passos[${i}]`, `"${k}" ausente`);
+    if (t.acao !== null && t.acao !== undefined && !(t.acao && ['home','biblioteca','escopos','cases','novo-case','cadastro','recomendar'].includes(t.acao.tela) && typeof t.acao.label === 'string')) p(`${ctx}.passos[${i}]`, 'acao precisa ser null ou {tela válida, label}');
+  }
+  const ORIGEM = /^(drive:[A-Za-z0-9_-]+|hangar:[a-z0-9-]+|manual:[^@\s]+@[^@\s]+)$/;
+  for (const [i, g] of (trilha.glossario || []).entries()) {
+    if (typeof g.sigla !== 'string' || !g.sigla) p(`${ctx}.glossario[${i}]`, 'sigla ausente');
+    if (g.nome !== null && typeof g.nome !== 'string') p(`${ctx}.glossario[${i}]`, 'nome precisa ser texto ou null');
+    if (typeof g.definicao !== 'string' || g.definicao.length < 20) p(`${ctx}.glossario[${i}]`, 'definicao ausente ou curta demais');
+    if (!ORIGEM.test(g.origem || '')) p(`${ctx}.glossario[${i}]`, 'origem precisa ser drive:<id>, hangar:<slug> ou manual:<e-mail>');
+    if (typeof g.pendente !== 'boolean') p(`${ctx}.glossario[${i}]`, 'pendente precisa ser true/false');
+  }
+  const pend = (trilha.glossario || []).filter((g) => g.pendente).length;
+  check(!problemas_.some((x) => x.startsWith('trilha')), `trilha.json  ${(trilha.passos || []).length} passos, ${(trilha.glossario || []).length} termos (${pend} a confirmar)`, 'trilha.json com erros');
+}
 
 for (const msg of problemas_) console.log(`    ${msg}`);
 if (legados && T.legadoPermitido) aviso(`${legados} item(ns) legado(s) do MVP ainda em ferramentas.json — sem lastro no acervo, removidos na promoção`);
@@ -305,7 +329,7 @@ if (dist) {
   try { dados = extrairDados(dist.logic); }
   catch (e) { check(false, '', `o script do bundle não avalia: ${e.message}`); }
   if (dados) {
-    const pares = [['ferramentas', ferramentas], ['escopos', escopos], ['taxonomia', T], ['problemas', problemas], ['modelos', modelos], ['documentoPadrao', documentoPadrao], ['cases', cases]];
+    const pares = [['ferramentas', ferramentas], ['escopos', escopos], ['taxonomia', T], ['problemas', problemas], ['modelos', modelos], ['documentoPadrao', documentoPadrao], ['cases', cases], ['trilha', trilha]];
     for (const [chave, esperado] of pares) {
       const n = Array.isArray(esperado) ? `${esperado.length} itens` : 'ok';
       check(isDeepStrictEqual(dados[chave], esperado), `dist carrega DADOS.${chave}  ${n}`, `DADOS.${chave} no bundle DIVERGE de src/data — rode node tools/pack.mjs`);

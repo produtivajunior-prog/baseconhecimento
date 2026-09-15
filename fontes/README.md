@@ -159,7 +159,8 @@ Cases não passam por extração nem por revisão: quem viveu o projeto registra
 1. Suba os documentos e o vídeo da equipe numa pasta do Drive `Banco de Cases/<cliente>` com
    acesso "qualquer pessoa da Produtiva" e copie os links. Vídeo pode ser Drive ou YouTube
    (não listado).
-2. No Hangar, aba **Cases → Cadastrar case**: projeto, equipe (1 gerente + 2 consultores), história,
+2. No Hangar, aba **Cases → Cadastrar case**: projeto, equipe (1 gerente + 2 consultores, com e-mail e
+   WhatsApp opcional para o botão "Pergunte a quem fez"), história,
    ferramentas usadas, documentos (link), **foto do projeto** e vídeo (link). **Publicar no meu Hangar**
    salva no seu navegador; **Baixar case (.json)** gera o arquivo.
    - A foto é a capa do case na galeria e na ficha. Arraste o arquivo (JPG/PNG/WebP): o app reduz para

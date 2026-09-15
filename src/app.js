@@ -14,6 +14,8 @@ class Component extends DCLogic {
     caseErro: '',
     caseFiltroFerr: '',
     filtrosAbertos: false,
+    trilhaFeitos: this.carregarLocal('hangar.trilha', []),
+    glossQuery: '',
     eu: this.carregarLocal('hangar.eu', {}),
     open: {},
     rating: null,
@@ -63,6 +65,8 @@ class Component extends DCLogic {
 
   // Banco de cases — src/data/cases.json (publicados) + os que este navegador cadastrou (localStorage).
   CASES = DADOS.cases;
+  // Trilha do primeiro projeto e glossário — src/data/trilha.json.
+  TRILHA = DADOS.trilha || { passos: [], glossario: [] };
 
   // Persistência local: sem backend, o que o membro cadastra fica neste navegador. Tudo em try/catch:
   // sem localStorage (modo privado, file:// bloqueado) o app segue funcionando, só não lembra.
@@ -127,13 +131,74 @@ class Component extends DCLogic {
   removerFoto() { this.setState(st => ({ formCase: { ...st.formCase, fotoDados: '', fotoLink: '', fotoLegenda: '' } })); }
 
   slugDe(t) { return this.normaliza(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  soDigitos(t) { return String(t || '').replace(/\D/g, ''); }
+  abrirLink(url) { if (url && typeof window !== 'undefined') window.open(url, '_blank', 'noopener'); }
+  baixarArquivo(nome, conteudo, mime) {
+    if (typeof document === 'undefined') return false;
+    try {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([conteudo], { type: mime }));
+      a.download = nome; document.body.appendChild(a); a.click();
+      setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      return true;
+    } catch (e) { return false; }
+  }
+
+  // ---- Material para a reunião com o cliente: uma página HTML pronta para imprimir com as perguntas-chave,
+  // o passo a passo, as entradas e, quando a ferramenta tem modelo em canvas, o canvas em branco.
+  esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c])); }
+  materialReuniao(it) {
+    const e = (t) => this.esc(t);
+    const lista = (arr) => (arr || []).filter(x => x && x !== '—');
+    const modelo = this.state.modelos.find(m => m.toolId === it.id && m.layout === 'canvas' && (m.blocos || []).length);
+    const linhas = '<div class="linhas"><span></span><span></span><span></span></div>';
+    const perguntas = lista(it.perguntas).map((q, i) => '<li><b>' + (i + 1) + '.</b> ' + e(q) + linhas + '</li>').join('');
+    const passos = lista(it.passos).map((q) => '<li><span class="cb"></span>' + e(q) + '</li>').join('');
+    const entradas = lista(it.entradas).map((q) => '<li><span class="cb"></span>' + e(q) + '</li>').join('');
+    const cuidados = lista(it.cuidados).map((q) => '<li>' + e(q) + '</li>').join('');
+    const quando = lista(it.quandoUsar).map((q) => '<li>' + e(q) + '</li>').join('');
+    const canvas = modelo ? '<section class="pagina"><h2>' + e(modelo.nome || it.nome) + ' — canvas em branco</h2><div class="canvas">' +
+      modelo.blocos.map((b) => '<div class="bloco" style="grid-column:' + e(b.gc || 'auto') + ';grid-row:' + e(b.gr || 'auto') + '"><b>' + e(b.titulo) + '</b>' + (b.dica ? '<small>' + e(b.dica) + '</small>' : '') + '</div>').join('') +
+      '</div></section>' : '';
+    return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>' + e(it.nome) + ' — material para a reunião</title><style>' +
+      '@page{size:A4;margin:16mm}body{font:12.5pt/1.45 -apple-system,"Segoe UI",Roboto,sans-serif;color:#172A30;margin:0;padding:24px;max-width:190mm}' +
+      'h1{font-size:22pt;margin:0 0 4px}h2{font-size:13pt;margin:22px 0 8px;color:#1E7C92;text-transform:uppercase;letter-spacing:.04em}' +
+      '.meta{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0 6px;font-size:11pt;color:#5E747B}.meta span{border-bottom:1px solid #9DAEB4;min-width:150px;padding:0 4px 2px}' +
+      'ul,ol{margin:0;padding-left:0;list-style:none}li{margin:0 0 8px;page-break-inside:avoid}.cb{display:inline-block;width:11px;height:11px;border:1.5px solid #3C545B;border-radius:3px;margin:0 8px -1px 0}' +
+      '.linhas span{display:block;border-bottom:1px solid #C9DBE0;height:20px}.linhas{margin:4px 0 2px 18px}' +
+      '.pagina{page-break-before:always}.canvas{display:grid;grid-template-columns:repeat(10,1fr);grid-auto-rows:minmax(58mm,auto);gap:3mm;margin-top:8px}' +
+      '.bloco{border:1.5px solid #3C545B;border-radius:6px;padding:6px 8px;font-size:10pt}.bloco b{display:block}.bloco small{display:block;color:#7C9097;font-size:8pt;line-height:1.3;margin-top:2px}' +
+      '.print{position:fixed;top:12px;right:12px;border:none;background:#3DAFC7;color:#fff;font:600 11pt sans-serif;padding:9px 14px;border-radius:9px;cursor:pointer}@media print{.print{display:none}body{padding:0}}' +
+      '</style></head><body><button class="print" onclick="window.print()">Imprimir</button>' +
+      '<div style="font-size:9.5pt;color:#8AA0A7;letter-spacing:.06em;text-transform:uppercase">Hangar · Produtiva Júnior · material para a reunião</div>' +
+      '<h1>' + e(it.nome) + '</h1><div style="color:#5E747B">' + e(it.descricao || '') + '</div>' +
+      '<div class="meta"><span>Cliente: </span><span>Data: </span><span>Consultor(a): </span></div>' +
+      (it.objetivo ? '<h2>Objetivo</h2><p>' + e(it.objetivo) + '</p>' : '') +
+      (quando ? '<h2>Quando usar</h2><ul>' + quando + '</ul>' : '') +
+      (entradas ? '<h2>O que levar / pedir ao cliente</h2><ul>' + entradas + '</ul>' : '') +
+      (perguntas ? '<h2>Perguntas-chave</h2><ol>' + perguntas + '</ol>' : '') +
+      (passos ? '<h2>Passo a passo</h2><ul>' + passos + '</ul>' : '') +
+      (cuidados ? '<h2>Cuidados</h2><ul>' + cuidados.replace(/<li>/g, '<li>• ') + '</ul>' : '') +
+      canvas + '</body></html>';
+  }
+  abrirMaterial(it) {
+    const html = this.materialReuniao(it);
+    if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome: this.slugDe(it.nome) + '-reuniao.html', html };
+    try { this.abrirLink(URL.createObjectURL(new Blob([html], { type: 'text/html' }))); this.showToast('Material aberto em outra aba. Use Ctrl+P para imprimir.'); }
+    catch (e) { this.showToast('Não consegui abrir aqui. Use "Baixar (.html)".'); }
+  }
+  baixarMaterial(it) {
+    const html = this.materialReuniao(it); const nome = this.slugDe(it.nome) + '-reuniao.html';
+    if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
+    this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' gerado. Abra e imprima.' : 'Não consegui gerar o arquivo aqui.');
+  }
   linhas(t) { return String(t || '').split('\n').map(x => x.trim()).filter(Boolean); }
   fmtMes(s) { const m = /^(\d{4})-(\d{2})$/.exec(s || ''); if (!m) return s || ''; const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']; return meses[+m[2]-1] + ' ' + m[1]; }
 
   formCaseVazio() {
     const eu = this.carregarLocal('hangar.eu', {});
     return { cliente:'', segmento:'', porte:'', cidade:'', escopoId:'', escopoNome:'', inicio:'', fim:'', duracaoDias:'',
-      gerenteNome:'', gerenteEmail:'', c1Nome:'', c1Email:'', c2Nome:'', c2Email:'',
+      gerenteNome:'', gerenteEmail:'', gerenteZap:'', c1Nome:'', c1Email:'', c1Zap:'', c2Nome:'', c2Email:'', c2Zap:'',
       resumo:'', desafio:'', solucao:'', resultados:'', aprendizados:'', depoimento:'', tags:'',
       ferramentas:[], documentos:[{ nome:'', tipo:(DADOS.taxonomia.documentosCase||[])[3] || 'Outro', url:'' }],
       fotoDados:'', fotoLink:'', fotoLegenda:'',
@@ -148,6 +213,7 @@ class Component extends DCLogic {
     if (f.resumo.trim().length < 20) return 'Escreva um resumo do projeto com pelo menos duas frases.';
     const emails = [f.gerenteEmail, f.c1Email, f.c2Email, f.meuEmail].filter(Boolean);
     if (emails.some(e => !/^[^@\s]+@produtivajunior\.com\.br$/.test(e.trim()))) return 'Use e-mails @produtivajunior.com.br na equipe.';
+    for (const z of [f.gerenteZap, f.c1Zap, f.c2Zap]) { const d = this.soDigitos(z); if (z && (d.length < 10 || d.length > 13)) return 'WhatsApp com DDD, só números (ex.: 84 99999-0000).'; }
     for (const d of f.documentos) { if ((d.nome || d.url) && !/^https:\/\//.test(d.url || '')) return 'Cada documento precisa de um link https (Drive).'; }
     if (f.videoUrl && !/^https:\/\//.test(f.videoUrl.trim())) return 'O link do vídeo precisa começar com https://.';
     if (!f.fotoDados && f.fotoLink && !/^https:\/\//.test(f.fotoLink.trim())) return 'O link da foto precisa começar com https:// (Drive).';
@@ -157,13 +223,13 @@ class Component extends DCLogic {
   montarCase(f) {
     const ano = (f.fim || f.inicio || this.hoje()).slice(0, 4);
     const escopo = this.ESCOPOS.find(e => e.id === f.escopoId);
-    const pessoa = (n, e) => ({ nome: n.trim(), email: (e || '').trim() });
+    const pessoa = (n, e, z) => ({ nome: n.trim(), email: (e || '').trim(), whatsapp: this.soDigitos(z) });
     return {
       id: [this.slugDe(f.cliente), ano, this.slugDe(escopo ? escopo.nome : f.escopoNome)].filter(Boolean).join('-'),
       cliente: f.cliente.trim(), segmento: f.segmento.trim(), porte: f.porte || '', cidade: f.cidade.trim(),
       escopoId: escopo ? escopo.id : null, escopoNome: escopo ? escopo.nome : f.escopoNome.trim(),
       periodo: { inicio: f.inicio || '', fim: f.fim || '' }, duracaoDias: f.duracaoDias ? Number(f.duracaoDias) : null,
-      equipe: { gerente: pessoa(f.gerenteNome, f.gerenteEmail), consultores: [pessoa(f.c1Nome, f.c1Email), pessoa(f.c2Nome, f.c2Email)] },
+      equipe: { gerente: pessoa(f.gerenteNome, f.gerenteEmail, f.gerenteZap), consultores: [pessoa(f.c1Nome, f.c1Email, f.c1Zap), pessoa(f.c2Nome, f.c2Email, f.c2Zap)] },
       resumo: f.resumo.trim(), desafio: f.desafio.trim(), solucao: f.solucao.trim(),
       resultados: this.linhas(f.resultados), aprendizados: this.linhas(f.aprendizados),
       ferramentas: f.ferramentas.slice(),
@@ -195,13 +261,7 @@ class Component extends DCLogic {
     const nome = 'case-' + limpo.id + '.json';
     if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json };
     if (typeof document === 'undefined') return;
-    try {
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
-      a.download = nome; document.body.appendChild(a); a.click();
-      setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-      this.showToast('Arquivo ' + nome + ' gerado. Envie ao CIEP.');
-    } catch (e) { this.showToast('Não consegui gerar o arquivo aqui. Use "Copiar JSON".'); }
+    this.showToast(this.baixarArquivo(nome, json, 'application/json') ? 'Arquivo ' + nome + ' gerado. Envie ao CIEP.' : 'Não consegui gerar o arquivo aqui. Use "Copiar JSON".');
   }
   copiarJson(c) {
     const { local, ...limpo } = c;
@@ -220,8 +280,18 @@ class Component extends DCLogic {
     const escopoNome = escopo ? escopo.nome : (c.escopoNome || 'Escopo não informado');
     const g = escopo ? (this.TAXONOMIA.gruposEscopo[escopo.grupo] || {}) : {};
     const eq = c.equipe || {}; const cons = eq.consultores || [];
+    const escopoRotulo = escopo ? escopo.nome : (c.escopoNome || 'o projeto');
+    const msg = (x) => 'Oi ' + (x.nome || '').split(' ')[0] + ', vi o case ' + (c.cliente || '') + ' no Hangar e queria tirar uma dúvida sobre ' + escopoRotulo + '.';
     const equipe = [{ ...(eq.gerente||{}), papel:'Gerente' }].concat(cons.map(x => ({ ...x, papel:'Consultor' })))
-      .filter(x => x.nome).map(x => ({ ...x, iniciais: this.initials(x.nome) }));
+      .filter(x => x.nome).map(x => {
+        const zap = this.soDigitos(x.whatsapp); const zapIntl = zap ? ((zap.length <= 11) ? '55' + zap : zap) : '';
+        return { ...x, iniciais: this.initials(x.nome), hasEmail: !!x.email, hasZap: !!zap, hasContato: !!(x.email || zap),
+          emailUrl: x.email ? 'mailto:' + x.email + '?subject=' + encodeURIComponent('Dúvida sobre o case ' + (c.cliente || '') + ' (Hangar)') + '&body=' + encodeURIComponent(msg(x)) : '',
+          zapUrl: zap ? 'https://wa.me/' + zapIntl + '?text=' + encodeURIComponent(msg(x)) : '',
+          abrirEmail: () => this.abrirLink(x.email ? 'mailto:' + x.email + '?subject=' + encodeURIComponent('Dúvida sobre o case ' + (c.cliente || '') + ' (Hangar)') + '&body=' + encodeURIComponent(msg(x)) : ''),
+          abrirZap: () => this.abrirLink(zap ? 'https://wa.me/' + zapIntl + '?text=' + encodeURIComponent(msg(x)) : '') };
+      });
+    const hasContatos = equipe.some(x => x.hasContato);
     const ferramentas = (c.ferramentas || []).map(fid => this.allData().find(d => d.id === fid)).filter(Boolean).map(d => this.decorate(d));
     const docs = (c.documentos || []).map(d => ({ ...d, ext: this.extOf(d), abrir: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); if (typeof window!=='undefined') window.open(d.url, '_blank', 'noopener'); } }));
     const video = c.video && c.video.url ? c.video : null;
@@ -235,7 +305,7 @@ class Component extends DCLogic {
     const ano = ((c.periodo||{}).fim || (c.periodo||{}).inicio || c.atualizado || '').slice(0, 4);
     return { ...c, escopoNome, escopoCor: g.cor || '#4E5E96', escopoBg: g.bg || '#ECEFF7', hasEscopo: !!escopo,
       abrirEscopo: () => { if (escopo) this.openEscopo(escopo.id); },
-      equipe, equipeResumo: equipe.map(x => x.nome.split(' ')[0]).join(', '),
+      equipe, equipeResumo: equipe.map(x => x.nome.split(' ')[0]).join(', '), hasContatos,
       ferramentas, hasFerramentas: ferramentas.length > 0, docs, nDocs: docs.length, hasDocs: docs.length > 0,
       video, hasVideo: !!video, videoEmbed: embed, hasVideoEmbed: !!embed, videoLink: video ? video.url : '',
       foto, hasFoto: !!fotoSrc, semFoto: !fotoSrc, fotoSrc, fotoLegenda: foto ? (foto.legenda || '') : '', hasFotoLegenda: !!(foto && foto.legenda), inicial, placeholderBg,
@@ -386,6 +456,28 @@ class Component extends DCLogic {
       this.setState({ applyLoading:false, applyError:'Não consegui preencher agora. Tente refinar os insumos e gerar de novo.' });
     }
   }
+  trilhaVals(s, data, dec) {
+    const feitos = new Set(s.trilhaFeitos || []);
+    const passos = (this.TRILHA.passos || []).map((p, i) => {
+      const feito = feitos.has(p.id);
+      return { ...p, n: i + 1, feito, pendente: !feito, hasAcao: !!p.acao, acaoLabel: p.acao ? p.acao.label : '',
+        ir: () => { if (!p.acao) return; if (p.acao.tela === 'novo-case') this.openNovoCase(); else this.nav(p.acao.tela); },
+        toggle: () => this.setState(st => { const set = new Set(st.trilhaFeitos || []); set.has(p.id) ? set.delete(p.id) : set.add(p.id); const lista = [...set]; this.salvarLocal('hangar.trilha', lista); return { trilhaFeitos: lista }; }) };
+    });
+    // ferramentas essenciais: as mapeadas em mais etapas dos escopos; sem escopos, as de uso frequente
+    const porUso = data.map(d => ({ d, n: this.usoDe(d.id).length })).filter(x => x.n > 0).sort((a, b) => b.n - a.n).slice(0, 5).map(x => x.d);
+    const essenciais = (porUso.length ? porUso : data.filter(d => d.freq === 'Alta').slice(0, 5)).map(dec);
+    // quem procurar: responsáveis que aparecem no acervo
+    const resp = {};
+    for (const d of data) { const nome = this.respNome(d.responsavel); const email = this.respEmail(d.responsavel); if (!nome || nome === '—') continue; (resp[nome] = resp[nome] || { nome, email, iniciais: this.initials(nome), n: 0 }).n++; }
+    const responsaveis = Object.values(resp).sort((a, b) => b.n - a.n).slice(0, 8).map(r => ({ ...r, resumo: r.n + (r.n === 1 ? ' conteúdo' : ' conteúdos'), hasEmail: !!r.email }));
+    const q = this.normaliza(s.glossQuery || '');
+    const glossario = (this.TRILHA.glossario || []).filter(g => !q || this.normaliza(g.sigla + ' ' + (g.nome || '') + ' ' + g.definicao).includes(q))
+      .map(g => ({ ...g, hasNome: !!g.nome, nome: g.nome || '' }));
+    return { trilhaPassos: passos, trilhaFeitos: passos.filter(p => p.feito).length, trilhaTotal: passos.length, trilhaPct: passos.length ? Math.round(100 * passos.filter(p => p.feito).length / passos.length) : 0,
+      trilhaCompleta: passos.length > 0 && passos.every(p => p.feito), essenciais, hasEssenciais: essenciais.length > 0, responsaveis, hasResponsaveis: responsaveis.length > 0,
+      glossario, semGlossario: glossario.length === 0, glossQuery: s.glossQuery, onGlossQuery: (e) => this.setState({ glossQuery: e.target.value }) };
+  }
   nav(screen) { this.setState({ screen, escopoId: screen==='escopos' ? null : this.state.escopoId, caseId: screen==='cases' ? null : this.state.caseId }); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
   // ---- Rotas na URL (#/biblioteca, #/ferramenta/pmmc, #/escopo/<id>, #/case/<id>…)
@@ -401,6 +493,7 @@ class Component extends DCLogic {
       case 'cadastro': return '#/cadastrar';
       case 'docs': return '#/docs';
       case 'recomendar': return '#/recomendar';
+      case 'comece': return '#/comece';
       default: return '#/';
     }
   }
@@ -419,6 +512,7 @@ class Component extends DCLogic {
     else if (tela === 'cadastrar') this.nav('cadastro');
     else if (tela === 'docs') this.goDocs();
     else if (tela === 'recomendar') this.nav('recomendar');
+    else if (tela === 'comece') this.nav('comece');
     else if (this.state.screen !== 'home') this.nav('home');
   }
   componentDidMount() {
@@ -700,7 +794,7 @@ class Component extends DCLogic {
     const dec = (it) => it ? this.decorate(it) : null;
 
     // nav
-    const navDef = [{key:'home',label:'Início'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
+    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
     const navItems = navDef.map(n => {
       const active = s.screen===n.key || (n.key==='biblioteca' && s.screen==='conteudo') || (n.key==='cases' && (s.screen==='case' || s.screen==='novo-case'));
       return { label:n.label, go: n.key==='docs' ? ()=>this.goDocs() : ()=>this.nav(n.key), bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
@@ -736,7 +830,7 @@ class Component extends DCLogic {
     // formulário de case
     const fcase = s.formCase;
     const setFC = (k) => (e) => this.setState(st => ({ formCase: { ...st.formCase, [k]: e.target.value }, caseErro:'' }));
-    const fc = {}; for (const k of ['cliente','segmento','porte','cidade','escopoId','escopoNome','inicio','fim','duracaoDias','gerenteNome','gerenteEmail','c1Nome','c1Email','c2Nome','c2Email','resumo','desafio','solucao','resultados','aprendizados','depoimento','tags','fotoLink','fotoLegenda','videoUrl','videoQuem','videoDuracao','meuNome','meuEmail']) fc[k] = setFC(k);
+    const fc = {}; for (const k of ['cliente','segmento','porte','cidade','escopoId','escopoNome','inicio','fim','duracaoDias','gerenteNome','gerenteEmail','gerenteZap','c1Nome','c1Email','c1Zap','c2Nome','c2Email','c2Zap','resumo','desafio','solucao','resultados','aprendizados','depoimento','tags','fotoLink','fotoLegenda','videoUrl','videoQuem','videoDuracao','meuNome','meuEmail']) fc[k] = setFC(k);
     const escopoOptions = [{ value:'', label:'Escolha o escopo…' }].concat(this.ESCOPOS.map(e => ({ value:e.id, label:e.nome }))).concat([{ value:'', label:'Outro (descrever abaixo)' }]);
     const porteOptions = [{ value:'', label:'Porte…' }].concat(this.vivos(this.TAXONOMIA.portes || []).map(v => ({ value:v, label:v })));
     const docTipoOptions = this.vivos(this.TAXONOMIA.documentosCase || []).map(v => ({ value:v, label:v }));
@@ -803,7 +897,9 @@ class Component extends DCLogic {
       return 'Rascunho · aguardando revisão';
     };
     const sel = selRaw ? { ...dec(selRaw), respInitials:this.initials(this.respNome(selRaw.responsavel)), anexos:(selRaw.anexos||[]).map(decAnexo), revisaoTexto:revisaoTexto(selRaw),
-      pendencias:selRaw.pendencias||[], hasPendencias:!!(selRaw.pendencias&&selRaw.pendencias.length), cases: casesTodos.filter(c => (c.ferramentas||[]).includes(selRaw.id)).map(decCase), hasCases: casesTodos.some(c => (c.ferramentas||[]).includes(selRaw.id)) } : null;
+      pendencias:selRaw.pendencias||[], hasPendencias:!!(selRaw.pendencias&&selRaw.pendencias.length),
+      hasCanvas: this.state.modelos.some(m => m.toolId === selRaw.id && m.layout === 'canvas' && (m.blocos||[]).length > 0),
+      abrirMaterial: () => this.abrirMaterial(selRaw), baixarMaterial: () => this.baixarMaterial(selRaw), cases: casesTodos.filter(c => (c.ferramentas||[]).includes(selRaw.id)).map(decCase), hasCases: casesTodos.some(c => (c.ferramentas||[]).includes(selRaw.id)) } : null;
     const blocks = selRaw ? this.buildBlocks(selRaw) : [];
 
     // anexos modal
@@ -885,6 +981,8 @@ class Component extends DCLogic {
       isCadastro: s.screen==='cadastro', isRecomendar: s.screen==='recomendar', isEscopos: s.screen==='escopos',
       isCases: s.screen==='cases', isCase: s.screen==='case', isNovoCase: s.screen==='novo-case',
       goCases:()=>this.nav('cases'), goNovoCase:()=>this.openNovoCase(),
+      // trilha do primeiro projeto + glossário
+      isComece: s.screen==='comece', goComece:()=>this.nav('comece'), ...this.trilhaVals(s, data, dec),
       // filtros no celular (biblioteca e cases) e iniciais de quem usa
       filtrosClass: s.filtrosAbertos ? 'hg-open' : '', filtrosLabel: s.filtrosAbertos ? 'Ocultar filtros' : 'Filtros', toggleFiltros:()=>this.setState(st=>({ filtrosAbertos: !st.filtrosAbertos })),
       hasEu: !!(s.eu && s.eu.nome), euNome: (s.eu && s.eu.nome) || '', euIniciais: s.eu && s.eu.nome ? this.initials(s.eu.nome) : '',

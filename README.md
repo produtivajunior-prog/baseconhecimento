@@ -86,6 +86,13 @@ for `true`; `node tools/promover.mjs --remover-legado` os tira quando o acervo r
   `#/case/<id>`, `#/cases/novo`, `#/cadastrar`, `#/docs`, `#/recomendar`. Dá para compartilhar o link de
   uma ferramenta ou case, usar o botão "voltar" do navegador e recarregar sem perder a tela. Funciona em `file://`.
 - **Teclado**: `/` foca a busca da tela; `Esc` fecha a janela de anexos; foco visível em todos os controles.
+- **Comece aqui** (`#/comece`): trilha do primeiro projeto em seis passos marcáveis (ficam no navegador), as
+  ferramentas mapeadas em mais etapas, quem procurar e o glossário. Os termos vêm de `src/data/trilha.json`,
+  cada um com `origem`; os marcados `pendente: true` aparecem como "a confirmar" até o CIEP validar.
+- **Material para a reunião**: na ficha da ferramenta, "Abrir material para imprimir" gera uma página com
+  perguntas-chave, o que pedir ao cliente, passo a passo e, quando há modelo em canvas, o canvas em branco.
+- **Pergunte a quem fez**: na ficha do case, botões de e-mail e WhatsApp para a equipe, com a mensagem já
+  escrita. O WhatsApp é opcional no cadastro.
 - **Celular**: menu em segunda linha rolável, filtros da Biblioteca e dos Cases atrás de um botão "Filtros",
   grades e formulários em uma coluna. Nada rola na horizontal.
 
