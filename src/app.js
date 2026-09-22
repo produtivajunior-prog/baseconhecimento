@@ -269,7 +269,7 @@ class Component extends DCLogic {
       resumo: f.resumo.trim(), desafio: f.desafio.trim(), solucao: f.solucao.trim(),
       resultados: this.linhas(f.resultados), aprendizados: this.linhas(f.aprendizados),
       ferramentas: f.ferramentas.slice(),
-      documentos: f.documentos.filter(d => d.url).map(d => ({ nome: d.nome.trim() || (/^data:/.test(d.url) ? 'Documento.pdf' : d.url), tipo: d.tipo, url: d.url.trim() })),
+      documentos: f.documentos.filter(d => d.url).map(d => ({ nome: d.nome.trim() || (/^data:/.test(d.url) ? 'Documento.pdf' : (d.tipo || 'Documento')), tipo: d.tipo, url: d.url.trim() })),
       foto: (f.fotoDados || f.fotoLink.trim()) ? { url: f.fotoDados || f.fotoLink.trim(), legenda: (f.fotoLegenda || '').trim() } : null,
       video: f.videoUrl.trim() ? { url: f.videoUrl.trim(), quem: f.videoQuem.trim(), duracao: f.videoDuracao.trim() } : null,
       depoimentoCliente: f.depoimento.trim(), tags: f.tags.split(',').map(x => x.trim()).filter(Boolean),
@@ -333,13 +333,18 @@ class Component extends DCLogic {
         const zap = this.soDigitos(x.whatsapp); const zapIntl = zap ? ((zap.length <= 11) ? '55' + zap : zap) : '';
         return { ...x, iniciais: this.initials(x.nome), hasEmail: !!x.email, hasZap: !!zap, hasContato: !!(x.email || zap),
           emailUrl: x.email ? 'mailto:' + x.email + '?subject=' + encodeURIComponent('Dúvida sobre o case ' + (c.cliente || '') + ' (Hangar)') + '&body=' + encodeURIComponent(msg(x)) : '',
-          zapUrl: zap ? 'https://wa.me/' + zapIntl + '?text=' + encodeURIComponent(msg(x)) : '',
-          abrirEmail: () => this.abrirLink(x.email ? 'mailto:' + x.email + '?subject=' + encodeURIComponent('Dúvida sobre o case ' + (c.cliente || '') + ' (Hangar)') + '&body=' + encodeURIComponent(msg(x)) : ''),
-          abrirZap: () => this.abrirLink(zap ? 'https://wa.me/' + zapIntl + '?text=' + encodeURIComponent(msg(x)) : '') };
+          zapUrl: zap ? 'https://wa.me/' + zapIntl + '?text=' + encodeURIComponent(msg(x)) : '' };
       });
     const hasContatos = equipe.some(x => x.hasContato);
     const ferramentas = (c.ferramentas || []).map(fid => this.allData().find(d => d.id === fid)).filter(Boolean).map(d => this.decorate(d));
-    const docs = (c.documentos || []).map(d => ({ ...d, ext: this.extOf(d), btnLabel: /^data:/.test(d.url || '') ? 'Abrir PDF' : 'Abrir no Drive', abrir: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.abrirDataUrl(d.url); } }));
+    // Dentro do artifact, window.open não abre para a maioria dos visitantes: link https vira <a href> de verdade.
+    const docs = (c.documentos || []).map(d => {
+      const isPdf = /^data:/.test(d.url || ''); const isLink = /^https:\/\//.test(d.url || '');
+      const nomeEhUrl = /^https?:\/\//.test(d.nome || '');
+      return { ...d, nome: nomeEhUrl ? (d.tipo || 'Documento') : d.nome, ext: this.extOf(nomeEhUrl ? { tipo: d.tipo } : d),
+        isPdf, isLink, href: isLink ? d.url : '', btnLabel: isPdf ? 'Abrir PDF' : 'Abrir no Drive',
+        abrir: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.abrirDataUrl(d.url); } };
+    });
     const video = c.video && c.video.url ? c.video : null;
     const embed = video ? this.embedDe(video.url) : '';
     const foto = c.foto && c.foto.url ? c.foto : null;
@@ -355,7 +360,6 @@ class Component extends DCLogic {
       ferramentas, hasFerramentas: ferramentas.length > 0, docs, nDocs: docs.length, hasDocs: docs.length > 0,
       video, hasVideo: !!video, videoEmbed: embed, hasVideoEmbed: !!embed, videoLink: video ? video.url : '',
       foto, hasFoto: !!fotoSrc, semFoto: !fotoSrc, fotoSrc, fotoLegenda: foto ? (foto.legenda || '') : '', hasFotoLegenda: !!(foto && foto.legenda), inicial, placeholderBg,
-      abrirVideo: () => { if (video && typeof window!=='undefined') window.open(video.url, '_blank', 'noopener'); },
       periodoFmt: periodoFmt || (ano ? String(ano) : ''), ano, duracaoFmt: c.duracaoDias ? c.duracaoDias + ' dias' : '',
       resultados: c.resultados || [], hasResultados: !!(c.resultados && c.resultados.length), resultadoDestaque: (c.resultados && c.resultados[0]) || c.resumo,
       aprendizados: c.aprendizados || [], hasAprendizados: !!(c.aprendizados && c.aprendizados.length),
@@ -949,9 +953,8 @@ class Component extends DCLogic {
     const decAnexo = (a) => {
       const st = this.ANEXO_STYLE[a.tipo] || this.ANEXO_STYLE['Material complementar'] || { bg:'#EFF4F5', color:'#5E747B' };
       const url = typeof a.url === 'string' && /^https:\/\//.test(a.url) ? a.url : '';
-      return { ...a, bg:st.bg, color:st.color, ext:this.extOf(a), dataFmt:this.fmtData(a.data), hasUrl:!!url, semUrl:!url,
-        btnLabel: url ? 'Abrir no Drive' : 'Arquivo não localizado',
-        abrir: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); if (url && typeof window!=='undefined') window.open(url, '_blank', 'noopener'); } };
+      return { ...a, bg:st.bg, color:st.color, ext:this.extOf(a), dataFmt:this.fmtData(a.data), hasUrl:!!url, semUrl:!url, href:url,
+        btnLabel: url ? 'Abrir no Drive' : 'Arquivo não localizado' };
     };
     const revisaoTexto = (it) => {
       const r = it && it.revisao;

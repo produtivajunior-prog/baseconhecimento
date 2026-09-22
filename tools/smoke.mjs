@@ -85,7 +85,7 @@ await page.getByRole('button', { name: 'Abrir material para imprimir' }).first()
 }
 
 // anexo → Drive: procura na Biblioteca a primeira ferramenta com botão "Abrir no Drive"
-if (!(await page.getByRole('button', { name: 'Abrir no Drive' }).count())) {
+if (!(await page.getByRole('link', { name: 'Abrir no Drive' }).count())) {
   await page.getByRole('button', { name: 'Biblioteca', exact: true }).first().click();
   await page.waitForTimeout(200);
   const nome = await page.evaluate(() => {
@@ -103,11 +103,11 @@ if (!(await page.getByRole('button', { name: 'Abrir no Drive' }).count())) {
   }
 }
 {
-  const btn = page.getByRole('button', { name: 'Abrir no Drive' }).first();
-  if (await btn.count()) {
-    await btn.click();
-    const url = await page.evaluate(() => window.__abertoNoDrive);
-    check(!!url && /^https:\/\/(drive|docs)\.google\.com\//.test(url), `botão "Abrir no Drive" pediu ${url ? url.slice(0, 70) : 'nada'}`);
+  // <a href> de verdade: no artifact o window.open não abre para a maioria dos visitantes
+  const link = page.getByRole('link', { name: 'Abrir no Drive' }).first();
+  if (await link.count()) {
+    const url = await link.getAttribute('href'); const alvo = await link.getAttribute('target');
+    check(!!url && /^https:\/\/(drive|docs)\.google\.com\//.test(url) && alvo === '_blank', `anexo "Abrir no Drive" é link real para ${url ? url.slice(0, 70) : 'nada'} (nova aba)`);
   } else check(true, 'nenhuma ferramenta com anexo no Drive neste bundle — botão não testado');
 }
 
@@ -185,6 +185,10 @@ let t = await texto();
 check(/Padaria Smoke/.test(t) && /Equipe do projeto/i.test(t), 'case publicado abriu a ficha');
 check((await page.locator('iframe[src*="youtube.com/embed/"]').count()) > 0, 'ficha do case embute o vídeo');
 check(/Relatório final\.pdf/.test(t) && /Abrir no Drive/.test(t), 'ficha lista o documento com botão do Drive');
+{
+  const link = page.getByRole('link', { name: 'Abrir no Drive' }).first();
+  check((await link.getAttribute('href')) === 'https://drive.google.com/file/d/1abcDEF/view' && (await link.getAttribute('target')) === '_blank', 'documento do case é link real (<a href>) para o Drive, em nova aba');
+}
 check(/Proposta\.pdf/.test(t) && /Abrir PDF/.test(t), 'ficha lista o PDF anexado com o rótulo "Abrir PDF"');
 {
   await page.getByRole('button', { name: 'Abrir PDF' }).first().click();
@@ -196,11 +200,9 @@ check(/Proposta\.pdf/.test(t) && /Abrir PDF/.test(t), 'ficha lista o PDF anexado
 check((await page.locator('main img[alt="Padaria Smoke"][src^="data:image/jpeg"]').count()) > 0 && /Equipe na entrega/.test(t), 'ficha mostra a foto de capa com a legenda');
 check(/Só neste navegador/i.test(t), 'ficha avisa que o case só existe neste navegador');
 check(/Pergunte a quem fez/.test(t), 'ficha tem o bloco "Pergunte a quem fez"');
-await page.getByRole('button', { name: 'WhatsApp' }).first().click(); await page.waitForTimeout(200);
 {
-  const url = await page.evaluate(() => window.__abertoNoDrive);
-  check(!!url && /^https:\/\/wa\.me\/5584999990000\?text=/.test(url) && /Padaria/.test(decodeURIComponent(url)), `botão WhatsApp abre wa.me com a mensagem do case (${url ? url.slice(0, 48) : 'nada'})`);
-  await page.evaluate(() => { window.__abertoNoDrive = null; });
+  const url = await page.getByRole('link', { name: 'WhatsApp' }).first().getAttribute('href');
+  check(!!url && /^https:\/\/wa\.me\/5584999990000\?text=/.test(url) && /Padaria/.test(decodeURIComponent(url)), `link WhatsApp aponta para wa.me com a mensagem do case (${url ? url.slice(0, 48) : 'nada'})`);
 }
 await page.getByRole('button', { name: 'Baixar case (.json)' }).first().click();
 await page.waitForTimeout(200);
