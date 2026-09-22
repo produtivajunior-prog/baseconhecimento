@@ -1402,6 +1402,7 @@
           <p style="font-size:12.5px;color:#7A6330;margin:6px 0 12px;line-height:1.5">Baixe o arquivo e envie ao CIEP; ele entra no Hangar de todos na próxima versão.</p>
           <button onclick="{{ caseSel.baixar }}" style="width:100%;border:none;background:#3DAFC7;color:#fff;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer" style-hover="background:#2E9DB5">Baixar case (.json)</button>
           <button onclick="{{ caseSel.copiar }}" style="width:100%;margin-top:8px;border:1px solid #DCE7EB;background:#fff;color:#5E747B;font-size:13px;font-weight:600;padding:9px;border-radius:10px;cursor:pointer">Copiar JSON</button>
+          <button onclick="{{ caseSel.remover }}" style="width:100%;margin-top:8px;border:1px solid #F1DFB0;background:#fff;color:#B23B47;font-size:13px;font-weight:600;padding:9px;border-radius:10px;cursor:pointer" style-hover="border-color:#E3A0A8;background:#FFF6F6">Remover case</button>
         </div>
         </sc-if>
       </aside>
@@ -1845,6 +1846,20 @@ Pergunta 2" style="width:100%;border:1px solid #DCE7EB;border-radius:9px;padding
             <button onclick="{{ a.abrir }}" disabled="{{ a.semUrl }}" style="flex:none;display:flex;align-items:center;gap:6px;border:none;background:#3DAFC7;color:#fff;font-size:13px;font-weight:600;padding:8px 14px;border-radius:9px;cursor:pointer" style-hover="background:#2E9DB5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>{{ a.btnLabel }}</button>
           </div>
         </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============ MODAL CONFIRMAR REMOÇÃO DO CASE ============ -->
+  <sc-if value="{{ confirmRemoverAberto }}" hint-placeholder-val="{{ false }}">
+  <div onclick="{{ cancelarRemover }}" style="position:fixed;inset:0;z-index:60;background:rgba(13,38,45,0.45);display:flex;align-items:center;justify-content:center;padding:24px;animation:ciepFade .15s ease">
+    <div onclick="{{ stop }}" style="background:#fff;border-radius:18px;width:420px;max-width:100%;padding:24px;animation:ciepPop .2s ease;box-shadow:0 30px 80px -30px rgba(13,38,45,0.5)">
+      <h3 style="font-size:18px;font-weight:700;color:#163B45;margin:0">Remover case?</h3>
+      <p style="font-size:14px;color:#5E747B;margin:10px 0 0;line-height:1.55">O case de <strong>{{ confirmRemoverNome }}</strong> vai ser apagado deste navegador. Se ele ainda não foi enviado ao CIEP, essa cópia se perde.</p>
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <button onclick="{{ cancelarRemover }}" style="flex:1;border:1px solid #DCE7EB;background:#fff;color:#5E747B;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer">Cancelar</button>
+        <button onclick="{{ confirmRemover }}" style="flex:1;border:none;background:#B23B47;color:#fff;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer" style-hover="background:#9A303B">Remover</button>
       </div>
     </div>
   </div>

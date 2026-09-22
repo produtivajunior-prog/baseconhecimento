@@ -212,6 +212,21 @@ await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); 
 await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
 await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('xyzinexistente'); await page.waitForTimeout(300);
 check(/Nenhum case encontrado/.test(await texto()), 'busca sem resultado mostra a mensagem certa');
+// remover case: pede confirmação, cancelar mantém, confirmar apaga do localStorage
+await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
+await page.locator('article img[alt="Padaria Smoke"]').first().click(); await page.waitForTimeout(300);
+await page.getByRole('button', { name: 'Remover case' }).click(); await page.waitForTimeout(200);
+t = await texto();
+check(/Remover case\?/.test(t) && /Padaria Smoke/.test(t), 'confirmação de remoção mostra o nome do cliente');
+await page.getByRole('button', { name: 'Cancelar' }).click(); await page.waitForTimeout(200);
+check(!/Remover case\?/.test(await texto()) && /Equipe do projeto/i.test(await texto()), 'cancelar fecha o modal e mantém o case');
+await page.getByRole('button', { name: 'Remover case' }).click(); await page.waitForTimeout(200);
+await page.getByRole('button', { name: 'Remover', exact: true }).click(); await page.waitForTimeout(300);
+t = await texto();
+check(/Banco de cases/i.test(t) && !/Equipe do projeto/i.test(t), 'confirmar remoção volta para a lista de cases');
+check(/removido deste navegador/i.test(t), 'toast confirma a remoção');
+const casesLocaisPos = await page.evaluate(() => { try { return JSON.parse(localStorage.getItem('hangar.casesLocais') || '[]'); } catch { return null; } });
+check(Array.isArray(casesLocaisPos) && casesLocaisPos.length === 0, 'case removido some do localStorage');
 await page.evaluate(() => { try { localStorage.removeItem('hangar.casesLocais'); } catch {} });
 
 check(erros.length === 0, erros.length ? `erros de página: ${erros.slice(0, 3).join(' | ')}` : 'nenhum erro de JavaScript');

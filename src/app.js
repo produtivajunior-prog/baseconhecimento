@@ -21,6 +21,7 @@ class Component extends DCLogic {
     rating: null,
     feedback: '',
     anexosId: null,
+    confirmRemoverId: null,
     recoKey: null,
     toast: '',
     form: this.formVazio(),
@@ -274,6 +275,16 @@ class Component extends DCLogic {
   }
   openCase(id) { this.setState({ screen:'case', caseId:id }); if(typeof window!=='undefined') window.scrollTo(0,0); }
   openNovoCase() { this.setState({ screen:'novo-case', caseErro:'' }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+  pedirRemoverCase(id, e) { if(e&&e.stopPropagation)e.stopPropagation(); this.setState({ confirmRemoverId:id }); }
+  cancelarRemoverCase() { this.setState({ confirmRemoverId:null }); }
+  // Só remove do navegador de quem cadastrou: sem backend, não existe "publicado para todos" a desfazer daqui.
+  removerCase(id) {
+    const casesLocais = this.state.casesLocais.filter(c => c.id !== id);
+    this.salvarLocal('hangar.casesLocais', casesLocais);
+    this.setState({ casesLocais, confirmRemoverId:null, screen:'cases', caseId:null });
+    if (typeof window !== 'undefined') window.scrollTo(0,0);
+    this.showToast('Case removido deste navegador.');
+  }
 
   decorateCase(c) {
     const escopo = c.escopoId ? this.ESCOPOS.find(e => e.id === c.escopoId) : null;
@@ -316,7 +327,8 @@ class Component extends DCLogic {
       hasDesafio: !!c.desafio, hasSolucao: !!c.solucao, hasDepoimento: !!c.depoimentoCliente,
       tags: c.tags || [], hasTags: !!(c.tags && c.tags.length), local: !!c.local,
       cadastradoTexto: 'Cadastrado por ' + ((c.cadastradoPor||{}).nome || '—') + ' · ' + this.fmtData(c.atualizado),
-      open: () => this.openCase(c.id), baixar: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.baixarJson(c); }, copiar: () => this.copiarJson(c) };
+      open: () => this.openCase(c.id), baixar: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.baixarJson(c); }, copiar: () => this.copiarJson(c),
+      remover: (e) => this.pedirRemoverCase(c.id, e) };
   }
   computeCases() {
     const f = this.state.caseFilters; const q = this.normaliza(this.state.caseQuery.trim());
@@ -535,6 +547,7 @@ class Component extends DCLogic {
     this._onKey = (e) => {
       const alvo = e.target || {}; const digitando = /^(INPUT|TEXTAREA|SELECT)$/.test(alvo.tagName || '') || alvo.isContentEditable;
       if (e.key === 'Escape' && this.state.anexosId) this.setState({ anexosId: null });
+      if (e.key === 'Escape' && this.state.confirmRemoverId) this.setState({ confirmRemoverId: null });
       if (e.key === '/' && !digitando) { const el = document.querySelector('main input[placeholder]'); if (el) { e.preventDefault(); el.focus(); } }
     };
     window.addEventListener('keydown', this._onKey);
@@ -839,6 +852,7 @@ class Component extends DCLogic {
     caseFilterGroups.forEach(g => g.options.filter(o=>o.active).forEach(o => caseActiveChips.push({ label:o.label, remove:o.toggle })));
     const caseRaw = s.caseId ? casesTodos.find(c => c.id === s.caseId) : null;
     const caseSel = caseRaw ? decCase(caseRaw) : null;
+    const confirmRemoverCase = s.confirmRemoverId ? casesTodos.find(c => c.id === s.confirmRemoverId) : null;
     // formulário de case
     const fcase = s.formCase;
     const setFC = (k) => (e) => this.setState(st => ({ formCase: { ...st.formCase, [k]: e.target.value }, caseErro:'' }));
@@ -1005,6 +1019,8 @@ class Component extends DCLogic {
       caseFilterGroups, caseActiveChips, hasCaseFilters: caseActiveChips.length>0, clearCaseFilters:()=>this.setState({ caseFilters:{ escopo:[], segmento:[], ano:[], ferramenta:[] } }),
       caseQuery: s.caseQuery, onCaseQuery:(e)=>this.setState({ caseQuery:e.target.value }),
       caseSel, hasCaseSel: !!caseSel, casesRecentes, hasCasesRecentes: casesRecentes.length>0,
+      confirmRemoverAberto: !!confirmRemoverCase, confirmRemoverNome: confirmRemoverCase ? confirmRemoverCase.cliente : '',
+      confirmRemover:()=>this.removerCase(s.confirmRemoverId), cancelarRemover:()=>this.cancelarRemoverCase(),
       // formulário de case
       formCase: fcase, fc, escopoOptions, porteOptions, docTipoOptions, ferrChips, caseFiltroFerr: s.caseFiltroFerr, onCaseFiltroFerr:(e)=>this.setState({ caseFiltroFerr:e.target.value }),
       nFerrEscolhidas: fcase.ferramentas.length, docsRows, addDoc:()=>this.setState(st=>({ formCase:{ ...st.formCase, documentos: st.formCase.documentos.concat([{ nome:'', tipo:docTipoOptions[0]?docTipoOptions[0].value:'Outro', url:'' }]) } })),
