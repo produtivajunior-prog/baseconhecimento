@@ -158,6 +158,16 @@ await preencher('O que o cliente precisava e o que a Produtiva entregou.', 'A pa
 await preencher(/Processo de pedidos reduzido/, 'Preço dos 12 produtos revisto com margem conhecida');
 await preencher('Nome do arquivo', 'Relatório final.pdf');
 await preencher('https://drive.google.com/…', 'https://drive.google.com/file/d/1abcDEF/view');
+// segundo documento: PDF anexado direto (sem Drive), pelo botão "Anexar PDF"
+await page.getByRole('button', { name: '+ Adicionar documento' }).click();
+await page.waitForTimeout(150);
+await page.getByPlaceholder('Nome do arquivo').nth(1).fill('Proposta.pdf');
+await page.getByRole('button', { name: 'Anexar PDF' }).nth(1).click();
+await page.waitForTimeout(100);
+const PDF_MINIMO = Buffer.from('%PDF-1.4\n1 0 obj<</Type/Catalog>>endobj\ntrailer<</Size 1/Root 1 0 R>>\n%%EOF', 'utf-8');
+await page.locator('#hangar-doc-pdf-1').setInputFiles({ name: 'proposta.pdf', mimeType: 'application/pdf', buffer: PDF_MINIMO });
+await page.waitForTimeout(200);
+check(/PDF anexado/.test(await texto()), 'anexar PDF direto mostra o chip "PDF anexado" no formulário');
 await preencher(/youtu\.be/, 'https://youtu.be/dQw4w9WgXcQ');
 await page.waitForTimeout(200);
 check((await page.locator('iframe[src*="youtube.com/embed/dQw4w9WgXcQ"]').count()) > 0, 'pré-visualização do vídeo (iframe) apareceu no formulário');
@@ -175,6 +185,14 @@ let t = await texto();
 check(/Padaria Smoke/.test(t) && /Equipe do projeto/i.test(t), 'case publicado abriu a ficha');
 check((await page.locator('iframe[src*="youtube.com/embed/"]').count()) > 0, 'ficha do case embute o vídeo');
 check(/Relatório final\.pdf/.test(t) && /Abrir no Drive/.test(t), 'ficha lista o documento com botão do Drive');
+check(/Proposta\.pdf/.test(t) && /Abrir PDF/.test(t), 'ficha lista o PDF anexado com o rótulo "Abrir PDF"');
+{
+  await page.getByRole('button', { name: 'Abrir PDF' }).first().click();
+  await page.waitForTimeout(200);
+  const url = await page.evaluate(() => window.__abertoNoDrive);
+  check(!!url && /^blob:/.test(url), `"Abrir PDF" abre um blob: (não um data: bloqueado pelo Chrome) — ${url ? url.slice(0, 24) : 'nada'}`);
+  await page.evaluate(() => { window.__abertoNoDrive = null; });
+}
 check((await page.locator('main img[alt="Padaria Smoke"][src^="data:image/jpeg"]').count()) > 0 && /Equipe na entrega/.test(t), 'ficha mostra a foto de capa com a legenda');
 check(/Só neste navegador/i.test(t), 'ficha avisa que o case só existe neste navegador');
 check(/Pergunte a quem fez/.test(t), 'ficha tem o bloco "Pergunte a quem fez"');

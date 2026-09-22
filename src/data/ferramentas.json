@@ -2306,5 +2306,62 @@
     "pendencias": [
       "Só existe PDF avulso aplicado em cliente (SIPOC.pdf); falta metodologia e modelo padrão."
     ]
+  },
+  {
+    "id": "n8n",
+    "nome": "n8n (Automação de Workflows)",
+    "tipo": "Ferramenta",
+    "categoria": "Processos",
+    "complexidade": "Médio",
+    "tempo": "Varia com o fluxo",
+    "status": "Em construção",
+    "freq": "Média",
+    "responsavel": {
+      "nome": "Carlos Eduardo",
+      "email": "carloseduardo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-22",
+    "descricao": "Plataforma de automação de workflows (low-code) usada para conectar sistemas, disparar ações e automatizar rotinas repetitivas dentro dos projetos — como a conferência financeira automatizada do case Atlantis Divers.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "produtivajunior@gmail.com",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-22",
+      "proximaRevisao": "2026-12-22",
+      "nota": "Adicionado a pedido: ferramenta de automação usada em projetos (ex.: case Atlantis Divers), não um framework de consultoria — ainda sem metodologia própria no acervo. Carlos Eduardo (dono de Processos) revisa e decide o conteúdo completo."
+    },
+    "origem": {
+      "nome": "manual:carloseduardo@produtivajunior.com.br",
+      "tipo": "manual:carloseduardo@produtivajunior.com.br",
+      "categoria": "manual:carloseduardo@produtivajunior.com.br",
+      "complexidade": "manual:carloseduardo@produtivajunior.com.br",
+      "tempo": "manual:carloseduardo@produtivajunior.com.br",
+      "freq": "manual:carloseduardo@produtivajunior.com.br",
+      "responsavel": "manual:carloseduardo@produtivajunior.com.br",
+      "descricao": "manual:carloseduardo@produtivajunior.com.br",
+      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Sem roteiro de metodologia no Hangar (objetivo, passo a passo, perguntas-chave) — é uma ferramenta de automação, não um framework de consultoria; citada em cases (ex.: Atlantis Divers) mas sem material próprio ainda.",
+      "Responsável atribuído por convenção de categoria (dono de Processos); confirmar se é de fato quem cuida do n8n na Produtiva."
+    ]
   }
 ]

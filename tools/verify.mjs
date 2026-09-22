@@ -234,7 +234,9 @@ for (const c of cases) {
   for (const [i, d] of (c.documentos || []).entries()) {
     if (typeof d.nome !== 'string' || !d.nome) p(`${ctx}.documentos[${i}]`, 'sem nome');
     if (!enumDe(T.documentosCase).includes(d.tipo)) p(`${ctx}.documentos[${i}]`, `tipo "${d.tipo}" fora da taxonomia`);
-    if (!HTTPS.test(d.url || '')) p(`${ctx}.documentos[${i}]`, 'url precisa ser https');
+    const du = typeof d.url === 'string' ? d.url : '';
+    if (!HTTPS.test(du) && !/^data:application\/pdf;base64,/.test(du)) p(`${ctx}.documentos[${i}]`, 'url precisa ser https (Drive) ou data:application/pdf/… (PDF anexado)');
+    if (du.length > 11000000) p(`${ctx}.documentos[${i}]`, `PDF embutido com ${Math.round(du.length / 1024)} KB — acima de 8 MB; use o link do Drive`);
   }
   if (c.video && c.video.url && !HTTPS.test(c.video.url)) p(ctx, 'video.url precisa ser https');
   if (c.foto) {

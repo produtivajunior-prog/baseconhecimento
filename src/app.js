@@ -131,9 +131,44 @@ class Component extends DCLogic {
   abrirSeletorFoto() { if (typeof document === 'undefined') return; const el = document.getElementById('hangar-foto-input'); if (el) el.click(); }
   removerFoto() { this.setState(st => ({ formCase: { ...st.formCase, fotoDados: '', fotoLink: '', fotoLegenda: '' } })); }
 
+  // Documento em PDF anexado direto (sem passar pelo Drive): vira data URL dentro do próprio case.
+  // Sem compressão possível (não é imagem), por isso o limite de tamanho é mais apertado.
+  DOC_PDF_MAX = 8 * 1024 * 1024;
+  lerPdf(file) {
+    return new Promise((resolve, reject) => {
+      if (!file || !/^application\/pdf$/.test(file.type || '') && !/\.pdf$/i.test(file.name || '')) return reject(new Error('Escolha um arquivo PDF.'));
+      if (file.size > this.DOC_PDF_MAX) return reject(new Error('PDF maior que 8 MB — use o link do Drive em vez de anexar.'));
+      const r = new FileReader();
+      r.onerror = () => reject(new Error('Não consegui ler o arquivo.'));
+      r.onload = () => resolve(String(r.result));
+      r.readAsDataURL(file);
+    });
+  }
+  receberDocPdf(idx, file) {
+    this.lerPdf(file).then(
+      (dados) => this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.map((x, j) => j === idx ? { ...x, url: dados, nome: x.nome.trim() || file.name } : x) }, caseErro: '' })),
+      (err) => this.setState({ caseErro: err.message }));
+  }
+  onDocPdfArquivo(idx, e) { const f = e && e.target && e.target.files && e.target.files[0]; if (f) this.receberDocPdf(idx, f); try { e.target.value = ''; } catch (x) {} }
+  abrirSeletorDocPdf(idx) { if (typeof document === 'undefined') return; const el = document.getElementById('hangar-doc-pdf-' + idx); if (el) el.click(); }
+  removerDocPdf(idx) { this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.map((x, j) => j === idx ? { ...x, url: '' } : x) } })); }
+
   slugDe(t) { return this.normaliza(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   soDigitos(t) { return String(t || '').replace(/\D/g, ''); }
   abrirLink(url) { if (url && typeof window !== 'undefined') window.open(url, '_blank', 'noopener'); }
+  // Chrome bloqueia window.open direto para "data:" (anti-phishing); vira Blob primeiro, como o material da reunião já fazia.
+  abrirDataUrl(url) {
+    const m = /^data:([^;]+);base64,([\s\S]*)$/.exec(url || '');
+    if (!m) { this.abrirLink(url); return; }
+    try {
+      const bin = atob(m[2]);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      const blobUrl = URL.createObjectURL(new Blob([bytes], { type: m[1] }));
+      this.abrirLink(blobUrl);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+    } catch (e) { this.abrirLink(url); }
+  }
   baixarArquivo(nome, conteudo, mime) {
     if (typeof document === 'undefined') return false;
     try {
@@ -215,7 +250,7 @@ class Component extends DCLogic {
     const emails = [f.gerenteEmail, f.c1Email, f.c2Email, f.meuEmail].filter(Boolean);
     if (emails.some(e => !/^[^@\s]+@produtivajunior\.com\.br$/.test(e.trim()))) return 'Use e-mails @produtivajunior.com.br na equipe.';
     for (const z of [f.gerenteZap, f.c1Zap, f.c2Zap]) { const d = this.soDigitos(z); if (z && (d.length < 10 || d.length > 13)) return 'WhatsApp com DDD, só números (ex.: 84 99999-0000).'; }
-    for (const d of f.documentos) { if ((d.nome || d.url) && !/^https:\/\//.test(d.url || '')) return 'Cada documento precisa de um link https (Drive).'; }
+    for (const d of f.documentos) { if ((d.nome || d.url) && !/^https:\/\//.test(d.url || '') && !/^data:application\/pdf/.test(d.url || '')) return 'Cada documento precisa de um link https (Drive) ou de um PDF anexado.'; }
     if (f.videoUrl && !/^https:\/\//.test(f.videoUrl.trim())) return 'O link do vídeo precisa começar com https://.';
     if (!f.fotoDados && f.fotoLink && !/^https:\/\//.test(f.fotoLink.trim())) return 'O link da foto precisa começar com https:// (Drive).';
     if (!f.meuNome.trim()) return 'Diga quem está cadastrando (seu nome).';
@@ -234,7 +269,7 @@ class Component extends DCLogic {
       resumo: f.resumo.trim(), desafio: f.desafio.trim(), solucao: f.solucao.trim(),
       resultados: this.linhas(f.resultados), aprendizados: this.linhas(f.aprendizados),
       ferramentas: f.ferramentas.slice(),
-      documentos: f.documentos.filter(d => d.url).map(d => ({ nome: d.nome.trim() || d.url, tipo: d.tipo, url: d.url.trim() })),
+      documentos: f.documentos.filter(d => d.url).map(d => ({ nome: d.nome.trim() || (/^data:/.test(d.url) ? 'Documento.pdf' : d.url), tipo: d.tipo, url: d.url.trim() })),
       foto: (f.fotoDados || f.fotoLink.trim()) ? { url: f.fotoDados || f.fotoLink.trim(), legenda: (f.fotoLegenda || '').trim() } : null,
       video: f.videoUrl.trim() ? { url: f.videoUrl.trim(), quem: f.videoQuem.trim(), duracao: f.videoDuracao.trim() } : null,
       depoimentoCliente: f.depoimento.trim(), tags: f.tags.split(',').map(x => x.trim()).filter(Boolean),
@@ -304,7 +339,7 @@ class Component extends DCLogic {
       });
     const hasContatos = equipe.some(x => x.hasContato);
     const ferramentas = (c.ferramentas || []).map(fid => this.allData().find(d => d.id === fid)).filter(Boolean).map(d => this.decorate(d));
-    const docs = (c.documentos || []).map(d => ({ ...d, ext: this.extOf(d), abrir: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); if (typeof window!=='undefined') window.open(d.url, '_blank', 'noopener'); } }));
+    const docs = (c.documentos || []).map(d => ({ ...d, ext: this.extOf(d), btnLabel: /^data:/.test(d.url || '') ? 'Abrir PDF' : 'Abrir no Drive', abrir: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.abrirDataUrl(d.url); } }));
     const video = c.video && c.video.url ? c.video : null;
     const embed = video ? this.embedDe(video.url) : '';
     const foto = c.foto && c.foto.url ? c.foto : null;
@@ -866,12 +901,14 @@ class Component extends DCLogic {
       return { id:d.id, nome:d.nome, ativo, inativo:!ativo, bg: ativo?'#EAF6F9':'#fff', border: ativo?'#3DAFC7':'#DCE7EB', color: ativo?'#1E7C92':'#3C545B',
         toggle: () => this.setState(st => ({ formCase: { ...st.formCase, ferramentas: ativo ? st.formCase.ferramentas.filter(x=>x!==d.id) : st.formCase.ferramentas.concat(d.id) } })) };
     });
-    const docsRows = fcase.documentos.map((d, i) => ({ ...d, idx:i, n:i+1,
+    const docsRows = fcase.documentos.map((d, i) => { const isPdf = /^data:application\/pdf/.test(d.url || ''); return { ...d, idx:i, n:i+1, isPdf, semPdf:!isPdf,
       setNome: (e) => this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.map((x,j)=>j===i?{...x,nome:e.target.value}:x) } })),
       setTipo: (e) => this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.map((x,j)=>j===i?{...x,tipo:e.target.value}:x) } })),
       setUrl: (e) => this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.map((x,j)=>j===i?{...x,url:e.target.value}:x) } })),
       remove: () => this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.filter((_,j)=>j!==i) } })),
-      tipoOptions: docTipoOptions.map(o => ({ ...o, selected: o.value===d.tipo })) }));
+      pdfKB: isPdf ? Math.round(d.url.length * 0.75 / 1024) : 0,
+      anexarPdf: () => this.abrirSeletorDocPdf(i), onPdfArquivo: (e) => this.onDocPdfArquivo(i, e), removerPdf: () => this.removerDocPdf(i),
+      tipoOptions: docTipoOptions.map(o => ({ ...o, selected: o.value===d.tipo })) }; });
     const videoPreview = this.embedDe(fcase.videoUrl);
     const fotoPreview = this.fotoSrc(fcase.fotoDados || fcase.fotoLink);
     const fotoFonte = fcase.fotoDados ? 'Foto enviada do seu computador · vai dentro do arquivo do case (' + Math.round(fcase.fotoDados.length * 0.75 / 1024) + ' KB)' : (fcase.fotoLink ? 'Foto pelo link do Drive · quem abrir precisa ter acesso ao arquivo' : '');
