@@ -1,0 +1,755 @@
+{
+  "_comentario": "Mapa curado por ferramenta: o que exige julgamento (categoria no Hangar, tipo, complexidade, frequência, anexos com id do Drive, entradas/saídas) e os stubs sem metodologia. O TEXTO da ficha vem do PDF de metodologia via tools/rascunho.mjs; o que está aqui entra no rascunho como origem 'manual' e é revisado pelo dono.",
+  "donos": {
+    "carloseduardo@produtivajunior.com.br": "Carlos Eduardo",
+    "gabrielapalma@produtivajunior.com.br": "Gabriela Palma",
+    "viniciusmoraes@produtivajunior.com.br": "Vinícius Moraes",
+    "laurarodrigues@produtivajunior.com.br": "Laura Rodrigues",
+    "heitorqueiroz@produtivajunior.com.br": "Heitor Queiroz",
+    "thiagomelo@produtivajunior.com.br": "Thiago Melo"
+  },
+  "ferramentas": [
+    {
+      "id": "pmmc",
+      "nome": "Process Map Model Canvas (PMMC)",
+      "tipo": "Metodologia",
+      "categoria": "Processos",
+      "complexidade": "Médio",
+      "tempo": "1 reunião de 2h + consolidação",
+      "freq": "Alta",
+      "responsavel": "carloseduardo@produtivajunior.com.br",
+      "metodologiaId": "16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr",
+      "anexos": [
+        {
+          "driveId": "16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr",
+          "tipo": "Metodologia (PDF)",
+          "nome": "[CIEP] Metodologia - PMMC.pdf",
+          "descricao": "Metodologia completa: os 10 blocos, perguntas-chave e recomendações de condução."
+        },
+        {
+          "driveId": "1sfzv1hNxzuRhD0NDe9ekpxfNE2EDsqOB",
+          "tipo": "Modelo padrão",
+          "nome": "[CIEP] Process Map Model Canvas.pdf",
+          "descricao": "Canvas em branco com os 10 blocos e a pergunta-guia de cada um."
+        },
+        {
+          "driveId": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+          "tipo": "Planilha",
+          "nome": "Banco de Indicadores",
+          "descricao": "139 indicadores por escopo, com fórmula e método, para o bloco Indicadores de Performance."
+        }
+      ],
+      "entradas": [
+        "Reunião ou brainstorming com o gestor e a equipe do processo",
+        "Documentos existentes: POPs, manuais, fluxogramas antigos"
+      ],
+      "saidas": [
+        "Canvas PMMC preenchido e validado com o gestor",
+        "Base para o mapeamento AS IS e para o relatório de melhorias"
+      ],
+      "modelo": {
+        "sigla": "PMMC",
+        "layout": "canvas",
+        "fonteId": "1sfzv1hNxzuRhD0NDe9ekpxfNE2EDsqOB",
+        "blocos": [
+          {
+            "titulo": "Principais Fornecedores",
+            "gc": "1 / 2",
+            "gr": "1 / 2",
+            "dica": "De onde são retirados os insumos envolvidos no processo?"
+          },
+          {
+            "titulo": "Principais Insumos",
+            "gc": "2 / 3",
+            "gr": "1 / 2",
+            "dica": "Inputs (físicos ou de ordem intelectual) que serão processados até o resultado final."
+          },
+          {
+            "titulo": "Principais Atividades",
+            "gc": "3 / 4",
+            "gr": "1 / 2",
+            "dica": "Quais atividades são desempenhadas desde o repasse dos insumos até a finalização da proposta de valor?"
+          },
+          {
+            "titulo": "Principais Produtos",
+            "gc": "4 / 5",
+            "gr": "1 / 2",
+            "dica": "Informações de saída resultantes do processo (resultados)."
+          },
+          {
+            "titulo": "Principais Clientes",
+            "gc": "5 / 6",
+            "gr": "1 / 2",
+            "dica": "Beneficiários do processo. Aqueles a quem o produto é destinado."
+          },
+          {
+            "titulo": "Recursos Humanos",
+            "gc": "1 / 3",
+            "gr": "2 / 3",
+            "dica": "Quem e quantos são responsáveis pelo processo? Funções e cargos podem ser importantes."
+          },
+          {
+            "titulo": "Recursos Tecnológicos",
+            "gc": "3 / 4",
+            "gr": "2 / 3",
+            "dica": "Equipamentos e sistemas utilizados."
+          },
+          {
+            "titulo": "Finalidade e Melhorias",
+            "gc": "4 / 6",
+            "gr": "2 / 3",
+            "dica": "Qual o objetivo desse processo? Existem melhorias propostas ou em andamento?"
+          },
+          {
+            "titulo": "Indicadores de Performance",
+            "gc": "1 / 3",
+            "gr": "3 / 4",
+            "dica": "Indicadores (quantitativos) utilizados para apuração de resultados na empresa."
+          },
+          {
+            "titulo": "Ferramentas de Controle",
+            "gc": "3 / 6",
+            "gr": "3 / 4",
+            "dica": "Quais os controles utilizados para o acompanhamento do processo?"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mapa-de-contexto",
+      "nome": "Mapa de Contexto",
+      "tipo": "Ferramenta",
+      "categoria": "Entendimento",
+      "complexidade": "Baixo",
+      "tempo": "2–3h",
+      "freq": "Média",
+      "responsavel": "carloseduardo@produtivajunior.com.br",
+      "metodologiaId": "1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm",
+      "anexos": [
+        {
+          "driveId": "1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm",
+          "tipo": "Metodologia (PDF)",
+          "nome": "[CIEP] Metodologia de Mapa de Contexto.pdf",
+          "descricao": "O que é, importância, construção em 5 passos e benefícios."
+        },
+        {
+          "driveId": "161BO5wQ10MHub_X-9ngOWOKkG1pd3ga1",
+          "tipo": "Modelo padrão",
+          "nome": "[CIEP] Modelo PPT Mapa de Contexto.pdf",
+          "descricao": "Slides-modelo para apresentar o mapa ao cliente."
+        }
+      ],
+      "entradas": [
+        "Lista de áreas e departamentos da empresa",
+        "Partes interessadas internas e externas"
+      ],
+      "saidas": [
+        "Mapa visual do sistema, agentes externos e fluxos",
+        "Fronteira clara do que está dentro e fora do escopo"
+      ]
+    },
+    {
+      "id": "swot",
+      "nome": "Matriz SWOT",
+      "tipo": "Ferramenta",
+      "categoria": "Entendimento",
+      "complexidade": "Médio",
+      "tempo": "Qualitativa 1–2h · Quantitativa +2h",
+      "freq": "Alta",
+      "responsavel": "gabrielapalma@produtivajunior.com.br",
+      "metodologiaId": "1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8",
+      "anexos": [
+        {
+          "driveId": "1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8",
+          "tipo": "Metodologia (PDF)",
+          "nome": "Metodologia - SWOT.pdf",
+          "descricao": "Definição, SWOT qualitativa e quantitativa, roteiro de perguntas e cenários estratégicos."
+        },
+        {
+          "driveId": "1-Y_mYRGz1ZxiVVAK1_WyMlZFYjUBjGf7",
+          "tipo": "Modelo padrão",
+          "nome": "[SWOT] Modelo padrão.pdf",
+          "descricao": "Matriz em branco com os 4 quadrantes."
+        },
+        {
+          "driveId": "1xSiqIc7gthAaUHSa3RBs1_BMoqQMZRAWU7zQg-xBWUw",
+          "tipo": "Planilha",
+          "nome": "Matriz SWOT Quantitativa - MODELO PADRÃO",
+          "descricao": "Planilha de cruzamento com pesos, somas, ordem e cálculo dos 4 cenários."
+        }
+      ],
+      "entradas": [
+        "Entrevistas com participantes de níveis e áreas diferentes",
+        "Dados secundários sobre mercado e concorrência"
+      ],
+      "saidas": [
+        "Matriz SWOT qualitativa validada",
+        "Matriz quantitativa com priorização e cenário estratégico"
+      ],
+      "modelo": {
+        "sigla": "SWOT",
+        "layout": "canvas",
+        "fonteId": "1-Y_mYRGz1ZxiVVAK1_WyMlZFYjUBjGf7",
+        "blocos": [
+          {
+            "titulo": "Forças",
+            "gc": "1 / 2",
+            "gr": "1 / 2",
+            "dica": "Fatores internos positivos que a empresa controla."
+          },
+          {
+            "titulo": "Fraquezas",
+            "gc": "2 / 3",
+            "gr": "1 / 2",
+            "dica": "Fatores internos negativos que a empresa controla."
+          },
+          {
+            "titulo": "Oportunidades",
+            "gc": "1 / 2",
+            "gr": "2 / 3",
+            "dica": "Fatores externos favoráveis, fora do controle da empresa."
+          },
+          {
+            "titulo": "Ameaças",
+            "gc": "2 / 3",
+            "gr": "2 / 3",
+            "dica": "Fatores externos desfavoráveis, fora do controle da empresa."
+          }
+        ]
+      }
+    },
+    {
+      "id": "porter",
+      "nome": "5 Forças de Porter",
+      "tipo": "Ferramenta",
+      "categoria": "Entendimento",
+      "complexidade": "Médio",
+      "tempo": "2–3h",
+      "freq": "Média",
+      "responsavel": "gabrielapalma@produtivajunior.com.br",
+      "metodologiaId": "1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h",
+      "anexos": [
+        {
+          "driveId": "1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h",
+          "tipo": "Metodologia (PDF)",
+          "nome": "Metodologia - 5 Forças de Porter.pdf",
+          "descricao": "Definição, as 5 forças com 'como coletar', construção e modelo padrão."
+        },
+        {
+          "driveId": "19FF6AvSQ5YzYieFjahDTW5ShIX9h3qCq",
+          "tipo": "Modelo padrão",
+          "nome": "Modelo - 5 Forças de Porter.pdf",
+          "descricao": "Diagrama das 5 forças com as perguntas-guia."
+        },
+        {
+          "driveId": "1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY",
+          "tipo": "Planilha",
+          "nome": "Modelo Padrão - 5 Forças de Porter",
+          "descricao": "Planilha com questões determinantes, avaliação e nota por força, e gráfico."
+        }
+      ],
+      "entradas": [
+        "Dados do setor: concorrentes, fornecedores, clientes, substitutos",
+        "Entrevista com o gestor sobre o mercado"
+      ],
+      "saidas": [
+        "Nota de intensidade de cada força",
+        "Leitura da atratividade do setor para o planejamento"
+      ],
+      "modelo": {
+        "sigla": "5F",
+        "layout": "grid",
+        "fonteId": "19FF6AvSQ5YzYieFjahDTW5ShIX9h3qCq",
+        "blocos": [
+          {
+            "titulo": "Rivalidade entre os concorrentes",
+            "dica": "Quantos concorrentes, com que intensidade disputam preço e cliente."
+          },
+          {
+            "titulo": "Poder de barganha dos fornecedores",
+            "dica": "Quantos fornecedores existem e quanto ditam preço e prazo."
+          },
+          {
+            "titulo": "Poder de barganha dos clientes",
+            "dica": "Quanto os clientes pressionam preço e condições."
+          },
+          {
+            "titulo": "Ameaça de novos entrantes",
+            "dica": "Barreiras de entrada e facilidade de novos concorrentes surgirem."
+          },
+          {
+            "titulo": "Ameaça de produtos substitutos",
+            "dica": "Alternativas que resolvem a mesma necessidade do cliente."
+          }
+        ]
+      }
+    },
+    {
+      "id": "cpv",
+      "nome": "Canvas de Proposta de Valor (CPV)",
+      "tipo": "Ferramenta",
+      "categoria": "Entendimento",
+      "complexidade": "Baixo",
+      "tempo": "1–2h",
+      "freq": "Média",
+      "responsavel": "laurarodrigues@produtivajunior.com.br",
+      "metodologiaId": "1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb",
+      "anexos": [
+        {
+          "driveId": "1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb",
+          "tipo": "Metodologia (PDF)",
+          "nome": "Metodologia - CPV.pdf",
+          "descricao": "Definição, perfil do cliente (tarefas, dores, ganhos) e mapa de valor, com dicas e projeto de referência."
+        },
+        {
+          "driveId": "1QK6lIIWR589W8HG0xWhknAENBw8cwwYD",
+          "tipo": "Modelo padrão",
+          "nome": "[CIEP] Proposta de Valor (Modelo Padrão)",
+          "descricao": "Canvas em branco com os 6 blocos."
+        }
+      ],
+      "entradas": [
+        "Segmento de cliente definido (ICP ou persona)",
+        "Entrevistas ou pesquisa com clientes"
+      ],
+      "saidas": [
+        "Canvas com perfil do cliente e mapa de valor encaixados"
+      ],
+      "modelo": {
+        "sigla": "CPV",
+        "layout": "canvas",
+        "fonteId": "1QK6lIIWR589W8HG0xWhknAENBw8cwwYD",
+        "blocos": [
+          {
+            "titulo": "Produtos e serviços",
+            "gc": "1 / 2",
+            "gr": "1 / 4",
+            "dica": "O que a empresa oferece para o segmento."
+          },
+          {
+            "titulo": "Aliviadores de dores",
+            "gc": "2 / 3",
+            "gr": "1 / 2",
+            "dica": "Como a oferta reduz ou elimina as dores do cliente."
+          },
+          {
+            "titulo": "Criadores de ganhos",
+            "gc": "2 / 3",
+            "gr": "2 / 4",
+            "dica": "Como a oferta gera os ganhos que o cliente espera."
+          },
+          {
+            "titulo": "Tarefas do cliente",
+            "gc": "3 / 4",
+            "gr": "1 / 4",
+            "dica": "O que o cliente está tentando realizar."
+          },
+          {
+            "titulo": "Dores",
+            "gc": "4 / 5",
+            "gr": "1 / 2",
+            "dica": "Frustrações, riscos e obstáculos que o cliente enfrenta."
+          },
+          {
+            "titulo": "Ganhos",
+            "gc": "4 / 5",
+            "gr": "2 / 4",
+            "dica": "Resultados e benefícios que o cliente deseja."
+          }
+        ]
+      }
+    },
+    {
+      "id": "estudo-de-segmento",
+      "nome": "Estudo de Segmento",
+      "tipo": "Checklist",
+      "categoria": "Entendimento",
+      "complexidade": "Baixo",
+      "tempo": "2–4h de pesquisa",
+      "freq": "Alta",
+      "responsavel": "carloseduardo@produtivajunior.com.br",
+      "metodologiaId": "1KcKyCTQceifhm4btNwmzvW43BEFbQ-Kh",
+      "anexos": [
+        {
+          "driveId": "1KcKyCTQceifhm4btNwmzvW43BEFbQ-Kh",
+          "tipo": "Modelo padrão",
+          "nome": "[CIEP] Checklist do Estudo de Segmento.pdf",
+          "descricao": "Checklist: informações básicas, contexto de mercado e materiais de coleta."
+        },
+        {
+          "driveId": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+          "tipo": "Planilha",
+          "nome": "Banco de Indicadores",
+          "descricao": "Indicadores úteis por segmento e escopo."
+        }
+      ],
+      "entradas": [
+        "Nome e CNPJ da empresa",
+        "Site, LinkedIn, Reclame Aqui, Instagram"
+      ],
+      "saidas": [
+        "Ficha do segmento preenchida antes da RAC/RAP"
+      ],
+      "descricao": "Checklist do que levantar sobre a empresa e o segmento antes de iniciar o projeto: informações básicas, contexto de mercado e materiais de coleta.",
+      "objetivo": "Chegar à RAC e à RAP já conhecendo porte, produtos, clientes, concorrentes, tendências e regulamentação do segmento.",
+      "problema": "Consultor entrava no cliente sem estudo prévio e gastava as primeiras reuniões descobrindo o básico.",
+      "quandoUsar": [
+        "Sempre, antes da primeira reunião com o gestor",
+        "Ao receber o repasse comercial de um cliente novo"
+      ],
+      "perguntas": [
+        "Qual o porte e quantos colaboradores?",
+        "Quem são os principais concorrentes e qual a participação de mercado?",
+        "Há regulamentações ou normas que limitam o setor?",
+        "Quais indicadores do Banco de Indicadores se aplicam ao segmento?"
+      ]
+    },
+    {
+      "id": "banco-de-indicadores",
+      "nome": "Banco de Indicadores",
+      "tipo": "Template",
+      "categoria": "Metodologias",
+      "complexidade": "Baixo",
+      "tempo": "Consulta",
+      "freq": "Alta",
+      "responsavel": "carloseduardo@produtivajunior.com.br",
+      "metodologiaId": null,
+      "descricao": "Planilha com 139 indicadores classificados por hierarquia (estratégico, tático, operacional), tipo (KPI ou suporte), segmento, escopo sugerido, medida, direção (maior ou menor é melhor), fórmula e método de aplicação.",
+      "objetivo": "Dar ao consultor um ponto de partida para escolher indicadores no PMMC, no gerenciamento financeiro, em processos e nos demais escopos, sem inventar métrica do zero.",
+      "problema": "Cada projeto reinventava indicadores; a planilha padroniza nome, fórmula e forma de coleta.",
+      "anexos": [
+        {
+          "driveId": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
+          "tipo": "Planilha",
+          "nome": "Planilha de indicadores [PROCESSOS]",
+          "descricao": "Aba 1: indicador, hierarquia, tipo, segmento, escopo, medida, melhor, como calcular, o que é. Aba 2: escopo sugerido, setor, fórmula e método."
+        }
+      ],
+      "entradas": [
+        "Escopo do projeto e setor do cliente"
+      ],
+      "saidas": [
+        "Lista curta de indicadores com fórmula e método de coleta"
+      ],
+      "quandoUsar": [
+        "Ao preencher o bloco Indicadores de Performance do PMMC",
+        "Ao definir indicadores em Gerenciamento Financeiro, Custeio, Comercial ou Estoque",
+        "Quando o gestor pede 'um indicador' e não sabe qual"
+      ],
+      "quandoNao": [
+        "Quando o cliente já tem indicadores maduros e consistentes: nesse caso, revise os dele"
+      ],
+      "passos": [
+        "Filtre a aba 1 pelo escopo sugerido e pelo setor",
+        "Escolha poucos indicadores, misturando estratégico, tático e operacional",
+        "Confira na aba 2 a fórmula e o método de aplicação",
+        "Valide com o gestor se o dado existe ou pode ser coletado"
+      ],
+      "perguntas": [
+        "O dado necessário para a fórmula já é coletado hoje?",
+        "O indicador é KPI ou apenas suporte?",
+        "Maior ou menor é melhor para este indicador?"
+      ],
+      "cuidados": [
+        "Não leve 15 indicadores ao cliente: escolha os que ele consegue acompanhar",
+        "Confirme a unidade de medida antes de montar dashboard"
+      ],
+      "exemplos": [
+        "Gerenciamento Financeiro: 12 indicadores sugeridos na aba 2",
+        "Mapeamento e Modelagem: 17 indicadores sugeridos na aba 2"
+      ]
+    },
+    {
+      "id": "bmc",
+      "nome": "Business Model Canvas (BMC)",
+      "tipo": "Ferramenta",
+      "categoria": "Entendimento",
+      "complexidade": "Baixo",
+      "tempo": "1–2h",
+      "freq": "Alta",
+      "responsavel": "gabrielapalma@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Canvas de 9 blocos que descreve o modelo de negócio da empresa: segmentos, proposta de valor, canais, relacionamento, receitas, recursos, atividades, parcerias e custos.",
+      "pendencias": [
+        "Sem PDF de metodologia no Drive: só a página do Hangar e o modelo '[CIEP] Modelo - BMC.pdf' citado no MVP. Pedir a gabrielapalma@ a metodologia ou colar a página do Hangar em fontes/hangar/bmc.md."
+      ],
+      "modeloLegadoId": "bmc"
+    },
+    {
+      "id": "bpmn",
+      "nome": "Fluxograma de Processos (BPMN AS IS / TO BE)",
+      "tipo": "Metodologia",
+      "categoria": "Processos",
+      "complexidade": "Alto",
+      "tempo": "1 sprint por processo",
+      "freq": "Alta",
+      "responsavel": "carloseduardo@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Desenho dos processos como são (AS IS) e como devem ser (TO BE) em notação BPMN, base do Mapeamento e Modelagem.",
+      "pendencias": [
+        "Sem metodologia no Drive: a notação e o padrão de desenho estão só no Hangar (Sistema PJ). Colar a página em fontes/hangar/bpmn.md."
+      ]
+    },
+    {
+      "id": "sipoc",
+      "nome": "SIPOC",
+      "tipo": "Ferramenta",
+      "categoria": "Processos",
+      "complexidade": "Baixo",
+      "tempo": "1h por processo",
+      "freq": "Média",
+      "responsavel": "carloseduardo@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Tabela Suppliers–Inputs–Process–Outputs–Customers que delimita um processo antes de fluxogramar.",
+      "pendencias": [
+        "Só existe PDF avulso aplicado em cliente (SIPOC.pdf); falta metodologia e modelo padrão."
+      ]
+    },
+    {
+      "id": "raci",
+      "nome": "Matriz RACI",
+      "tipo": "Ferramenta",
+      "categoria": "Processos",
+      "complexidade": "Baixo",
+      "tempo": "1h",
+      "freq": "Média",
+      "responsavel": "carloseduardo@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Matriz que define quem é Responsável, Aprovador, Consultado e Informado em cada atividade do processo.",
+      "pendencias": [
+        "Só aplicações em cliente (ex.: Matriz RACI - PotiCode); falta metodologia e modelo padrão."
+      ]
+    },
+    {
+      "id": "jornada-do-cliente",
+      "nome": "Jornada do Cliente (AS IS / TO BE)",
+      "tipo": "Ferramenta",
+      "categoria": "Metodologias",
+      "complexidade": "Médio",
+      "tempo": "2–3h",
+      "freq": "Alta",
+      "responsavel": "viniciusmoraes@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Mapa das etapas, pontos de contato e emoções do cliente com a empresa, hoje e como deveria ser.",
+      "pendencias": [
+        "Só aplicações em cliente (Jornada do Cliente To Be / As Is); falta metodologia e modelo padrão."
+      ]
+    },
+    {
+      "id": "icp",
+      "nome": "ICP (Ideal Customer Profile)",
+      "tipo": "Ferramenta",
+      "categoria": "Entendimento",
+      "complexidade": "Baixo",
+      "tempo": "1–2h",
+      "freq": "Alta",
+      "responsavel": "viniciusmoraes@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Perfil do cliente ideal da empresa: quem compra mais, com menos esforço e mais margem.",
+      "pendencias": [
+        "Citado nos Cronogramas Base (Plano de Marketing, Estruturação Comercial, Pesquisa de Mercado) sem metodologia no Drive."
+      ]
+    },
+    {
+      "id": "buyer-persona",
+      "nome": "Buyer Persona",
+      "tipo": "Ferramenta",
+      "categoria": "Entendimento",
+      "complexidade": "Baixo",
+      "tempo": "1–2h",
+      "freq": "Média",
+      "responsavel": "viniciusmoraes@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Representação semi-fictícia do cliente típico, com contexto, objetivos e dores.",
+      "pendencias": [
+        "Citada no Resumão (Plano de MKT, Idealização de Novos Produtos) sem metodologia no Drive."
+      ]
+    },
+    {
+      "id": "matriz-de-concorrentes",
+      "nome": "Matriz de Concorrentes",
+      "tipo": "Ferramenta",
+      "categoria": "Entendimento",
+      "complexidade": "Baixo",
+      "tempo": "2h",
+      "freq": "Alta",
+      "responsavel": "viniciusmoraes@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Comparação estruturada da empresa com os concorrentes diretos em critérios definidos com o cliente.",
+      "pendencias": [
+        "Entregável recorrente nos Cronogramas Base; sem metodologia própria (ver Matriz de Comparativo de Marcas)."
+      ]
+    },
+    {
+      "id": "pestel",
+      "nome": "Análise PESTEL",
+      "tipo": "Ferramenta",
+      "categoria": "Entendimento",
+      "complexidade": "Baixo",
+      "tempo": "1–2h",
+      "freq": "Média",
+      "responsavel": "gabrielapalma@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Análise do ambiente macro: fatores políticos, econômicos, sociais, tecnológicos, ecológicos e legais.",
+      "pendencias": [
+        "Entregável em Plano de Marketing e Planejamento Estratégico; sem metodologia no Drive."
+      ]
+    },
+    {
+      "id": "curva-abc",
+      "nome": "Curva ABC",
+      "tipo": "Ferramenta",
+      "categoria": "Metodologias",
+      "complexidade": "Baixo",
+      "tempo": "1h com os dados em mãos",
+      "freq": "Média",
+      "responsavel": "thiagomelo@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Classificação de produtos, clientes ou materiais pela participação acumulada no faturamento ou no gasto.",
+      "pendencias": [
+        "Etapa do Custeio e Precificação e da Gestão de Estoque; sem metodologia no Drive."
+      ]
+    },
+    {
+      "id": "dre",
+      "nome": "DRE (Demonstrativo de Resultado)",
+      "tipo": "Template",
+      "categoria": "Metodologias",
+      "complexidade": "Médio",
+      "tempo": "1 sprint",
+      "freq": "Alta",
+      "responsavel": "thiagomelo@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Demonstrativo padronizado de receitas, custos, despesas e resultado, geral ou por produto.",
+      "pendencias": [
+        "Entregável de Gerenciamento Financeiro e Custeio; falta o modelo padrão da planilha no Drive."
+      ]
+    },
+    {
+      "id": "markup",
+      "nome": "Markup e Margem de Contribuição",
+      "tipo": "Ferramenta",
+      "categoria": "Metodologias",
+      "complexidade": "Médio",
+      "tempo": "1 sprint",
+      "freq": "Média",
+      "responsavel": "thiagomelo@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Cálculo do preço de venda a partir do custo, das despesas e da margem desejada por produto.",
+      "pendencias": [
+        "Etapa do Custeio e Precificação; sem metodologia no Drive."
+      ]
+    },
+    {
+      "id": "pco",
+      "nome": "PCO (Pesquisa de Clima Organizacional)",
+      "tipo": "Template",
+      "categoria": "Pesquisas de cultura",
+      "complexidade": "Médio",
+      "tempo": "1 sprint de aplicação",
+      "freq": "Média",
+      "responsavel": "laurarodrigues@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Questionário aplicado aos colaboradores para medir clima e engajamento.",
+      "pendencias": [
+        "Existe o formulário '[2025] PCO' e respostas por empresa (thiagomelo@), sem metodologia de aplicação e análise."
+      ]
+    },
+    {
+      "id": "ibaco",
+      "nome": "IBACO",
+      "tipo": "Template",
+      "categoria": "Pesquisas de cultura",
+      "complexidade": "Médio",
+      "tempo": "1 sprint de aplicação",
+      "freq": "Baixa",
+      "responsavel": "laurarodrigues@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Inventário Brasileiro de Cultura Organizacional: questionário validado de valores e práticas.",
+      "pendencias": [
+        "Só o formulário aplicado em cliente (CRN-Bio); sem metodologia."
+      ]
+    },
+    {
+      "id": "fib",
+      "nome": "FIB (Felicidade Interna Bruta)",
+      "tipo": "Template",
+      "categoria": "Pesquisas de cultura",
+      "complexidade": "Médio",
+      "tempo": "1 sprint de aplicação",
+      "freq": "Baixa",
+      "responsavel": "laurarodrigues@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Pesquisa de bem-estar dos colaboradores nas dimensões do FIB.",
+      "pendencias": [
+        "Nada no Drive; conteúdo só no Hangar."
+      ]
+    },
+    {
+      "id": "mlq",
+      "nome": "MLQ-6S (Liderança)",
+      "tipo": "Template",
+      "categoria": "Pesquisas de cultura",
+      "complexidade": "Médio",
+      "tempo": "1 sprint de aplicação",
+      "freq": "Baixa",
+      "responsavel": "laurarodrigues@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Questionário multifatorial de liderança aplicado a gestores e equipes.",
+      "pendencias": [
+        "Só o formulário aplicado em cliente (CRN-Bio); sem metodologia."
+      ]
+    },
+    {
+      "id": "dco",
+      "nome": "DCO (Descritivo de Cargo e Ordem de serviço)",
+      "tipo": "Template",
+      "categoria": "Metodologias",
+      "complexidade": "Médio",
+      "tempo": "1–2 sprints",
+      "freq": "Alta",
+      "responsavel": "laurarodrigues@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Documento que formaliza atribuições, responsabilidades e rotina de cada cargo após a modelagem.",
+      "pendencias": [
+        "Só decks de treinamento ([PTPJ 26.1] DCO.pdf, [Mechanics] DCO.pdf); falta metodologia e modelo padrão."
+      ]
+    },
+    {
+      "id": "gamificacao",
+      "nome": "Manual de Gamificação",
+      "tipo": "Metodologia",
+      "categoria": "Metodologias",
+      "complexidade": "Alto",
+      "tempo": "2 sprints",
+      "freq": "Baixa",
+      "responsavel": "laurarodrigues@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Critérios, pontuações, tema e ferramenta de acompanhamento que transformam metas em jogo para a equipe.",
+      "pendencias": [
+        "Só decks de treinamento (Gamificação - PTPJ) e um manual de cliente ([CT] Manual da Gamificação - Meta Concreta); falta metodologia padrão."
+      ]
+    },
+    {
+      "id": "ux-research-canvas",
+      "nome": "UX Research Canvas",
+      "tipo": "Ferramenta",
+      "categoria": "Metodologias",
+      "complexidade": "Baixo",
+      "tempo": "1h",
+      "freq": "Baixa",
+      "responsavel": "viniciusmoraes@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Canvas que define objetivo, hipóteses, público, método e métricas de uma pesquisa antes de aplicá-la.",
+      "pendencias": [
+        "Método da etapa 'Definição da Pesquisa' no Cronograma Base de Pesquisa de Mercado; sem metodologia no Drive."
+      ]
+    }
+  ],
+  "foraDoEscopo": {
+    "_comentario": "Ferramentas retiradas do acervo porque não fazem parte dos escopos da Produtiva. Não voltam em rascunho.mjs --ferramentas; os arquivos-fonte continuam em fontes/drive/ só como registro.",
+    "removidasEm": "2026-09-24",
+    "pedidoPor": "produtivajunior@gmail.com",
+    "ids": ["mapa-perceptual", "comparativo-de-marcas", "matriz-gracioso", "teoria-da-saliencia", "cadeia-de-valor"]
+  }
+}

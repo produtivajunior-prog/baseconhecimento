@@ -1,0 +1,36 @@
+# id: 1HeM7YZv0vgQCTkn6ZOzS11h9jELTGUqkmtaITIOEp10
+# nome: Cronograma Base Estruturação Comercial  - Thiago Melo
+# mimeType: application/vnd.google-apps.spreadsheet
+# dono: thiagomelo@produtivajunior.com.br
+# url: https://docs.google.com/spreadsheets/d/1HeM7YZv0vgQCTkn6ZOzS11h9jELTGUqkmtaITIOEp10/edit?usp=drivesdk&ouid=100327922083657613631
+# extraidoEm: 2026-09-07
+# uso: escopo
+---
+|  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+|  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] Cliente | \[merged\] Cliente |  |  |  |  |  |  |  |
+|  | \[merged\] Serviço | \[merged\] Serviço | Estruturação Comercial |  |  |  |  |  |  |
+|  | \[merged\] Equipe de Venda | \[merged\] Equipe de Venda |  |  |  |  |  |  |  |
+|  | \[merged\] Gerente | \[merged\] Gerente | Thiago Melo |  |  |  |  |  |  |
+|  | \[merged\] Data  | \[merged\] Data  |  |  |  |  |  |  |  |
+|  | \[merged\] Dias | \[merged\] Dias | 55 |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |
+|  | \[merged\] Iniciação + Entendimento do macroprocesso comercial | \[merged\] Iniciação + Entendimento do macroprocesso comercial | \[merged\] Iniciação + Entendimento do macroprocesso comercial | \[merged\] Iniciação + Entendimento do macroprocesso comercial | \[merged\] Iniciação + Entendimento do macroprocesso comercial | 1 | 5 | RAC  Coleta de informações | BMC + Macroprocesso comercial |
+|  | \[merged\] Imersão na empresa + Entendimento do setor comercial | \[merged\] Imersão na empresa + Entendimento do setor comercial | \[merged\] Imersão na empresa + Entendimento do setor comercial | \[merged\] Imersão na empresa + Entendimento do setor comercial | \[merged\] Imersão na empresa + Entendimento do setor comercial | 1 | 5 | Entrevista com o setor comercial | Process map model canvas comercial |
+|  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | 2 | 10 |  |  |
+|  | \[merged\] ETAPA 02 - ESTRUTURAÇÃO COMERCIAL  | \[merged\] ETAPA 02 - ESTRUTURAÇÃO COMERCIAL  | \[merged\] ETAPA 02 - ESTRUTURAÇÃO COMERCIAL  | \[merged\] ETAPA 02 - ESTRUTURAÇÃO COMERCIAL  | \[merged\] ETAPA 02 - ESTRUTURAÇÃO COMERCIAL  | \[merged\] ETAPA 02 - ESTRUTURAÇÃO COMERCIAL  | \[merged\] ETAPA 02 - ESTRUTURAÇÃO COMERCIAL  | \[merged\] ETAPA 02 - ESTRUTURAÇÃO COMERCIAL  | \[merged\] ETAPA 02 - ESTRUTURAÇÃO COMERCIAL  |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |
+|  | \[merged\] Análise de mercado + Estudo dos concorrentes  | \[merged\] Análise de mercado + Estudo dos concorrentes  | \[merged\] Análise de mercado + Estudo dos concorrentes  | \[merged\] Análise de mercado + Estudo dos concorrentes  | \[merged\] Análise de mercado + Estudo dos concorrentes  | 2 | 10 | Clientes ocultos | Relatório dos clientes ocultos + Matriz de concorrentes |
+|  | \[merged\] Mapeamentos dos processos comerciais + Entendimento da jornada AS IS + Definição do cliente ideal | \[merged\] Mapeamentos dos processos comerciais + Entendimento da jornada AS IS + Definição do cliente ideal | \[merged\] Mapeamentos dos processos comerciais + Entendimento da jornada AS IS + Definição do cliente ideal | \[merged\] Mapeamentos dos processos comerciais + Entendimento da jornada AS IS + Definição do cliente ideal | \[merged\] Mapeamentos dos processos comerciais + Entendimento da jornada AS IS + Definição do cliente ideal | 2 | 10 | Visualização e entrevista sobre os processos | Fluxogramas AS IS e Jornada do cliente AS IS + ICP |
+|  | \[merged\] Elaboração das ferramentas comerciais + Elaboração da jornada do cliente TO BE + Modelagens e implementação | \[merged\] Elaboração das ferramentas comerciais + Elaboração da jornada do cliente TO BE + Modelagens e implementação | \[merged\] Elaboração das ferramentas comerciais + Elaboração da jornada do cliente TO BE + Modelagens e implementação | \[merged\] Elaboração das ferramentas comerciais + Elaboração da jornada do cliente TO BE + Modelagens e implementação | \[merged\] Elaboração das ferramentas comerciais + Elaboração da jornada do cliente TO BE + Modelagens e implementação | 4 | 20 | Construção interna + Apresentação | CRM, Roteiro de abordagem, Matriz de objeções, Templates de mensagem,  Fluxo de cadência, etc. |
+|  |  |  |  |  |  | 8 | 40 |  |  |
+|  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |
+|  | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | 1 | 5 | RAF | \- |
+|  | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \- | 6 | Visita e acompanhamento dos processos/ ajustes necessários nas ferramentas | Relatório quinzenal do andamento |
+|  |  |  |  |  |  |  | 11 |  |  |

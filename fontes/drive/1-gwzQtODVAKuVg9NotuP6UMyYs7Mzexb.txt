@@ -1,0 +1,68 @@
+# id: 1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb
+# nome: Metodologia - CPV.pdf
+# mimeType: application/pdf
+# dono: laurarodrigues@produtivajunior.com.br
+# url: https://drive.google.com/file/d/1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb/view?usp=drivesdk
+# extraidoEm: 2026-09-07
+# uso: ferramenta:cpv
+---
+Metodologia - CPV
+
+METODOLOGIA CANVAS PROPOSTA DE VALOR
+
+INTRODUÇÃO
+
+Canvas Proposta de valor:
+
+1\. Definição Lançar um produto, serviço ou marca no mercado exige mais do que uma boa ideia — é necessário entender profundamente quem é o cliente, o que ele valoriza e quais problemas realmente precisam ser resolvidos. Nesse cenário, o Canvas de Proposta de Valor surge como uma ferramenta estratégica que permite alinhar o que sua solução oferece com as necessidades reais do público-alvo.
+
+Desenvolvido por Alexander Osterwalder, o Canvas de Proposta de Valor ajuda empresas e equipes a visualizar e estruturar as relações entre:
+
+Perfil do cliente: suas tarefas, dores e ganhos esperados. Oferta de valor: os produtos, serviços e soluções que aliviam essas dores e geram esses ganhos.
+
+Ao organizar essas informações de forma gráfica e objetiva, a ferramenta facilita decisões mais assertivas em diferentes contextos — desde o lançamento de novos produtos e funcionalidades até ajustes de posicionamento de marca, criação de campanhas ou redefinição de estratégias de atendimento.
+
+DEFINIÇÃO
+
+2 Definição: A ferramenta é separada em 2 blocos: a Proposta de Valor e o Segmento de Clientes. No bloco de ‘‘Segmento de Clientes’’, você terá a chance de entender melhor os usuários e seu contexto, a partir de 3 tópicos:
+
+Tarefas: quais os problemas que os seus usuários estão tentando resolver ou necessidades que estão tentando satisfazer a partir do seu produto;
+
+Dores: quais as emoções negativas, custos e situações indesejadas, riscos e outras experiências ruins que o usuário pode vivenciar antes, durante ou após as tarefas que foram citadas no tópico anterior;
+
+Ganhos: quais benefícios os usuários esperam, desejam ou seriam surpreendidos positivamente se existisse no seu produto.
+
+DEFINIÇÃO
+
+Dica do sucesso: ao pensar em “ganhos”, foque em outcomes (resultados desejados pelo cliente) e não em soluções ou funcionalidades do produto. A ideia aqui é entender o benefício final que o cliente quer atingir, como “ter mais tempo livre” ou “se sentir mais seguro” — e não o “como” isso será entregue. O “como” virá depois, na construção da proposta de valor.
+
+Já no bloco de ‘’Proposta de Valor’’, você poderá entender como o seu produto gera valor a partir dos tópicos:
+
+Produtos e serviços: descreva quais produtos e serviços você oferece que podem ajudar seus clientes a realizar tarefas que podem ajudá-los a satisfazer necessidades básicas;
+
+Aliviamento de dores: descreva como produtos e serviços aliviam as dores de seus clientes;
+
+Criadores de ganhos: descreva como seus produtos e serviços criam ganhos para seus clientes.
+
+Através do preenchimento desse canvas, é possível estabelecer melhores estratégias e preparar você para testar as hipóteses estabelecidas para ambos os blocos. Além de identificar quais dores o seu produto ainda não resolve ou quais ganhos ele ainda não gera para o seu usuário.
+
+Depois de preencher o Canva de Proposta de Valor e ter uma visualização mais clara do que o seu produto gera para os seus usuários, partimos para a definição da proposta de valor em si.
+
+Aqui é importante que você tente condensar em uma frase ou parágrafo curto qual o valor seu produto entrega, de forma a comunicar para o mercado qual é o seu diferencial e quais os benefícios intangível seu cliente desfruta ao contratar seu produto. Como fazer isso?
+
+1\) Ter um bom modelo de negócio \[BMC\]; 2) Focar no que é importante para o usuário; 3) Focar nas dores não resolvidas; 4) Escolher poucas tarefas, dores e ganhos, mas executá-las perfeitamente; 7) Focar nas tarefas, dores e ganhos que as pessoas estariam dispostas a pagar pelo seu produto; 8) Ter um diferencial competitivo.
+
+Depois de preencher o Canva de Proposta de Valor e
+
+LINK DE REFERÊNCIA
+
+PROJETO REFERÊNCIA: Bee Delivery
+
+PRODUZIDO POR:
+
+PRODUTIVA
+
+JÚNIOR
+
+<https://www.canva.com/design/DAGtKhXHqSY/FwVKjUlzG6lxzP8ovpkY5A/edit?utm_content=DAGtKhXHqSY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton>
+<https://www.canva.com/design/DAGe_EeHMJY/90TgYjaPcfs-Gb1TnmhSdw/edit?utm_content=DAGe_EeHMJY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton>

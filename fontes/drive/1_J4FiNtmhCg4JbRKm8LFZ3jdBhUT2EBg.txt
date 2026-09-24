@@ -1,0 +1,31 @@
+# id: 1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg
+# nome: Modelo Padrão - Mapa Perceptual.pdf
+# mimeType: application/pdf
+# dono: viniciusmoraes@produtivajunior.com.br
+# url: https://drive.google.com/file/d/1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg/view?usp=drivesdk
+# extraidoEm: 2026-09-07
+# uso: ferramenta:mapa-perceptual
+---
+Modelo Padrão - Mapa Perceptual
+
+Produzido por Produtiva JR (03/2026)
+
+LOGO
+
+Mapa Perceptual Modelo da ferramenta padrão
+
+Mapa Perceptual
+
+Empresa 4
+
+Empresa 1
+
+Critério 1 Oposto do Criterio 1
+
+Empresa
+
+Empresa 3 5Empresa
+
+2
+
+Empresa 6

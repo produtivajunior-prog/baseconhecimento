@@ -1,0 +1,76 @@
+# id: 1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h
+# nome: Metodologia - 5 Forças de Porter.pdf
+# mimeType: application/pdf
+# dono: gabrielapalma@produtivajunior.com.br
+# url: https://drive.google.com/file/d/1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h/view?usp=drivesdk
+# extraidoEm: 2026-09-07
+# uso: ferramenta:porter
+---
+Metodologia - 5 Forças de Porter
+
+METODOLOGIA 5 FORÇAS DE PORTER
+
+INTRODUÇÃO
+
+1\. Definição
+
+O modelo das 5 Forças de Porter é uma estrutura de análise da competitividade setorial que examina cinco fatores chave do ambiente externo, determinando como o valor econômico é dividido entre os atores de uma empresa. As 5 Forças oferecem uma abordagem técnica e estruturada para avaliar o quão atrativo e lucrativo é um mercado, identificando a intensidade da competição e onde reside o poder de barganha em seu setor. Em suma, a ferramenta serve para dissecar o ambiente competitivo de empresas já atuantes no mercado, provendo insights sobre pressões externas que afetam a rentabilidade e embasando decisões estratégicas fundamentadas.
+
+2\. Estruturação (as forças)
+
+A AMEAÇA DE NOVOS ENTRANTES se refere ao risco de novas empresas entrarem no mercado, o que pode aumentar a competição e reduzir a lucratividade. Mercados com barreiras altas protegem as empresas estabelecidas. Porém, em mercados com barreiras baixas, novos competidores podem facilmente entrar, o que eleva a rivalidade. Como coletar:
+
+O QUE É SÃO AS 5 FORÇAS DE PORTER
+
+Analisar registros de novas empresas: observar se há novos players ou startups que estão entrando no mercado. Investigar os custos e exigências para entrar no mercado: perguntar a executivos sobre as barreiras de entrada, como patentes, capital necessário ou licenciamento. Entrevistar fornecedores e clientes: investigar se há algum movimento de grandes empresas globais tentando entrar no mercado local.
+
+O PODER DE BARGANHA DOS FORNECEDORES avalia a capacidade de os fornecedores influenciarem o preço e a qualidade dos insumos. Quando o número de fornecedores é pequeno ou os insumos são exclusivos, os fornecedores têm maior poder. Isso pode levar a preços mais altos ou condições mais desfavoráveis para as empresas compradoras. Como coletar:
+
+Analisar a concentração de fornecedores: perguntar ao time de compras sobre a dependência de poucos fornecedores. Verificar a existência de fornecedores alternativos: investigar se há muitos fornecedores concorrendo ou se as opções são limitadas. Entrevistar com fornecedores: negociar com fornecedores para entender os termos e as condições em que eles operam.
+
+O QUE É SÃO AS 5 FORÇAS DE PORTER
+
+O PODER DE BARGANHA DOS CLIENTES se refere à influência dos clientes sobre as empresas do setor. Os clientes têm mais poder quando existem muitas alternativas no mercado, quando o produto é pouco diferenciado ou quando trocar de empresa é fácil. Em mercados maduros, a sensibilidade a preço é uma característica comum, especialmente quando o cliente pode comparar rapidamente preços e características. Como coletar:
+
+Entrevistar clientes: perguntar sobre sua sensibilidade a preço, nível de fidelidade e preferências por atributos do produto ou serviço. Analisar dados de mercado: identificar se a concorrência oferece produtos similares ou se os clientes estão migrando para alternativas mais baratas ou com melhores recursos. Avaliar contratos com grandes clientes: investigar a concentração de clientes e como empresas grandes podem influenciar o mercado.
+
+A AMEAÇA DE PRODUTOS SUBSTITUTOS surge quando alternativas ao produto da empresa podem ser adotadas pelos clientes, atendendo à mesma necessidade. A competição não vem necessariamente de concorrentes diretos, mas de novas soluções ou inovações tecnológicas.
+
+Como coletar:
+
+O QUE É SÃO AS 5 FORÇAS DE PORTER
+
+Analisar tendências de mercado: verificar se novos produtos ou tecnologias emergentes estão surgindo como alternativas ao produto da empresa. Entrevistar clientes e especialistas do setor: investigar se os clientes estão considerando ou já adotando substitutos.
+
+A RIVALIDADE ENTRE OS CONCORRENTES descreve a intensidade da competição no mercado. Quando muitos competidores estão lutando por participação de mercado, a rivalidade aumenta, levando a guerras de preço, promoções agressivas e melhorias de produtos. Isso pode reduzir as margens de lucro. A rivalidade é mais alta quando o mercado é saturado, pouco diferenciado ou de baixo crescimento. Como coletar:
+
+Analisar participação de mercado: Identificar quantos concorrentes significativos existem e qual sua participação de mercado. Investigar campanhas e promoções: Observar a frequência de promoções e lançamentos de novos produtos entre os concorrentes. Converse com equipes comerciais e de vendas: Eles geralmente têm informações diretas sobre como a concorrência se posiciona e como os preços estão sendo pressionados.
+
+COMO CONSTRUIR AS 5 FORÇAS DE PORTER
+
+3\. Construção
+
+Para analisar as 5 Forças de Porter de uma maneira quantitativa, seguimos uma lógica de atribuição de notas para cada fator que influencia cada força competitiva. Esses fatores são questões determinantes que ajudam a entender o impacto de cada força na empresa.
+
+3.1. Analise as questões determinantes: cada força tem questões padrões específicas que ajudam a determinar a intensidade dessa força no mercado.
+
+3.2. Atribuição de notas de 0 a 5: Para cada uma dessas questões, você vai atribuir uma nota de 0 a 5, conforme a intensidade da força: 5 = Muito Alta, 4 = Alta, 3 = Média, 2 = Baixa, 1 = Muito Baixa, 0 = Zero. \*Quando uma força recebe alta pontuação significa dizer que ela é uma grande ameaça para a organização, então vamos inverter a nota quando a questão determinante for favorável à empresa, ou seja:
+
+COMO CONSTRUIR AS 5 FORÇAS DE PORTER
+
+Se o fator determinante for favorável a capacidade de combater a ameaça (ex.: “grau de desenvolvimento de novos produtos/serviços pela empresa”) iremos inverter a nota... seguindo essa lógica se der “Muito Alta” significa que a empresa tem alta capacidade de combater produtos substitutos, então ao invés de atribuirmos a nota 5, iremos inverter e atribuir a nota 0.
+
+3.3. Cálculo das Médias: depois de atribuir notas para cada questão determinante em cada uma das 5 forças, você deve calcular a média das notas de cada força para ver qual delas tem maior impacto na empresa. Quanto menor a média, maior o impacto da força sobre a empresa, já que as forças mais ameaçadoras terão notas mais altas, e aquelas que estão em controle terão notas mais baixas.
+
+3.4. Resumo das análises: por fim, traga de forma visual em um quadro um resumo das análises feitas, este resumo visual ajuda a compartilhar os insights de maneira clara e objetiva, facilitando a tomada de decisões estratégicas.
+
+4\. Modelo Padrão Modelo Padrão - 5 Forças de Porter Modelo Padrão - 5 Forças de Porter
+
+PRODUZIDO POR:
+
+PRODUTIVA
+
+JÚNIOR
+
+<https://docs.google.com/spreadsheets/d/1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY/edit?usp=sharing>
+<https://www.canva.com/design/DAGpKQMEKhU/4Ow7CXAMdLwEbBYIaQBQBg/edit?utm_content=DAGpKQMEKhU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton>

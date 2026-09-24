@@ -1,31 +1,42 @@
-# Biblioteca CIEP — Produtiva Júnior
+# Hangar — Produtiva Júnior
 
-Biblioteca interna de ferramentas, metodologias e escopos de consultoria, para uso dos
+Hangar: a base interna de ferramentas, escopos e cases de consultoria da Produtiva Júnior, para uso dos
 consultores de projeto.
 
-> **Estado atual:** MVP herdado, desempacotado para desenvolvimento. Ainda **não** é a
-> versão que deve ir para os consultores — leia o [DIAGNOSTICO.md](DIAGNOSTICO.md) antes
-> de mexer, especialmente as seções 8, 9 e 10.
+> **Estado atual:** estrutura reconstruída em dois eixos (Ferramentas × Escopos) e acervo real
+> extraído do Drive em **rascunho**, aguardando revisão dos donos de cada área. O bundle oficial
+> (`dist/Hangar.html`) só recebe conteúdo aprovado; a prévia com os rascunhos fica em
+> `dist/Hangar.preview.html`. Leia [fontes/README.md](fontes/README.md) para revisar e
+> promover, e o [DIAGNOSTICO.md](DIAGNOSTICO.md) para o histórico.
 
 ---
 
 ## Estrutura
 
 ```
-original/          bundle herdado, intacto — linha de base, não editar
+original/          bundle herdado do MVP, intacto — só histórico
+fontes/            de onde vem cada texto (ver fontes/README.md)
+  drive/<id>.txt          texto extraído de cada PDF/planilha do Drive, com cabeçalho e hash
+  hangar/<slug>.md        páginas do Hangar Academy coladas à mão
+  inventario.json         índice dos arquivos extraídos
+  ferramentas-mapa.json   por ferramenta: categoria, anexos (ids do Drive), entradas/saídas, stubs
+  escopos-mapa.json       por escopo: coluna do Resumão, cronograma base, ferramentas por etapa
 src/
   index.html       marcação da interface (sintaxe <sc-if> / <sc-for> do dc-runtime)
   app.js           lógica: class Component extends DCLogic
   tail.html        fechamento do documento
   data/            o acervo, como dado editável
-    ferramentas.json        13 ferramentas
-    problemas.json          11 problemas → ferramentas (tela "Recomendar")
+    taxonomia.json          fonte única de tipos, categorias, grupos de escopo, status, cores
+    ferramentas.json        ferramentas promovidas (27: 26 do acervo real + n8n; 20 ainda "Em construção")
+    escopos.json            escopos promovidos, com etapas ordenadas e ferramentas por etapa
+    problemas.json          problemas → ferramentas (tela "Recomendar")
     modelos.json            modelos-padrão (blocos que a IA preenche)
-    documento-padrao.json   documento PMMC
+    documento-padrao.json   documento PMMC (10 seções, do PDF oficial)
+    rascunhos/              rascunhos gerados de fontes/, aguardando revisão — NUNCA entram no pack
 assets/            logo e fontes; index.json mapeia uuid ↔ arquivo
-vendor/            dc-runtime.js e o invólucro do bundle
-tools/             unpack / pack / verify
-dist/              artefato gerado — não editar à mão
+vendor/            dc-runtime.js, React embutido e o invólucro do bundle
+tools/             pack / verify / rascunho / promover / smoke / unpack
+dist/              artefatos gerados — não editar à mão
 ```
 
 ## Fluxo de trabalho
@@ -34,32 +45,79 @@ O distribuível é um HTML único que abre com duplo clique, sem servidor e sem 
 Ele é **gerado**, nunca editado direto.
 
 ```bash
-node tools/pack.mjs      # src/ + data/ + assets/ → dist/Biblioteca_CIEP.html
-node tools/verify.mjs    # confere que dist/ preserva o conteúdo do original
-node tools/unpack.mjs    # só para reimportar um bundle de fora
+node tools/pack.mjs                  # src/ + data/ + assets/ → dist/Hangar.html (só conteúdo aprovado)
+node tools/pack.mjs --com-rascunhos  # prévia com src/data/rascunhos/ → dist/Hangar.preview.html
+node tools/verify.mjs                # valida schema, referências e revisão; prova que dist/ carrega src/data
+node tools/smoke.mjs [arquivo]       # abre no Chromium sem rede e navega (exige playwright)
+node tools/unpack.mjs                # só para reimportar um bundle de fora
 ```
 
-**Para mudar conteúdo** (texto de uma ferramenta, passos, anexos): edite
-`src/data/*.json` e rode `pack`. Não precisa tocar em código.
+**Para trazer conteúdo do acervo** (Drive ou Hangar): siga [fontes/README.md](fontes/README.md) —
+extrair → `tools/rascunho.mjs` → revisão do dono → `tools/promover.mjs` → `pack` + `verify`.
 
-**Para mudar comportamento ou layout:** `src/app.js` e `src/index.html`.
+**Para corrigir conteúdo já promovido:** edite `src/data/*.json`, mantenha `origem` e `revisao`
+coerentes, e rode `pack` + `verify`.
+
+**Para mudar comportamento ou layout:** `src/app.js` e `src/index.html`. Tipos, categorias,
+status e cores vêm de `src/data/taxonomia.json`; não crie lista literal no código.
 
 ⚠️ Editar `dist/` ou `original/` à mão corrompe o bundle — o template é uma string JSON
 escapada dentro do HTML.
 
 ### O que o verify garante
 
-`tools/verify.mjs` compara `dist/` com `original/` em três níveis:
+`tools/verify.mjs` deixou de comparar com o MVP e passou a validar o acervo:
 
-- **assets** — bytes idênticos após descomprimir
-- **markup** — a marcação `<x-dc>` idêntica caractere a caractere
-- **dados** — avalia a classe dos dois bundles com `new Function` (do mesmo jeito que o
-  `dc-runtime` faz) e compara as estruturas resultantes; depois confere que os JSON em
-  `src/data/` são fiéis ao que o bundle original continha
+- **schema** — cada ferramenta e escopo tem os campos certos, com valores de `taxonomia.json`;
+  itens do acervo real não podem ter `acessos`, `nota` nem `etapa`; datas em ISO
+- **integridade** — `problemas.ids`, `modelos.toolId` e `escopos.etapas[].ferramentas` apontam
+  para ferramentas que existem
+- **revisão** — nada entra em `ferramentas.json`/`escopos.json` sem `revisao.status = "aprovado"`
+  por e-mail `@produtivajunior.com.br`
+- **round-trip** — o bundle em `dist/` carrega exatamente o que está em `src/data/`
+- **assets e markup** — bytes dos assets e a marcação batem com `assets/` e `src/index.html`
 
-Comparação byte a byte do arquivo inteiro não serve: o gzip do Node não reproduz os bytes
-do compressor original, e os dados saíram do código para JSON. O que precisa bater é o que
-o navegador enxerga.
+Os 13 itens herdados do MVP saíram em 2026-09-15 (`promover.mjs --remover-legado`); campos que a
+fonte não tinha ficam `null` com a pendência registrada, e o verify aceita isso.
+
+## Navegação e uso
+
+- **URL acompanha a tela**: `#/biblioteca`, `#/ferramenta/<id>`, `#/escopos`, `#/escopo/<id>`, `#/cases`,
+  `#/case/<id>`, `#/cases/novo`, `#/cadastrar`, `#/docs`, `#/recomendar`. Dá para compartilhar o link de
+  uma ferramenta ou case, usar o botão "voltar" do navegador e recarregar sem perder a tela. Funciona em `file://`.
+- **Teclado**: `/` foca a busca da tela; `Esc` fecha a janela de anexos; foco visível em todos os controles.
+- **Comece aqui** (`#/comece`): trilha do primeiro projeto em seis passos marcáveis (ficam no navegador), as
+  ferramentas mapeadas em mais etapas, quem procurar e o glossário. Os termos vêm de `src/data/trilha.json`,
+  cada um com `origem`; os marcados `pendente: true` aparecem como "a confirmar" até o CIEP validar.
+- **Material para a reunião**: na ficha da ferramenta, "Abrir material para imprimir" gera uma página com
+  perguntas-chave, o que pedir ao cliente, passo a passo e, quando há modelo em canvas, o canvas em branco.
+- **Pergunte a quem fez**: na ficha do case, botões de e-mail e WhatsApp para a equipe, com a mensagem já
+  escrita. O WhatsApp é opcional no cadastro.
+- **Celular**: menu em segunda linha rolável, filtros da Biblioteca e dos Cases atrás de um botão "Filtros",
+  grades e formulários em uma coluna. Nada rola na horizontal.
+
+## Revisão do acervo
+
+- `node tools/aprovar.mjs <ids|--todos> --revisor <e-mail>` registra a aprovação de rascunhos (quem, quando,
+  próxima revisão em 3 meses). `node tools/promover.mjs --aprovados` leva para o acervo.
+- `node tools/revisao.mjs` imprime a agenda do ritual trimestral por dono; o painel do CIEP (tela
+  Cadastrar) mostra o que venceu; `verify` avisa. Detalhes em `fontes/README.md`, seção 7.
+- Hangar Academy: `tools/hangar-extrator.js` (roda no navegador de quem tem acesso) +
+  `node tools/hangar-importar.mjs` trazem as páginas para `fontes/hangar/`. Seção 2 de `fontes/README.md`.
+
+## Publicar na web (Coolify)
+
+O repositório já tem `Dockerfile` + `deploy/nginx.conf`: um nginx que serve `dist/Hangar.html`
+como `index.html` (gzip, HTML sem cache, `/healthz` para health check).
+
+1. No Coolify: **+ New → Application → Public/Private Repository (GitHub)** e escolha
+   `produtivajunior-prog/baseconhecimento`, branch `main` (depois do merge do PR).
+2. **Build Pack: Dockerfile** (caminho `/Dockerfile`), **porta exposta: 80**.
+3. Em **Domains**, informe o domínio (ex.: `https://hangar.seudominio.com.br`); o Coolify emite o HTTPS.
+4. **Deploy.** Com o GitHub App do Coolify, cada push na `main` publica sozinho.
+
+Para atualizar o site: edite `src/`, rode `node tools/pack.mjs && node tools/verify.mjs`, faça commit
+do `dist/Hangar.html` e dê push. Testar localmente: `docker build -t hangar . && docker run -p 8080:80 hangar`.
 
 ## Limitações conhecidas
 
@@ -79,6 +137,15 @@ Detalhes e o resto do inventário no [DIAGNOSTICO.md](DIAGNOSTICO.md).
 
 ## Próximos passos
 
-Ver [DIAGNOSTICO.md](DIAGNOSTICO.md) seção 10 — o conteúdo precisa ser reconstruído a partir
-do **Hangar Academy**, e a taxonomia de dois eixos (Ferramentas × Escopos/Etapas) não cabe
-no modelo plano atual.
+1. **Completar os 20 itens "Em construção"**: são as ferramentas sem PDF de metodologia no Drive
+   (BMC, BPMN, SIPOC, RACI, Jornada, PCO, IBACO, FIB, MLQ, DCO, Gamificação, n8n…). O caminho mais curto é
+   trazer as páginas do Hangar Academy com `tools/hangar-extrator.js` + `node tools/hangar-importar.mjs`
+   (seção 2 de `fontes/README.md`) e regerar os rascunhos.
+2. **Donos de área revisam a primeira carga**: os 47 conteúdos (27 ferramentas + 20 escopos) foram aprovados pela conta institucional
+   em 2026-09-15; cada dono confere os da sua área até 2026-12-15 (`node tools/revisao.mjs`).
+3. **Escopos despriorizados** (11) estão publicados sem ferramentas mapeadas, porque não têm Cronograma
+   Base; thiagomelo@ decide se entram na linha do tempo.
+4. **Glossário**: o CIEP confirma os termos "a confirmar" em `src/data/trilha.json`.
+
+Fora do escopo desta reconstrução e ainda abertos: backend para a IA, persistência, login e
+o aviso de LGPD no campo "Insumos do projeto" (ver DIAGNOSTICO.md §9 e §11).

@@ -1,4 +1,10 @@
-# Diagnóstico — Biblioteca CIEP
+# Diagnóstico — Biblioteca CIEP (hoje, Hangar)
+
+> **Nota (set/2026):** este diagnóstico descreve o MVP herdado. Os pontos das seções 4, 6 (números
+> fictícios), 10 e 11.1–11.2 foram tratados na reconstrução do conteúdo: taxonomia em dois eixos
+> (`src/data/escopos.json` + `taxonomia.json`), acervo extraído do Drive com trilha de origem
+> (`fontes/`), PMMC com 10 blocos, validador de schema. Continuam abertos: 5, 6 (leitura de anexo
+> e IA), 7–9, 11.3–11.9. O README traz o estado atual.
 
 Análise do MVP `Biblioteca CIEP.html` (356.672 bytes, sha256 `fedef82c…`), preservado
 em `original/Biblioteca_CIEP.html`. Corresponde ao arquivo que está no Drive da

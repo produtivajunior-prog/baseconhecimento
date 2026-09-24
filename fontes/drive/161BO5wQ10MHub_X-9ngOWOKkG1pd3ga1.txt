@@ -1,0 +1,51 @@
+# id: 161BO5wQ10MHub_X-9ngOWOKkG1pd3ga1
+# nome: [CIEP] Modelo PPT Mapa de Contexto.pdf
+# mimeType: application/pdf
+# dono: carloseduardo@produtivajunior.com.br
+# url: https://drive.google.com/file/d/161BO5wQ10MHub_X-9ngOWOKkG1pd3ga1/view?usp=drivesdk
+# extraidoEm: 2026-09-07
+# uso: ferramenta:mapa-de-contexto
+---
+\[CIEP\] Modelo PPT Mapa de Contexto
+
+Produzido por Produtiva JR (01/2026)
+
+LOGO
+
+MAPA DE CONTEXTO
+
+IMPORTÂNCIA
+
+COMPREENSÃO GLOBAL
+
+COMUNICAÇÃO EFICAZ
+
+TOMADA DE DECISÃO
+
+ESTRUTURA
+
+Sistemas
+
+Agentes Externos
+
+Fluxos de Informação
+
+ESTRUTURA
+
+ETAPAS PARA A CONSTRUÇÃO
+
+IDENTIFICAR OS PROCESSOS CHAVE
+
+DEFINIR RELAÇÕES E INTERAÇÕES
+
+ADICIONAR FATORES EXTERNOS
+
+CLAREZA NO ESCOPO
+
+IMPORTÂNCIA
+
+ENTENDIMENTO DAS ÁREAS
+
+IDENTIFICAÇÃO DE STAKEHOLDERS
+
+LOGO

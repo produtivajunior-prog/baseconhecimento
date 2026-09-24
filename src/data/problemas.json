@@ -1,91 +1,128 @@
 [
   {
     "key": "mapear",
-    "label": "Mapear processos",
+    "label": "Mapear e melhorar processos",
     "ids": [
       "bpmn",
-      "ishikawa"
-    ]
+      "raci",
+      "pmmc",
+      "sipoc",
+      "mapa-de-contexto"
+    ],
+    "escopoIds": [
+      "map-e-model"
+    ],
+    "origem": "categoria Processos + escopo map-e-model"
   },
   {
-    "key": "diagnosticar",
-    "label": "Diagnosticar problemas",
+    "key": "entender",
+    "label": "Entender o cliente e o mercado",
     "ids": [
-      "5porques",
-      "ishikawa",
+      "porter",
+      "pestel",
+      "bmc",
+      "buyer-persona",
+      "cpv",
+      "estudo-de-segmento",
+      "icp",
+      "mapa-de-contexto",
+      "matriz-de-concorrentes",
       "swot"
-    ]
+    ],
+    "escopoIds": [
+      "pesquisa-de-mercado"
+    ],
+    "origem": "categoria Entendimento"
   },
   {
-    "key": "priorizar",
-    "label": "Priorizar ações",
+    "key": "precificar",
+    "label": "Definir custos e preços",
     "ids": [
-      "gut",
-      "esforcoimpacto"
-    ]
+      "curva-abc",
+      "dre",
+      "markup",
+      "matriz-de-concorrentes",
+      "banco-de-indicadores"
+    ],
+    "escopoIds": [
+      "custeio-e-precificacao",
+      "gerenciamento-financeiro"
+    ],
+    "origem": "etapas do escopo custeio-e-precificacao"
   },
   {
-    "key": "organizar",
-    "label": "Organizar informações do cliente",
+    "key": "vender",
+    "label": "Estruturar as vendas",
     "ids": [
-      "stakeholders",
-      "entrevista"
-    ]
+      "pmmc",
+      "matriz-de-concorrentes",
+      "jornada-do-cliente",
+      "icp"
+    ],
+    "escopoIds": [
+      "estruturacao-comercial"
+    ],
+    "origem": "etapas do escopo estruturacao-comercial"
   },
   {
-    "key": "plano",
-    "label": "Criar plano de ação",
+    "key": "posicionar",
+    "label": "Posicionar a marca",
     "ids": [
-      "5w2h",
-      "esforcoimpacto"
-    ]
+      "matriz-de-concorrentes",
+      "icp",
+      "buyer-persona",
+      "jornada-do-cliente",
+      "ux-research-canvas",
+      "cpv"
+    ],
+    "escopoIds": [
+      "plano-de-marketing"
+    ],
+    "origem": "etapas dos escopos plano-de-marketing e pesquisa-de-mercado"
   },
   {
-    "key": "mercado",
-    "label": "Analisar mercado",
-    "ids": [
-      "swot",
-      "valueprop"
-    ]
-  },
-  {
-    "key": "proposta",
-    "label": "Estruturar proposta",
-    "ids": [
-      "escopo",
-      "bmc"
-    ]
-  },
-  {
-    "key": "indicadores",
-    "label": "Melhorar indicadores",
-    "ids": [
-      "gut",
-      "5porques"
-    ]
-  },
-  {
-    "key": "redesenhar",
-    "label": "Redesenhar processo",
-    "ids": [
-      "bpmn",
-      "ishikawa"
-    ]
-  },
-  {
-    "key": "validar",
-    "label": "Validar ideia de produto",
+    "key": "estrategia",
+    "label": "Planejar a estratégia",
     "ids": [
       "bmc",
-      "valueprop"
-    ]
+      "swot",
+      "pestel",
+      "porter",
+      "estudo-de-segmento",
+      "banco-de-indicadores"
+    ],
+    "escopoIds": [
+      "planejamento-estrategico"
+    ],
+    "origem": "etapas do escopo planejamento-estrategico"
   },
   {
-    "key": "escopo",
-    "label": "Construir escopo de projeto",
+    "key": "medir",
+    "label": "Medir resultados",
     "ids": [
-      "escopo",
-      "kickoff"
-    ]
+      "banco-de-indicadores",
+      "dre"
+    ],
+    "escopoIds": [
+      "gerenciamento-financeiro"
+    ],
+    "origem": "ferramentas de indicadores nas etapas dos escopos"
+  },
+  {
+    "key": "cultura",
+    "label": "Cuidar da cultura e das pessoas",
+    "ids": [
+      "fib",
+      "ibaco",
+      "mlq",
+      "pco",
+      "gamificacao",
+      "dco"
+    ],
+    "escopoIds": [
+      "mapeamento-de-cultura",
+      "gamificacao"
+    ],
+    "origem": "categoria Pesquisas de cultura + escopos de cultura e gamificação"
   }
 ]

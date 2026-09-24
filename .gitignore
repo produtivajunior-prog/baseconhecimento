@@ -1,4 +1,4 @@
-node_modules/
+*-smoke.png
 *.log
 .DS_Store
-*-smoke.png
+node_modules/

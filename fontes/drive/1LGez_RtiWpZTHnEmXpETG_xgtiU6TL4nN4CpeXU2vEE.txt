@@ -1,0 +1,38 @@
+# id: 1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE
+# nome: Cronograma Base Planejamento estratégico - Thiago Melo
+# mimeType: application/vnd.google-apps.spreadsheet
+# dono: thiagomelo@produtivajunior.com.br
+# url: https://docs.google.com/spreadsheets/d/1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE/edit?usp=drivesdk&ouid=100327922083657613631
+# extraidoEm: 2026-09-07
+# uso: escopo
+---
+|  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] Cliente | \[merged\] Cliente |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] Serviço | \[merged\] Serviço | Planejamento estratégico |  |  |  |  |  |  |  |  |
+|  | \[merged\] Equipe de Venda | \[merged\] Equipe de Venda |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] Gerente | \[merged\] Gerente |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] Dias padrão | \[merged\] Dias padrão | 55 |  |  |  |  |  |  |  |  |
+|  | \[merged\] Dias totais | \[merged\] Dias totais | 70 |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL | \[merged\] ETAPA 01 - DIAGNÓSTICO SITUACIONAL |  |  |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |  |  |
+|  | \[merged\] Iniciação + Entendimento da situação recente  | \[merged\] Iniciação + Entendimento da situação recente  | \[merged\] Iniciação + Entendimento da situação recente  | \[merged\] Iniciação + Entendimento da situação recente  | \[merged\] Iniciação + Entendimento da situação recente  | 1 | 5 | RAC  Coleta de informações | BMC |  | \[merged\] ATENÇÃO |
+|  | \[merged\] Imersão na empresa para entendimento das operações  | \[merged\] Imersão na empresa para entendimento das operações  | \[merged\] Imersão na empresa para entendimento das operações  | \[merged\] Imersão na empresa para entendimento das operações  | \[merged\] Imersão na empresa para entendimento das operações  | 1 | 5 |  |  |  | \[merged\] O que está entre aspas: "        " e pintado de azulsão coisas que podem ocorrer nas demandas dos serviços, mas nem sempre ocorrem. Não será contado nos "Dias - Padrão" Mas será nos "Dias totais" |
+|  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | 2 | 10 |  |  |  | \[merged\] Em alguns casos, terá uma amplitude na quantidade de sprints a depender do escopo em alguns sentido. mas nunca será muito larga |
+|  | \[merged\] ETAPA 02 - PLANEJAMENTO ESTRATÉGICO | \[merged\] ETAPA 02 - PLANEJAMENTO ESTRATÉGICO | \[merged\] ETAPA 02 - PLANEJAMENTO ESTRATÉGICO | \[merged\] ETAPA 02 - PLANEJAMENTO ESTRATÉGICO | \[merged\] ETAPA 02 - PLANEJAMENTO ESTRATÉGICO | \[merged\] ETAPA 02 - PLANEJAMENTO ESTRATÉGICO | \[merged\] ETAPA 02 - PLANEJAMENTO ESTRATÉGICO | \[merged\] ETAPA 02 - PLANEJAMENTO ESTRATÉGICO | \[merged\] ETAPA 02 - PLANEJAMENTO ESTRATÉGICO |  | \[merged\] Em alguns casos, terá uma amplitude na quantidade de sprints a depender do escopo em alguns sentido. mas nunca será muito larga |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |  | \[merged\]  |
+|  | \[merged\] Análise de ambiente  | \[merged\] Análise de ambiente  | \[merged\] Análise de ambiente  | \[merged\] Análise de ambiente  | \[merged\] Análise de ambiente  | 3 | 15 | Reuniões de coleta e validação + Construção interna | SWOT + PESTAL + 5 FORÇAS DE PORTER |  | \[merged\]  |
+|  | \[merged\] Pesquisa de mercado  | \[merged\] Pesquisa de mercado  | \[merged\] Pesquisa de mercado  | \[merged\] Pesquisa de mercado  | \[merged\] Pesquisa de mercado  | 3 | 15 | Coleta de respostas e Pesquisa de dados secundários | Dashboard com dados primários + Relatório de dados secundários + Análise de dados cruzada |  | \[merged\]  |
+|  | \[merged\] Revisão/Atualização  do MVV | \[merged\] Revisão/Atualização  do MVV | \[merged\] Revisão/Atualização  do MVV | \[merged\] Revisão/Atualização  do MVV | \[merged\] Revisão/Atualização  do MVV | 1 | 5 | Reunião de discussão + Construção interna | MVV atualizado |  | \[merged\]  |
+|  | \[merged\] Estruturação de metas  e objetivos + Definição de ferramenta/metodologia de planejamento estratégico + Construção de planilha de PE | \[merged\] Estruturação de metas  e objetivos + Definição de ferramenta/metodologia de planejamento estratégico + Construção de planilha de PE | \[merged\] Estruturação de metas  e objetivos + Definição de ferramenta/metodologia de planejamento estratégico + Construção de planilha de PE | \[merged\] Estruturação de metas  e objetivos + Definição de ferramenta/metodologia de planejamento estratégico + Construção de planilha de PE | \[merged\] Estruturação de metas  e objetivos + Definição de ferramenta/metodologia de planejamento estratégico + Construção de planilha de PE | 2 | 10 | Reunião de validação e apresentação + construção interna | Planilha de PE + Acompanhamento estratégico |  |  |
+|  | \[merged\] Desdobramento dos planos de ação | \[merged\] Desdobramento dos planos de ação | \[merged\] Desdobramento dos planos de ação | \[merged\] Desdobramento dos planos de ação | \[merged\] Desdobramento dos planos de ação | 2 | 10 | Construção interna + Reunião de apresentação/validação | Planos de ação |  |  |
+|  |  |  |  |  |  | 11 | 55 |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  |
+|  | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO | \[merged\] FINALIZAÇÃO + IMPLEMENTAÇÃO |  |  |
+|  | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | \[merged\] Macroetapas do ciclo | Sprints | Dias | Métodos | Entregáveis |  |  |
+|  | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | \[merged\] FINALIZAÇÃO | 1 | 5 | RAF | \- |  |  |
+|  | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \[merged\] 3 meses de acompanhamento das implementações | \- | 6 | Visita e acompanhamento dos processos/ ajustes necessários nas ferramentas | Relatório quinzenal do andamento |  |  |
+|  |  |  |  |  |  |  | 11 |  |  |  |  |

@@ -1,0 +1,31 @@
+# id: 1xSiqIc7gthAaUHSa3RBs1_BMoqQMZRAWU7zQg-xBWUw
+# nome: Matriz SWOT Quantitativa - MODELO PADRÃO
+# mimeType: application/vnd.google-apps.spreadsheet
+# dono: desconhecido (campo owner não retornado pela API)
+# url: https://docs.google.com/spreadsheets/d/1xSiqIc7gthAaUHSa3RBs1_BMoqQMZRAWU7zQg-xBWUw/edit?usp=drivesdk&ouid=100327922083657613631
+# extraidoEm: 2026-09-07
+# uso: ferramenta:swot
+---
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA | \[merged\] MATRIZ SWOT QUANTITATIVA |
+| \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+|  |  |  | \[merged\] OPORTUNIDADES | \[merged\] OPORTUNIDADES | \[merged\] OPORTUNIDADES | \[merged\] OPORTUNIDADES | \[merged\]  | \[merged\] AMEAÇAS  | \[merged\] AMEAÇAS  | \[merged\] AMEAÇAS  | \[merged\] AMEAÇAS  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |  |
+|  |  | \[LOGO DA EMPRESA\] | x | x | x | x | \[merged\]  | y | y | y | y |  | SOMA  | ORDEM | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |
+|  | \[merged\] FORÇAS | z |  |  |  |  | 0 |  |  |  |  | 0 | 0 | 1 | \[merged\]  | \[merged\] LEGENDA | \[merged\] LEGENDA | \[merged\] LEGENDA | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |
+|  | \[merged\] FORÇAS | z |  |  |  |  | 0 |  |  |  |  | 0 | 0 | 1 | \[merged\]  | 0 | \[merged\] Sem relação | \[merged\] Sem relação | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |
+|  | \[merged\] FORÇAS | z |  |  |  |  | 0 |  |  |  |  | 0 | 0 | 1 | \[merged\]  | 1 | \[merged\] Relação Média | \[merged\] Relação Média | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |
+|  | \[merged\] FORÇAS | z |  |  |  |  | 0 |  |  |  |  | 0 | 0 | 1 | \[merged\]  | 2 | \[merged\] Relação Alta | \[merged\] Relação Alta | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |
+|  | \[merged\] FORÇAS | z |  |  |  |  | 0 |  |  |  |  | 0 | 0 | 1 | \[merged\]  |  |  |  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |
+|  |  |  | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |  |  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |
+| \[merged\]  | \[merged\] FRAQUEZAS | w |  |  |  |  | 0 |  |  |  |  | 0 | 0 | 1 | \[merged\]  | \[merged\]  | \[merged\]  | Fraquezas | Forças | Fraquezas | Forças |  |
+| \[merged\]  | \[merged\] FRAQUEZAS | w |  |  |  |  | 0 |  |  |  |  | 0 | 0 | 1 | \[merged\]  | \[merged\]  | \[merged\]  | Ameaças | Ameaças | Oportunidades | Oportunidades |  |
+| \[merged\]  | \[merged\] FRAQUEZAS | w |  |  |  |  | 0 |  |  |  |  | 0 | 0 | 1 | \[merged\]  | \[merged\] CENÁRIOS | \[merged\] CENÁRIOS | SOBREVIVÊNCIA | MANUTENÇÃO | CRESCIMENTO | DESENVOLVIMENTO |  |
+| \[merged\]  | \[merged\] FRAQUEZAS | w |  |  |  |  | 0 |  |  |  |  | 0 | 0 | 1 | \[merged\]  | \[merged\] PONTUAÇÃO TOTAL | \[merged\] PONTUAÇÃO TOTAL | 0 | 0 | 0 | 0 |  |
+| \[merged\]  | \[merged\] FRAQUEZAS | w |  |  |  |  | 0 |  |  |  |  | 0 | 0 | 1 | \[merged\]  | \[merged\] PONTUAÇÃO MÁXIMA | \[merged\] PONTUAÇÃO MÁXIMA |  |  |  |  |  |
+| \[merged\]  | \[merged\] FRAQUEZAS |  | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |  |  | \[merged\]  | \[merged\] CÁLCULO | \[merged\] CÁLCULO |  |  |  |  |  |
+| \[merged\]  | \[merged\] FRAQUEZAS | DIFERENÇA | 0 | 0 | 0 | 0 |  | 0 | 0 | 0 | 0 | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |  |  |  |  |  |  |  |
+| \[merged\]  | \[merged\]  | ORDEM | 1 | 1 | 1 | 1 |  | 1 | 1 | 1 | 1 | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |  |  |  | \[merged\]  | \[merged\]  | \[merged\]  | \[merged\]  |  |  |  |  |  |  |  |
+|  |  | / |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |

@@ -1,0 +1,186 @@
+# id: 16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr
+# nome: [CIEP] Metodologia - PMMC.pdf
+# mimeType: application/pdf
+# dono: carloseduardo@produtivajunior.com.br
+# url: https://drive.google.com/file/d/16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr/view?usp=drivesdk
+# extraidoEm: 2026-09-07
+# uso: ferramenta:pmmc
+---
+\[CIEP\] Metodologia - PMMC
+
+METODOLOGIA PROCESS MAP MODEL CANVAS
+
+INTRODUÇÃO INTRODUÇÃO INTRODUÇÃO
+
+O Process Map Model Canvas (PMMC) é uma ferramenta visual projetada para simplificar a análise e o redesenho de processos. Funcionando como um guia prático, ele condensa em uma única página os 10 blocos essenciais que compõem o fluxo de valor, ga- rantindo uma visão sistêmica e facilitando a validação do entendimento junto ao gestor.
+
+Baseada na lógica da Cadeia de Valor, a metodologia investiga a relação entre entradas, transformações e saídas. O objetivo é assegurar que a coleta de informações — idealmente realizada via brainstor- ming — seja padronizada e assertiva, servindo de base sólida para diagnósticos e melhorias operacio- nais.
+
+Nos tópicos a seguir, exploraremos a estrutura da ferramenta passo a passo, detalhando as perguntas- chave para o preenchimento dos grupos de Entradas, Processos, Saídas e Suporte.
+
+ENTRADAS
+
+01\. Principais Fornecedores
+
+Este é o ponto de partida lógico do mapeamento. O quadrante define a origem dos recursos que alimen- tarão o processo, identificando quem são os respon- sáveis por entregar o que é necessário para a operação começar.
+
+É crucial entender que, em um mapa de processos, o "fornecedor" não é necessariamente uma outra empresa; pode ser um departamento interno, uma etapa anterior do fluxo ou um parceiro externo.
+
+Identificá-los corretamente garante o entendimento das dependências e da cadeia de responsabilidade.
+
+Perguntas Chave:
+
+De onde são retirados os insumos envolvidos no processo? O fornecedor é externo (outra empresa) ou interno (outro setor/processo)? Quem é o responsável direto por disponibilizar o recurso no tempo certo?
+
+O CORAÇÃO DO NEGÓCIO ENTRADAS
+
+02\. Principais Insumos
+
+Os insumos representam a "matéria-prima" do pro- cesso. São todos os elementos — sejam eles tangíveis (físicos) ou intangíveis (dados, informações, ordens intelectuais) — que entram no fluxo para serem con- sumidos ou modificados até se tornarem o resultado final.
+
+Identificar corretamente os insumos é vital para garantir que o processo não sofra interrupções por falta de material ou informação. Se o fornecedor é "quem entrega", o insumo é "o que é entregue".
+
+Perguntas Chave:
+
+Quais são os inputs (físicos ou intelectuais) que serão processados? O que é indispensável receber para que a ativi- dade possa começar? Os insumos chegam no padrão ou formato correto para serem utilizados?
+
+PROCESSOS
+
+03\. Principais Atividades
+
+Este é o motor da operação. O quadrante de Ativida- des descreve o conjunto de ações e tarefas que de- vem ser executadas para transformar os insumos ma- peados anteriormente nos produtos finais desejados.
+
+Aqui, não é necessário listar cada micro-movimento, mas sim as etapas macro que agregam valor e são essenciais para o fluxo. É a resposta para "como o trabalho é feito".
+
+Entender essas atividades permite visualizar garga- los, retrabalhos e oportunidades de otimização na execução.
+
+Perguntas Chave:
+
+Quais atividades são desempenhadas desde o repasse dos insumos até a finalização da proposta de valor? Quais são as etapas críticas de transformação que não podem faltar? Existe uma sequência lógica clara entre as ações listadas?
+
+SAÍDAS
+
+04\. Principais Produtos
+
+Os produtos são a materialização do valor gerado pelas atividades. Eles representam a entrega final do fluxo analisado, sendo o resultado direto da transfor- mação dos insumos.
+
+É fundamental descrever com clareza o que está sendo entregue, seja um objeto físico, um relatório, um serviço concluído ou uma informação processada.
+
+Perguntas Chave:
+
+Quais são as informações de saída ou resultados tangíveis resultantes do processo? O que é efetivamente entregue ao final das ativi- dades listadas? O produto atende aos requisitos de qualidade es- perados?
+
+SAÍDAS
+
+05\. Principais Clientes
+
+Nenhum processo existe sem um propósito ou um destinatário. Este quadrante identifica quem recebe o produto mapeado anteriormente.
+
+Assim como nos fornecedores, o cliente aqui pode ser externo (o consumidor final da empresa) ou in- terno (o próximo departamento, setor ou funcionário que precisa desse produto para realizar o seu traba- lho).
+
+Entender quem é o cliente ajuda a calibrar a qualidade da entrega.
+
+Perguntas Chave:
+
+Quem são os beneficiários do processo? Para quem o produto é destinado? O cliente é o consumidor final ou uma etapa pos- terior interna?
+
+SUPORTE
+
+06\. Recursos Humanos
+
+Este quadrante foca nas pessoas. Aqui, identificamos quem são os agentes necessários para executar as atividades descritas anteriormente. Não se trata a- penas de listar nomes, mas de entender a capacidade operacional e as competências exigidas.
+
+Mapear corretamente os recursos humanos permite visualizar se a equipe está dimensionada correta- mente para o volume de trabalho e se as responsa- bilidades estão claras.
+
+É essencial definir funções e cargos para entender a estrutura de dependência humana do processo.
+
+Perguntas Chave:
+
+Quem e quantos são os responsáveis pela exe- cução do processo? Quais funções e cargos específicos são exigidos para a operação? A equipe alocada possui as competências neces- sárias para as atividades mapeadas?
+
+07\. Recursos Tecnológicos
+
+Além das pessoas, a maioria dos processos modernos depende de uma base tecnológica para funcionar.
+
+Este quadrante mapeia as ferramentas não humanas — sejam softwares, sistemas de gestão (ERPs), máquinas ou equipamentos físicos — que dão suporte à realização das atividades.
+
+Identificar esses recursos é vital para entender o nível de automação do processo, a dependência de sistemas específicos e se a infraestrutura atual é um facilitador ou um gargalo para a operação.
+
+Perguntas Chave:
+
+Quais equipamentos e sistemas são utilizados durante o processo? As ferramentas tecnológicas disponíveis atendem à demanda das atividades? O processo é manual ou automatizado por algum software específico?SUPORTE
+
+SUPORTE
+
+08\. Finalidade e Melhorias
+
+Este bloco conecta a operação à estratégia. Não basta executar; é preciso saber o "porquê". Aqui define-se o propósito central da existência daquele processo e se ele está estático ou em evolução.
+
+Entender a finalidade evita a manutenção de proces- sos obsoletos que não agregam mais valor. Além disso, mapear as melhorias em andamento (ou propostas) dá a visão de futuro, mostrando se o pro- cesso está sendo otimizado ou se precisa de inter- venção imediata.
+
+Perguntas Chave:
+
+Qual o objetivo principal desse processo? Existem melhorias propostas ou já em andamento? O processo atual atende plenamente à sua finalidade estratégica?
+
+SUPORTE
+
+09\. Indicadores de Performance
+
+"O que não é medido não é gerenciado". Este qua- drante é dedicado aos KPIs (Key Performance Indica- tors). Aqui devem constar as métricas quantitativas utilizadas para apurar se os resultados esperados estão sendo alcançados.
+
+Os indicadores mostram "quão bem" o processo rodou (tempo, custo, qualidade, taxa de erro). É a base numérica para a tomada de decisão gerencial.
+
+Clique aqui para acessar um Banco de Indicadores que pode te auxiliar na elaboração do PMMC
+
+Perguntas Chave:
+
+Quais indicadores (quantitativos) são utilizados para apuração de resultados? Como mensuramos o sucesso ou fracasso dessa operação? Os indicadores atuais refletem a realidade da eficiência do processo?
+
+SUPORTE
+
+10\. Ferramentas de Controle
+
+Para fechar o canvas, temos a governança. As ferra- mentas de controle são os mecanismos utilizados pa- ra acompanhar, fiscalizar e garantir que o processo siga o padrão estabelecido.
+
+Enquanto os Recursos Tecnológicos ajudam a fazer, as Ferramentas de Controle ajudam a monitorar.
+
+Podem ser checklists, planilhas de acompanhamento, reuniões de status, auditorias ou dashboards de gestão visual. Elas garantem que o processo não saia dos trilhos.
+
+Perguntas Chave:
+
+Quais os controles utilizados para o acompanha- mento do processo? Como garantimos a padronização e evitamos desvios na execução? A frequência de controle é adequada à cri- ticidade do processo?
+
+RECOMENDAÇÕES
+
+01\. Preparação e Contextualização
+
+Levantamento Prévio: Antes da reunião, solicite ou pesquise se já existem documentos sobre o processo (POPs antigos, manuais ou fluxogramas). Entendimento do Fluxo: Compreenda onde o processo se encaixa na cadeia de valor macro da empresa.
+
+02\. Validação da Realidade (Real vs. Ideal)
+
+Foco no "As-Is" (Como É): Questione sempre: "Isso acontece 100% das vezes ou é o cenário ideal?". Confirmação com Envolvidos: O nível operacional costuma ter uma visão mais realista dos gargalos e "gambiarras" do processo.
+
+03\. Atenção às Incongruências Comuns
+
+Nível de Detalhe: Evite listar microtarefas (ex: "clicar no botão salvar"). Foque nas Atividades Macro que transformam o insumo. Insumos vs. Recursos: Não confunda o que é consumido (Insumo) com o que é usado para trabalhar (Recurso). Ex: A farinha é insumo; o forno é recurso tecnológico. Indicador vs. Ferramenta: Indicador é um número (ex: % de perdas); Ferramenta é onde se anota (ex: Planilha de Controle).
+
+RECOMENDAÇÕES
+
+04\. Visão Sistêmica e Escrita
+
+Interconexão: Entenda que os quadrantes não são gavetas isoladas; "nada está solto". Compre- ender como um quadrante influencia o outro é a chave para entender o negócio. Especificidade: Seja o mais específico possível ao redigir as informações; evite generalizações.
+
+05\. Dinâmica da Dupla de Consultoria Para otimizar a reunião e não perder informações, divida os papéis:
+
+Consultor A: Fica responsável por apresentar a ferramenta (BMC), conduzir a dinâmica e fazer as perguntas assertivas. Consultor B: Fica focado exclusivamente em anotar e gravar as respostas do gestor.
+
+06\. A Regra do 80/20 (Foco na Regra, não na Exceção)
+
+Mapeie o fluxo padrão: O PMMC deve retratar o que acontece na maioria das vezes. Não tente incluir todas as exceções ou "casos raros" dentro das atividades principais, pois isso torna o Canvas confuso e ilegível.
+
+PRODUZIDO POR
+
+PRODUTIVA J U N I O R
+
+<https://docs.google.com/spreadsheets/d/1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A/edit?usp=sharing>
+<https://docs.google.com/spreadsheets/d/1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A/edit?usp=sharing>

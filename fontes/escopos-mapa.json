@@ -1,0 +1,220 @@
+{
+  "_comentario": "Mapa curado que liga cada escopo às suas fontes e diz qual ferramenta entra em qual macroetapa. As macroetapas em si vêm verbatim do Resumão (tools/rascunho.mjs --escopos); este arquivo só acrescenta o que exige julgamento: descrição, vínculo ferramenta↔etapa (lido dos Cronogramas Base) e entregáveis. Tudo aqui é origem 'manual' e passa por revisão de thiagomelo@.",
+  "resumaoId": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
+  "checklistId": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
+  "responsavel": { "nome": "Thiago Melo", "email": "thiagomelo@produtivajunior.com.br" },
+  "escopos": [
+    {
+      "id": "map-e-model",
+      "nome": "Mapeamento e Modelagem de Processos",
+      "colunaResumao": "Map e model",
+      "checklist": "Mapeamento e modelagem de processos",
+      "cronogramaId": "13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE",
+      "descricao": "Entende o macroprocesso, mapeia os processos AS IS de um setor, aponta causas raízes e oportunidades, modela os processos TO BE e deixa rotina, DCO e manual do setor implantados.",
+      "ferramentasPorEtapa": {
+        "1": ["bmc", "mapa-de-contexto", "pmmc"],
+        "2": ["pmmc", "bpmn", "sipoc"],
+        "4": ["bpmn"],
+        "5": ["raci"],
+        "6": ["dco"]
+      },
+      "entregaveisPorEtapa": {
+        "1": ["BMC + Macroprocesso", "Process Map Model Canvas"],
+        "2": ["Fluxogramas AS IS"],
+        "3": ["Relatório de causas raízes e oportunidades de melhoria"],
+        "4": ["Modelagens dos processos + Implementação + Treinamentos"],
+        "7": ["Manual do setor + DCO"]
+      }
+    },
+    {
+      "id": "gerenciamento-financeiro",
+      "nome": "Gerenciamento Financeiro",
+      "colunaResumao": "GERENCIAMENTO",
+      "checklist": "Gerenciamento Financeiro",
+      "cronogramaId": "1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo",
+      "descricao": "Mapeia os processos financeiros, classifica gastos, parametriza sistema ou constrói a planilha de gerenciamento, define indicadores e dashboard e documenta a rotina do setor.",
+      "ferramentasPorEtapa": {
+        "1": ["bmc", "pmmc"],
+        "2": ["pmmc", "bpmn"],
+        "5": ["dre"],
+        "6": ["banco-de-indicadores"],
+        "7": ["banco-de-indicadores"],
+        "9": ["bpmn", "dco"]
+      },
+      "entregaveisPorEtapa": {
+        "1": ["BMC + Macroprocesso", "Process Map Model Canvas do setor financeiro"],
+        "2": ["Processos AS IS + Relatório de melhorias"],
+        "3": ["Gastos classificados + Manual de classificação de gastos"],
+        "5": ["Sistema parametrizado ou planilha de gerenciamento financeiro"],
+        "6": ["Indicadores financeiros"],
+        "8": ["Dashboard Financeiro"],
+        "9": ["Manual do setor financeiro + Implementação"]
+      }
+    },
+    {
+      "id": "custeio-e-precificacao",
+      "nome": "Custeio e Precificação",
+      "colunaResumao": "Custeio e precificação",
+      "checklist": "Custeio e precificação",
+      "cronogramaId": "1LIe3FcON0dRXcErSfzRFVg-aZTcPUlbe0S2UAf-Unbw",
+      "descricao": "Levanta e classifica os gastos, prioriza produtos pela curva ABC, define método de custeio e rateio, chega ao DRE e ao markup por produto e fecha com indicadores e plano de ação.",
+      "ferramentasPorEtapa": {
+        "1": ["bmc", "bpmn"],
+        "3": ["curva-abc"],
+        "7": ["dre"],
+        "8": ["markup"],
+        "9": ["matriz-de-concorrentes"],
+        "10": ["banco-de-indicadores"]
+      },
+      "entregaveisPorEtapa": {
+        "1": ["Fluxogramas AS IS destacando custos"],
+        "3": ["Curva ABC + Método de custeio"],
+        "4": ["Gastos classificados"],
+        "7": ["DRE dos produtos"],
+        "8": ["Markup dos produtos"],
+        "9": ["Matriz de concorrentes"],
+        "10": ["Indicadores financeiros"],
+        "11": ["Planos de ação + Estratégias"]
+      }
+    },
+    {
+      "id": "estruturacao-comercial",
+      "nome": "Estruturação Comercial",
+      "colunaResumao": "ESTRUTURAÇÃO COMERCIAL",
+      "checklist": "Estruturação comercial (2 ways)",
+      "cronogramaId": "1HeM7YZv0vgQCTkn6ZOzS11h9jELTGUqkmtaITIOEp10",
+      "descricao": "Mapeia o processo comercial, faz cliente oculto e matriz de concorrentes, desenha a jornada do cliente AS IS e TO BE, constrói o ICP e entrega as ferramentas comerciais (CRM, roteiro, matriz de objeções, cadência).",
+      "ferramentasPorEtapa": {
+        "1": ["bmc", "pmmc"],
+        "2": ["matriz-de-concorrentes"],
+        "3": ["bpmn"],
+        "4": ["jornada-do-cliente"],
+        "5": ["icp"],
+        "7": ["jornada-do-cliente"],
+        "8": ["bpmn"]
+      },
+      "entregaveisPorEtapa": {
+        "1": ["BMC + Macroprocesso comercial", "Process Map Model Canvas comercial"],
+        "2": ["Relatório dos clientes ocultos + Matriz de concorrentes"],
+        "3": ["Fluxogramas AS IS"],
+        "4": ["Jornada do cliente AS IS + ICP"],
+        "6": ["CRM, Roteiro de abordagem, Matriz de objeções, Templates de mensagem, Fluxo de cadência"]
+      }
+    },
+    {
+      "id": "plano-de-marketing",
+      "nome": "Plano de Marketing",
+      "colunaResumao": "PLANO DE MKT",
+      "checklist": "Plano de marketing e vendas (2 ways)",
+      "cronogramaId": "10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ",
+      "descricao": "Diagnostica o marketing da empresa, analisa ambiente e concorrentes, define público-alvo e buyer persona, desenha a jornada do cliente, escolhe canais de tração e entrega estratégias com ferramenta de acompanhamento.",
+      "ferramentasPorEtapa": {
+        "1": ["bmc"],
+        "2": ["swot", "pestel", "matriz-de-concorrentes"],
+        "4": ["icp", "buyer-persona"],
+        "5": ["jornada-do-cliente"],
+        "9": ["banco-de-indicadores"]
+      },
+      "entregaveisPorEtapa": {
+        "1": ["BMC", "8 P's do marketing"],
+        "2": ["SWOT + PESTEL + Matriz de concorrentes"],
+        "3": ["Dashboard e relatório com compilado das respostas"],
+        "4": ["ICP e Buyer Persona"],
+        "5": ["Bullseye Framework + Jornada do cliente"],
+        "7": ["Relatório de estratégias + Ferramenta de suporte"]
+      }
+    },
+    {
+      "id": "planejamento-estrategico",
+      "nome": "Planejamento Estratégico",
+      "colunaResumao": "PLANEJAMENTO  ESTRATÉGICO",
+      "checklist": "Planejamento estratégico",
+      "cronogramaId": "1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE",
+      "descricao": "Revisa missão, visão e valores, analisa ambiente com SWOT, PESTEL e 5 Forças, cruza dados de pesquisa e estrutura metas, objetivos e acompanhamento estratégico com planos de ação.",
+      "ferramentasPorEtapa": {
+        "1": ["bmc"],
+        "3": ["swot", "pestel", "porter"],
+        "4": ["estudo-de-segmento"],
+        "5": ["banco-de-indicadores"]
+      },
+      "entregaveisPorEtapa": {
+        "1": ["BMC"],
+        "2": ["MVV atualizado"],
+        "3": ["SWOT + PESTEL + 5 Forças de Porter"],
+        "4": ["Dashboard com dados primários + Relatório de dados secundários"],
+        "5": ["Planilha de PE + Acompanhamento estratégico"],
+        "6": ["Planos de ação"]
+      }
+    },
+    {
+      "id": "mapeamento-de-cultura",
+      "nome": "Mapeamento de Cultura",
+      "colunaResumao": "MAPEAMENTO  DE CULTURA",
+      "checklist": "Mapeamento de cultura",
+      "cronogramaId": "1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4",
+      "descricao": "Aplica as pesquisas de cultura (PCO, IBACO, FIB, OCAI), analisa as respostas em dashboard, formula estratégias de engajamento com gestores e colaboradores e acompanha a implementação.",
+      "ferramentasPorEtapa": {
+        "1": ["bmc"],
+        "2": ["pco", "ibaco", "fib", "mlq"]
+      },
+      "entregaveisPorEtapa": {
+        "1": ["Perfil dos colaboradores"],
+        "2": ["PCO, IBACO, FIB, OCAI"],
+        "3": ["Dashboard com respostas + Análise"],
+        "4": ["Estratégias de engajamento"],
+        "6": ["Implementação"]
+      }
+    },
+    {
+      "id": "gamificacao",
+      "nome": "Gamificação",
+      "colunaResumao": "GAMIFICAÇÃO",
+      "checklist": "Gamificação",
+      "cronogramaId": "1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4",
+      "descricao": "Entende o perfil dos colaboradores e os processos, constrói critérios, pontuações e tema da gamificação, entrega manual e ferramenta de acompanhamento e define estratégias de engajamento.",
+      "ferramentasPorEtapa": {
+        "1": ["bmc"],
+        "3": ["pco"],
+        "4": ["bpmn"],
+        "5": ["bpmn"],
+        "6": ["gamificacao"]
+      },
+      "entregaveisPorEtapa": {
+        "3": ["Perfil dos colaboradores"],
+        "6": ["Critérios de pontuação da gamificação", "Manual da gamificação"],
+        "7": ["Ferramenta de acompanhamento"],
+        "8": ["Estratégias de engajamento e planos de ação"]
+      }
+    },
+    {
+      "id": "pesquisa-de-mercado",
+      "nome": "Pesquisa de Mercado",
+      "colunaResumao": "PESQUISA DE MERCADO",
+      "checklist": "Pesquisa de mercado",
+      "cronogramaId": "1zJV0aRDaxQNZfvHg1C_ABxY4u7TrMF5M-ErMRsHx-30",
+      "descricao": "Define a pesquisa e a metodologia, elabora as ferramentas de coleta, coleta e interpreta os dados em dashboard e entrega relatório final com ICP, SWOT e planos de ação.",
+      "ferramentasPorEtapa": {
+        "1": ["estudo-de-segmento", "porter"],
+        "2": ["ux-research-canvas"],
+        "7": ["icp", "swot", "cpv"]
+      },
+      "entregaveisPorEtapa": {
+        "2": ["UX Research Canvas", "Modelos de pesquisa + Estratégias de coleta"],
+        "4": ["Amostragem definida + Ferramentas de pesquisa"],
+        "6": ["Dashboard da pesquisa + Relatório de dados secundários"],
+        "7": ["Relatório de ICP + estratégias de marketing/comerciais"]
+      }
+    },
+    { "id": "gestao-a-vista", "nome": "Gestão à Vista", "colunaResumao": "GESTÃO A VISTA", "checklist": null, "cronogramaId": null, "descricao": "Mapeia e modela os processos, define rotina e ferramenta de rotina e estrutura o layout da gestão à vista com guia de implementação." },
+    { "id": "pcp", "nome": "PCP", "colunaResumao": "PCP", "checklist": null, "cronogramaId": null, "descricao": "Entende e classifica o sistema de produção, mapeia e analisa tempos, modela e entrega ferramenta de controle, programação e controle da produção." },
+    { "id": "capacidade-produtiva", "nome": "Capacidade Produtiva", "colunaResumao": "CAPACIDADE PRODUTIVA", "checklist": "Capacidade Produtiva", "cronogramaId": null, "descricao": "Mapeia e modela os processos, cronometra e calcula tempos normal e padrão e chega à capacidade produtiva com ferramenta de acompanhamento e relatório crítico." },
+    { "id": "layout", "nome": "Layout", "colunaResumao": "LAYOUT", "checklist": "Layout", "cronogramaId": null, "descricao": "Levanta restrições, analisa e modela os processos, desenha e simula opções de layout e define indicadores." },
+    { "id": "previsao-de-demanda", "nome": "Previsão de Demanda", "colunaResumao": "PREVISÃO DE  DEMANDA", "checklist": "Previsão de demanda", "cronogramaId": null, "descricao": "Alinha o objetivo da previsão, analisa o histórico, escolhe método e horizonte, constrói a ferramenta de cálculo e o MAD e treina a equipe." },
+    { "id": "gestao-de-estoque", "nome": "Gestão de Estoque", "colunaResumao": "GESTÃO DE  ESTOQUE", "checklist": "Gestão de estoque", "cronogramaId": null, "descricao": "Mapeia ressuprimento e armazenagem, analisa curva ABC e custos, define método de controle e armazenamento, indicadores, modelagens TO BE e planos de ação." },
+    { "id": "planejamento-financeiro", "nome": "Planejamento Financeiro", "colunaResumao": "PLANEJAMENTO", "checklist": "Planejamento Financeiro", "cronogramaId": null, "descricao": "Trata dados, cria cenários, levanta investimentos, define indicadores, monta DRE e ferramenta visual e fecha com planos de ação e manualização." },
+    { "id": "eve", "nome": "EVE (Estudo de Viabilidade Econômica)", "colunaResumao": "EVE", "checklist": null, "cronogramaId": null, "descricao": "Analisa mercado, levanta investimentos e premissas, projeta o financeiro e calcula indicadores de viabilidade." },
+    { "id": "dco-prosel", "nome": "DCO + Prosel", "colunaResumao": "DCO + PROSEL", "checklist": null, "cronogramaId": null, "descricao": "Analisa contexto e cargos com entrevistas, monta descritivos de cargo e organograma, implementa e monitora frente à rotina." },
+    { "id": "idealizacao-de-novos-produtos", "nome": "Idealização de Novos Produtos", "colunaResumao": "IDEALIZAÇÃO DE NOVOS PRODUTOS", "checklist": null, "cronogramaId": null, "descricao": "Analisa mercado, constrói e prioriza ideias com ICP, Buyer Persona, CPV e SWOT, estrutura o novo produto e o lançamento." },
+    { "id": "modelo-de-negocio", "nome": "Estruturação de Modelo de Negócio", "colunaResumao": "ESTRUTURAÇÃO DE  MODELO DE NEGÓCIO", "checklist": null, "cronogramaId": null, "descricao": "Analisa mercado e concorrentes, entende o cliente e define recursos, processos e stakeholders do modelo de negócio." }
+  ]
+}
