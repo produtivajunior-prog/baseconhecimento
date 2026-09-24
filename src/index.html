@@ -1705,6 +1705,7 @@
       <button onclick="{{ prodIrAreas }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">As {{ prodNAreas }} áreas</button>
       <button onclick="{{ prodIrFluxo }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Como um projeto nasce</button>
       <button onclick="{{ prodIrMembro }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Como você é acompanhado</button>
+      <sc-if value="{{ hasProdAuxilios }}" hint-placeholder-val="{{ true }}"><button onclick="{{ prodIrAuxilios }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Auxílios e reembolsos</button></sc-if>
     </nav>
 
     <!-- 1. O que é a Produtiva -->
@@ -1813,6 +1814,27 @@
         </sc-for>
       </div>
     </section>
+
+    <!-- 5. Auxílios e reembolsos -->
+    <sc-if value="{{ hasProdAuxilios }}" hint-placeholder-val="{{ true }}">
+    <section id="prod-auxilios" style="scroll-margin-top:90px;margin-top:40px">
+      <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">{{ prodAuxilios.titulo }}</h2>
+      <p style="font-size:14.5px;color:#7C9097;margin:6px 0 16px;line-height:1.5">{{ prodAuxilios.texto }}</p>
+      <div class="hg-g2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px">
+        <sc-for list="{{ prodAuxItens }}" as="x" hint-placeholder-count="2">
+          <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;display:flex;gap:14px;align-items:flex-start">
+            <span style="flex:none;width:42px;height:42px;border-radius:12px;background:#E9F4EE;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2.5" stroke="#39795B" stroke-width="1.8"></rect><circle cx="12" cy="12" r="2.6" stroke="#39795B" stroke-width="1.8"></circle></svg></span>
+            <div style="flex:1;min-width:0">
+              <h3 style="font-size:16.5px;font-weight:700;color:#163B45">{{ x.titulo }}</h3>
+              <p style="font-size:14px;color:#5E747B;margin:4px 0 0;line-height:1.5">{{ x.texto }}</p>
+              <sc-if value="{{ x.hasQuando }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;font-size:13.5px;color:#2E7D52;background:#F2FAF5;border:1px solid #CFEBD9;border-radius:9px;padding:8px 11px;line-height:1.45"><b>Quando vale:</b> {{ x.quando }}</div></sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <p style="font-size:13px;color:#8AA0A7;margin:12px 0 0">Dúvidas sobre valores e como pedir: procure a {{ prodAuxilios.area }}.</p>
+    </section>
+    </sc-if>
 
     <div class="hg-stack" style="margin-top:40px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
       <div>

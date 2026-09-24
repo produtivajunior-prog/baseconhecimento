@@ -670,7 +670,9 @@ class Component extends DCLogic {
       ir: () => { if (f.acao) this.irTela(f.acao.tela); }, linhaBg: i === arr.length - 1 ? 'transparent' : '#DCE7EB' }));
     return { prodOQueE: P.oQueE || {}, prodAtuacao: atuacao, prodNAtuacao: atuacao.length, prodAreas: areas, prodNAreas: areas.length,
       prodFluxo: P.fluxo || {}, prodPassos: passos, prodMembro: P.membro || {}, prodMembroItens: ((P.membro || {}).itens || []),
-      prodIrOQueE: () => this.irPara('prod-oquee'), prodIrAreas: () => this.irPara('prod-areas'), prodIrFluxo: () => this.irPara('prod-fluxo'), prodIrMembro: () => this.irPara('prod-membro'),
+      prodAuxilios: P.auxilios || {}, hasProdAuxilios: !!(P.auxilios && (P.auxilios.itens || []).length),
+      prodAuxItens: ((P.auxilios || {}).itens || []).map(x => ({ ...x, hasQuando: !!x.quando, quando: x.quando || '' })),
+      prodIrOQueE: () => this.irPara('prod-oquee'), prodIrAreas: () => this.irPara('prod-areas'), prodIrFluxo: () => this.irPara('prod-fluxo'), prodIrMembro: () => this.irPara('prod-membro'), prodIrAuxilios: () => this.irPara('prod-auxilios'),
       goProdutiva: () => this.nav('produtiva') };
   }
   nav(screen) { this.setState({ screen, escopoId: screen==='escopos' ? null : this.state.escopoId, caseId: screen==='cases' ? null : this.state.caseId }); if(typeof window!=='undefined') window.scrollTo(0,0); }

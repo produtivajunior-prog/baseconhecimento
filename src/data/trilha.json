@@ -91,7 +91,7 @@
     {"sigla": "Lead", "nome": null, "definicao": "Empresa que pode virar cliente. O SDR qualifica o lead antes de marcar a reunião de diagnóstico.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
     {"sigla": "CS", "nome": "Customer Success", "definicao": "Subnúcleo da área de Projetos. Cada projeto tem uma pessoa de CS, que aplica o CSAT e acompanha a percepção do gestor e dos consultores.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
     {"sigla": "CSAT", "nome": "Customer Satisfaction", "definicao": "Formulário de satisfação aplicado pelo CS em cada projeto, com a percepção do gestor e dos consultores alocados.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
-    {"sigla": "CIT", "nome": null, "definicao": "Subnúcleo da área de Projetos voltado à tecnologia: desenvolvimento tecnológico e sistemas internos da Produtiva, e apoio a outras consultorias nessa parte.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "CIT", "nome": null, "definicao": "Subnúcleo da área de Projetos voltado à tecnologia: desenvolvimento tecnológico e sistemas internos da Produtiva, e apoio a outros consultores nessa parte.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
     {"sigla": "Endomarketing", "nome": null, "definicao": "Ações da Gestão de Pessoas para integrar toda a empresa.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
     {"sigla": "Feedback 360", "nome": null, "definicao": "Avaliação conduzida pela Gestão de Pessoas que junta a visão de várias pessoas sobre o desenvolvimento de cada membro. Complementa o feedback one a one.", "origem": "manual:produtivajunior@gmail.com", "pendente": false}
   ]

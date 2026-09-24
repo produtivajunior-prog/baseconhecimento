@@ -61,6 +61,7 @@ await page.waitForTimeout(300);
   check(/#\/produtiva$/.test(await page.evaluate(() => location.hash)) && /Como funciona a Produtiva/.test(t), 'página "Como funciona a Produtiva" abriu pelo menu (#/produtiva)');
   check(['Gestão de Pessoas', 'Vice-presidência', 'Presidência', 'Marketing', 'Projetos'].every((x) => t.includes(x)) && ['CIEP', 'CIT', 'CSAT'].every((x) => t.includes(x)), 'página mostra as 5 áreas e os subnúcleos de Projetos');
   check(/SDR/.test(t) && /Closer/.test(t) && /Cronograma/.test(t) && /Proposta/.test(t), 'fluxo do primeiro contato ao projeto aparece (SDR → closer → gerente → proposta)');
+  check(/Reembolso de gasolina/.test(t) && /Auxílio alimentação/.test(t) && /manhã e de tarde/.test(t) && /auxílios e reembolsos dos membros/.test(t), 'seção Auxílios e reembolsos aparece e a Vice-presidência paga auxílios e reembolsos');
   await page.locator('main article', { hasText: 'Gestão da Tecnologia' }).first().click(); await page.waitForTimeout(400);
   check(/#\/escopos$/.test(await page.evaluate(() => location.hash)) && /Automação/.test(await texto()), 'área de atuação "Gestão da Tecnologia" abre a tela Escopos');
 }

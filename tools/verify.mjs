@@ -341,7 +341,15 @@ const TELAS = ['home', 'biblioteca', 'escopos', 'cases', 'novo-case', 'cadastro'
     if (f.acao !== null && f.acao !== undefined && !(f.acao && TELAS.includes(f.acao.tela) && texto(f.acao.label))) p(`${ctx}.fluxo.passos[${i}]`, 'acao precisa ser null ou {tela válida, label}');
   }
   for (const [i, m] of ((produtiva.membro || {}).itens || []).entries()) if (!texto(m.titulo) || !texto(m.texto)) p(`${ctx}.membro.itens[${i}]`, 'titulo e texto obrigatórios');
-  check(!problemas_.some((x) => x.startsWith('produtiva')), `produtiva.json  ${aids.size} áreas, ${((produtiva.fluxo || {}).passos || []).length} passos do fluxo comercial`, 'produtiva.json com erros');
+  if (produtiva.auxilios !== undefined) {
+    const ax = produtiva.auxilios || {};
+    if (!texto(ax.titulo) || !texto(ax.texto) || !texto(ax.area)) p(`${ctx}.auxilios`, 'titulo, texto e area obrigatórios');
+    for (const [i, x] of (ax.itens || []).entries()) {
+      if (!texto(x.titulo) || !texto(x.texto)) p(`${ctx}.auxilios.itens[${i}]`, 'titulo e texto obrigatórios');
+      if (x.quando !== null && x.quando !== undefined && !texto(x.quando)) p(`${ctx}.auxilios.itens[${i}]`, 'quando precisa ser texto ou null');
+    }
+  }
+  check(!problemas_.some((x) => x.startsWith('produtiva')), `produtiva.json  ${aids.size} áreas, ${((produtiva.fluxo || {}).passos || []).length} passos do fluxo comercial, ${((produtiva.auxilios || {}).itens || []).length} auxílios`, 'produtiva.json com erros');
 }
 
 // ---------------------------------------------------------------- ritual trimestral de revisão

@@ -7,10 +7,22 @@
     "texto": "A Produtiva é uma empresa de gestão empresarial com mais de 17 anos de mercado. Ajudamos empresas a crescer atuando nas grandes áreas da gestão, e cada uma delas vira escopos de projeto que você encontra no Hangar.",
     "anos": "17+",
     "atuacao": [
-      { "grupo": "PRODUÇÃO", "nome": "Gestão da Produção" },
-      { "grupo": "FINANCEIRO", "nome": "Gestão Financeira" },
-      { "grupo": "ESTRATÉGIA", "nome": "Gestão Estratégica" },
-      { "grupo": "TECNOLOGIA", "nome": "Gestão da Tecnologia" }
+      {
+        "grupo": "PRODUÇÃO",
+        "nome": "Gestão da Produção"
+      },
+      {
+        "grupo": "FINANCEIRO",
+        "nome": "Gestão Financeira"
+      },
+      {
+        "grupo": "ESTRATÉGIA",
+        "nome": "Gestão Estratégica"
+      },
+      {
+        "grupo": "TECNOLOGIA",
+        "nome": "Gestão da Tecnologia"
+      }
     ]
   },
   "areas": [
@@ -24,9 +36,21 @@
       ],
       "procure": "Vai entrar num projeto, tem dúvida sobre um escopo ou quer saber quem já fez um projeto parecido.",
       "subnucleos": [
-        { "sigla": "CIEP", "nome": null, "texto": "Criação de novos escopos e novos produtos da Produtiva." },
-        { "sigla": "CIT", "nome": null, "texto": "Parte tecnológica: desenvolvimento de tecnologia e dos sistemas internos da Produtiva. Também auxilia outras consultorias nessa parte mais tecnológica." },
-        { "sigla": "CS", "nome": "Customer Success", "texto": "Cada projeto tem uma pessoa de CS, que aplica o formulário CSAT e colhe a percepção do gestor e dos consultores sobre o projeto em que estão alocados." }
+        {
+          "sigla": "CIEP",
+          "nome": null,
+          "texto": "Criação de novos escopos e novos produtos da Produtiva."
+        },
+        {
+          "sigla": "CIT",
+          "nome": null,
+          "texto": "Parte tecnológica: desenvolvimento de tecnologia e dos sistemas internos da Produtiva. Também auxilia outros consultores nessa parte mais tecnológica."
+        },
+        {
+          "sigla": "CS",
+          "nome": "Customer Success",
+          "texto": "Cada projeto tem uma pessoa de CS, que aplica o formulário CSAT e colhe a percepção do gestor e dos consultores sobre o projeto em que estão alocados."
+        }
       ]
     },
     {
@@ -49,9 +73,10 @@
       "faz": [
         "Cuida do financeiro da Produtiva: todas as contas",
         "Pagamento de passagens e hospedagens",
-        "Pagamentos de eventos"
+        "Pagamentos de eventos",
+        "Pagamento de auxílios e reembolsos dos membros"
       ],
-      "procure": "Tem dúvida sobre pagamentos, passagens, hospedagem ou custos de um evento.",
+      "procure": "Tem dúvida sobre pagamentos, passagens, hospedagem, custos de um evento, auxílios ou reembolsos.",
       "subnucleos": []
     },
     {
@@ -83,25 +108,114 @@
     "titulo": "Do primeiro contato ao projeto",
     "texto": "Como um projeto nasce na Produtiva, passo a passo, e quem cuida de cada etapa.",
     "passos": [
-      { "quem": "SDR", "titulo": "Prospecção", "texto": "O SDR liga para a empresa, qualifica o lead e marca a reunião de diagnóstico.", "acao": null },
-      { "quem": "Closer", "titulo": "Reunião de diagnóstico", "texto": "O closer vai à reunião de diagnóstico e entende de verdade a dor do cliente.", "acao": { "tela": "escopos", "label": "Ver o Diagnóstico Inicial dos escopos" } },
-      { "quem": "Closer → Gerente", "titulo": "Repasse", "texto": "O closer faz o repasse do que ouviu para o gerente do projeto.", "acao": null },
-      { "quem": "Gerente", "titulo": "Cronograma", "texto": "Com base no repasse, o gerente constrói o cronograma do projeto.", "acao": { "tela": "escopos", "label": "Ver as etapas de cada escopo" } },
-      { "quem": "Closer", "titulo": "Proposta", "texto": "A proposta é feita com base no cronograma. O closer apresenta ao gestor a proposta e tudo o que vai ser feito no projeto.", "acao": null },
-      { "quem": "Equipe do projeto", "titulo": "Execução", "texto": "Projeto fechado, a equipe executa as etapas do escopo. Todos os membros executam projetos, com prioridade para a área de Projetos.", "acao": { "tela": "biblioteca", "label": "Abrir a Biblioteca de ferramentas" } },
-      { "quem": "CS", "titulo": "Acompanhamento", "texto": "A pessoa de CS do projeto aplica o CSAT e acompanha a percepção do gestor e dos consultores.", "acao": null },
-      { "quem": "Equipe do projeto", "titulo": "Case", "texto": "Ao final, a equipe registra o case no Hangar para servir de referência ao próximo projeto parecido.", "acao": { "tela": "novo-case", "label": "Cadastrar um case" } }
+      {
+        "quem": "SDR",
+        "titulo": "Prospecção",
+        "texto": "O SDR liga para a empresa, qualifica o lead e marca a reunião de diagnóstico.",
+        "acao": null
+      },
+      {
+        "quem": "Closer",
+        "titulo": "Reunião de diagnóstico",
+        "texto": "O closer vai à reunião de diagnóstico e entende de verdade a dor do cliente.",
+        "acao": {
+          "tela": "escopos",
+          "label": "Ver o Diagnóstico Inicial dos escopos"
+        }
+      },
+      {
+        "quem": "Closer → Gerente",
+        "titulo": "Repasse",
+        "texto": "O closer faz o repasse do que ouviu para o gerente do projeto.",
+        "acao": null
+      },
+      {
+        "quem": "Gerente",
+        "titulo": "Cronograma",
+        "texto": "Com base no repasse, o gerente constrói o cronograma do projeto.",
+        "acao": {
+          "tela": "escopos",
+          "label": "Ver as etapas de cada escopo"
+        }
+      },
+      {
+        "quem": "Closer",
+        "titulo": "Proposta",
+        "texto": "A proposta é feita com base no cronograma. O closer apresenta ao gestor a proposta e tudo o que vai ser feito no projeto.",
+        "acao": null
+      },
+      {
+        "quem": "Equipe do projeto",
+        "titulo": "Execução",
+        "texto": "Projeto fechado, a equipe executa as etapas do escopo. Todos os membros executam projetos, com prioridade para a área de Projetos.",
+        "acao": {
+          "tela": "biblioteca",
+          "label": "Abrir a Biblioteca de ferramentas"
+        }
+      },
+      {
+        "quem": "CS",
+        "titulo": "Acompanhamento",
+        "texto": "A pessoa de CS do projeto aplica o CSAT e acompanha a percepção do gestor e dos consultores.",
+        "acao": null
+      },
+      {
+        "quem": "Equipe do projeto",
+        "titulo": "Case",
+        "texto": "Ao final, a equipe registra o case no Hangar para servir de referência ao próximo projeto parecido.",
+        "acao": {
+          "tela": "novo-case",
+          "label": "Cadastrar um case"
+        }
+      }
     ]
   },
   "membro": {
     "titulo": "Como você é acompanhado",
     "texto": "O que faz parte da rotina de todo membro da Produtiva.",
     "itens": [
-      { "titulo": "Feedback one a one", "texto": "Conversa individual com a Gestão de Pessoas sobre o seu desenvolvimento.", "area": "Gestão de Pessoas" },
-      { "titulo": "Feedback 360", "texto": "Avaliação que junta a visão de várias pessoas com quem você trabalha, para acompanhar a sua evolução.", "area": "Gestão de Pessoas" },
-      { "titulo": "Formulários mensais", "texto": "Todo mês os membros respondem os formulários da Gestão de Pessoas.", "area": "Gestão de Pessoas" },
-      { "titulo": "CSAT do projeto", "texto": "Nos projetos em que você está alocado, a pessoa de CS colhe a percepção do gestor e a sua.", "area": "Projetos · CS" },
-      { "titulo": "Endomarketing", "texto": "Ações para integrar toda a empresa. Participe: é assim que você conhece quem está nas outras áreas.", "area": "Gestão de Pessoas" }
+      {
+        "titulo": "Feedback one a one",
+        "texto": "Conversa individual com a Gestão de Pessoas sobre o seu desenvolvimento.",
+        "area": "Gestão de Pessoas"
+      },
+      {
+        "titulo": "Feedback 360",
+        "texto": "Avaliação que junta a visão de várias pessoas com quem você trabalha, para acompanhar a sua evolução.",
+        "area": "Gestão de Pessoas"
+      },
+      {
+        "titulo": "Formulários mensais",
+        "texto": "Todo mês os membros respondem os formulários da Gestão de Pessoas.",
+        "area": "Gestão de Pessoas"
+      },
+      {
+        "titulo": "CSAT do projeto",
+        "texto": "Nos projetos em que você está alocado, a pessoa de CS colhe a percepção do gestor e a sua.",
+        "area": "Projetos · CS"
+      },
+      {
+        "titulo": "Endomarketing",
+        "texto": "Ações para integrar toda a empresa. Participe: é assim que você conhece quem está nas outras áreas.",
+        "area": "Gestão de Pessoas"
+      }
+    ]
+  },
+  "auxilios": {
+    "titulo": "Auxílios e reembolsos",
+    "texto": "A Produtiva apoia os membros nos custos de estar a serviço da PJ. Os pagamentos são feitos pela Vice-presidência.",
+    "area": "Vice-presidência",
+    "itens": [
+      {
+        "titulo": "Reembolso de gasolina",
+        "texto": "A Produtiva reembolsa a gasolina gasta pelo membro.",
+        "quando": null
+      },
+      {
+        "titulo": "Auxílio alimentação",
+        "texto": "A Produtiva paga um auxílio alimentação ao membro.",
+        "quando": "o membro tem compromisso da PJ de manhã e de tarde."
+      }
     ]
   }
 }
