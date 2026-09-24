@@ -137,10 +137,9 @@
       "porter"
     ],
     "escopoIds": [
-      "idealizacao-de-novos-produtos",
-      "eve"
+      "idealizacao-de-novos-produtos"
     ],
-    "origem": "escopos Idealização de Novos Produtos e EVE (PPGP 2026): entregáveis e etapas"
+    "origem": "escopo Idealização de Novos Produtos (PPGP 2026): entregáveis e etapas"
   },
   {
     "key": "planejar-financas",
@@ -153,10 +152,9 @@
       "swot"
     ],
     "escopoIds": [
-      "planejamento-financeiro",
-      "eve"
+      "planejamento-financeiro"
     ],
-    "origem": "escopos Planejamento Financeiro e EVE (PPGP 2026)"
+    "origem": "escopo Planejamento Financeiro (PPGP 2026)"
   },
   {
     "key": "estoque",

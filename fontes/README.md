@@ -50,12 +50,14 @@ daquela ferramenta precisa ser refeito.
 **Base desde 2026-09-24: `[PPGP 2026] Revisão dos Escopos`** (`fontes/ppgp-2026/revisao-dos-escopos.pdf`).
 São 16 slides, um por escopo, cada um com seis quadros: O que estudar · Escopo (as etapas) ·
 Cases/Cronogramas · Entregáveis · O que saber · Pontos de risco. O Hangar mostra exatamente esses
-16 escopos. Quem não está no documento saiu do acervo:
+os escopos que a Produtiva executa. Quem não está no documento saiu do acervo:
 
 - **Removidos:** Gestão à Vista, PCP e Estruturação de Modelo de Negócio.
 - **Fundidos:** Gamificação, Mapeamento de Cultura e DCO + Prosel viraram *Cultura, Gamificação e
   Prosel*, como no slide 5. Os ids antigos ficam em `antigosIds`, e links antigos continuam abrindo o escopo.
 - **Novo:** Automação (slide 15).
+- **Descontinuado:** EVE (slide 6). A Produtiva não executa mais esse escopo, então ele fica em
+  `removidos.descontinuados` do mapa e o `rascunho.mjs --escopos` ignora o slide.
 
 O fluxo tem três passos:
 

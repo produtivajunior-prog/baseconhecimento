@@ -258,7 +258,10 @@ function escopos() {
   const manual = `manual:${mapa.responsavel.email}`;
   let erros = 0;
   const erro = (m) => { console.error(`✗ ${m}`); erros++; };
-  for (const sl of ppgp.escopos) if (!mapa.escopos.some((d) => d.pagina === sl.pagina)) erro(`slide ${sl.pagina} (${sl.titulo}) não tem escopo no mapa`);
+  // escopos descontinuados continuam no PPGP, mas saem do Hangar: o slide deles não precisa de escopo no mapa
+  const fora = new Set(((mapa.removidos || {}).descontinuados || []).map((d) => d.pagina));
+  for (const sl of ppgp.escopos) if (!fora.has(sl.pagina) && !mapa.escopos.some((d) => d.pagina === sl.pagina)) erro(`slide ${sl.pagina} (${sl.titulo}) não tem escopo no mapa`);
+  for (const d of mapa.escopos) if (fora.has(d.pagina)) erro(`${d.id}: slide ${d.pagina} está em removidos.descontinuados`);
   for (const def of mapa.escopos) {
     const sl = ppgp.escopos.find((s) => s.pagina === def.pagina);
     if (!sl) { erro(`${def.id}: página ${def.pagina} não existe no PPGP`); continue; }

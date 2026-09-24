@@ -166,7 +166,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -427,7 +427,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -656,7 +656,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -821,7 +821,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -1039,7 +1039,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -1058,185 +1058,6 @@
     "pendencias": [
       "O PPGP 2026 junta Prosel neste escopo, mas não lista etapas próprias de Prosel."
     ]
-  },
-  {
-    "id": "eve",
-    "nome": "EVE (Estudo de Viabilidade Econômica)",
-    "grupo": "FINANCEIRO",
-    "status": "ativo",
-    "descricao": "Mostra se um novo negócio ou ponto vale o investimento: entende o negócio, analisa o mercado, levanta premissas e investimentos, projeta cenários, calcula os indicadores de viabilidade e entrega o relatório de viabilidade.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "pdf",
-        "nome": "[PPGP 2026] Revisão dos Escopos",
-        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
-        "pagina": 6,
-        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
-      }
-    ],
-    "estudar": [
-      {
-        "nome": "Premissas do EVE",
-        "ferramentas": []
-      },
-      {
-        "nome": "Ferramentas de pesquisa de mercado",
-        "ferramentas": []
-      },
-      {
-        "nome": "Indicadores de EVE",
-        "ferramentas": [
-          "banco-de-indicadores"
-        ]
-      },
-      {
-        "nome": "Planejamento financeiro",
-        "ferramentas": []
-      }
-    ],
-    "etapas": [
-      {
-        "id": "entendimento-de-negocio",
-        "ordem": 1,
-        "nome": "Entendimento de negócio",
-        "ferramentas": [
-          "bmc",
-          "swot"
-        ]
-      },
-      {
-        "id": "analise-de-mercado",
-        "ordem": 2,
-        "nome": "Análise de mercado",
-        "ferramentas": [
-          "pestel",
-          "porter",
-          "cpv"
-        ]
-      },
-      {
-        "id": "levantamento-de-premissas-e-investimento",
-        "ordem": 3,
-        "nome": "Levantamento de premissas e investimentos",
-        "ferramentas": []
-      },
-      {
-        "id": "projecoes-dos-cenarios-e-calculos-dos-in",
-        "ordem": 4,
-        "nome": "Projeções dos cenários e cálculos dos indicadores",
-        "ferramentas": []
-      },
-      {
-        "id": "definicao-da-viabilidade",
-        "ordem": 5,
-        "nome": "Definição da viabilidade",
-        "ferramentas": []
-      }
-    ],
-    "entregaveis": [
-      {
-        "nome": "SWOT e BMC",
-        "ferramentas": [
-          "bmc",
-          "swot"
-        ]
-      },
-      {
-        "nome": "PESTAL",
-        "ferramentas": [
-          "pestel"
-        ]
-      },
-      {
-        "nome": "CAMGPEST",
-        "ferramentas": []
-      },
-      {
-        "nome": "5 forças de Porter",
-        "ferramentas": [
-          "porter"
-        ]
-      },
-      {
-        "nome": "Canvas de proposta de valor",
-        "ferramentas": [
-          "cpv"
-        ]
-      },
-      {
-        "nome": "TAM SAM SOM",
-        "ferramentas": []
-      },
-      {
-        "nome": "Mapa de empatia",
-        "ferramentas": []
-      },
-      {
-        "nome": "Definição do público-alvo",
-        "ferramentas": []
-      },
-      {
-        "nome": "Orçamento das premissas",
-        "ferramentas": []
-      },
-      {
-        "nome": "Ferramenta de cálculos de EVE",
-        "ferramentas": []
-      },
-      {
-        "nome": "Indicadores de EVE",
-        "ferramentas": [
-          "banco-de-indicadores"
-        ]
-      },
-      {
-        "nome": "Relatório de viabilidade",
-        "ferramentas": []
-      }
-    ],
-    "saber": [
-      "Se há necessidade de ferramentas de pesquisa de mercado",
-      "Qual é o ponto que ele vai abrir e as características do ponto",
-      "Qual o público que ele vai atingir",
-      "Qual o produto ou serviço que ele vai vender",
-      "Se já tem as premissas"
-    ],
-    "riscos": [
-      "Gestor com pressa"
-    ],
-    "casesReferencia": [
-      {
-        "nome": "Solo"
-      },
-      {
-        "nome": "Picuí"
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-24",
-      "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "grupo": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
-      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
-      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
-      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
-      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
-      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
-      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
-      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
-      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
-    }
   },
   {
     "id": "gerenciamento-financeiro",
@@ -1477,7 +1298,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -1713,7 +1534,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -1867,7 +1688,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -2119,7 +1940,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -2395,7 +2216,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -2580,7 +2401,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -2781,7 +2602,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -2935,7 +2756,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -3096,7 +2917,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
@@ -3247,7 +3068,7 @@
       "revisor": "produtivajunior@gmail.com",
       "data": "2026-09-24",
       "proximaRevisao": "2026-12-24",
-      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. Automação no grupo Tecnologia a pedido da conta institucional."
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão. EVE descontinuado em 2026-09-24."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",

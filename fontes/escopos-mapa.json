@@ -3,11 +3,14 @@
   "fonte": "fontes/ppgp-2026/revisao-dos-escopos.json",
   "responsavel": {"nome":"Thiago Melo","email":"thiagomelo@produtivajunior.com.br"},
   "removidos": {
-    "_comentario": "Escopos que saíram do Hangar em 2026-09-24 por não estarem no PPGP 2026 (os 16 escopos atuais). Os ids fundidos redirecionam para o escopo novo.",
+    "_comentario": "Escopos que saíram do Hangar em 2026-09-24: os que não estão no PPGP 2026 (ids), os fundidos (redirecionam para o escopo novo) e os descontinuados, que estão no PPGP mas a Produtiva não executa mais (o slide é ignorado por tools/rascunho.mjs --escopos).",
     "pedidoPor": "produtivajunior@gmail.com",
     "em": "2026-09-24",
     "ids": ["gestao-a-vista","pcp","modelo-de-negocio"],
-    "fundidos": {"gamificacao":"cultura-gamificacao-prosel","mapeamento-de-cultura":"cultura-gamificacao-prosel","dco-prosel":"cultura-gamificacao-prosel"}
+    "fundidos": {"gamificacao":"cultura-gamificacao-prosel","mapeamento-de-cultura":"cultura-gamificacao-prosel","dco-prosel":"cultura-gamificacao-prosel"},
+    "descontinuados": [
+      {"id":"eve","pagina":6,"nome":"EVE (Estudo de Viabilidade Econômica)","em":"2026-09-24","motivo":"A Produtiva não executa mais este escopo. O slide 6 do PPGP 2026 continua na extração só como registro."}
+    ]
   },
   "escopos": [
     {
@@ -302,50 +305,6 @@
         {"nome":"Casa das Meias","ppgp":"Casa das meias"},
         "Sterbom"
       ]
-    },
-    {
-      "id": "eve",
-      "nome": "EVE (Estudo de Viabilidade Econômica)",
-      "pagina": 6,
-      "ppgpTitulo": "EVE",
-      "grupo": "FINANCEIRO",
-      "descricao": "Mostra se um novo negócio ou ponto vale o investimento: entende o negócio, analisa o mercado, levanta premissas e investimentos, projeta cenários, calcula os indicadores de viabilidade e entrega o relatório de viabilidade.",
-      "estudar": [
-        {"nome":"Premissas do EVE","ferramentas":[]},
-        {"nome":"Ferramentas de pesquisa de mercado","ferramentas":[]},
-        {"nome":"Indicadores de EVE","ferramentas":["banco-de-indicadores"]},
-        {"nome":"Planejamento financeiro","ferramentas":[]}
-      ],
-      "etapas": [
-        {"nome":"Entendimento de negócio","ppgp":"ENTENDIMENTO DE NEGÓCIO","ferramentas":["bmc","swot"]},
-        {"nome":"Análise de mercado","ppgp":"ANÁLISE DE MERCADO","ferramentas":["pestel","porter","cpv"]},
-        {"nome":"Levantamento de premissas e investimentos","ppgp":"LEVANTAMENTO DE PREMISSAS E INVESTIMENTOS","ferramentas":[]},
-        {"nome":"Projeções dos cenários e cálculos dos indicadores","ppgp":"PROJEÇÕES DOS CENÁRIOS E CÁLCULOS DOS INDICADORES","ferramentas":[]},
-        {"nome":"Definição da viabilidade","ppgp":"DEFINIÇÃO DA VIABILIDADE","ferramentas":[]}
-      ],
-      "entregaveis": [
-        {"nome":"SWOT e BMC","ppgp":"SWOT E BMC","ferramentas":["bmc","swot"]},
-        {"nome":"PESTAL","ferramentas":["pestel"]},
-        {"nome":"CAMGPEST","ferramentas":[]},
-        {"nome":"5 forças de Porter","ppgp":"5 FORÇAS DE PORTER","ferramentas":["porter"]},
-        {"nome":"Canvas de proposta de valor","ppgp":"CANVAS PROPOSTA DE VALOR","ferramentas":["cpv"]},
-        {"nome":"TAM SAM SOM","ferramentas":[]},
-        {"nome":"Mapa de empatia","ppgp":"MAPA DE EMPATIA","ferramentas":[]},
-        {"nome":"Definição do público-alvo","ppgp":"DEFINIÇÃO DO PUBLICO ALVO","ferramentas":[]},
-        {"nome":"Orçamento das premissas","ppgp":"ORÇAMENTO DAS PREMISSAS","ferramentas":[]},
-        {"nome":"Ferramenta de cálculos de EVE","ppgp":"FERRAMENTA DE CÁLCULOS DE EVE","ferramentas":[]},
-        {"nome":"Indicadores de EVE","ppgp":"INDICADORES DE EVE","ferramentas":["banco-de-indicadores"]},
-        {"nome":"Relatório de viabilidade","ppgp":"RELATÓRIO DE VIABILIDADE","ferramentas":[]}
-      ],
-      "saber": [
-        {"texto":"Se há necessidade de ferramentas de pesquisa de mercado","ppgp":"Necessidade de ferramentas de pesquisa mercado"},
-        {"texto":"Qual é o ponto que ele vai abrir e as características do ponto","ppgp":"Qual é o ponto que ele vai abrir e características dos pontos"},
-        "Qual o público que ele vai atingir",
-        {"texto":"Qual o produto ou serviço que ele vai vender","ppgp":"Qual o produto/ serviço que ele vai vender"},
-        {"texto":"Se já tem as premissas","ppgp":"Entender ja tem as premissas"}
-      ],
-      "riscos": ["Gestor com pressa"],
-      "cases": ["Solo",{"nome":"Picuí","ppgp":"Picui"}]
     },
     {
       "id": "gerenciamento-financeiro",

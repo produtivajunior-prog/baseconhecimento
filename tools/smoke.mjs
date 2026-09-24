@@ -73,7 +73,8 @@ const temEscopos = !/Nenhum escopo cadastrado/.test(await texto());
 check(true, temEscopos ? 'tela Escopos lista escopos' : 'tela Escopos vazia (nenhum escopo promovido ainda) — pulando navegação por etapa');
 if (temEscopos) {
   const nCards = await page.locator('main article').count();
-  check(/Revisão dos Escopos \(PPGP 2026\)/.test(await texto()) && nCards >= 16, `tela Escopos cita o PPGP 2026 e lista ${nCards} escopos`);
+  check(/Revisão dos Escopos \(PPGP 2026\)/.test(await texto()) && nCards >= 15, `tela Escopos cita o PPGP 2026 e lista ${nCards} escopos`);
+  check(!/Estudo de Viabilidade|\bEVE\b/.test(await texto()), 'EVE (descontinuado) não aparece na tela Escopos');
   const busca = page.getByPlaceholder(/Entregável, ferramenta, cliente/);
   await busca.fill('curva abc'); await page.waitForTimeout(300);
   const achados = await page.locator('main article').count();

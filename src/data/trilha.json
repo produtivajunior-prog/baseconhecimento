@@ -12,7 +12,7 @@
     {
       "id": "escopos",
       "titulo": "Entenda como um projeto é organizado",
-      "texto": "Todo projeto da Produtiva tem 1 gerente e 2 consultores e segue um dos 16 escopos. Abra o escopo do seu projeto e leia na ordem: o que estudar, o que saber do cliente, os pontos de risco, as etapas com as ferramentas, os entregáveis e os projetos que a Produtiva já fez.",
+      "texto": "Todo projeto da Produtiva tem 1 gerente e 2 consultores e segue um dos escopos da Produtiva. Abra o escopo do seu projeto e leia na ordem: o que estudar, o que saber do cliente, os pontos de risco, as etapas com as ferramentas, os entregáveis e os projetos que a Produtiva já fez.",
       "acao": {
         "tela": "escopos",
         "label": "Ver os escopos"
@@ -78,7 +78,7 @@
     {"sigla": "BMC", "nome": "Business Model Canvas", "definicao": "Canvas de 9 blocos que descreve o modelo de negócio da empresa. Costuma abrir a etapa de Iniciação de vários escopos.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false},
     {"sigla": "SWOT", "nome": "Forças, Fraquezas, Oportunidades e Ameaças", "definicao": "Matriz que cruza o ambiente interno (forças e fraquezas) com o externo (oportunidades e ameaças) para orientar a estratégia.", "origem": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8", "pendente": false},
     {"sigla": "Hangar Academy", "nome": null, "definicao": "Site (Google Sites) que reunia o conteúdo do CIEP antes do Hangar. As páginas ainda estão sendo migradas para cá.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
-    {"sigla": "PPGP 2026 — Revisão dos Escopos", "nome": null, "definicao": "Documento que descreve os 16 escopos atuais da Produtiva, um slide por escopo: o que estudar, escopo (etapas), cases/cronogramas, entregáveis, o que saber e pontos de risco. É a base da tela Escopos. A expansão da sigla PPGP ainda precisa ser confirmada.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf", "pendente": true},
+    {"sigla": "PPGP 2026 — Revisão dos Escopos", "nome": null, "definicao": "Documento que descreve os escopos da Produtiva, um slide por escopo: o que estudar, escopo (etapas), cases/cronogramas, entregáveis, o que saber e pontos de risco. É a base da tela Escopos. A expansão da sigla PPGP ainda precisa ser confirmada.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf", "pendente": true},
     {"sigla": "MVV", "nome": "Missão, Visão e Valores", "definicao": "Diretrizes da empresa revisadas ou criadas no Planejamento Estratégico e coletadas no escopo de Cultura.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p4", "pendente": false},
     {"sigla": "TAM SAM SOM", "nome": "Mercado Endereçável Total · Endereçável Aproveitável · Alcançável Aproveitável", "definicao": "Dimensiona o mercado em três níveis, do potencial total do setor (TAM) ao mercado disponível na região de atuação (SAM) e à parcela que a empresa consegue de fato capturar (SOM).", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
     {"sigla": "OKR · BSC · MWB", "nome": "Objectives and Key Results · Balanced Scorecard · Must Win Battles", "definicao": "Metodologias de acompanhamento estratégico que o cliente escolhe no Planejamento Estratégico.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},

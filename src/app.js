@@ -1277,7 +1277,7 @@ class Component extends DCLogic {
       atalhos: [
         { label:'Qual ferramenta usar?', hint:'Escolha o problema e veja as sugestões', go:()=>this.nav('recomendar') },
         { label:'Registrar um case', hint:'Projeto finalizado vira referência', go:()=>this.openNovoCase() },
-        { label:'Ver os escopos', hint:'O que estudar, perguntar e entregar em cada um dos 16', go:()=>this.nav('escopos') },
+        { label:'Ver os escopos', hint:'O que estudar, perguntar e entregar em cada um dos ' + this.ESCOPOS.length, go:()=>this.nav('escopos') },
       ],
       // biblioteca
       filtered, filterGroups, cardStyles,

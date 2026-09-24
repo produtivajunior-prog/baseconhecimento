@@ -19,7 +19,7 @@ fontes/            de onde vem cada texto (ver fontes/README.md)
   drive/<id>.txt          texto extraído de cada PDF/planilha do Drive, com cabeçalho e hash
   hangar/<slug>.md        páginas do Hangar Academy coladas à mão
   inventario.json         índice dos arquivos extraídos
-  ppgp-2026/              [PPGP 2026] Revisão dos Escopos: o PDF (base dos 16 escopos) e a extração verbatim
+  ppgp-2026/              [PPGP 2026] Revisão dos Escopos: o PDF (base dos escopos) e a extração verbatim
   ferramentas-mapa.json   por ferramenta: categoria, anexos (ids do Drive), entradas/saídas, stubs
   escopos-mapa.json       por escopo: texto curado do PPGP, ferramentas por etapa/entregável, cronograma base
 src/
@@ -29,7 +29,7 @@ src/
   data/            o acervo, como dado editável
     taxonomia.json          fonte única de tipos, categorias, grupos de escopo, status, cores
     ferramentas.json        ferramentas promovidas (27: 26 do acervo real + n8n; 20 ainda "Em construção")
-    escopos.json            os 16 escopos do PPGP 2026: estudar, etapas (com ferramentas), entregáveis, saber, riscos, cases
+    escopos.json            os 15 escopos do PPGP 2026 em execução: estudar, etapas (com ferramentas), entregáveis, saber, riscos, cases
     problemas.json          problemas → ferramentas (tela "Recomendar")
     modelos.json            modelos-padrão (blocos que a IA preenche)
     documento-padrao.json   documento PMMC (10 seções, do PDF oficial)
@@ -96,7 +96,7 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   os subnúcleos de Projetos (CIEP, CIT, CS), o caminho do primeiro contato ao projeto (SDR → closer → gerente
   → proposta → execução → CSAT → case) e como o membro é acompanhado. O conteúdo fica em
   `src/data/produtiva.json` e é validado pelo `verify`.
-- **Escopos** (`#/escopos`): os 16 escopos da Revisão dos Escopos (PPGP 2026), com busca por entregável, ferramenta,
+- **Escopos** (`#/escopos`): os 15 escopos da Revisão dos Escopos (PPGP 2026) que a Produtiva executa (o EVE foi descontinuado), com busca por entregável, ferramenta,
   cliente ou etapa. Cada escopo tem cinco blocos: o que estudar, o Diagnóstico Inicial, as etapas, os entregáveis e os cases.
   - **Diagnóstico Inicial:** checklist "O que saber" (as marcações ficam no navegador) e os pontos de risco.
   - **Etapas:** mostram as ferramentas da Biblioteca e, em Cultura, as frentes.
@@ -155,7 +155,7 @@ Detalhes e o resto do inventário no [DIAGNOSTICO.md](DIAGNOSTICO.md).
    (BMC, BPMN, SIPOC, RACI, Jornada, PCO, IBACO, FIB, MLQ, DCO, Gamificação, n8n…). O caminho mais curto é
    trazer as páginas do Hangar Academy com `tools/hangar-extrator.js` + `node tools/hangar-importar.mjs`
    (seção 2 de `fontes/README.md`) e regerar os rascunhos.
-2. **Donos de área revisam a primeira carga**: as 27 ferramentas (2026-09-15) e os 16 escopos do PPGP 2026 (2026-09-24)
+2. **Donos de área revisam a primeira carga**: as 27 ferramentas (2026-09-15) e os 15 escopos do PPGP 2026 (2026-09-24)
    foram aprovados pela conta institucional; cada dono confere os da sua área na próxima revisão (`node tools/revisao.mjs`).
 3. **Pendências do PPGP 2026** com o CIEP: o significado dos itens marcados com ✱, o slide de Custeio e
    Precificação (que repete o de Gerenciamento Financeiro) e as etapas de Prosel. Ver `fontes/README.md`.
