@@ -230,7 +230,7 @@ class Component extends DCLogic {
     if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
     this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' gerado. Abra e imprima.' : 'Não consegui gerar o arquivo aqui.');
   }
-  // ---- Roteiro da reunião de diagnóstico de um escopo (PPGP 2026): o que saber, riscos, entregáveis e etapas.
+  // ---- Roteiro do Diagnóstico Inicial de um escopo (PPGP 2026): o que saber, riscos, entregáveis e etapas.
   roteiroEscopo(esc) {
     const e = (t) => this.esc(t);
     const linhas = '<div class="linhas"><span></span><span></span></div>';
@@ -241,7 +241,7 @@ class Component extends DCLogic {
     const etapas = (esc.etapas || []).map((q) => { const h = q.frente && q.frente !== frente ? '<li class="fr">' + e(q.frente) + '</li>' : ''; frente = q.frente || frente; return h + '<li><b>' + q.ordem + '.</b> ' + e(q.nome) + '</li>'; }).join('');
     const estudar = (esc.estudar || []).map((q) => '<li><span class="cb"></span>' + e(q.nome) + '</li>').join('');
     const pdf = (esc.fontes || []).find(f => f.tipo === 'pdf');
-    return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>' + e(esc.nome) + ' — roteiro da reunião de diagnóstico</title><style>' +
+    return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>' + e(esc.nome) + ' — roteiro do Diagnóstico Inicial</title><style>' +
       '@page{size:A4;margin:16mm}body{font:12.5pt/1.45 -apple-system,"Segoe UI",Roboto,sans-serif;color:#172A30;margin:0;padding:24px;max-width:190mm}' +
       'h1{font-size:22pt;margin:0 0 4px}h2{font-size:13pt;margin:22px 0 8px;color:#1E7C92;text-transform:uppercase;letter-spacing:.04em}' +
       '.meta{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0 6px;font-size:11pt;color:#5E747B}.meta span{border-bottom:1px solid #9DAEB4;min-width:150px;padding:0 4px 2px}' +
@@ -250,7 +250,7 @@ class Component extends DCLogic {
       '.risco{background:#FBF1E0;border-radius:8px;padding:10px 14px}.nota{color:#8AA0A7;font-size:9.5pt;margin-top:24px}' +
       '.print{position:fixed;top:12px;right:12px;border:none;background:#3DAFC7;color:#fff;font:600 11pt sans-serif;padding:9px 14px;border-radius:9px;cursor:pointer}@media print{.print{display:none}body{padding:0}}' +
       '</style></head><body><button class="print" onclick="window.print()">Imprimir</button>' +
-      '<div style="font-size:9.5pt;color:#8AA0A7;letter-spacing:.06em;text-transform:uppercase">Hangar · Produtiva Júnior · roteiro da reunião de diagnóstico</div>' +
+      '<div style="font-size:9.5pt;color:#8AA0A7;letter-spacing:.06em;text-transform:uppercase">Hangar · Produtiva Júnior · roteiro do Diagnóstico Inicial</div>' +
       '<h1>' + e(esc.nome) + '</h1><div style="color:#5E747B">' + e(esc.descricao || '') + '</div>' +
       '<div class="meta"><span>Cliente: </span><span>Data: </span><span>Gerente: </span><span>Consultores: </span></div>' +
       (saber ? '<h2>O que precisamos saber do cliente</h2><ol>' + saber + '</ol>' : '') +
@@ -261,13 +261,13 @@ class Component extends DCLogic {
       '<div class="nota">Fonte: ' + e(pdf ? pdf.nome + ', slide ' + pdf.pagina : 'Hangar') + '.</div></body></html>';
   }
   abrirRoteiro(esc) {
-    const html = this.roteiroEscopo(esc); const nome = this.slugDe(esc.nome) + '-roteiro-diagnostico.html';
+    const html = this.roteiroEscopo(esc); const nome = this.slugDe(esc.nome) + '-diagnostico-inicial.html';
     if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
     try { this.abrirLink(URL.createObjectURL(new Blob([html], { type: 'text/html' }))); this.showToast('Roteiro aberto em outra aba. Use Ctrl+P para imprimir.'); }
     catch (e) { this.showToast('Não consegui abrir aqui. Use "Baixar (.html)".'); }
   }
   baixarRoteiro(esc) {
-    const html = this.roteiroEscopo(esc); const nome = this.slugDe(esc.nome) + '-roteiro-diagnostico.html';
+    const html = this.roteiroEscopo(esc); const nome = this.slugDe(esc.nome) + '-diagnostico-inicial.html';
     if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
     this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' gerado. Abra e imprima.' : 'Não consegui gerar o arquivo aqui.');
   }

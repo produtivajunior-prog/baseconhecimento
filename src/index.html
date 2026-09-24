@@ -1101,7 +1101,7 @@
           <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Responsável</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.respNome }}</div></div>
         </div>
         <div class="hg-wrap" style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
-          <button onclick="{{ escopoSel.abrirRoteiro }}" style="display:flex;align-items:center;gap:8px;border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 16px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M7 8V3h10v5M7 17H4v-7h16v7h-3M7 14h10v7H7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path></svg>Roteiro da reunião de diagnóstico</button>
+          <button onclick="{{ escopoSel.abrirRoteiro }}" style="display:flex;align-items:center;gap:8px;border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 16px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M7 8V3h10v5M7 17H4v-7h16v7h-3M7 14h10v7H7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path></svg>Roteiro do Diagnóstico Inicial</button>
           <button onclick="{{ escopoSel.baixarRoteiro }}" style="border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:14px;font-weight:600;padding:10px 14px;border-radius:11px;cursor:pointer" style-hover="border-color:#9FD7E2">Baixar (.html)</button>
           <sc-if value="{{ escopoSel.hasCronograma }}" hint-placeholder-val="{{ false }}"><a href="{{ escopoSel.cronogramaUrl }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:7px;text-decoration:none;border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:14px;font-weight:600;padding:10px 14px;border-radius:11px" style-hover="border-color:#9FD7E2">Cronograma base no Drive ↗</a></sc-if>
         </div>
@@ -1110,7 +1110,7 @@
       <!-- atalhos das seções -->
       <nav class="hg-nav hg-aside" aria-label="Seções do escopo" style="display:flex;gap:8px;margin-bottom:22px;position:sticky;top:68px;z-index:5;background:rgba(246,249,250,0.94);backdrop-filter:blur(6px);padding:10px 0">
         <button onclick="{{ escopoSel.irEstudar }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">1 · O que estudar</button>
-        <button onclick="{{ escopoSel.irReuniao }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">2 · Reunião com o cliente</button>
+        <button onclick="{{ escopoSel.irReuniao }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">2 · Diagnóstico Inicial</button>
         <button onclick="{{ escopoSel.irEtapas }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">3 · Etapas</button>
         <button onclick="{{ escopoSel.irEntregaveis }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">4 · Entregáveis</button>
         <button onclick="{{ escopoSel.irCases }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">5 · Cases e cronogramas</button>
@@ -1140,7 +1140,7 @@
 
       <!-- 2. Reunião: o que saber + pontos de risco -->
       <section id="esc-reuniao" style="scroll-margin-top:130px;margin-bottom:30px">
-        <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.05em;text-transform:uppercase">2 · Reunião de diagnóstico</div>
+        <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.05em;text-transform:uppercase">2 · Diagnóstico Inicial</div>
         <h2 style="font-size:21px;font-weight:700;color:#163B45;margin:4px 0 4px">O que saber do cliente e onde o projeto costuma dar errado</h2>
         <p style="font-size:14px;color:#7C9097;margin:0 0 14px;line-height:1.5">Marque cada pergunta à medida que o cliente responde (fica salvo neste navegador). O roteiro para imprimir traz as duas listas com espaço para anotar.</p>
         <div class="hg-g2" style="display:grid;grid-template-columns:1.25fr 1fr;gap:16px;align-items:start">

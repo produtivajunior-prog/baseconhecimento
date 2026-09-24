@@ -31,7 +31,7 @@
     {
       "id": "reuniao",
       "titulo": "Prepare a reunião com o cliente",
-      "texto": "Na página do escopo, 'Roteiro da reunião de diagnóstico' gera uma folha para imprimir com o que saber do cliente (com espaço para anotar), os pontos de risco para alinhar e os entregáveis. Para uma ferramenta específica, use 'Material para a reunião' na ficha dela.",
+      "texto": "Na página do escopo, 'Roteiro do Diagnóstico Inicial' gera uma folha para imprimir com o que saber do cliente (com espaço para anotar), os pontos de risco para alinhar e os entregáveis. Para uma ferramenta específica, use 'Material para a reunião' na ficha dela.",
       "acao": {
         "tela": "escopos",
         "label": "Escolher o escopo"

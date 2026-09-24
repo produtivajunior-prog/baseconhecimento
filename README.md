@@ -91,11 +91,11 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   ferramentas mapeadas em mais etapas, quem procurar e o glossário. Os termos vêm de `src/data/trilha.json`,
   cada um com `origem`; os marcados `pendente: true` aparecem como "a confirmar" até o CIEP validar.
 - **Escopos** (`#/escopos`): os 16 escopos da Revisão dos Escopos (PPGP 2026), com busca por entregável, ferramenta,
-  cliente ou etapa. Cada escopo tem cinco blocos: o que estudar, a reunião de diagnóstico, as etapas, os entregáveis e os cases.
-  - **Reunião de diagnóstico:** checklist "O que saber" (as marcações ficam no navegador) e os pontos de risco.
+  cliente ou etapa. Cada escopo tem cinco blocos: o que estudar, o Diagnóstico Inicial, as etapas, os entregáveis e os cases.
+  - **Diagnóstico Inicial:** checklist "O que saber" (as marcações ficam no navegador) e os pontos de risco.
   - **Etapas:** mostram as ferramentas da Biblioteca e, em Cultura, as frentes.
   - **Cases:** os projetos que a Produtiva já fez, ligados ao Banco de Cases. O botão "+ ficha" abre o cadastro já preenchido.
-  - **Roteiro da reunião de diagnóstico:** gera a folha para imprimir.
+  - **Roteiro do Diagnóstico Inicial:** gera a folha para imprimir.
   - **Links antigos:** `#/escopo/gamificacao` e outros ids de escopos fundidos redirecionam para o escopo novo.
 - **Material para a reunião**: na ficha da ferramenta, "Abrir material para imprimir" gera uma página com
   perguntas-chave, o que pedir ao cliente, passo a passo e, quando há modelo em canvas, o canvas em branco.

@@ -69,7 +69,7 @@ if (temEscopos) {
   await page.locator('main article', { hasText: 'Estruturação Comercial' }).first().click();
   await page.waitForTimeout(400);
   const t = await texto();
-  check(['O que estudar', 'O que saber', 'Pontos de risco', 'Etapas do escopo', 'Entregáveis', 'Cases e cronogramas'].every((x) => t.includes(x)), 'escopo abriu com os 5 blocos (estudar, reunião, etapas, entregáveis, cases)');
+  check(['O que estudar', 'Diagnóstico Inicial', 'O que saber', 'Pontos de risco', 'Etapas do escopo', 'Entregáveis', 'Cases e cronogramas'].every((x) => t.includes(x)), 'escopo abriu com os 5 blocos (estudar, Diagnóstico Inicial, etapas, entregáveis, cases)');
   check(/Culpar a PJ por não vender/.test(t) && /Trópicos Motel/.test(t) && /Matriz de objeções/.test(t), 'risco, case e entregável do slide 2 do PPGP aparecem na tela');
 
   // checklist "O que saber": marca, conta e sobrevive ao F5
@@ -79,11 +79,11 @@ if (temEscopos) {
   check(/1 de \d+ levantados/.test(await texto()), 'checklist continua marcado depois de recarregar (localStorage)');
   await page.getByRole('button', { name: 'Limpar', exact: true }).first().click(); await page.waitForTimeout(200);
 
-  // roteiro da reunião de diagnóstico
-  await page.getByRole('button', { name: /Roteiro da reunião de diagnóstico/ }).click(); await page.waitForTimeout(300);
+  // roteiro do Diagnóstico Inicial
+  await page.getByRole('button', { name: /Roteiro do Diagnóstico Inicial/ }).click(); await page.waitForTimeout(300);
   {
     const mat = await page.evaluate(() => window.__hangarUltimoMaterial);
-    check(!!mat && /roteiro da reunião de diagnóstico/i.test(mat.html) && mat.html.includes('Culpar a PJ por não vender') && mat.html.includes('Quantas pessoas da equipe comercial'), `roteiro imprimível traz o que saber e os riscos (${mat ? mat.nome : 'nada'})`);
+    check(!!mat && /roteiro do Diagnóstico Inicial/i.test(mat.html) && mat.html.includes('Culpar a PJ por não vender') && mat.html.includes('Quantas pessoas da equipe comercial'), `roteiro imprimível traz o que saber e os riscos (${mat ? mat.nome : 'nada'})`);
     await page.evaluate(() => { window.__abertoNoDrive = null; });
   }
 
