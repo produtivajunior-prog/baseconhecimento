@@ -8,6 +8,7 @@
  * O que ele garante:
  *   - a página renderiza sem "{{ … }}" cru na tela (o sintoma clássico de runtime que não subiu);
  *   - com unpkg.com bloqueado o app continua (React embutido);
+ *   - Como funciona a Produtiva: menu, áreas, subnúcleos, fluxo comercial e atalho para os escopos;
  *   - Escopos (PPGP 2026): busca, os 5 blocos do escopo, checklist "O que saber" após F5, roteiro imprimível,
  *     etapa → ferramenta → "Usado em", link antigo redirecionando e "+ ficha" preenchendo o cadastro de case;
  *   - a busca por um termo de dentro dos passos encontra a ferramenta;
@@ -51,6 +52,18 @@ const texto = async () => page.evaluate(() => document.body.innerText);
 check(!/\{\{/.test(await texto()), 'nenhum "{{" cru na tela (runtime subiu sem unpkg)');
 check((await page.locator('#__bundler_err').count()) === 0, 'sem painel vermelho de erro do bundle na tela');
 check(/Por escopo|Escopos/.test(await texto()), 'home renderizou a seção "Por escopo"');
+
+// Como funciona a Produtiva: menu → página com as 5 áreas, subnúcleos, fluxo comercial → área de atuação abre Escopos
+await page.getByRole('button', { name: 'Como funciona', exact: true }).first().click();
+await page.waitForTimeout(300);
+{
+  const t = await texto();
+  check(/#\/produtiva$/.test(await page.evaluate(() => location.hash)) && /Como funciona a Produtiva/.test(t), 'página "Como funciona a Produtiva" abriu pelo menu (#/produtiva)');
+  check(['Gestão de Pessoas', 'Vice-presidência', 'Presidência', 'Marketing', 'Projetos'].every((x) => t.includes(x)) && ['CIEP', 'CIT', 'CSAT'].every((x) => t.includes(x)), 'página mostra as 5 áreas e os subnúcleos de Projetos');
+  check(/SDR/.test(t) && /Closer/.test(t) && /Cronograma/.test(t) && /Proposta/.test(t), 'fluxo do primeiro contato ao projeto aparece (SDR → closer → gerente → proposta)');
+  await page.locator('main article', { hasText: 'Gestão da Tecnologia' }).first().click(); await page.waitForTimeout(400);
+  check(/#\/escopos$/.test(await page.evaluate(() => location.hash)) && /Automação/.test(await texto()), 'área de atuação "Gestão da Tecnologia" abre a tela Escopos');
+}
 
 // Escopos (PPGP 2026) → busca → escopo em 5 blocos → checklist → roteiro → etapa → ferramenta
 await page.getByRole('button', { name: 'Escopos', exact: true }).first().click();

@@ -167,7 +167,7 @@
     @media (max-width:960px){
       .hg-cols{grid-template-columns:1fr!important}
       .hg-aside{position:static!important;max-height:none!important}
-      .hg-g3{grid-template-columns:1fr 1fr!important}
+      .hg-g3,.hg-g4{grid-template-columns:1fr 1fr!important}
     }
     @media (max-width:680px){
       .hg-main{padding-left:16px!important;padding-right:16px!important}
@@ -175,7 +175,7 @@
       .hg-hero{padding:44px 16px 40px!important}
       .hg-hero h1{font-size:34px!important}
       .hg-hero p{font-size:16px!important}
-      .hg-g2,.hg-g3,.hg-form{grid-template-columns:1fr!important}
+      .hg-g2,.hg-g3,.hg-g4,.hg-form{grid-template-columns:1fr!important}
       .hg-hide-m{display:none!important}
       .hg-only-m{display:flex!important}
       .hg-filtros{display:none!important}
@@ -187,7 +187,7 @@
       .hg-nav{order:3;width:100%;margin-left:0!important;padding-bottom:2px}
       .hg-capa{height:220px!important}
     }
-    .hg-cols>*,.hg-g2>*,.hg-g3>*{min-width:0}
+    .hg-cols>*,.hg-g2>*,.hg-g3>*,.hg-g4>*{min-width:0}
     @keyframes ciepGrow{from{height:0;opacity:0}to{opacity:1}}
     @keyframes ciepSpin{to{transform:rotate(360deg)}}
   </style>
@@ -197,7 +197,7 @@
 
   <!-- ============ TOP NAV ============ -->
   <header style="position:sticky;top:0;z-index:30;background:rgba(255,255,255,0.88);backdrop-filter:blur(10px);border-bottom:1px solid #E7EEF1">
-    <div class="hg-header" style="max-width:1200px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;gap:28px">
+    <div class="hg-header" style="max-width:1200px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;gap:18px">
       <div onclick="{{ goHome }}" style="display:flex;align-items:center;gap:11px;cursor:pointer;flex:none">
         <img src="3ef4b086-390f-48b4-b543-ba27789b2a30" alt="Produtiva Júnior" style="height:30px;width:auto;display:block">
         <div style="display:flex;flex-direction:column;line-height:1.05">
@@ -205,9 +205,9 @@
           <span style="font-size:11px;color:#8AA0A7;font-weight:500;letter-spacing:0.04em">PRODUTIVA JÚNIOR</span>
         </div>
       </div>
-      <nav class="hg-nav" style="display:flex;align-items:center;gap:4px;margin-left:6px;min-width:0">
+      <nav class="hg-nav" style="display:flex;align-items:center;gap:2px;margin-left:0;min-width:0">
         <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
-          <button onclick="{{ n.go }}" style="border:none;background:{{ n.bg }};color:{{ n.color }};font-size:14.5px;font-weight:{{ n.weight }};padding:8px 14px;border-radius:9px;cursor:pointer">{{ n.label }}</button>
+          <button onclick="{{ n.go }}" style="border:none;background:{{ n.bg }};color:{{ n.color }};font-size:14px;font-weight:{{ n.weight }};padding:8px 11px;border-radius:9px;cursor:pointer">{{ n.label }}</button>
         </sc-for>
       </nav>
       <div style="flex:1"></div>
@@ -1059,7 +1059,7 @@
         <div style="margin-top:28px;background:#fff;border:1px dashed #C9DBE0;border-radius:16px;padding:32px;text-align:center;color:#8AA0A7;font-size:14.5px">Nenhum escopo cadastrado ainda. O rascunho é gerado a partir do PPGP 2026 — veja <b>fontes/README.md</b>.</div>
       </sc-if>
       <sc-for list="{{ escoposPorGrupo }}" as="g" hint-placeholder-count="3">
-        <div style="margin-top:34px">
+        <div id="{{ g.ancora }}" style="margin-top:34px;scroll-margin-top:90px">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
             <span style="width:10px;height:10px;border-radius:3px;background:{{ g.cor }}"></span>
             <h2 style="font-size:19px;font-weight:700;color:#163B45;letter-spacing:-0.01em">{{ g.label }}</h2>
@@ -1693,12 +1693,143 @@
   </main>
   </sc-if>
 
+  <!-- ============ COMO FUNCIONA A PRODUTIVA ============ -->
+  <sc-if value="{{ isProdutiva }}" hint-placeholder-val="{{ false }}">
+  <main class="hg-main" style="max-width:1100px;margin:0 auto;padding:34px 28px 80px">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:#EAF6F9;color:#1E7C92;font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:100px;margin-bottom:14px">Para quem acabou de chegar</div>
+    <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">Como funciona a Produtiva</h1>
+    <p style="font-size:15.5px;color:#5E747B;margin:10px 0 0;line-height:1.55;max-width:720px">Quem é a Produtiva, como ela se organiza, como um projeto nasce e como você é acompanhado. O essencial para entender o dia a dia da empresa.</p>
+
+    <nav class="hg-nav" aria-label="Seções da página" style="display:flex;gap:8px;margin:22px 0 8px">
+      <button onclick="{{ prodIrOQueE }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">O que é a Produtiva</button>
+      <button onclick="{{ prodIrAreas }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">As {{ prodNAreas }} áreas</button>
+      <button onclick="{{ prodIrFluxo }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Como um projeto nasce</button>
+      <button onclick="{{ prodIrMembro }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Como você é acompanhado</button>
+    </nav>
+
+    <!-- 1. O que é a Produtiva -->
+    <section id="prod-oquee" style="scroll-margin-top:90px;margin-top:26px">
+      <div class="hg-stack" style="display:flex;gap:26px;align-items:center;background:linear-gradient(150deg,#1B4651 0%,#28697A 100%);border-radius:20px;padding:28px 30px;color:#fff">
+        <div style="flex:none;text-align:center;min-width:130px">
+          <div style="font-family:'Schibsted Grotesk';font-size:52px;font-weight:800;line-height:1;color:#7FD3E3">{{ prodOQueE.anos }}</div>
+          <div style="font-size:13px;color:#BFE2EA;margin-top:6px">anos de mercado</div>
+        </div>
+        <div style="flex:1;min-width:0">
+          <h2 style="font-size:23px;font-weight:700;letter-spacing:-0.02em">{{ prodOQueE.titulo }}</h2>
+          <p style="font-size:15.5px;color:#DCEFF4;margin:8px 0 0;line-height:1.6">{{ prodOQueE.texto }}</p>
+        </div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin:24px 0 12px">As {{ prodNAtuacao }} grandes áreas de atuação</div>
+      <div class="hg-g4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+        <sc-for list="{{ prodAtuacao }}" as="a" hint-placeholder-count="4">
+          <article onclick="{{ a.abrir }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px;cursor:pointer;display:flex;flex-direction:column;gap:10px" style-hover="border-color:#C6E4EC;box-shadow:0 12px 30px -18px rgba(22,59,69,0.25)">
+            <span style="width:36px;height:36px;border-radius:10px;background:{{ a.bg }};display:flex;align-items:center;justify-content:center"><span style="width:12px;height:12px;border-radius:4px;background:{{ a.cor }}"></span></span>
+            <h3 style="font-size:16.5px;font-weight:700;color:#163B45;line-height:1.25">{{ a.nome }}</h3>
+            <p style="font-size:12.5px;color:#7C9097;line-height:1.45;margin:0">{{ a.escopos }}</p>
+            <span style="margin-top:auto;font-size:13px;font-weight:600;color:{{ a.cor }}">{{ a.resumoEscopos }} ›</span>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 2. As áreas -->
+    <section id="prod-areas" style="scroll-margin-top:90px;margin-top:44px">
+      <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">Como a Produtiva se organiza</h2>
+      <p style="font-size:14.5px;color:#7C9097;margin:6px 0 16px;line-height:1.5">A empresa tem {{ prodNAreas }} áreas. Veja o que cada uma faz e quando procurar cada uma.</p>
+      <div class="hg-wrap" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+        <sc-for list="{{ prodAreas }}" as="a" hint-placeholder-count="5"><button onclick="{{ a.irArea }}" style="display:flex;align-items:center;gap:8px;border:1px solid #DCE7EB;background:#fff;color:#163B45;font-size:13.5px;font-weight:600;padding:7px 12px 7px 8px;border-radius:10px;cursor:pointer" style-hover="border-color:#9FD7E2"><span style="width:24px;height:24px;border-radius:7px;background:{{ a.bg }};color:{{ a.cor }};font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ a.iniciais }}</span>{{ a.nome }}</button></sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <sc-for list="{{ prodAreas }}" as="a" hint-placeholder-count="3">
+          <article id="area-{{ a.id }}" style="scroll-margin-top:90px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px">
+            <div style="display:flex;align-items:center;gap:13px">
+              <span style="flex:none;width:44px;height:44px;border-radius:12px;background:{{ a.bg }};color:{{ a.cor }};display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:800;font-size:16px">{{ a.iniciais }}</span>
+              <div style="min-width:0">
+                <h3 style="font-size:19px;font-weight:700;color:#163B45;letter-spacing:-0.01em">{{ a.nome }}</h3>
+                <p style="font-size:14.5px;color:#5E747B;margin:2px 0 0;line-height:1.5">{{ a.resumo }}</p>
+              </div>
+            </div>
+            <div class="hg-cols" style="display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-top:16px">
+              <div>
+                <div style="font-size:11.5px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px">O que faz</div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <sc-for list="{{ a.faz }}" as="x" hint-placeholder-count="3"><div style="display:flex;gap:9px;align-items:flex-start"><span style="flex:none;width:6px;height:6px;border-radius:50%;background:{{ a.cor }};margin-top:8px"></span><span style="font-size:14.5px;color:#3C545B;line-height:1.5">{{ x }}</span></div></sc-for>
+                </div>
+              </div>
+              <div style="background:#F6F9FA;border-radius:12px;padding:14px 16px;align-self:start">
+                <div style="font-size:11.5px;font-weight:700;color:{{ a.cor }};letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px">Procure quando</div>
+                <p style="font-size:14px;color:#3C545B;margin:0;line-height:1.5">{{ a.procure }}</p>
+              </div>
+            </div>
+            <sc-if value="{{ a.hasSub }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:11.5px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin:18px 0 10px">Subnúcleos</div>
+              <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+                <sc-for list="{{ a.subnucleos }}" as="sn" hint-placeholder-count="3">
+                  <div style="border:1px solid #E7EEF1;border-radius:13px;padding:14px 15px">
+                    <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><span style="font-family:'Schibsted Grotesk';font-size:17px;font-weight:800;color:{{ a.cor }}">{{ sn.sigla }}</span><sc-if value="{{ sn.nome }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px;color:#7C9097">{{ sn.nome }}</span></sc-if></div>
+                    <p style="font-size:13.5px;color:#3C545B;margin:6px 0 0;line-height:1.5">{{ sn.texto }}</p>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 3. Como um projeto nasce -->
+    <section id="prod-fluxo" style="scroll-margin-top:90px;margin-top:44px">
+      <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">{{ prodFluxo.titulo }}</h2>
+      <p style="font-size:14.5px;color:#7C9097;margin:6px 0 18px;line-height:1.5">{{ prodFluxo.texto }}</p>
+      <sc-for list="{{ prodPassos }}" as="f" hint-placeholder-count="5">
+        <div style="display:grid;grid-template-columns:52px minmax(0,1fr);gap:16px">
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <span style="width:40px;height:40px;border-radius:50%;background:#163B45;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">{{ f.num }}</span>
+            <span style="flex:1;width:2px;background:{{ f.linhaBg }};margin:6px 0"></span>
+          </div>
+          <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:16px 20px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <h3 style="font-size:16.5px;font-weight:700;color:#163B45">{{ f.titulo }}</h3>
+              <span style="font-size:12px;font-weight:600;color:#1E7C92;background:#EAF6F9;padding:3px 9px;border-radius:6px">{{ f.quem }}</span>
+            </div>
+            <p style="font-size:14.5px;color:#3C545B;margin:6px 0 0;line-height:1.55">{{ f.texto }}</p>
+            <sc-if value="{{ f.hasAcao }}" hint-placeholder-val="{{ false }}"><button onclick="{{ f.ir }}" style="margin-top:10px;border:none;background:transparent;color:#1E7C92;font-size:13.5px;font-weight:600;cursor:pointer;padding:0">{{ f.acaoLabel }} ›</button></sc-if>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+    <!-- 4. Como você é acompanhado -->
+    <section id="prod-membro" style="scroll-margin-top:90px;margin-top:34px">
+      <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">{{ prodMembro.titulo }}</h2>
+      <p style="font-size:14.5px;color:#7C9097;margin:6px 0 16px;line-height:1.5">{{ prodMembro.texto }}</p>
+      <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        <sc-for list="{{ prodMembroItens }}" as="m" hint-placeholder-count="3">
+          <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px">
+            <h3 style="font-size:16px;font-weight:700;color:#163B45">{{ m.titulo }}</h3>
+            <p style="font-size:14px;color:#5E747B;margin:0;line-height:1.5">{{ m.texto }}</p>
+            <span style="margin-top:auto;align-self:flex-start;font-size:12px;font-weight:600;color:#6A5FB0;background:#EFEDFB;padding:3px 9px;border-radius:6px">{{ m.area }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <div class="hg-stack" style="margin-top:40px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:17px;font-weight:700;color:#163B45">Próximo passo: seu primeiro projeto</div>
+        <p style="font-size:14px;color:#7C9097;margin:4px 0 0">A trilha "Comece aqui" mostra o caminho até a primeira reunião com o cliente.</p>
+      </div>
+      <button onclick="{{ goComece }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">Ir para Comece aqui</button>
+    </div>
+  </main>
+  </sc-if>
+
   <!-- ============ COMECE AQUI (trilha do primeiro projeto + glossário) ============ -->
   <sc-if value="{{ isComece }}" hint-placeholder-val="{{ false }}">
   <main class="hg-main" style="max-width:1000px;margin:0 auto;padding:34px 28px 80px">
     <div style="display:inline-flex;align-items:center;gap:8px;background:#EAF6F9;color:#1E7C92;font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:100px;margin-bottom:14px">Trilha do primeiro projeto</div>
     <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">Seu primeiro projeto na Produtiva</h1>
-    <p style="font-size:15.5px;color:#5E747B;margin:10px 0 0;line-height:1.55;max-width:700px">Seis passos para chegar ao cliente sabendo o que fazer. Marque o que já fez; fica lembrado neste navegador.</p>
+    <p style="font-size:15.5px;color:#5E747B;margin:10px 0 0;line-height:1.55;max-width:700px">{{ trilhaTotal }} passos para chegar ao cliente sabendo o que fazer. Marque o que já fez; fica lembrado neste navegador.</p>
 
     <div style="display:flex;align-items:center;gap:14px;margin:22px 0 26px;background:#fff;border:1px solid #E7EEF1;border-radius:14px;padding:14px 18px">
       <div style="flex:1;height:8px;border-radius:100px;background:#EEF3F5;overflow:hidden"><div style="height:100%;width:{{ trilhaPct }}%;background:#3DAFC7;border-radius:100px;transition:width .3s ease"></div></div>

@@ -70,6 +70,8 @@ class Component extends DCLogic {
   CASES = DADOS.cases;
   // Trilha do primeiro projeto e glossário — src/data/trilha.json.
   TRILHA = DADOS.trilha || { passos: [], glossario: [] };
+  // Página "Como funciona a Produtiva" — src/data/produtiva.json.
+  PRODUTIVA = DADOS.produtiva || { oQueE: { atuacao: [] }, areas: [], fluxo: { passos: [] }, membro: { itens: [] } };
 
   // Persistência local: sem backend, o que o membro cadastra fica neste navegador. Tudo em try/catch:
   // sem localStorage (modo privado, file:// bloqueado) o app segue funcionando, só não lembra.
@@ -629,7 +631,7 @@ class Component extends DCLogic {
     const passos = (this.TRILHA.passos || []).map((p, i) => {
       const feito = feitos.has(p.id);
       return { ...p, n: i + 1, feito, pendente: !feito, hasAcao: !!p.acao, acaoLabel: p.acao ? p.acao.label : '',
-        ir: () => { if (!p.acao) return; if (p.acao.tela === 'novo-case') this.openNovoCase(); else this.nav(p.acao.tela); },
+        ir: () => { if (p.acao) this.irTela(p.acao.tela); },
         toggle: () => this.setState(st => { const set = new Set(st.trilhaFeitos || []); set.has(p.id) ? set.delete(p.id) : set.add(p.id); const lista = [...set]; this.salvarLocal('hangar.trilha', lista); return { trilhaFeitos: lista }; }) };
     });
     // ferramentas essenciais: as mapeadas em mais etapas dos escopos; sem escopos, as de uso frequente
@@ -645,6 +647,31 @@ class Component extends DCLogic {
     return { trilhaPassos: passos, trilhaFeitos: passos.filter(p => p.feito).length, trilhaTotal: passos.length, trilhaPct: passos.length ? Math.round(100 * passos.filter(p => p.feito).length / passos.length) : 0,
       trilhaCompleta: passos.length > 0 && passos.every(p => p.feito), essenciais, hasEssenciais: essenciais.length > 0, responsaveis, hasResponsaveis: responsaveis.length > 0,
       glossario, semGlossario: glossario.length === 0, glossQuery: s.glossQuery, onGlossQuery: (e) => this.setState({ glossQuery: e.target.value }) };
+  }
+  // Ações de conteúdo ({tela, label}) da trilha e da página Como funciona
+  irTela(tela) { if (tela === 'novo-case') this.openNovoCase(); else this.nav(tela); }
+  abrirGrupoEscopo(grupo) {
+    this.setState({ screen:'escopos', escopoId:null, escopoBusca:'' });
+    setTimeout(() => this.irPara('grupo-' + this.slugDe(grupo)), 60);
+  }
+  produtivaVals() {
+    const P = this.PRODUTIVA; const g = this.TAXONOMIA.gruposEscopo;
+    const atuacao = ((P.oQueE || {}).atuacao || []).map(a => {
+      const esc = this.ESCOPOS.filter(e => e.grupo === a.grupo); const cor = (g[a.grupo] || {});
+      return { ...a, cor: cor.cor || '#1E7C92', bg: cor.bg || '#EAF6F9', nEscopos: esc.length,
+        resumoEscopos: esc.length + (esc.length === 1 ? ' escopo' : ' escopos'), escopos: esc.map(e => e.nome).join(' · '),
+        abrir: () => this.abrirGrupoEscopo(a.grupo) };
+    });
+    const paleta = [['#EAF6F9','#1E7C92'],['#EFEDFB','#6A5FB0'],['#E9F4EE','#39795B'],['#FBF0E7','#A5632B'],['#FBE9EA','#B23B47']];
+    const areas = (P.areas || []).map((a, i) => ({ ...a, n: i + 1, bg: paleta[i % paleta.length][0], cor: paleta[i % paleta.length][1], iniciais: this.initials(a.nome),
+      subnucleos: a.subnucleos || [], hasSub: !!(a.subnucleos && a.subnucleos.length),
+      irArea: () => this.irPara('area-' + a.id) }));
+    const passos = ((P.fluxo || {}).passos || []).map((f, i, arr) => ({ ...f, n: i + 1, num: (i < 9 ? '0' : '') + (i + 1), hasAcao: !!f.acao, acaoLabel: f.acao ? f.acao.label : '',
+      ir: () => { if (f.acao) this.irTela(f.acao.tela); }, linhaBg: i === arr.length - 1 ? 'transparent' : '#DCE7EB' }));
+    return { prodOQueE: P.oQueE || {}, prodAtuacao: atuacao, prodNAtuacao: atuacao.length, prodAreas: areas, prodNAreas: areas.length,
+      prodFluxo: P.fluxo || {}, prodPassos: passos, prodMembro: P.membro || {}, prodMembroItens: ((P.membro || {}).itens || []),
+      prodIrOQueE: () => this.irPara('prod-oquee'), prodIrAreas: () => this.irPara('prod-areas'), prodIrFluxo: () => this.irPara('prod-fluxo'), prodIrMembro: () => this.irPara('prod-membro'),
+      goProdutiva: () => this.nav('produtiva') };
   }
   nav(screen) { this.setState({ screen, escopoId: screen==='escopos' ? null : this.state.escopoId, caseId: screen==='cases' ? null : this.state.caseId }); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
@@ -662,6 +689,7 @@ class Component extends DCLogic {
       case 'docs': return '#/docs';
       case 'recomendar': return '#/recomendar';
       case 'comece': return '#/comece';
+      case 'produtiva': return '#/produtiva';
       default: return '#/';
     }
   }
@@ -681,6 +709,7 @@ class Component extends DCLogic {
     else if (tela === 'docs') this.goDocs();
     else if (tela === 'recomendar') this.nav('recomendar');
     else if (tela === 'comece') this.nav('comece');
+    else if (tela === 'produtiva') this.nav('produtiva');
     else if (this.state.screen !== 'home') this.nav('home');
   }
   componentDidMount() {
@@ -963,7 +992,7 @@ class Component extends DCLogic {
     const dec = (it) => it ? this.decorate(it) : null;
 
     // nav
-    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
+    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'produtiva',label:'Como funciona'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
     const navItems = navDef.map(n => {
       const active = s.screen===n.key || (n.key==='biblioteca' && s.screen==='conteudo') || (n.key==='cases' && (s.screen==='case' || s.screen==='novo-case'));
       return { label:n.label, go: n.key==='docs' ? ()=>this.goDocs() : ()=>this.nav(n.key), bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
@@ -1036,7 +1065,7 @@ class Component extends DCLogic {
       ...[...(e.etapas||[]), ...(e.entregaveis||[]), ...(e.estudar||[])].flatMap(x => (x.ferramentas||[]).map(nomeFerr))].join(' '));
     const escoposVisiveis = this.ESCOPOS.filter(e => !buscaEsc || buscaEsc.split(/\s+/).every(t => hayEscopo(e).includes(t)));
     const escoposPorGrupo = Object.keys(gruposEscopo).map(g => ({
-      grupo:g, label:gruposEscopo[g].label||g, cor:gruposEscopo[g].cor, bg:gruposEscopo[g].bg,
+      grupo:g, ancora:'grupo-' + this.slugDe(g), label:gruposEscopo[g].label||g, cor:gruposEscopo[g].cor, bg:gruposEscopo[g].bg,
       escopos:escoposVisiveis.filter(e=>e.grupo===g).map(decEscopo),
     })).filter(g => g.escopos.length);
     const escopoRaw = s.escopoId ? this.escopoPorId(s.escopoId) : null;
@@ -1206,6 +1235,7 @@ class Component extends DCLogic {
       ...this.revisoesVals(),
       // trilha do primeiro projeto + glossário
       isComece: s.screen==='comece', goComece:()=>this.nav('comece'), ...this.trilhaVals(s, data, dec),
+      isProdutiva: s.screen==='produtiva', ...this.produtivaVals(),
       // filtros no celular (biblioteca e cases) e iniciais de quem usa
       filtrosClass: s.filtrosAbertos ? 'hg-open' : '', filtrosLabel: s.filtrosAbertos ? 'Ocultar filtros' : 'Filtros', toggleFiltros:()=>this.setState(st=>({ filtrosAbertos: !st.filtrosAbertos })),
       hasEu: !!(s.eu && s.eu.nome), euNome: (s.eu && s.eu.nome) || '', euIniciais: s.eu && s.eu.nome ? this.initials(s.eu.nome) : '',

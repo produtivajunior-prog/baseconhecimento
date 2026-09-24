@@ -1,6 +1,15 @@
 {
   "passos": [
     {
+      "id": "produtiva",
+      "titulo": "Entenda como a Produtiva funciona",
+      "texto": "Antes do primeiro projeto, conheça as áreas da empresa, quem procurar para cada assunto e como um projeto nasce: do SDR que marca a reunião de diagnóstico até a execução e o CSAT.",
+      "acao": {
+        "tela": "produtiva",
+        "label": "Como funciona a Produtiva"
+      }
+    },
+    {
       "id": "escopos",
       "titulo": "Entenda como um projeto é organizado",
       "texto": "Todo projeto da Produtiva tem 1 gerente e 2 consultores e segue um dos 16 escopos. Abra o escopo do seu projeto e leia na ordem: o que estudar, o que saber do cliente, os pontos de risco, as etapas com as ferramentas, os entregáveis e os projetos que a Produtiva já fez.",
@@ -60,7 +69,7 @@
     {"sigla": "Resumão dos escopos", "nome": null, "definicao": "Documento antigo que listava as macroetapas de todos os escopos. Foi substituído pela Revisão dos Escopos do PPGP 2026 como base do Hangar.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false},
     {"sigla": "RAC", "nome": null, "definicao": "Marco da etapa de Iniciação nos Cronogramas Base, ligado à coleta de informações com o cliente (aparece como 'RAC — Coleta de informações' na primeira semana). A expansão da sigla ainda precisa ser confirmada com o CIEP.", "origem": "drive:13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE", "pendente": true},
     {"sigla": "RAF", "nome": null, "definicao": "Marco da etapa de Finalização nos Cronogramas Base, na última semana do projeto. A expansão da sigla ainda precisa ser confirmada com o CIEP.", "origem": "drive:13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE", "pendente": true},
-    {"sigla": "CIEP", "nome": null, "definicao": "Área da Produtiva responsável pelo acervo de ferramentas e metodologias. Aprova o conteúdo do Hangar e publica os cases enviados pelos membros.", "origem": "manual:produtivajunior@gmail.com", "pendente": true},
+    {"sigla": "CIEP", "nome": null, "definicao": "Subnúcleo da área de Projetos responsável pela criação de novos escopos e novos produtos da Produtiva.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
     {"sigla": "Case", "nome": null, "definicao": "Registro de um projeto finalizado: cliente, escopo, equipe, história, resultados, documentos, foto e vídeo. Fica no Banco de Cases para servir de referência.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
     {"sigla": "Map e Mod", "nome": "Mapeamento e Modelagem de Processos", "definicao": "Escopo de Produção: entende o macroprocesso, mapeia os processos AS IS, aponta causas raízes e modela os processos TO BE, deixando rotina, DCO e manual do setor implantados.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false},
     {"sigla": "AS IS / TO BE", "nome": "Como é / Como deve ser", "definicao": "Os dois retratos de um processo no Map e Mod: como ele funciona hoje (AS IS) e como deve funcionar depois da modelagem (TO BE).", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false},
@@ -76,6 +85,14 @@
     {"sigla": "MAD", "nome": "Desvio médio absoluto", "definicao": "Medida do erro da previsão na Previsão de Demanda: quanto, em média, a previsão errou em relação ao que de fato aconteceu.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p14", "pendente": true},
     {"sigla": "TN · TP", "nome": "Tempo normal · Tempo padrão", "definicao": "Tempos calculados a partir da cronometragem em Capacidade Produtiva: o normal ajusta o tempo médio pelo ritmo do operador; o padrão soma as tolerâncias.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p13", "pendente": true},
     {"sigla": "Cliente oculto", "nome": null, "definicao": "Visita ou contato feito como se fosse um cliente comum para avaliar o atendimento. Pode ser externo (da concorrência) ou interno (da própria empresa). Aparece em Estruturação Comercial, Planejamento de Marketing e Idealização.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p2", "pendente": false},
-    {"sigla": "POP", "nome": "Procedimento Operacional Padrão", "definicao": "Documento passo a passo de como uma atividade deve ser feita. Entregável de Processos e Gestão de Estoque.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p10", "pendente": false}
+    {"sigla": "POP", "nome": "Procedimento Operacional Padrão", "definicao": "Documento passo a passo de como uma atividade deve ser feita. Entregável de Processos e Gestão de Estoque.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p10", "pendente": false},
+    {"sigla": "SDR", "nome": null, "definicao": "Pessoa do Marketing (comercial) que prospecta empresas: liga, qualifica o lead e marca a reunião de diagnóstico.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Closer", "nome": null, "definicao": "Pessoa do Marketing (comercial) que conduz a reunião de diagnóstico, entende a dor do cliente, faz o repasse ao gerente e apresenta a proposta ao gestor.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Lead", "nome": null, "definicao": "Empresa que pode virar cliente. O SDR qualifica o lead antes de marcar a reunião de diagnóstico.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "CS", "nome": "Customer Success", "definicao": "Subnúcleo da área de Projetos. Cada projeto tem uma pessoa de CS, que aplica o CSAT e acompanha a percepção do gestor e dos consultores.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "CSAT", "nome": "Customer Satisfaction", "definicao": "Formulário de satisfação aplicado pelo CS em cada projeto, com a percepção do gestor e dos consultores alocados.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "CIT", "nome": null, "definicao": "Subnúcleo da área de Projetos voltado à tecnologia: desenvolvimento tecnológico e sistemas internos da Produtiva, e apoio a outras consultorias nessa parte.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Endomarketing", "nome": null, "definicao": "Ações da Gestão de Pessoas para integrar toda a empresa.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Feedback 360", "nome": null, "definicao": "Avaliação conduzida pela Gestão de Pessoas que junta a visão de várias pessoas sobre o desenvolvimento de cada membro. Complementa o feedback one a one.", "origem": "manual:produtivajunior@gmail.com", "pendente": false}
   ]
 }

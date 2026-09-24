@@ -48,6 +48,7 @@ const modelos = json('modelos');
 const documentoPadrao = json('documento-padrao');
 const cases = json('cases');
 const trilha = json('trilha');
+const produtiva = json('produtiva');
 
 const enumDe = (obj) => Array.isArray(obj) ? obj : Object.keys(obj);
 const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -287,6 +288,9 @@ for (const c of cases) {
 }
 check(!problemas_.some((x) => x.startsWith('cases')), `cases.json  ${cases.length} case(s), referências resolvem`, 'cases.json com erros');
 
+// telas que um botão de conteúdo (trilha, página Como funciona) pode abrir
+const TELAS = ['home', 'biblioteca', 'escopos', 'cases', 'novo-case', 'cadastro', 'recomendar', 'comece', 'produtiva'];
+
 // ---------------------------------------------------------------- trilha (Comece aqui)
 {
   const ctx = 'trilha';
@@ -296,7 +300,7 @@ check(!problemas_.some((x) => x.startsWith('cases')), `cases.json  ${cases.lengt
     if (typeof t.id !== 'string' || !KEBAB.test(t.id)) p(`${ctx}.passos[${i}]`, 'id ausente ou fora do kebab-case');
     if (pids.has(t.id)) p(`${ctx}.passos[${i}]`, 'id duplicado'); pids.add(t.id);
     for (const k of ['titulo', 'texto']) if (typeof t[k] !== 'string' || !t[k]) p(`${ctx}.passos[${i}]`, `"${k}" ausente`);
-    if (t.acao !== null && t.acao !== undefined && !(t.acao && ['home','biblioteca','escopos','cases','novo-case','cadastro','recomendar'].includes(t.acao.tela) && typeof t.acao.label === 'string')) p(`${ctx}.passos[${i}]`, 'acao precisa ser null ou {tela válida, label}');
+    if (t.acao !== null && t.acao !== undefined && !(t.acao && TELAS.includes(t.acao.tela) && typeof t.acao.label === 'string')) p(`${ctx}.passos[${i}]`, 'acao precisa ser null ou {tela válida, label}');
   }
   const ORIGEM = /^(drive:[A-Za-z0-9_-]+|hangar:[a-z0-9-]+|ppgp:fontes\/[a-z0-9\/._-]+(#p\d+)?|manual:[^@\s]+@[^@\s]+)$/;
   for (const [i, g] of (trilha.glossario || []).entries()) {
@@ -308,6 +312,36 @@ check(!problemas_.some((x) => x.startsWith('cases')), `cases.json  ${cases.lengt
   }
   const pend = (trilha.glossario || []).filter((g) => g.pendente).length;
   check(!problemas_.some((x) => x.startsWith('trilha')), `trilha.json  ${(trilha.passos || []).length} passos, ${(trilha.glossario || []).length} termos (${pend} a confirmar)`, 'trilha.json com erros');
+}
+
+// ---------------------------------------------------------------- produtiva (Como funciona a Produtiva)
+{
+  const ctx = 'produtiva';
+  const texto = (v) => typeof v === 'string' && v.trim().length > 0;
+  if (!/^(manual:[^@\s]+@[^@\s]+)$/.test(produtiva.origem || '')) p(ctx, 'origem precisa ser manual:<e-mail>');
+  if (!ISO.test(produtiva.atualizado || '')) p(ctx, 'atualizado precisa ser YYYY-MM-DD');
+  const o = produtiva.oQueE || {};
+  if (!texto(o.titulo) || !texto(o.texto)) p(`${ctx}.oQueE`, 'titulo e texto obrigatórios');
+  for (const [i, a] of (o.atuacao || []).entries()) {
+    if (!enumDe(T.gruposEscopo).includes(a.grupo)) p(`${ctx}.oQueE.atuacao[${i}]`, `grupo "${a.grupo}" fora de taxonomia.gruposEscopo`);
+    if (!texto(a.nome)) p(`${ctx}.oQueE.atuacao[${i}]`, 'sem nome');
+  }
+  const aids = new Set();
+  for (const [i, a] of (produtiva.areas || []).entries()) {
+    const actx = `${ctx}.areas[${a.id ?? i}]`;
+    if (!KEBAB.test(a.id || '') || aids.has(a.id)) p(actx, 'id ausente, fora do kebab-case ou repetido');
+    aids.add(a.id);
+    if (!texto(a.nome) || !texto(a.resumo) || !texto(a.procure)) p(actx, 'nome, resumo e procure obrigatórios');
+    if (!isStrArr(a.faz, 1)) p(actx, 'faz[] precisa ter ao menos um item');
+    for (const [j, sn] of (a.subnucleos || []).entries()) if (!texto(sn.sigla) || !texto(sn.texto)) p(`${actx}.subnucleos[${j}]`, 'sigla e texto obrigatórios');
+  }
+  if (!aids.size) p(ctx, 'areas[] vazio');
+  for (const [i, f] of ((produtiva.fluxo || {}).passos || []).entries()) {
+    if (!texto(f.quem) || !texto(f.titulo) || !texto(f.texto)) p(`${ctx}.fluxo.passos[${i}]`, 'quem, titulo e texto obrigatórios');
+    if (f.acao !== null && f.acao !== undefined && !(f.acao && TELAS.includes(f.acao.tela) && texto(f.acao.label))) p(`${ctx}.fluxo.passos[${i}]`, 'acao precisa ser null ou {tela válida, label}');
+  }
+  for (const [i, m] of ((produtiva.membro || {}).itens || []).entries()) if (!texto(m.titulo) || !texto(m.texto)) p(`${ctx}.membro.itens[${i}]`, 'titulo e texto obrigatórios');
+  check(!problemas_.some((x) => x.startsWith('produtiva')), `produtiva.json  ${aids.size} áreas, ${((produtiva.fluxo || {}).passos || []).length} passos do fluxo comercial`, 'produtiva.json com erros');
 }
 
 // ---------------------------------------------------------------- ritual trimestral de revisão
@@ -396,7 +430,7 @@ if (dist) {
   try { dados = extrairDados(dist.logic); }
   catch (e) { check(false, '', `o script do bundle não avalia: ${e.message}`); }
   if (dados) {
-    const pares = [['ferramentas', ferramentas], ['escopos', escopos], ['taxonomia', T], ['problemas', problemas], ['modelos', modelos], ['documentoPadrao', documentoPadrao], ['cases', cases], ['trilha', trilha]];
+    const pares = [['ferramentas', ferramentas], ['escopos', escopos], ['taxonomia', T], ['problemas', problemas], ['modelos', modelos], ['documentoPadrao', documentoPadrao], ['cases', cases], ['trilha', trilha], ['produtiva', produtiva]];
     for (const [chave, esperado] of pares) {
       const n = Array.isArray(esperado) ? `${esperado.length} itens` : 'ok';
       check(isDeepStrictEqual(dados[chave], esperado), `dist carrega DADOS.${chave}  ${n}`, `DADOS.${chave} no bundle DIVERGE de src/data — rode node tools/pack.mjs`);

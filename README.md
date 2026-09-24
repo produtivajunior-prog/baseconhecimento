@@ -33,6 +33,7 @@ src/
     problemas.json          problemas → ferramentas (tela "Recomendar")
     modelos.json            modelos-padrão (blocos que a IA preenche)
     documento-padrao.json   documento PMMC (10 seções, do PDF oficial)
+    produtiva.json          página "Como funciona a Produtiva": áreas, subnúcleos, fluxo comercial
     rascunhos/              rascunhos gerados de fontes/, aguardando revisão — NUNCA entram no pack
 assets/            logo e fontes; index.json mapeia uuid ↔ arquivo
 vendor/            dc-runtime.js, React embutido e o invólucro do bundle
@@ -90,6 +91,11 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
 - **Comece aqui** (`#/comece`): trilha do primeiro projeto em seis passos marcáveis (ficam no navegador), as
   ferramentas mapeadas em mais etapas, quem procurar e o glossário. Os termos vêm de `src/data/trilha.json`,
   cada um com `origem`; os marcados `pendente: true` aparecem como "a confirmar" até o CIEP validar.
+- **Como funciona a Produtiva** (`#/produtiva`): página de boas-vindas com o que é a Produtiva e as áreas
+  de atuação (cada uma abre os escopos do grupo), as 5 áreas da empresa com "o que faz" e "procure quando",
+  os subnúcleos de Projetos (CIEP, CIT, CS), o caminho do primeiro contato ao projeto (SDR → closer → gerente
+  → proposta → execução → CSAT → case) e como o membro é acompanhado. O conteúdo fica em
+  `src/data/produtiva.json` e é validado pelo `verify`.
 - **Escopos** (`#/escopos`): os 16 escopos da Revisão dos Escopos (PPGP 2026), com busca por entregável, ferramenta,
   cliente ou etapa. Cada escopo tem cinco blocos: o que estudar, o Diagnóstico Inicial, as etapas, os entregáveis e os cases.
   - **Diagnóstico Inicial:** checklist "O que saber" (as marcações ficam no navegador) e os pontos de risco.
