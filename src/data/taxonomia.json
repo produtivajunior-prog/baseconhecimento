@@ -97,6 +97,11 @@
       "cor": "#6A5FB0",
       "bg": "#EFEDFB",
       "label": "Estratégia"
+    },
+    "TECNOLOGIA": {
+      "cor": "#A5632B",
+      "bg": "#FBF0E7",
+      "label": "Tecnologia"
     }
   },
   "complexidade": {

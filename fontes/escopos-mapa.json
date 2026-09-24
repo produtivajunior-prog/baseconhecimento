@@ -822,7 +822,7 @@
       "nome": "Automação",
       "pagina": 15,
       "ppgpTitulo": "AUTOMAÇÃO",
-      "grupo": "PRODUÇÃO",
+      "grupo": "TECNOLOGIA",
       "descricao": "Entende o negócio, mapeia os processos e as necessidades, desenvolve o sistema ou as automações (plataformas low-code, n8n), testa, valida e entrega o sistema funcionando com documentação e treinamento.",
       "estudar": [
         {"nome":"Plataformas low-code","ppgp":"Plataofrmas Low-code","ferramentas":[]},
