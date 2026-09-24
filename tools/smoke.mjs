@@ -14,6 +14,7 @@
  *   - a busca por um termo de dentro dos passos encontra a ferramenta;
  *   - o botão do anexo abre uma URL do Drive numa aba nova;
  *   - Banco de cases: cadastro com foto → publicar → ficha com capa, vídeo e documento → JSON → galeria após recarregar;
+ *     capa trocada/removida direto na galeria e na ficha;
  *   - screenshot em dist/<nome>-smoke.png (ignorado pelo git).
  *
  * Precisa do pacote playwright (npx playwright@1 …) e de um Chromium; sem os dois, sai com aviso.
@@ -274,6 +275,23 @@ check(/Equipe do projeto/i.test(await texto()), 'clicar na foto abre a ficha do 
 check(/^#\/case\//.test(await page.evaluate(() => location.hash)), `URL acompanha a tela (${await page.evaluate(() => location.hash)})`);
 await page.goBack(); await page.waitForTimeout(400);
 check(/Banco de cases/i.test(await texto()) && !/Equipe do projeto/i.test(await texto()), 'botão "voltar" do navegador volta para a lista de cases');
+// foto de capa direto da galeria e da ficha, sem abrir o formulário
+{
+  const card = page.locator('main article', { hasText: 'Padaria Smoke' }).first();
+  check((await card.getByRole('button', { name: /Trocar capa/ }).count()) === 1, 'card da galeria com foto oferece "Trocar capa"');
+  await page.locator('article img[alt="Padaria Smoke"]').first().click(); await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Remover capa' }).click(); await page.waitForTimeout(300);
+  check((await page.locator('main img[alt="Padaria Smoke"]').count()) === 0 && /Adicionar foto de capa/.test(await texto()), 'ficha: "Remover capa" tira a foto e oferece "Adicionar foto de capa"');
+  await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); await page.waitForTimeout(300);
+  await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
+  const card2 = page.locator('main article', { hasText: 'Padaria Smoke' }).first();
+  const [fc] = await Promise.all([page.waitForEvent('filechooser'), card2.getByRole('button', { name: /Adicionar capa/ }).click()]);
+  await fc.setFiles({ name: 'capa.png', mimeType: 'image/png', buffer: PNG_1PX }); await page.waitForTimeout(800);
+  check(/#\/cases$/.test(await page.evaluate(() => location.hash)) && (await page.locator('article img[alt="Padaria Smoke"][src^="data:image/jpeg"]').count()) > 0, 'galeria: "Adicionar capa" no card põe a foto sem abrir a ficha');
+  await page.reload(); await page.waitForTimeout(1200);
+  await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
+  check((await page.locator('article img[alt="Padaria Smoke"][src^="data:image/jpeg"]').count()) > 0, 'capa nova continua depois de recarregar (localStorage)');
+}
 await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(400);
 check(/^Biblioteca/m.test(await texto()) || (await page.getByPlaceholder(/Buscar por nome/).count()) > 0, 'mudar o hash na URL troca de tela (#/biblioteca)');
 await page.keyboard.press('/'); await page.waitForTimeout(100);

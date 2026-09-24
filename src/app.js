@@ -10,6 +10,7 @@ class Component extends DCLogic {
     caseQuery: '',
     caseFilters: { escopo: [], segmento: [], ano: [], ferramenta: [] },
     casesLocais: this.carregarLocal('hangar.casesLocais', []),
+    capas: this.carregarLocal('hangar.capas', {}),
     formCase: this.formCaseVazio(),
     caseErro: '',
     caseFiltroFerr: '',
@@ -77,7 +78,12 @@ class Component extends DCLogic {
   // sem localStorage (modo privado, file:// bloqueado) o app segue funcionando, só não lembra.
   carregarLocal(chave, padrao) { try { const v = (typeof localStorage !== 'undefined') && localStorage.getItem(chave); return v ? JSON.parse(v) : padrao; } catch (e) { return padrao; } }
   salvarLocal(chave, valor) { try { if (typeof localStorage !== 'undefined') { localStorage.setItem(chave, JSON.stringify(valor)); return true; } } catch (e) {} return false; }
-  allCases() { return this.state.casesLocais.map(c => ({ ...c, local: true })).concat(this.CASES); }
+  // Capa trocada num case já publicado fica só neste navegador (hangar.capas) até o CIEP publicar o JSON novo.
+  allCases() {
+    const capas = this.state.capas || {};
+    return this.state.casesLocais.map(c => ({ ...c, local: true }))
+      .concat(this.CASES.map(c => capas[c.id] ? { ...c, foto: capas[c.id], capaLocal: true } : c));
+  }
 
   // Link de vídeo → URL embutível. YouTube e Drive; qualquer outro fica só como link.
   embedDe(url) {
@@ -132,6 +138,37 @@ class Component extends DCLogic {
   onFotoArquivo(e) { const f = e && e.target && e.target.files && e.target.files[0]; if (f) this.receberFoto(f); try { e.target.value = ''; } catch (x) {} }
   onFotoDrop(e) { if (e && e.preventDefault) e.preventDefault(); const f = e && e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) this.receberFoto(f); }
   onFotoDragOver(e) { if (e && e.preventDefault) e.preventDefault(); }
+  // ---- Foto de capa direto da galeria ou da ficha (sem abrir o formulário)
+  escolherCapa(id, e) {
+    if (e && e.stopPropagation) e.stopPropagation();
+    this._capaAlvo = id;
+    if (typeof document === 'undefined') return;
+    const el = document.getElementById('hangar-capa-input'); if (el) el.click();
+  }
+  onCapaArquivo(e) {
+    const f = e && e.target && e.target.files && e.target.files[0]; const id = this._capaAlvo;
+    try { e.target.value = ''; } catch (x) {}
+    if (!f || !id) return;
+    this.lerFoto(f).then((url) => this.aplicarCapa(id, url), (err) => this.showToast(err.message));
+  }
+  aplicarCapa(id, url) {
+    const local = this.state.casesLocais.find(c => c.id === id);
+    if (local) {
+      const casesLocais = this.state.casesLocais.map(c => c.id === id ? { ...c, foto: url ? { url, legenda: (c.foto && c.foto.legenda) || '' } : null } : c);
+      const ok = this.salvarLocal('hangar.casesLocais', casesLocais);
+      this.setState({ casesLocais });
+      this.showToast(!ok ? 'A capa aparece agora, mas não coube na memória deste navegador: baixe o case para não perder.'
+        : url ? 'Capa atualizada. Baixe o case de novo e envie ao CIEP para publicar a foto para todos.' : 'Capa removida.');
+      return;
+    }
+    const capas = { ...(this.state.capas || {}) };
+    if (url) capas[id] = { url, legenda: '' }; else delete capas[id];
+    const ok = this.salvarLocal('hangar.capas', capas);
+    this.setState({ capas });
+    this.showToast(!ok ? 'A capa aparece agora, mas não coube na memória deste navegador: baixe o case para não perder.'
+      : url ? 'Capa salva neste navegador. Baixe o case (.json) e envie ao CIEP para publicar a foto para todos.' : 'Capa removida.');
+  }
+  removerCapa(id, e) { if (e && e.stopPropagation) e.stopPropagation(); this.aplicarCapa(id, ''); }
   abrirSeletorFoto() { if (typeof document === 'undefined') return; const el = document.getElementById('hangar-foto-input'); if (el) el.click(); }
   removerFoto() { this.setState(st => ({ formCase: { ...st.formCase, fotoDados: '', fotoLink: '', fotoLegenda: '' } })); }
 
@@ -362,7 +399,7 @@ class Component extends DCLogic {
   }
   // Gera o arquivo do case para enviar ao CIEP. Guarda o último em window para o smoke conferir.
   baixarJson(c) {
-    const { local, ...limpo } = c;
+    const { local, capaLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const nome = 'case-' + limpo.id + '.json';
     if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json };
@@ -370,7 +407,7 @@ class Component extends DCLogic {
     this.showToast(this.baixarArquivo(nome, json, 'application/json') ? 'Arquivo ' + nome + ' gerado. Envie ao CIEP.' : 'Não consegui gerar o arquivo aqui. Use "Copiar JSON".');
   }
   copiarJson(c) {
-    const { local, ...limpo } = c;
+    const { local, capaLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const ok = () => this.showToast('JSON do case copiado. Cole numa mensagem para o CIEP.');
     try {
@@ -446,6 +483,9 @@ class Component extends DCLogic {
       tags: c.tags || [], hasTags: !!(c.tags && c.tags.length), local: !!c.local,
       cadastradoTexto: 'Cadastrado por ' + ((c.cadastradoPor||{}).nome || '—') + ' · ' + this.fmtData(c.atualizado),
       open: () => this.openCase(c.id), baixar: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.baixarJson(c); }, copiar: () => this.copiarJson(c),
+      escolherCapa: (e) => this.escolherCapa(c.id, e), removerCapa: (e) => this.removerCapa(c.id, e),
+      capaLabel: fotoSrc ? 'Trocar capa' : 'Adicionar capa', capaLabelFicha: fotoSrc ? 'Trocar foto de capa' : 'Adicionar foto de capa',
+      podeRemoverCapa: c.local ? !!fotoSrc : !!c.capaLocal, capaLocal: !!c.capaLocal,
       remover: (e) => this.pedirRemoverCase(c.id, e) };
   }
   computeCases() {
@@ -1256,7 +1296,7 @@ class Component extends DCLogic {
       nFerrEscolhidas: fcase.ferramentas.length, docsRows, addDoc:()=>this.setState(st=>({ formCase:{ ...st.formCase, documentos: st.formCase.documentos.concat([{ nome:'', tipo:docTipoOptions[0]?docTipoOptions[0].value:'Outro', url:'' }]) } })),
       videoPreview, hasVideoPreview: !!videoPreview, caseErro: s.caseErro, hasCaseErro: !!s.caseErro,
       fotoPreview, hasFotoPreview: !!fotoPreview, semFotoPreview: !fotoPreview, fotoFonte,
-      onFotoArquivo:(e)=>this.onFotoArquivo(e), onFotoDrop:(e)=>this.onFotoDrop(e), onFotoDragOver:(e)=>this.onFotoDragOver(e), abrirSeletorFoto:()=>this.abrirSeletorFoto(), removerFoto:()=>this.removerFoto(),
+      onCapaArquivo:(e)=>this.onCapaArquivo(e), onFotoArquivo:(e)=>this.onFotoArquivo(e), onFotoDrop:(e)=>this.onFotoDrop(e), onFotoDragOver:(e)=>this.onFotoDragOver(e), abrirSeletorFoto:()=>this.abrirSeletorFoto(), removerFoto:()=>this.removerFoto(),
       publishCase:()=>this.publishCase(), baixarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.baixarJson(this.montarCase(fcase)); }, copiarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.copiarJson(this.montarCase(fcase)); },
       casePronto: !!casePreview, limparCase:()=>this.setState({ formCase:this.formCaseVazio(), caseErro:'' }),
       goHome:()=>this.nav('home'), goBiblioteca:()=>this.nav('biblioteca'), goRecomendar:()=>this.nav('recomendar'), goEscopos:()=>this.nav('escopos'),

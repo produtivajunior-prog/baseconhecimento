@@ -103,6 +103,10 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   - **Cases:** os projetos que a Produtiva já fez, ligados ao Banco de Cases. O botão "+ ficha" abre o cadastro já preenchido.
   - **Roteiro do Diagnóstico Inicial:** gera a folha para imprimir.
   - **Links antigos:** `#/escopo/gamificacao` e outros ids de escopos fundidos redirecionam para o escopo novo.
+- **Foto de capa dos cases**: cada card da galeria de Cases tem o botão "Adicionar capa" / "Trocar capa", e a ficha
+  tem "Adicionar/Trocar foto de capa" e "Remover capa". A foto é reduzida no navegador (JPEG ≤ ~700 KB). Em case
+  que só existe neste navegador, ela vai direto para o case; em case já publicado, fica só neste navegador
+  (`hangar.capas`) com o aviso para baixar o JSON e enviar ao CIEP.
 - **Material para a reunião**: na ficha da ferramenta, "Abrir material para imprimir" gera uma página com
   perguntas-chave, o que pedir ao cliente, passo a passo e, quando há modelo em canvas, o canvas em branco.
 - **Pergunte a quem fez**: na ficha do case, botões de e-mail e WhatsApp para a equipe, com a mensagem já

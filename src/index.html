@@ -194,6 +194,7 @@
 </helmet>
 
 <div style="font-family:'Figtree',sans-serif;color:#172A30;background:#F6F9FA;min-height:100vh;-webkit-font-smoothing:antialiased">
+  <input id="hangar-capa-input" type="file" accept="image/*" onchange="{{ onCapaArquivo }}" style="display:none" aria-hidden="true">
 
   <!-- ============ TOP NAV ============ -->
   <header style="position:sticky;top:0;z-index:30;background:rgba(255,255,255,0.88);backdrop-filter:blur(10px);border-bottom:1px solid #E7EEF1">
@@ -1371,6 +1372,7 @@
                 <span style="position:absolute;top:10px;left:10px;max-width:calc(100% - 84px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }};box-shadow:0 1px 4px rgba(0,0,0,0.08)">{{ c.escopoNome }}</span>
                 <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:10px;right:10px;font-size:11px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:4px 8px;border-radius:6px" title="Só neste navegador · envie ao CIEP">Só aqui</span></sc-if>
                 <sc-if value="{{ c.hasVideo }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;right:10px;bottom:10px;background:rgba(14,26,30,0.72);color:#fff;font-size:11px;font-weight:600;padding:4px 8px;border-radius:6px">▶ vídeo</span></sc-if>
+                <button onclick="{{ c.escolherCapa }}" title="{{ c.capaLabel }}" aria-label="{{ c.capaLabel }} de {{ c.cliente }}" style="position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:6px;border:none;background:rgba(255,255,255,0.92);color:#163B45;font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:8px;cursor:pointer;box-shadow:0 2px 8px rgba(14,26,30,0.18)" style-hover="background:#fff;color:#1E7C92"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 8.5A1.5 1.5 0 015.5 7h2.3l1.4-2h5.6l1.4 2h2.3A1.5 1.5 0 0120 8.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 17.5v-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"></circle></svg>{{ c.capaLabel }}</button>
               </div>
               <div style="padding:0 4px">
                 <h3 style="font-size:16.5px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25">{{ c.cliente }}</h3>
@@ -1400,6 +1402,11 @@
             <div style="margin:-28px -28px 22px;background:#EEF3F5"><img class="hg-capa" sc-camel-src="{{ caseSel.fotoSrc }}" alt="{{ caseSel.cliente }}" style="width:100%;height:360px;object-fit:cover;display:block"></div>
             <sc-if value="{{ caseSel.hasFotoLegenda }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;color:#8AA0A7;margin:-12px 0 16px">{{ caseSel.fotoLegenda }}</div></sc-if>
           </sc-if>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+            <button onclick="{{ caseSel.escolherCapa }}" style="display:flex;align-items:center;gap:7px;border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:7px 12px;border-radius:9px;cursor:pointer" style-hover="border-color:#9FD7E2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 8.5A1.5 1.5 0 015.5 7h2.3l1.4-2h5.6l1.4 2h2.3A1.5 1.5 0 0120 8.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 17.5v-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"></circle></svg>{{ caseSel.capaLabelFicha }}</button>
+            <sc-if value="{{ caseSel.podeRemoverCapa }}" hint-placeholder-val="{{ false }}"><button onclick="{{ caseSel.removerCapa }}" style="border:none;background:transparent;color:#9DAEB4;font-size:13px;font-weight:600;padding:7px 6px;cursor:pointer" style-hover="color:#B23B47">Remover capa</button></sc-if>
+            <sc-if value="{{ caseSel.capaLocal }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:5px 10px;border-radius:7px">Capa só neste navegador</span><button onclick="{{ caseSel.baixar }}" style="border:none;background:transparent;color:#1E7C92;font-size:13px;font-weight:600;padding:7px 4px;cursor:pointer">Baixar case (.json) para enviar ao CIEP</button></sc-if>
+          </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
             <button onclick="{{ caseSel.abrirEscopo }}" style="border:none;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:7px;background:{{ caseSel.escopoBg }};color:{{ caseSel.escopoCor }};cursor:pointer">{{ caseSel.escopoNome }}</button>
             <span style="font-size:12.5px;color:#5E747B;background:#EFF4F5;padding:5px 11px;border-radius:7px">{{ caseSel.segmento }}</span>
