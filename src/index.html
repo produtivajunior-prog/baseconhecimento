@@ -191,6 +191,10 @@
     .hg-cols>*,.hg-g2>*,.hg-g3>*,.hg-g4>*{min-width:0}
     @keyframes ciepGrow{from{height:0;opacity:0}to{opacity:1}}
     @keyframes ciepSpin{to{transform:rotate(360deg)}}
+    @keyframes hgPulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,0.45)}70%{box-shadow:0 0 0 18px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+    .hg-poster:hover .hg-play{transform:scale(1.07)}
+    .hg-poster:hover .hg-poster-img{transform:scale(1.03)}
+    @media (max-width:760px){.hg-poster-box{padding-top:88%!important}.hg-poster-titulo{font-size:16px!important}.hg-play{width:62px!important;height:62px!important;margin:-31px 0 0 -31px!important;top:37%!important}}
   </style>
 </helmet>
 
@@ -1464,6 +1468,7 @@
               <div><label style="display:block;font-size:12.5px;font-weight:600;color:#3C545B;margin-bottom:6px">Duração</label><input value="{{ vf.duracao }}" oninput="{{ vfDuracao }}" placeholder="Ex.: 6 min" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:10px 13px;font-size:14px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
             </div>
           </div>
+          <sc-if value="{{ vfReconhecido }}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px;display:flex;align-items:center;gap:8px;background:#F2FAF5;border:1px solid #CFEBD9;border-radius:10px;padding:10px 13px;font-size:13px;color:#2E7D52;font-weight:600">✓ Link do {{ vfFonte }} reconhecido. A prévia não toca aqui, mas o case vai mostrar a capa do vídeo.</div></sc-if>
           <sc-if value="{{ hasVfPreview }}" hint-placeholder-val="{{ false }}">
             <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#0E1A1E;margin-top:14px"><iframe sc-camel-src="{{ vfPreview }}" allowfullscreen="true" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe></div>
           </sc-if>
@@ -1479,17 +1484,49 @@
         <sc-if value="{{ caseSel.hasVideo }}" hint-placeholder-val="{{ false }}">
         <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px;margin-bottom:14px">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px;flex-wrap:wrap">
-            <div><div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.04em;text-transform:uppercase">A equipe conta o projeto</div><div style="font-size:13px;color:#8AA0A7;margin-top:2px">{{ caseSel.videoMeta }}</div></div>
+            <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.04em;text-transform:uppercase">Vídeo do case</div>
             <div style="display:flex;gap:6px;flex-wrap:wrap">
               <a href="{{ caseSel.videoLink }}" target="_blank" rel="noopener noreferrer" style="display:inline-block;text-decoration:none;border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer" style-hover="border-color:#9FD7E2">Abrir o vídeo</a>
               <sc-if value="{{ videoFormFechado }}" hint-placeholder-val="{{ true }}"><button onclick="{{ caseSel.abrirVideoForm }}" style="border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer" style-hover="border-color:#9FD7E2">Trocar vídeo</button></sc-if>
               <sc-if value="{{ caseSel.podeRemoverVideo }}" hint-placeholder-val="{{ false }}"><button onclick="{{ caseSel.removerVideo }}" style="border:1px solid #F1D3D6;background:#fff;color:#B23B47;font-size:13px;font-weight:600;padding:7px 13px;border-radius:8px;cursor:pointer">Remover vídeo</button></sc-if>
             </div>
           </div>
-          <sc-if value="{{ caseSel.hasVideoEmbed }}" hint-placeholder-val="{{ false }}">
-            <div style="position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#0E1A1E">
-              <iframe sc-camel-src="{{ caseSel.videoEmbed }}" allowfullscreen="true" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+          <sc-if value="{{ caseSel.mostrarPlayer }}" hint-placeholder-val="{{ false }}">
+            <div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#123640">
+              <iframe sc-camel-src="{{ caseSel.videoPlayerSrc }}" allow="autoplay; fullscreen" allowfullscreen="true" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
             </div>
+          </sc-if>
+          <sc-if value="{{ caseSel.mostrarPoster }}" hint-placeholder-val="{{ true }}">
+            <sc-if value="{{ caseSel.posterTocaAqui }}" hint-placeholder-val="{{ true }}">
+            <button class="hg-poster hg-poster-box" onclick="{{ caseSel.tocarVideo }}" aria-label="Assistir ao vídeo" style="position:relative;display:block;width:100%;padding:56.25% 0 0;border:0;border-radius:14px;overflow:hidden;cursor:pointer;background:#123640;text-decoration:none">
+              <div style="position:absolute;inset:0;background:{{ caseSel.posterGradiente }}"></div>
+              <div class="hg-poster-img" style="position:absolute;inset:0;background-image:{{ caseSel.posterImagem }};background-size:cover;background-position:50% 35%;filter:saturate(1.05) brightness(0.82);transition:transform .5s ease"></div>
+              <sc-if value="{{ caseSel.hasPosterFoto }}" hint-placeholder-val="{{ false }}"><img class="hg-poster-img" sc-camel-src="{{ caseSel.posterFoto }}" alt="" aria-hidden="true" style="position:absolute;inset:-24px;width:calc(100% + 48px);height:calc(100% + 48px);max-width:none;object-fit:cover;object-position:50% 30%;filter:blur(7px) saturate(1.1) brightness(0.62);transition:transform .5s ease"></sc-if>
+              <div style="position:absolute;inset:0;background:linear-gradient(140deg,rgba(18,54,64,0.55) 0%,rgba(30,124,146,0.28) 100%);mix-blend-mode:multiply"></div>
+              <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(8,22,27,0.86) 0%,rgba(8,22,27,0.25) 48%,rgba(8,22,27,0.35) 100%)"></div>
+              <span style="position:absolute;left:18px;top:16px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.14);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.22);color:#fff;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="13" height="12" rx="2.5" stroke="#fff" stroke-width="2"></rect><path d="M16 10.5l5-3v9l-5-3" stroke="#fff" stroke-width="2" stroke-linejoin="round"></path></svg>{{ caseSel.videoFonte }}</span>
+              <span class="hg-play" style="position:absolute;left:50%;top:44%;width:78px;height:78px;margin:-39px 0 0 -39px;border-radius:50%;background:rgba(255,255,255,0.96);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 34px rgba(0,0,0,0.35);animation:hgPulse 2.4s ease-out infinite;transition:transform .25s ease"><svg width="28" height="28" viewBox="0 0 24 24" style="margin-left:4px"><path d="M7 4.8v14.4a1 1 0 001.5.86l11.3-7.2a1 1 0 000-1.72L8.5 3.94A1 1 0 007 4.8z" fill="#1E7C92"></path></svg></span>
+              <div style="position:absolute;left:22px;right:22px;bottom:18px;text-align:left">
+                <div class="hg-poster-titulo" style="color:#fff;font-family:'Schibsted Grotesk';font-size:21px;font-weight:700;letter-spacing:-0.01em;text-shadow:0 1px 8px rgba(0,0,0,0.35)">A equipe conta o projeto {{ caseSel.cliente }}</div>
+                <div style="color:rgba(255,255,255,0.82);font-size:13.5px;margin-top:4px">{{ caseSel.posterRodapeAqui }}</div>
+              </div>
+            </button>
+            </sc-if>
+            <sc-if value="{{ caseSel.posterAbreFora }}" hint-placeholder-val="{{ false }}">
+            <a class="hg-poster hg-poster-box" href="{{ caseSel.videoLink }}" target="_blank" rel="noopener noreferrer" aria-label="Assistir ao vídeo em nova aba" style="position:relative;display:block;width:100%;padding:56.25% 0 0;border:0;border-radius:14px;overflow:hidden;cursor:pointer;background:#123640;text-decoration:none">
+              <div style="position:absolute;inset:0;background:{{ caseSel.posterGradiente }}"></div>
+              <div class="hg-poster-img" style="position:absolute;inset:0;background-image:{{ caseSel.posterImagem }};background-size:cover;background-position:50% 35%;filter:saturate(1.05) brightness(0.82);transition:transform .5s ease"></div>
+              <sc-if value="{{ caseSel.hasPosterFoto }}" hint-placeholder-val="{{ false }}"><img class="hg-poster-img" sc-camel-src="{{ caseSel.posterFoto }}" alt="" aria-hidden="true" style="position:absolute;inset:-24px;width:calc(100% + 48px);height:calc(100% + 48px);max-width:none;object-fit:cover;object-position:50% 30%;filter:blur(7px) saturate(1.1) brightness(0.62);transition:transform .5s ease"></sc-if>
+              <div style="position:absolute;inset:0;background:linear-gradient(140deg,rgba(18,54,64,0.55) 0%,rgba(30,124,146,0.28) 100%);mix-blend-mode:multiply"></div>
+              <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(8,22,27,0.86) 0%,rgba(8,22,27,0.25) 48%,rgba(8,22,27,0.35) 100%)"></div>
+              <span style="position:absolute;left:18px;top:16px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.14);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.22);color:#fff;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="13" height="12" rx="2.5" stroke="#fff" stroke-width="2"></rect><path d="M16 10.5l5-3v9l-5-3" stroke="#fff" stroke-width="2" stroke-linejoin="round"></path></svg>{{ caseSel.videoFonte }}</span>
+              <span class="hg-play" style="position:absolute;left:50%;top:44%;width:78px;height:78px;margin:-39px 0 0 -39px;border-radius:50%;background:rgba(255,255,255,0.96);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 34px rgba(0,0,0,0.35);animation:hgPulse 2.4s ease-out infinite;transition:transform .25s ease"><svg width="28" height="28" viewBox="0 0 24 24" style="margin-left:4px"><path d="M7 4.8v14.4a1 1 0 001.5.86l11.3-7.2a1 1 0 000-1.72L8.5 3.94A1 1 0 007 4.8z" fill="#1E7C92"></path></svg></span>
+              <div style="position:absolute;left:22px;right:22px;bottom:18px;text-align:left">
+                <div class="hg-poster-titulo" style="color:#fff;font-family:'Schibsted Grotesk';font-size:21px;font-weight:700;letter-spacing:-0.01em;text-shadow:0 1px 8px rgba(0,0,0,0.35)">A equipe conta o projeto {{ caseSel.cliente }}</div>
+                <div style="color:rgba(255,255,255,0.82);font-size:13.5px;margin-top:4px">{{ caseSel.posterRodapeFora }}</div>
+              </div>
+            </a>
+            </sc-if>
           </sc-if>
         </div>
         </sc-if>

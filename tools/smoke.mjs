@@ -274,7 +274,9 @@ await page.getByRole('button', { name: 'Publicar no meu Hangar' }).click();
 await page.waitForTimeout(400);
 let t = await texto();
 check(/Padaria Smoke/.test(t) && /Equipe do projeto/i.test(t), 'case publicado abriu a ficha');
-check((await page.locator('iframe[src*="youtube.com/embed/"]').count()) > 0, 'ficha do case embute o vídeo');
+check((await page.locator('iframe[src*="youtube.com/embed/"]').count()) === 0 && (await page.getByRole('button', { name: 'Assistir ao vídeo' }).count()) === 1, 'ficha mostra a capa do vídeo com play (sem player preto)');
+await page.getByRole('button', { name: 'Assistir ao vídeo' }).click(); await page.waitForTimeout(300);
+check((await page.locator('iframe[src*="youtube.com/embed/"][src*="autoplay=1"]').count()) === 1, 'clicar na capa abre o player embutido (YouTube com autoplay)');
 check(/Relatório final\.pdf/.test(t) && /Abrir no Drive/.test(t), 'ficha lista o documento com botão do Drive');
 {
   const link = page.getByRole('link', { name: 'Abrir no Drive' }).first();
@@ -343,7 +345,12 @@ check(/Banco de cases/i.test(await texto()) && !/Equipe do projeto/i.test(await 
   check((await page.locator('iframe[src="https://drive.google.com/file/d/1AtlantisVideo_x/preview"]').count()) === 1, 'prévia do vídeo do Drive aparece antes de salvar');
   await page.getByRole('button', { name: 'Salvar vídeo' }).click(); await page.waitForTimeout(300);
   await page.reload(); await page.waitForTimeout(1200);
-  check((await page.locator('iframe[src="https://drive.google.com/file/d/1AtlantisVideo_x/preview"]').count()) === 1 && /Gerente e consultores · 8 min/.test(await texto()), 'vídeo novo continua na ficha depois de recarregar');
+  check((await page.getByRole('button', { name: 'Assistir ao vídeo' }).count()) === 1 && /Gerente e consultores · 8 min · clique para assistir/.test(await texto()) && /Google Drive/.test(await texto()), 'vídeo novo continua na ficha depois de recarregar (capa com origem e duração)');
+  await page.getByRole('button', { name: 'Assistir ao vídeo' }).click(); await page.waitForTimeout(300);
+  check((await page.locator('iframe[src="https://drive.google.com/file/d/1AtlantisVideo_x/preview"]').count()) === 1, 'capa do vídeo do Drive abre o player do Drive');
+  // Host que bloqueia iframes (CSP, como a prévia no Claude): o player some e a capa vira link para o Drive
+  await page.evaluate(() => document.dispatchEvent(new SecurityPolicyViolationEvent('securitypolicyviolation', { blockedURI: 'https://drive.google.com/file/d/x/preview', effectiveDirective: 'frame-src', violatedDirective: 'frame-src', originalPolicy: "frame-src 'none'", disposition: 'enforce', statusCode: 200 }))); await page.waitForTimeout(300);
+  check((await page.locator('main iframe').count()) === 0 && (await page.locator('a.hg-poster[href="https://drive.google.com/file/d/1AtlantisVideo_x/view?usp=sharing"][target="_blank"]').count()) === 1 && /abre no Google Drive ↗/.test(await texto()), 'com iframe bloqueado, a capa vira link que abre o vídeo no Drive');
   await page.getByRole('button', { name: /Baixar case/ }).first().click(); await page.waitForTimeout(200);
   const jv = JSON.parse((await page.evaluate(() => window.__hangarUltimoDownload)).json);
   check(jv.video && jv.video.url === 'https://drive.google.com/file/d/1AtlantisVideo_x/view?usp=sharing' && !('videoLocal' in jv), 'JSON do case leva o link do vídeo novo');

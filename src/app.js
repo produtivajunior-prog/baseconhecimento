@@ -13,6 +13,8 @@ class Component extends DCLogic {
     capas: this.carregarLocal('hangar.capas', {}),
     videos: this.carregarLocal('hangar.videos', {}),
     videoForm: null,
+    videoPlay: null,
+    embedBloqueado: false,
     formCase: this.formCaseVazio(),
     caseErro: '',
     caseFiltroFerr: '',
@@ -100,6 +102,15 @@ class Component extends DCLogic {
     m = /drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/.exec(u);
     if (m) return 'https://drive.google.com/file/d/' + m[1] + '/preview';
     return '';
+  }
+  // Miniatura e origem do vídeo, para a capa do player. Se a miniatura não carregar, fica o degradê.
+  videoInfo(url) {
+    const u = String(url || '').trim();
+    let m = /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/.exec(u);
+    if (m) return { fonte: 'YouTube', thumb: 'https://i.ytimg.com/vi/' + m[1] + '/hqdefault.jpg' };
+    m = /drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/.exec(u);
+    if (m) return { fonte: 'Google Drive', thumb: 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1280' };
+    return { fonte: 'Link externo', thumb: '' };
   }
   // Foto do case → URL que um <img> consegue mostrar. Data URL (enviada do computador) passa direto;
   // link do Drive vira a miniatura pública do arquivo (precisa de acesso, como os documentos); outro https fica como está.
@@ -202,7 +213,7 @@ class Component extends DCLogic {
     const f = s.videoForm && caseSel && s.videoForm.id === caseSel.id ? s.videoForm : null;
     const prev = f ? this.embedDe(f.url) : '';
     return { videoFormAberto: !!f, videoFormFechado: !f, vf: f || { url: '', quem: '', duracao: '', erro: '' },
-      vfPreview: prev, hasVfPreview: !!prev, vfLinkSemEmbed: !!(f && /^https:\/\//.test(f.url.trim()) && !prev), hasVfErro: !!(f && f.erro),
+      vfPreview: prev, hasVfPreview: !!prev && !s.embedBloqueado, vfReconhecido: !!prev && !!s.embedBloqueado, vfFonte: f ? this.videoInfo(f.url).fonte : '', vfLinkSemEmbed: !!(f && /^https:\/\//.test(f.url.trim()) && !prev), hasVfErro: !!(f && f.erro),
       vfUrl: (e) => this.setVideoForm('url', e), vfQuem: (e) => this.setVideoForm('quem', e), vfDuracao: (e) => this.setVideoForm('duracao', e),
       vfSalvar: () => this.salvarVideoForm(), vfCancelar: () => this.setState({ videoForm: null }) };
   }
@@ -468,7 +479,7 @@ class Component extends DCLogic {
       else ok();
     } catch (e) { this.showToast('Não consegui copiar automaticamente.'); }
   }
-  openCase(id) { this.setState({ screen:'case', caseId:id, videoForm:null }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+  openCase(id) { this.setState({ screen:'case', caseId:id, videoForm:null, videoPlay:null }); if(typeof window!=='undefined') window.scrollTo(0,0); }
   openNovoCase(prefill) {
     const pre = prefill && typeof prefill === 'object' && !prefill.target ? prefill : null;
     const f = this.state.formCase;
@@ -516,6 +527,7 @@ class Component extends DCLogic {
     });
     const video = c.video && c.video.url ? c.video : null;
     const embed = video ? this.embedDe(video.url) : '';
+    const vInfo = video ? this.videoInfo(video.url) : { fonte: '', thumb: '' };
     const foto = c.foto && c.foto.url ? c.foto : null;
     const fotoSrc = foto ? this.fotoSrc(foto.url) : '';
     // Sem foto, a galeria mostra um cartão na cor do grupo do escopo com as iniciais do cliente.
@@ -539,6 +551,18 @@ class Component extends DCLogic {
       escolherCapa: (e) => this.escolherCapa(c.id, e), removerCapa: (e) => this.removerCapa(c.id, e),
       capaLabel: fotoSrc ? 'Trocar capa' : 'Adicionar capa', capaLabelFicha: fotoSrc ? 'Trocar foto de capa' : 'Adicionar foto de capa',
       podeRemoverCapa: c.local ? !!fotoSrc : !!c.capaLocal, capaLocal: !!c.capaLocal,
+      videoFonte: vInfo.fonte,
+      // Foto do case entra como <img> (data URL tem ';' e quebraria o style); sem foto, a miniatura do vídeo vai no fundo.
+      posterFoto: fotoSrc, hasPosterFoto: !!fotoSrc,
+      posterImagem: !fotoSrc && vInfo.thumb ? "url('" + vInfo.thumb + "')" : 'none',
+      posterGradiente: 'linear-gradient(140deg,#123640 0%,#1B5664 55%,' + (g.cor || '#2E8FA6') + ' 150%)',
+      mostrarPlayer: !!embed && this.state.videoPlay === c.id && !this.state.embedBloqueado,
+      mostrarPoster: !(!!embed && this.state.videoPlay === c.id && !this.state.embedBloqueado),
+      posterTocaAqui: !!embed && !this.state.embedBloqueado, posterAbreFora: !embed || !!this.state.embedBloqueado,
+      videoPlayerSrc: embed ? embed + (/youtube/.test(embed) ? '?autoplay=1&rel=0' : '') : '',
+      tocarVideo: () => this.setState({ videoPlay: c.id }),
+      posterRodapeAqui: [video && video.quem, video && video.duracao, 'clique para assistir'].filter(Boolean).join(' · '),
+      posterRodapeFora: [video && video.quem, video && video.duracao, 'abre ' + (vInfo.fonte === 'Link externo' ? 'o link' : 'no ' + vInfo.fonte) + ' ↗'].filter(Boolean).join(' · '),
       semVideo: !video, videoLocal: !!c.videoLocal, alteracaoLocal: !!(c.capaLocal || c.videoLocal),
       avisoLocal: c.capaLocal && c.videoLocal ? 'A capa e o vídeo novos só existem neste navegador.' : c.videoLocal ? 'O vídeo novo só existe neste navegador.' : 'A capa nova só existe neste navegador.',
       podeRemoverVideo: c.local ? !!video : !!c.videoLocal, videoMeta: video ? [video.quem, video.duracao].filter(Boolean).join(' · ') : '',
@@ -820,6 +844,14 @@ class Component extends DCLogic {
     if (typeof window === 'undefined') return;
     this._onHash = () => { if (this._hashPropria) { this._hashPropria = false; return; } this.aplicarHash(); };
     window.addEventListener('hashchange', this._onHash);
+    // Onde a página não pode embutir Drive/YouTube (CSP do host), o player some e a capa passa a abrir o vídeo em nova aba.
+    this._onCsp = (e) => {
+      const alvo = String((e && (e.blockedURI || e.blockedURL)) || '');
+      if (/frame-src|child-src/.test(String((e && e.effectiveDirective) || '')) || /youtube|drive\.google/.test(alvo)) {
+        if (!this.state.embedBloqueado) this.setState({ embedBloqueado: true, videoPlay: null });
+      }
+    };
+    document.addEventListener('securitypolicyviolation', this._onCsp);
     // "/" foca a busca da tela; Esc fecha a janela de anexos
     this._onKey = (e) => {
       const alvo = e.target || {}; const digitando = /^(INPUT|TEXTAREA|SELECT)$/.test(alvo.tagName || '') || alvo.isContentEditable;
@@ -837,7 +869,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     if (typeof window === 'undefined') return;
-    window.removeEventListener('hashchange', this._onHash); window.removeEventListener('keydown', this._onKey);
+    window.removeEventListener('hashchange', this._onHash); window.removeEventListener('keydown', this._onKey); if (this._onCsp) document.removeEventListener('securitypolicyviolation', this._onCsp);
   }
   openEscopo(id) { this.setState({ screen:'escopos', escopoId:id }); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
@@ -1402,7 +1434,7 @@ class Component extends DCLogic {
       // formulário de case
       formCase: fcase, fc, escopoOptions, porteOptions, docTipoOptions, ferrChips, caseFiltroFerr: s.caseFiltroFerr, onCaseFiltroFerr:(e)=>this.setState({ caseFiltroFerr:e.target.value }),
       nFerrEscolhidas: fcase.ferramentas.length, docsRows, addDoc:()=>this.setState(st=>({ formCase:{ ...st.formCase, documentos: st.formCase.documentos.concat([{ nome:'', tipo:docTipoOptions[0]?docTipoOptions[0].value:'Outro', url:'' }]) } })),
-      videoPreview, hasVideoPreview: !!videoPreview, caseErro: s.caseErro, hasCaseErro: !!s.caseErro,
+      videoPreview, hasVideoPreview: !!videoPreview && !s.embedBloqueado, caseErro: s.caseErro, hasCaseErro: !!s.caseErro,
       fotoPreview, hasFotoPreview: !!fotoPreview, semFotoPreview: !fotoPreview, fotoFonte,
       onCapaArquivo:(e)=>this.onCapaArquivo(e), onFotoArquivo:(e)=>this.onFotoArquivo(e), onFotoDrop:(e)=>this.onFotoDrop(e), onFotoDragOver:(e)=>this.onFotoDragOver(e), abrirSeletorFoto:()=>this.abrirSeletorFoto(), removerFoto:()=>this.removerFoto(),
       publishCase:()=>this.publishCase(), baixarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.baixarJson(this.montarCase(fcase)); }, copiarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.copiarJson(this.montarCase(fcase)); },
