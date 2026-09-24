@@ -969,7 +969,7 @@ class Component extends DCLogic {
       return { label:n.label, go: n.key==='docs' ? ()=>this.goDocs() : ()=>this.nav(n.key), bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
     });
 
-    // home sections — nada de contador fictício: escopos ativos, atualizações reais e uso frequente.
+    // home sections — nada de contador fictício: escopos ativos e uso frequente.
     const decEscopo = (e) => {
       const g = this.TAXONOMIA.gruposEscopo[e.grupo] || { cor:'#1E7C92', bg:'#EAF6F9', label:e.grupo };
       const ferrIds = new Set(); for (const et of (e.etapas||[])) for (const f of (et.ferramentas||[])) ferrIds.add(f);
@@ -983,7 +983,6 @@ class Component extends DCLogic {
         resumo:(e.etapas||[]).length+' etapas · '+(e.entregaveis||[]).length+' entregáveis · '+nCases+' cases', pick:()=>this.openEscopo(e.id) };
     };
     const porEscopo = this.ESCOPOS.filter(e=>e.status==='ativo').slice(0,3).map(decEscopo);
-    const novidades = [...data].sort((a,b)=>String(b.atualizado||'').localeCompare(String(a.atualizado||''))).slice(0,3).map(dec);
     const recomendados = data.filter(d=>d.freq==='Alta' && d.status==='Ativo').slice(0,3).map(dec);
 
     const quickChips = this.vivos(this.TAXONOMIA.tipos)
@@ -1239,7 +1238,7 @@ class Component extends DCLogic {
       runSearch:()=>this.nav('biblioteca'),
       quickChips,
       // home
-      porEscopo, hasPorEscopo: porEscopo.length>0, novidades, recomendados, hasRecomendados: recomendados.length>0, semRecomendados: recomendados.length===0,
+      porEscopo, hasPorEscopo: porEscopo.length>0, recomendados, hasRecomendados: recomendados.length>0, semRecomendados: recomendados.length===0,
       atalhos: [
         { label:'Qual ferramenta usar?', hint:'Escolha o problema e veja as sugestões', go:()=>this.nav('recomendar') },
         { label:'Registrar um case', hint:'Projeto finalizado vira referência', go:()=>this.openNovoCase() },
