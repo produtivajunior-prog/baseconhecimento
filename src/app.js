@@ -671,7 +671,14 @@ class Component extends DCLogic {
     return { prodOQueE: P.oQueE || {}, prodAtuacao: atuacao, prodNAtuacao: atuacao.length, prodAreas: areas, prodNAreas: areas.length,
       prodFluxo: P.fluxo || {}, prodPassos: passos, prodMembro: P.membro || {}, prodMembroItens: ((P.membro || {}).itens || []),
       prodAuxilios: P.auxilios || {}, hasProdAuxilios: !!(P.auxilios && (P.auxilios.itens || []).length),
-      prodAuxItens: ((P.auxilios || {}).itens || []).map(x => ({ ...x, hasQuando: !!x.quando, quando: x.quando || '' })),
+      prodAuxItens: ((P.auxilios || {}).itens || []).map(x => ({ ...x,
+        valores: (x.valores || []).map(v => ({ ...v, hasObs: !!v.obs, obs: v.obs || '' })), hasValores: !!(x.valores && x.valores.length),
+        quando: x.quando || [], hasQuando: !!(x.quando && x.quando.length),
+        passos: (x.passos || []).map((t, i) => ({ t, n: i + 1 })), hasPassos: !!(x.passos && x.passos.length),
+        regras: x.regras || [], hasRegras: !!(x.regras && x.regras.length),
+        colunas: (x.passos || []).length && (x.regras || []).length ? '1fr 1fr' : '1fr',
+        hasModelo: !!x.modelo, modeloTitulo: x.modelo ? x.modelo.titulo : '', modeloTexto: x.modelo ? x.modelo.texto : '',
+        ir: () => this.irPara('aux-' + x.id) })),
       prodIrOQueE: () => this.irPara('prod-oquee'), prodIrAreas: () => this.irPara('prod-areas'), prodIrFluxo: () => this.irPara('prod-fluxo'), prodIrMembro: () => this.irPara('prod-membro'), prodIrAuxilios: () => this.irPara('prod-auxilios'),
       goProdutiva: () => this.nav('produtiva') };
   }

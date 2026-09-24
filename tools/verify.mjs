@@ -344,9 +344,15 @@ const TELAS = ['home', 'biblioteca', 'escopos', 'cases', 'novo-case', 'cadastro'
   if (produtiva.auxilios !== undefined) {
     const ax = produtiva.auxilios || {};
     if (!texto(ax.titulo) || !texto(ax.texto) || !texto(ax.area)) p(`${ctx}.auxilios`, 'titulo, texto e area obrigatórios');
+    const xids = new Set();
     for (const [i, x] of (ax.itens || []).entries()) {
-      if (!texto(x.titulo) || !texto(x.texto)) p(`${ctx}.auxilios.itens[${i}]`, 'titulo e texto obrigatórios');
-      if (x.quando !== null && x.quando !== undefined && !texto(x.quando)) p(`${ctx}.auxilios.itens[${i}]`, 'quando precisa ser texto ou null');
+      const xctx = `${ctx}.auxilios.itens[${x.id ?? i}]`;
+      if (!KEBAB.test(x.id || '') || xids.has(x.id)) p(xctx, 'id ausente, fora do kebab-case ou repetido');
+      xids.add(x.id);
+      if (!texto(x.titulo) || !texto(x.resumo)) p(xctx, 'titulo e resumo obrigatórios');
+      for (const k of ['quando', 'passos', 'regras']) if (!isStrArr(x[k] || [])) p(xctx, `${k}[] precisa ser lista de textos`);
+      for (const [j, v] of (x.valores || []).entries()) if (!texto(v.rotulo) || !texto(v.valor)) p(`${xctx}.valores[${j}]`, 'rotulo e valor obrigatórios');
+      if (x.modelo && (!texto(x.modelo.titulo) || !texto(x.modelo.texto))) p(xctx, 'modelo precisa de titulo e texto');
     }
   }
   check(!problemas_.some((x) => x.startsWith('produtiva')), `produtiva.json  ${aids.size} áreas, ${((produtiva.fluxo || {}).passos || []).length} passos do fluxo comercial, ${((produtiva.auxilios || {}).itens || []).length} auxílios`, 'produtiva.json com erros');

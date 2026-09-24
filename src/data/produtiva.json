@@ -74,9 +74,11 @@
         "Cuida do financeiro da Produtiva: todas as contas",
         "Pagamento de passagens e hospedagens",
         "Pagamentos de eventos",
-        "Pagamento de auxílios e reembolsos dos membros"
+        "Pagamento de auxílios e reembolsos dos membros",
+        "PIPJ: libera as retiradas e analisa os casos fora da regra",
+        "Empréstimo dos computadores da Produtiva"
       ],
-      "procure": "Tem dúvida sobre pagamentos, passagens, hospedagem, custos de um evento, auxílios ou reembolsos.",
+      "procure": "Tem dúvida sobre pagamentos, passagens, hospedagem, custos de um evento, auxílios, reembolsos, PIPJ ou quer reservar um computador.",
       "subnucleos": []
     },
     {
@@ -203,18 +205,151 @@
   },
   "auxilios": {
     "titulo": "Auxílios e reembolsos",
-    "texto": "A Produtiva apoia os membros nos custos de estar a serviço da PJ. Os pagamentos são feitos pela Vice-presidência.",
+    "texto": "A Produtiva apoia os membros no desenvolvimento e nos custos de estar a serviço da PJ. Quem cuida de tudo isso é a Vice-presidência.",
     "area": "Vice-presidência",
+    "fonte": "Manual financeiro da Produtiva (PIPJ, auxílios, Uber Business, reembolso gasolina e computadores), 2025, com o cartão corporativo atualizado para o Caju.",
+    "cartao": "Caju",
     "itens": [
       {
-        "titulo": "Reembolso de gasolina",
-        "texto": "A Produtiva reembolsa a gasolina gasta pelo membro.",
-        "quando": null
+        "id": "pipj",
+        "titulo": "PIPJ — Programa de Incentivo Produtiva Júnior",
+        "resumo": "Valor mensal para investir no seu desenvolvimento: cursos, eventos, livros, materiais de estudo e de trabalho. O valor depende do cargo e muda com reconhecimentos, avaliações e pontos no plano de punição.",
+        "valores": [
+          {
+            "rotulo": "Cargos operacionais",
+            "valor": "R$ 200/mês",
+            "obs": "+ R$ 50 se Piloto de Elite · + R$ 75 se Líder de Voo"
+          },
+          {
+            "rotulo": "Cargos táticos",
+            "valor": "R$ 200/mês",
+            "obs": "+ R$ 75 se Líder de Voo · + R$ 100 com média mensal de avaliação ≥ 4"
+          },
+          {
+            "rotulo": "Cargos estratégicos",
+            "valor": "R$ 275/mês",
+            "obs": null
+          },
+          {
+            "rotulo": "Descontos (todos)",
+            "valor": "− R$ 15 por ponto",
+            "obs": "no saldo final do plano de punição · − R$ 50 com média de Piloto de Elite ≤ 3"
+          }
+        ],
+        "quando": [],
+        "passos": [],
+        "regras": [
+          "Use para reinvestir em você: cursos, eventos, materiais de estudo e de trabalho. Outro tipo de uso precisa ser pedido ao diretor da Vice-presidência.",
+          "Máximo de R$ 400 por saída. Casos extraordinários: converse antes com o diretor da Vice-presidência.",
+          "Dá para pagar uma compra parcelada com o PIPJ.",
+          "Ordem de prioridade: 1º tecnologia (conserto ou compra de equipamentos para o trabalho), 2º capacitações (cursos, livros, materiais), 3º eventos do MEJ e de representação (não vale para festas e integração), 4º papelaria para a universidade.",
+          "Se a saída deixar o caixa do PIPJ negativo, ela passa para o mês seguinte ou é vetada.",
+          "Os pontos do plano de punição podem ser retirados ao longo do mês; o desconto usa o saldo do último dia.",
+          "Não recebe nem retira PIPJ: quem está em plano de acompanhamento (no mês), em processo de desligamento, com reunião de desligamento agendada ou há mais de 1 mês sem projeto interno ou externo.",
+          "Mesmo dentro das regras, a Vice-presidência pode vetar a retirada conforme a situação financeira da Produtiva."
+        ],
+        "modelo": null
       },
       {
+        "id": "gasolina",
+        "titulo": "Reembolso de gasolina",
+        "resumo": "Para viagens a serviço da Produtiva feitas no seu próprio veículo.",
+        "valores": [],
+        "quando": [
+          "Viagem vinculada à empresa (projeto, atividade interna ou situação extraordinária) com o seu próprio meio de transporte."
+        ],
+        "passos": [
+          "Abra a planilha REEMBOLSO GASOLINA, crie uma cópia da aba \"Exemplo Base\" e renomeie com o seu nome.",
+          "Preencha o modelo do carro, a autonomia e troque \"Projeto 1, 2, 3\" pelo nome dos seus projetos.",
+          "Para cada viagem, preencha saída, chegada, motivo, carro, distância e data. O total em litros é calculado sozinho.",
+          "No Pipefy, abra o formulário \"Processos de Pagamento\" e escolha \"Reembolso\". Informe a sua chave Pix (não a do PIPJ) e o seu nome, com a descrição \"Reembolso gasolina [NOME DO PROJETO]\".",
+          "Informe o valor que aparece na célula vinho embaixo do nome do projeto, na sua planilha.",
+          "Selecione \"Consultorias/Assessorias\" e o nome do projeto, e anexe como comprovante um print da sua planilha."
+        ],
+        "regras": [],
+        "modelo": null
+      },
+      {
+        "id": "uber",
+        "titulo": "Uber for Business",
+        "resumo": "Se você não tem veículo ou não pode usá-lo, vá de Uber pela conta corporativa da Produtiva.",
+        "valores": [],
+        "quando": [
+          "Atividade vinculada à empresa sem meio de transporte próprio."
+        ],
+        "passos": [
+          "Confira se está na conta corporativa da Produtiva Júnior e escolha o UberX.",
+          "Confirme o local de partida.",
+          "Escolha o código de despesa: o projeto da visita, ou \"Prospecção\" quando for diagnóstico ou proposta.",
+          "Escolheu o código errado? Dá para alterar depois na própria viagem."
+        ],
+        "regras": [],
+        "modelo": null
+      },
+      {
+        "id": "alimentacao",
         "titulo": "Auxílio alimentação",
-        "texto": "A Produtiva paga um auxílio alimentação ao membro.",
-        "quando": "o membro tem compromisso da PJ de manhã e de tarde."
+        "resumo": "Para membros efetivos que estão a serviço da Produtiva de manhã e de tarde. O saldo cai toda semana no cartão corporativo Caju.",
+        "valores": [
+          {
+            "rotulo": "Por refeição (almoço)",
+            "valor": "R$ 30",
+            "obs": null
+          },
+          {
+            "rotulo": "Por semana, no cartão Caju",
+            "valor": "R$ 60",
+            "obs": "equivale a dois auxílios, se a situação financeira da empresa permitir"
+          }
+        ],
+        "quando": [
+          "Dois turnos em eventos do MEJ ou em eventos de representação.",
+          "Eventos internos (RG, Workday, RN e outras reuniões), quando avisado antes e se a situação financeira permitir.",
+          "Construção de ferramenta ou Workday no turno seguinte, sem duas reuniões em turnos diferentes: vale, mas precisa de justificativa no Slack (veja abaixo)."
+        ],
+        "passos": [
+          "Use o saldo do cartão Caju na refeição.",
+          "Quando não houver duas reuniões em turnos diferentes, justifique no canal \"Rotina-PJ\" do Slack, no modelo abaixo, e registre as atividades no Google Agenda.",
+          "Em construções, detalhe o projeto e os pontos feitos. Marketing usando o contêiner em horário comercial: informe leads abertos, fluxos enviados e ligações feitas."
+        ],
+        "regras": [
+          "No máximo DUAS saídas de até R$ 30 por semana. Não vale, por exemplo, R$ 20 + R$ 40 ou três de R$ 20.",
+          "Sem justificativa, com participação muito curta ou produtividade incompatível: o membro estorna o valor para a Produtiva e pode ter penalidades e o saldo suspenso."
+        ],
+        "modelo": {
+          "titulo": "Modelo para o canal Rotina-PJ",
+          "texto": "[NOME] data\nAtividade turno 1:\nNome da(s) atividade(s) realizada(s) - horário\nAtividade turno 2:\nNome da(s) atividade(s) realizada(s) - horário\n\nExemplo:\n[MARIA BEATRIZ] 15/08\nAtividade turno 1:\nRAC Unimed - 9h às 14h\nAtividade turno 2:\nPlanilha de tempos Nordestão - 15h às 16h\nAlterações planilha Iskisita - 16h às 18h"
+        }
+      },
+      {
+        "id": "computadores",
+        "titulo": "Computadores da Produtiva",
+        "resumo": "A Produtiva tem dois computadores para empréstimo aos membros, em rodízio.",
+        "valores": [
+          {
+            "rotulo": "Computador 1",
+            "valor": "até 7 dias",
+            "obs": "uso pontual e rápido"
+          },
+          {
+            "rotulo": "Computador 2",
+            "valor": "até 30 dias",
+            "obs": "uso mais longo"
+          }
+        ],
+        "quando": [],
+        "passos": [
+          "Veja as datas livres de cada computador no Monday, aba \"Computadores\" (quadro e calendário).",
+          "Preencha o formulário RESERVA DOS COMPUTADORES: seu nome, qual computador, data de retirada e de devolução.",
+          "Depois da reserva, combine com um assessor da Vice-presidência o horário de retirada. No fim do período, combine o horário de devolução para a vistoria."
+        ],
+        "regras": [
+          "Nova reserva só depois de devolver o computador e ele passar pela vistoria.",
+          "O prazo conta a partir da data em que você já pode retirar, não do dia em que retirou.",
+          "Pode reservar de novo em seguida, desde que não coincida com quem quer o mesmo período: a prioridade é de quem não está com computador.",
+          "Devolveu antes? O próximo da fila pode retirar antes."
+        ],
+        "modelo": null
       }
     ]
   }
