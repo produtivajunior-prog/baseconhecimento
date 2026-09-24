@@ -27,7 +27,7 @@ class Component extends DCLogic {
     confirmRemoverId: null,
     recoKey: null,
     toast: '',
-    form: this.formVazio(),
+    form: this.carregarLocal('hangar.formRascunho', null) || this.formVazio(),
     extra: this.carregarLocal('hangar.extra', []),
     doc: null,
     aiDocInput: '',
@@ -44,7 +44,7 @@ class Component extends DCLogic {
     applyResult: null,
     applyOpen: false,
     // cadastro — modelo padrão de ferramenta
-    modelos: this.defaultModelos(),
+    modelos: this.carregarLocal('hangar.modelos', []).concat(this.defaultModelos()),
     modeloNome: '',
     modeloFile: null,
     modeloLoading: false,
@@ -875,10 +875,20 @@ class Component extends DCLogic {
       entradas:['—'], saidas:['—'], passos:['Conteúdo gerado automaticamente a partir do cadastro.'],
       perguntas:['—'], cuidados:['—'], exemplos:['—'], anexos:[]
     };
+    this.salvarLocal('hangar.formRascunho', null);
     this.setState(s => { const extra = [item, ...s.extra]; this.salvarLocal('hangar.extra', extra); return { extra, toast:'Conteúdo publicado! Página gerada automaticamente.', form:this.formVazio() }; });
     setTimeout(()=>{ this.openContent(id); this.setState({toast:''}); }, 1100);
   }
 
+  // window.claude.complete só existe quando o Hangar roda dentro do Claude (claude.ai). No Coolify ou no
+  // HTML baixado ela não existe: avisamos isso em vez de um "tente de novo" que nunca vai funcionar.
+  iaDisponivel() { return typeof window !== 'undefined' && !!(window.claude && typeof window.claude.complete === 'function'); }
+  get IA_INDISPONIVEL() { return 'A IA só funciona quando o Hangar é aberto dentro do Claude (claude.ai). Neste endereço, preencha manualmente.'; }
+  salvarRascunhoForm() {
+    const f = this.state.form;
+    if (!f.nome.trim() && !f.descricao.trim()) { this.showToast('Nada para salvar ainda: preencha pelo menos o nome.'); return; }
+    this.showToast(this.salvarLocal('hangar.formRascunho', f) ? 'Rascunho salvo neste navegador. Ele volta preenchido quando você abrir o Cadastrar.' : 'Não consegui salvar o rascunho neste navegador.');
+  }
   goDocs() { this.setState(st=>({ screen:'docs', doc: st.doc || this.defaultDoc() })); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
   parseAIJson(text) {
@@ -911,6 +921,7 @@ class Component extends DCLogic {
   async generateDoc() {
     const d = this.state.doc; const inp = (this.state.aiDocInput||'').trim();
     if (inp.length < 8) { this.setState({ aiError:'Descreva a ferramenta com um pouco mais de detalhe.' }); return; }
+    if (!this.iaDisponivel()) { this.setState({ aiError:this.IA_INDISPONIVEL }); return; }
     this.setState({ aiLoading:true, aiError:'' });
     const isModelo = d.type === 'modelo';
     const tipoLabel = isModelo ? 'modelo editável (template)' : (d.type==='manual' ? 'manual de uso' : 'metodologia');
@@ -935,6 +946,7 @@ class Component extends DCLogic {
   async generateTool() {
     const inp = (this.state.aiToolInput||'').trim();
     if (inp.length < 8) { this.setState({ aiToolError:'Cole ou descreva o conteúdo da ferramenta primeiro.' }); return; }
+    if (!this.iaDisponivel()) { this.setState({ aiToolError:this.IA_INDISPONIVEL }); return; }
     this.setState({ aiToolLoading:true, aiToolError:'' });
     const nomeHint = (this.state.aiToolNome||'').trim();
     const tx = this.TAXONOMIA;
@@ -958,7 +970,7 @@ class Component extends DCLogic {
         perguntas: arr(j.perguntas,['—']), cuidados: arr(j.cuidados,['—']), exemplos: arr(j.exemplos,['—']),
         anexos: [], geradoIA: true
       };
-      this.setState(st=>({ extra:[item, ...st.extra], aiToolLoading:false, aiToolInput:'', aiToolNome:'' }));
+      this.setState(st=>{ const extra = [item, ...st.extra]; this.salvarLocal('hangar.extra', extra); return { extra, aiToolLoading:false, aiToolInput:'', aiToolNome:'' }; });
       this.showToast('Ferramenta gerada por IA e adicionada à biblioteca (em revisão).');
       setTimeout(()=>this.openContent(id), 900);
     } catch(e) {
@@ -977,6 +989,7 @@ class Component extends DCLogic {
   async readModelo() {
     const f = this.state.modeloFile;
     if (!f) { this.setState({ modeloError:'Anexe a imagem ou o PDF do modelo da ferramenta.' }); return; }
+    if (!this.iaDisponivel()) { this.setState({ modeloError:this.IA_INDISPONIVEL }); return; }
     this.setState({ modeloLoading:true, modeloError:'' });
     const nomeHint = (this.state.modeloNome||'').trim() || f.name.replace(/\.[a-z0-9]+$/i,'');
     const schema = '{"nome":string,"sigla":string curto,"layout":"canvas"|"grid","blocos":[{"titulo":string,"dica":string (1 frase do que preencher)}]}';
@@ -989,13 +1002,15 @@ class Component extends DCLogic {
       const id = 'mod-'+Date.now();
       const toolMatch = this.allData().find(d => (d.nome||'').toLowerCase() === (j.nome||nomeHint||'').toLowerCase());
       const modelo = { id, toolId: toolMatch?toolMatch.id:null, nome: j.nome||nomeHint||'Modelo de ferramenta', sigla: j.sigla||'', fonte: f.name, layout: j.layout==='canvas'?'canvas':'grid', registrado:'Lido do anexo', blocos };
-      this.setState(st=>({ modelos:[modelo, ...st.modelos], modeloLoading:false, modeloFile:null, modeloNome:'' }));
+      this.setState(st=>{ const modelos = [modelo, ...st.modelos]; this.salvarModelosLocais(modelos); return { modelos, modeloLoading:false, modeloFile:null, modeloNome:'' }; });
       this.showToast('Modelo-padrão lido e registrado. A IA passará a seguir esse formato.');
     } catch(e) {
       this.setState({ modeloLoading:false, modeloError:'Não consegui ler o modelo agora. Tente outro arquivo ou ajuste o nome.' });
     }
   }
-  removeModelo(id) { this.setState(st=>({ modelos: st.modelos.filter(m=>m.id!==id) })); }
+  removeModelo(id) { this.setState(st=>{ const modelos = st.modelos.filter(m=>m.id!==id); this.salvarModelosLocais(modelos); return { modelos }; }); }
+  // só os modelos que o membro registrou vão para o navegador; os do acervo vêm sempre de modelos.json
+  salvarModelosLocais(modelos) { const doAcervo = new Set((DADOS.modelos||[]).map(m=>m.id)); this.salvarLocal('hangar.modelos', modelos.filter(m=>!doAcervo.has(m.id))); }
 
   updateDoc(patch) { this.setState(st=>({ doc: { ...st.doc, ...patch } })); }
   setDocType(t) { this.updateDoc({ type:t }); }
@@ -1006,7 +1021,41 @@ class Component extends DCLogic {
   addBloco() { this.setState(st=>({ doc:{...st.doc, blocos:[...st.doc.blocos, { titulo:'Novo bloco', itens:['Campo de exemplo'], w:'normal' }]} })); }
   removeBloco(i) { this.setState(st=>({ doc:{...st.doc, blocos: st.doc.blocos.filter((_,idx)=>idx!==i)} })); }
   showToast(msg) { this.setState({toast:msg}); setTimeout(()=>this.setState({toast:''}), 2600); }
-  exportDoc(fmt) { this.showToast('Documento exportado ('+fmt+'). Pronto para compartilhar.'); }
+  documentoHtml(d) {
+    const e = (t) => this.esc(t);
+    const isModelo = d.type === 'modelo';
+    const tipo = isModelo ? 'Modelo' : (d.type === 'manual' ? 'Manual de uso' : 'Metodologia');
+    const intro = String(d.intro || '').split('\n').filter(Boolean).map(p => '<p>' + e(p) + '</p>').join('');
+    let corpo = '';
+    if (isModelo) {
+      corpo = '<div class="grade">' + (d.blocos || []).map(b => '<div class="bloco' + (b.w === 'wide' ? ' wide' : '') + '"><b>' + e(b.titulo) + '</b><ul>' + (b.itens || []).map(i => '<li>' + e(i) + '</li>').join('') + '</ul></div>').join('') + '</div>';
+    } else {
+      let grupo = null;
+      corpo = (d.secoes || []).map((x, i) => {
+        const g = x.grupo && x.grupo !== grupo ? '<h2>' + e(x.grupo) + '</h2>' : ''; grupo = x.grupo || grupo;
+        return g + '<section><h3>' + String(i + 1).padStart(2, '0') + '. ' + e(x.titulo) + '</h3><p>' + e(x.descricao) + '</p>' +
+          ((x.perguntas || []).length ? '<div class="perg"><b>Perguntas-chave</b><ul>' + x.perguntas.map(q => '<li>' + e(q) + '</li>').join('') + '</ul></div>' : '') + '</section>';
+      }).join('');
+    }
+    return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>' + e(d.nome) + ' — ' + tipo + '</title><style>' +
+      '@page{size:A4;margin:16mm}body{font:12pt/1.55 -apple-system,"Segoe UI",Roboto,sans-serif;color:#172A30;margin:0;padding:24px;max-width:190mm}' +
+      'h1{font-size:24pt;margin:4px 0}h2{font-size:12pt;margin:24px 0 6px;color:#1E7C92;text-transform:uppercase;letter-spacing:.05em}h3{font-size:13pt;margin:14px 0 4px}' +
+      '.sub{color:#5E747B;font-size:13pt}.meta{font-size:9.5pt;color:#8AA0A7;letter-spacing:.06em;text-transform:uppercase}section{page-break-inside:avoid}' +
+      '.perg{background:#F6F9FA;border-radius:8px;padding:8px 12px;font-size:11pt}.perg ul,.bloco ul{margin:4px 0 0;padding-left:18px}' +
+      '.grade{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.bloco{border:1.5px solid #3C545B;border-radius:8px;padding:10px 12px}.bloco.wide{grid-column:1/-1}' +
+      '.print{position:fixed;top:12px;right:12px;border:none;background:#3DAFC7;color:#fff;font:600 11pt sans-serif;padding:9px 14px;border-radius:9px;cursor:pointer}@media print{.print{display:none}body{padding:0}}' +
+      '</style></head><body><button class="print" onclick="window.print()">Imprimir / salvar PDF</button>' +
+      '<div class="meta">Hangar · Produtiva Júnior · ' + e(tipo) + (d.categoria ? ' · ' + e(d.categoria) : '') + '</div>' +
+      '<h1>' + e(d.nome) + (d.sigla ? ' (' + e(d.sigla) + ')' : '') + '</h1>' + (d.subtitulo ? '<div class="sub">' + e(d.subtitulo) + '</div>' : '') +
+      intro + corpo + '</body></html>';
+  }
+  exportDoc() {
+    const d = this.state.doc; if (!d) return;
+    const nome = this.slugDe(d.nome || 'documento') + '-' + (d.type === 'modelo' ? 'modelo' : d.type === 'manual' ? 'manual' : 'metodologia') + '.html';
+    const html = this.documentoHtml(d);
+    if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json: html };
+    this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' baixado. Abra e use "Imprimir / salvar PDF".' : 'Não consegui gerar o arquivo aqui.');
+  }
   saveDocLibrary() {
     const d = this.state.doc; const isModelo = d.type==='modelo';
     const id = 'doc-'+Date.now();
@@ -1026,8 +1075,8 @@ class Component extends DCLogic {
       cuidados:['—'], exemplos:['—'],
       anexos:[{nome:anexoNome, tipo:anexoTipo, descricao:'Documento gerado automaticamente pela plataforma.', versao:'v1.0', data:this.hoje()}]
     };
-    this.setState(st=>({ extra:[item, ...st.extra] }));
-    this.showToast('Documentação salva na biblioteca!');
+    this.setState(st=>{ const extra = [item, ...st.extra]; this.salvarLocal('hangar.extra', extra); return { extra }; });
+    this.showToast('Documentação salva na biblioteca (neste navegador).');
     setTimeout(()=>{ this.openContent(id); }, 1000);
   }
 
@@ -1382,7 +1431,7 @@ class Component extends DCLogic {
       docNome:updField('nome'), docSigla:updField('sigla'), docSubtitulo:updField('subtitulo'), docIntro:updField('intro'), docCategoria:updField('categoria'),
       secoesEdit, secoesPrev, introParas, addSecao:()=>this.addSecao(),
       docCount: doc.secoes.length,
-      exportPdf:()=>this.exportDoc('PDF'), saveDoc:()=>this.saveDocLibrary(),
+      exportPdf:()=>this.exportDoc(), saveDoc:()=>this.saveDocLibrary(), salvarRascunhoForm:()=>this.salvarRascunhoForm(),
       // toast
       toastOpen: !!s.toast, toastMsg: s.toast,
     };

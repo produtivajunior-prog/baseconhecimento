@@ -142,10 +142,9 @@ do `dist/Hangar.html` e dê push. Testar localmente: `docker build -t hangar . &
 | | |
 |---|---|
 | ✅ **React via unpkg.com** | **Resolvido.** O `dc-runtime` baixava React de CDN em runtime; sem internet a página renderizava o template cru, com `{{ item.nome }}` visível na tela. React 18.3.1 agora vai embutido no bundle, carregado antes do runtime. Verificado em Chromium com o unpkg inacessível. |
-| 🔴 **`window.claude.complete`** | Só existe dentro do sandbox de artifacts da Claude.ai. Como a distribuição é por download do HTML, **as 4 funcionalidades de IA falham em 100% das tentativas** hoje, com mensagem que sugere erro do usuário. Exige backend — não dá para resolver dentro do bundle. |
+| 🔴 **`window.claude.complete`** | Só existe quando o Hangar roda dentro do Claude (claude.ai). No Coolify e no HTML baixado, **as funcionalidades de IA (Criar com IA, Modelo-padrão, Gerar documentação e Aplicar ferramenta) não funcionam**; desde 2026-09-24 o app avisa isso com clareza em vez de pedir para "tentar de novo". Exige backend. O "Modelo-padrão" também só envia o nome do arquivo à IA, não o conteúdo do anexo. |
 
-Além disso: nada persiste (F5 apaga tudo), não há login, e os anexos são apenas metadados —
-nenhum arquivo existe por trás dos botões "Baixar".
+Além disso: o que cada membro cadastra (ferramentas, documentação, modelos-padrão, cases, rascunhos) fica só no navegador dele até o CIEP publicar; não há login; e os anexos das ferramentas são links do Drive.
 
 > Ruído esperado no console em `file://`: `dc-runtime.js:154` faz `fetch(location.href)` para
 > recarregar o template (recurso de editor). É bloqueado por CORS, já tratado pelo `.catch()`

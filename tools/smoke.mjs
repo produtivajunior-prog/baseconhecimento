@@ -8,6 +8,7 @@
  * O que ele garante:
  *   - a página renderiza sem "{{ … }}" cru na tela (o sintoma clássico de runtime que não subiu);
  *   - com unpkg.com bloqueado o app continua (React embutido);
+ *   - Cadastrar e Documentação: rascunho, publicação após F5, download do documento e IA indisponível fora do Claude;
  *   - Como funciona a Produtiva: menu, áreas, subnúcleos, fluxo comercial e atalho para os escopos;
  *   - Escopos (PPGP 2026): busca, os 5 blocos do escopo, checklist "O que saber" após F5, roteiro imprimível,
  *     etapa → ferramenta → "Usado em", link antigo redirecionando e "+ ficha" preenchendo o cadastro de case;
@@ -66,6 +67,34 @@ await page.waitForTimeout(300);
   await page.locator('main article', { hasText: 'Gestão da Tecnologia' }).first().click(); await page.waitForTimeout(400);
   check(/#\/escopos$/.test(await page.evaluate(() => location.hash)) && /Automação/.test(await texto()), 'área de atuação "Gestão da Tecnologia" abre a tela Escopos');
 }
+
+// Cadastrar (manual) e Documentação: rascunho, publicação que sobrevive ao F5, download real e IA indisponível fora do Claude
+await page.evaluate(() => { location.hash = '#/cadastrar'; }); await page.waitForTimeout(400);
+await page.getByRole('button', { name: 'Preencher manualmente' }).click(); await page.waitForTimeout(200);
+await page.getByPlaceholder('Ex.: Matriz de Priorização GUT').last().fill('Ferramenta Smoke');
+await page.getByPlaceholder('Uma frase que resume o que é e para que serve').fill('Criada pelo smoke.');
+await page.getByRole('button', { name: 'Salvar rascunho' }).click(); await page.waitForTimeout(200);
+await page.reload(); await page.waitForTimeout(1200);
+await page.getByRole('button', { name: 'Preencher manualmente' }).click(); await page.waitForTimeout(200);
+check((await page.getByPlaceholder('Ex.: Matriz de Priorização GUT').last().inputValue()) === 'Ferramenta Smoke', 'Cadastrar: "Salvar rascunho" guarda o formulário e ele volta depois do F5');
+await page.getByRole('button', { name: 'Publicar conteúdo' }).click(); await page.waitForTimeout(1500);
+await page.reload(); await page.waitForTimeout(1200);
+check(/#\/ferramenta\/novo-/.test(await page.evaluate(() => location.hash)) && /Ferramenta Smoke/.test(await texto()), 'Cadastrar: conteúdo publicado abre a página e continua depois do F5');
+await page.getByRole('button', { name: 'Cadastrar', exact: true }).first().click(); await page.waitForTimeout(300);
+await page.getByRole('button', { name: 'Criar com IA' }).click(); await page.waitForTimeout(200);
+await page.getByPlaceholder(/Cole aqui o material/).fill('A matriz GUT prioriza problemas por gravidade, urgência e tendência.');
+await page.locator('main button', { hasText: /Gerar/ }).first().click(); await page.waitForTimeout(400);
+check(/só funciona quando o Hangar é aberto dentro do Claude/.test(await texto()), 'Cadastrar com IA fora do Claude explica que a IA não está disponível');
+await page.getByRole('button', { name: 'Documentação', exact: true }).first().click(); await page.waitForTimeout(400);
+await page.getByRole('button', { name: 'Baixar' }).click(); await page.waitForTimeout(300);
+{
+  const dl = await page.evaluate(() => window.__hangarUltimoDownload);
+  check(!!dl && /\.html$/.test(dl.nome) && /Process Map Model Canvas/.test(dl.json) && /Perguntas-chave/.test(dl.json), `Documentação: "Baixar" gera o documento em HTML (${dl ? dl.nome : 'nada'})`);
+}
+await page.getByRole('button', { name: 'Salvar na biblioteca' }).click(); await page.waitForTimeout(1400);
+await page.reload(); await page.waitForTimeout(1200);
+check(/#\/ferramenta\/doc-/.test(await page.evaluate(() => location.hash)) && /Process Map Model Canvas/.test(await texto()), 'Documentação: "Salvar na biblioteca" cria o item e ele continua depois do F5');
+await page.evaluate(() => { localStorage.removeItem('hangar.extra'); localStorage.removeItem('hangar.formRascunho'); location.hash = '#/'; }); await page.reload(); await page.waitForTimeout(1200);
 
 // Escopos (PPGP 2026) → busca → escopo em 5 blocos → checklist → roteiro → etapa → ferramenta
 await page.getByRole('button', { name: 'Escopos', exact: true }).first().click();
