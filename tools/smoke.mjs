@@ -256,7 +256,7 @@ const PNG_1PX = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0l
 await page.locator('#hangar-foto-input').setInputFiles({ name: 'foto.png', mimeType: 'image/png', buffer: PNG_1PX });
 await page.waitForSelector('img[alt="Pré-visualização da foto"]', { timeout: 5000 }).catch(() => {});
 const fotoPrev = await page.locator('img[alt="Pré-visualização da foto"]').first().getAttribute('src').catch(() => null);
-check(!!fotoPrev && /^data:image\/jpeg;base64,/.test(fotoPrev), 'foto enviada virou pré-visualização JPEG (data URL) no formulário');
+check(!!fotoPrev && /^data:image\/(webp|jpeg);base64,/.test(fotoPrev), 'foto enviada virou pré-visualização WebP/JPEG (data URL) no formulário');
 await page.getByPlaceholder('Ex.: Equipe com o gestor na entrega final').fill('Equipe na entrega');
 await page.getByText('Seu nome *').locator('..').locator('input').fill('Pessoa do Smoke');
 await page.getByRole('button', { name: 'Publicar no meu Hangar' }).click();
@@ -277,7 +277,7 @@ check(/Proposta\.pdf/.test(t) && /Abrir PDF/.test(t), 'ficha lista o PDF anexado
   check(!!url && /^blob:/.test(url), `"Abrir PDF" abre um blob: (não um data: bloqueado pelo Chrome) — ${url ? url.slice(0, 24) : 'nada'}`);
   await page.evaluate(() => { window.__abertoNoDrive = null; });
 }
-check((await page.locator('main img[alt="Padaria Smoke"][src^="data:image/jpeg"]').count()) > 0 && /Equipe na entrega/.test(t), 'ficha mostra a foto de capa com a legenda');
+check((await page.locator('main img[alt="Padaria Smoke"][src^="data:image/"]').count()) > 0 && /Equipe na entrega/.test(t), 'ficha mostra a foto de capa com a legenda');
 check(/Só neste navegador/i.test(t), 'ficha avisa que o case só existe neste navegador');
 check(/Pergunte a quem fez/.test(t), 'ficha tem o bloco "Pergunte a quem fez"');
 {
@@ -289,7 +289,7 @@ await page.waitForTimeout(200);
 const dl = await page.evaluate(() => window.__hangarUltimoDownload);
 let caseJson = null; try { caseJson = dl && JSON.parse(dl.json); } catch {}
 check(!!caseJson && caseJson.cliente === 'Padaria Smoke' && caseJson.equipe.consultores.length === 2 && /^case-.*\.json$/.test(dl.nome), `"Baixar case" gerou ${dl ? dl.nome : 'nada'} com JSON válido`);
-check(!!caseJson && caseJson.foto && /^data:image\/jpeg;base64,/.test(caseJson.foto.url) && caseJson.foto.legenda === 'Equipe na entrega', 'JSON do case leva a foto embutida e a legenda');
+check(!!caseJson && caseJson.foto && /^data:image\/(webp|jpeg);base64,/.test(caseJson.foto.url) && caseJson.foto.legenda === 'Equipe na entrega', 'JSON do case leva a foto embutida e a legenda');
 check(!!caseJson && caseJson.equipe.gerente.whatsapp === '84999990000', 'JSON do case guarda o WhatsApp só com dígitos');
 // busca e persistência
 await page.reload(); await page.waitForTimeout(1200);
@@ -316,10 +316,10 @@ check(/Banco de cases/i.test(await texto()) && !/Equipe do projeto/i.test(await 
   const card2 = page.locator('main article', { hasText: 'Padaria Smoke' }).first();
   const [fc] = await Promise.all([page.waitForEvent('filechooser'), card2.getByRole('button', { name: /Adicionar capa/ }).click()]);
   await fc.setFiles({ name: 'capa.png', mimeType: 'image/png', buffer: PNG_1PX }); await page.waitForTimeout(800);
-  check(/#\/cases$/.test(await page.evaluate(() => location.hash)) && (await page.locator('article img[alt="Padaria Smoke"][src^="data:image/jpeg"]').count()) > 0, 'galeria: "Adicionar capa" no card põe a foto sem abrir a ficha');
+  check(/#\/cases$/.test(await page.evaluate(() => location.hash)) && (await page.locator('article img[alt="Padaria Smoke"][src^="data:image/"]').count()) > 0, 'galeria: "Adicionar capa" no card põe a foto sem abrir a ficha');
   await page.reload(); await page.waitForTimeout(1200);
   await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
-  check((await page.locator('article img[alt="Padaria Smoke"][src^="data:image/jpeg"]').count()) > 0, 'capa nova continua depois de recarregar (localStorage)');
+  check((await page.locator('article img[alt="Padaria Smoke"][src^="data:image/"]').count()) > 0, 'capa nova continua depois de recarregar (localStorage)');
 }
 await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(400);
 check(/^Biblioteca/m.test(await texto()) || (await page.getByPlaceholder(/Buscar por nome/).count()) > 0, 'mudar o hash na URL troca de tela (#/biblioteca)');

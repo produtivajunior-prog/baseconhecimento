@@ -104,8 +104,10 @@ class Component extends DCLogic {
     if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1600';
     return u;
   }
-  // Lê a foto escolhida, reduz para no máximo 1600px e devolve um JPEG em data URL (~100–400 KB).
-  // O case vira um JSON único, então a foto vai dentro dele; por isso o limite de tamanho.
+  // Lê a foto escolhida e devolve uma data URL nítida e leve para ir dentro do case (JSON único):
+  // até 2000px no maior lado; WebP de alta qualidade quando o navegador suporta (texto e logos ficam
+  // limpos, arquivo pequeno), senão JPEG. Se passar de ~900 KB, reduz as dimensões em vez de
+  // degradar a qualidade (JPEG baixo borrava capas com texto, como slides de case).
   lerFoto(file) {
     return new Promise((resolve, reject) => {
       if (!file || !/^image\//.test(file.type || '')) return reject(new Error('Escolha um arquivo de imagem (JPG, PNG ou WebP).'));
@@ -116,13 +118,21 @@ class Component extends DCLogic {
         img.onerror = () => reject(new Error('Não consegui abrir essa imagem.'));
         img.onload = () => {
           try {
-            const MAX = 1600, esc = Math.min(1, MAX / Math.max(img.width, img.height, 1));
-            const w = Math.max(1, Math.round(img.width * esc)), h = Math.max(1, Math.round(img.height * esc));
-            const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
-            const ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); ctx.drawImage(img, 0, 0, w, h);
-            let q = 0.85, out = cv.toDataURL('image/jpeg', q);
-            while (out.length > 700000 && q > 0.45) { q -= 0.1; out = cv.toDataURL('image/jpeg', q); }
-            resolve(out);
+            const LIMITE = 900000;
+            const gerar = (maxLado) => {
+              const esc = Math.min(1, maxLado / Math.max(img.width, img.height, 1));
+              const w = Math.max(1, Math.round(img.width * esc)), h = Math.max(1, Math.round(img.height * esc));
+              const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+              const ctx = cv.getContext('2d'); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+              ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); ctx.drawImage(img, 0, 0, w, h);
+              const webp = cv.toDataURL('image/webp', 0.9);
+              if (/^data:image\/webp/.test(webp) && webp.length <= LIMITE) return webp;
+              for (const q of [0.92, 0.85, 0.78]) { const jpg = cv.toDataURL('image/jpeg', q); if (jpg.length <= LIMITE) return jpg; }
+              return null;
+            };
+            let out = null;
+            for (const lado of [2000, 1600, 1280, 1024]) { out = gerar(lado); if (out) break; }
+            resolve(out || gerar(800) || document.createElement('canvas').toDataURL());
           } catch (e) { reject(new Error('Não consegui processar a imagem.')); }
         };
         img.src = String(r.result);
