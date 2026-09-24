@@ -331,6 +331,23 @@ check(/Banco de cases/i.test(await texto()) && !/Equipe do projeto/i.test(await 
   await page.reload(); await page.waitForTimeout(1200);
   await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
   check((await page.locator('article img[alt="Padaria Smoke"][src^="data:image/"]').count()) > 0, 'capa nova continua depois de recarregar (localStorage)');
+  // Vídeo num case já cadastrado: remover, adicionar pelo link do Drive (com prévia), sobreviver ao F5 e ir no JSON
+  await page.locator('article img[alt="Padaria Smoke"]').first().click(); await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Remover vídeo', exact: true }).click(); await page.waitForTimeout(300);
+  check((await page.locator('main iframe').count()) === 0 && (await page.getByRole('button', { name: 'Adicionar vídeo' }).count()) === 1, 'ficha: remover o vídeo oferece "Adicionar vídeo"');
+  await page.getByRole('button', { name: 'Adicionar vídeo' }).click(); await page.waitForTimeout(200);
+  await page.getByPlaceholder(/drive\.google\.com\/file\/d\/… ou/).fill('drive.google.com/file/d/abc'); await page.getByRole('button', { name: 'Salvar vídeo' }).click(); await page.waitForTimeout(200);
+  check(/começando com https:\/\//.test(await texto()), 'link sem https:// é recusado com mensagem clara');
+  await page.getByPlaceholder(/drive\.google\.com\/file\/d\/… ou/).fill('https://drive.google.com/file/d/1AtlantisVideo_x/view?usp=sharing');
+  await page.getByPlaceholder('Ex.: 6 min').fill('8 min'); await page.waitForTimeout(200);
+  check((await page.locator('iframe[src="https://drive.google.com/file/d/1AtlantisVideo_x/preview"]').count()) === 1, 'prévia do vídeo do Drive aparece antes de salvar');
+  await page.getByRole('button', { name: 'Salvar vídeo' }).click(); await page.waitForTimeout(300);
+  await page.reload(); await page.waitForTimeout(1200);
+  check((await page.locator('iframe[src="https://drive.google.com/file/d/1AtlantisVideo_x/preview"]').count()) === 1 && /Gerente e consultores · 8 min/.test(await texto()), 'vídeo novo continua na ficha depois de recarregar');
+  await page.getByRole('button', { name: /Baixar case/ }).first().click(); await page.waitForTimeout(200);
+  const jv = JSON.parse((await page.evaluate(() => window.__hangarUltimoDownload)).json);
+  check(jv.video && jv.video.url === 'https://drive.google.com/file/d/1AtlantisVideo_x/view?usp=sharing' && !('videoLocal' in jv), 'JSON do case leva o link do vídeo novo');
+  await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); await page.waitForTimeout(300);
 }
 await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(400);
 check(/^Biblioteca/m.test(await texto()) || (await page.getByPlaceholder(/Buscar por nome/).count()) > 0, 'mudar o hash na URL troca de tela (#/biblioteca)');

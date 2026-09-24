@@ -11,6 +11,8 @@ class Component extends DCLogic {
     caseFilters: { escopo: [], segmento: [], ano: [], ferramenta: [] },
     casesLocais: this.carregarLocal('hangar.casesLocais', []),
     capas: this.carregarLocal('hangar.capas', {}),
+    videos: this.carregarLocal('hangar.videos', {}),
+    videoForm: null,
     formCase: this.formCaseVazio(),
     caseErro: '',
     caseFiltroFerr: '',
@@ -79,10 +81,15 @@ class Component extends DCLogic {
   carregarLocal(chave, padrao) { try { const v = (typeof localStorage !== 'undefined') && localStorage.getItem(chave); return v ? JSON.parse(v) : padrao; } catch (e) { return padrao; } }
   salvarLocal(chave, valor) { try { if (typeof localStorage !== 'undefined') { localStorage.setItem(chave, JSON.stringify(valor)); return true; } } catch (e) {} return false; }
   // Capa trocada num case já publicado fica só neste navegador (hangar.capas) até o CIEP publicar o JSON novo.
+  // O mesmo vale para o vídeo (hangar.videos): o arquivo fica no Drive/YouTube, o Hangar guarda só o link.
   allCases() {
-    const capas = this.state.capas || {};
+    const capas = this.state.capas || {}; const videos = this.state.videos || {};
     return this.state.casesLocais.map(c => ({ ...c, local: true }))
-      .concat(this.CASES.map(c => capas[c.id] ? { ...c, foto: capas[c.id], capaLocal: true } : c));
+      .concat(this.CASES.map(c => {
+        let x = capas[c.id] ? { ...c, foto: capas[c.id], capaLocal: true } : c;
+        if (videos[c.id]) x = { ...x, video: videos[c.id], videoLocal: true };
+        return x;
+      }));
   }
 
   // Link de vídeo → URL embutível. YouTube e Drive; qualquer outro fica só como link.
@@ -179,6 +186,42 @@ class Component extends DCLogic {
       : url ? 'Capa salva neste navegador. Baixe o case (.json) e envie ao CIEP para publicar a foto para todos.' : 'Capa removida.');
   }
   removerCapa(id, e) { if (e && e.stopPropagation) e.stopPropagation(); this.aplicarCapa(id, ''); }
+  // ---- Vídeo da equipe num case já cadastrado: o vídeo sobe no Drive/YouTube e aqui entra só o link.
+  abrirVideoForm(c) {
+    const v = c.video || {};
+    this.setState({ videoForm: { id: c.id, url: v.url || '', quem: v.quem || 'Gerente e consultores', duracao: v.duracao || '', erro: '' } });
+  }
+  setVideoForm(k, e) { const val = e && e.target ? e.target.value : ''; this.setState(st => ({ videoForm: st.videoForm ? { ...st.videoForm, [k]: val, erro: '' } : null })); }
+  salvarVideoForm() {
+    const f = this.state.videoForm; if (!f) return;
+    const url = f.url.trim();
+    if (!/^https:\/\//.test(url)) { this.setState({ videoForm: { ...f, erro: 'Cole o link completo, começando com https:// (Drive ou YouTube).' } }); return; }
+    this.aplicarVideo(f.id, { url, quem: f.quem.trim(), duracao: f.duracao.trim() });
+  }
+  videoFormVals(s, caseSel) {
+    const f = s.videoForm && caseSel && s.videoForm.id === caseSel.id ? s.videoForm : null;
+    const prev = f ? this.embedDe(f.url) : '';
+    return { videoFormAberto: !!f, videoFormFechado: !f, vf: f || { url: '', quem: '', duracao: '', erro: '' },
+      vfPreview: prev, hasVfPreview: !!prev, vfLinkSemEmbed: !!(f && /^https:\/\//.test(f.url.trim()) && !prev), hasVfErro: !!(f && f.erro),
+      vfUrl: (e) => this.setVideoForm('url', e), vfQuem: (e) => this.setVideoForm('quem', e), vfDuracao: (e) => this.setVideoForm('duracao', e),
+      vfSalvar: () => this.salvarVideoForm(), vfCancelar: () => this.setState({ videoForm: null }) };
+  }
+  aplicarVideo(id, video) {
+    const local = this.state.casesLocais.find(c => c.id === id);
+    let ok;
+    if (local) {
+      const casesLocais = this.state.casesLocais.map(c => c.id === id ? { ...c, video } : c);
+      ok = this.salvarLocal('hangar.casesLocais', casesLocais);
+      this.setState({ casesLocais, videoForm: null });
+    } else {
+      const videos = { ...(this.state.videos || {}) };
+      if (video) videos[id] = video; else delete videos[id];
+      ok = this.salvarLocal('hangar.videos', videos);
+      this.setState({ videos, videoForm: null });
+    }
+    this.showToast(!ok ? 'O vídeo aparece agora, mas não coube na memória deste navegador: baixe o case para não perder.'
+      : video ? 'Vídeo salvo neste navegador. Baixe o case (.json) e envie ao CIEP para publicar para todos.' : 'Vídeo removido.');
+  }
   abrirSeletorFoto() { if (typeof document === 'undefined') return; const el = document.getElementById('hangar-foto-input'); if (el) el.click(); }
   removerFoto() { this.setState(st => ({ formCase: { ...st.formCase, fotoDados: '', fotoLink: '', fotoLegenda: '' } })); }
 
@@ -409,7 +452,7 @@ class Component extends DCLogic {
   }
   // Gera o arquivo do case para enviar ao CIEP. Guarda o último em window para o smoke conferir.
   baixarJson(c) {
-    const { local, capaLocal, ...limpo } = c;
+    const { local, capaLocal, videoLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const nome = 'case-' + limpo.id + '.json';
     if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json };
@@ -417,7 +460,7 @@ class Component extends DCLogic {
     this.showToast(this.baixarArquivo(nome, json, 'application/json') ? 'Arquivo ' + nome + ' gerado. Envie ao CIEP.' : 'Não consegui gerar o arquivo aqui. Use "Copiar JSON".');
   }
   copiarJson(c) {
-    const { local, capaLocal, ...limpo } = c;
+    const { local, capaLocal, videoLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const ok = () => this.showToast('JSON do case copiado. Cole numa mensagem para o CIEP.');
     try {
@@ -425,7 +468,7 @@ class Component extends DCLogic {
       else ok();
     } catch (e) { this.showToast('Não consegui copiar automaticamente.'); }
   }
-  openCase(id) { this.setState({ screen:'case', caseId:id }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+  openCase(id) { this.setState({ screen:'case', caseId:id, videoForm:null }); if(typeof window!=='undefined') window.scrollTo(0,0); }
   openNovoCase(prefill) {
     const pre = prefill && typeof prefill === 'object' && !prefill.target ? prefill : null;
     const f = this.state.formCase;
@@ -496,6 +539,10 @@ class Component extends DCLogic {
       escolherCapa: (e) => this.escolherCapa(c.id, e), removerCapa: (e) => this.removerCapa(c.id, e),
       capaLabel: fotoSrc ? 'Trocar capa' : 'Adicionar capa', capaLabelFicha: fotoSrc ? 'Trocar foto de capa' : 'Adicionar foto de capa',
       podeRemoverCapa: c.local ? !!fotoSrc : !!c.capaLocal, capaLocal: !!c.capaLocal,
+      semVideo: !video, videoLocal: !!c.videoLocal, alteracaoLocal: !!(c.capaLocal || c.videoLocal),
+      avisoLocal: c.capaLocal && c.videoLocal ? 'A capa e o vídeo novos só existem neste navegador.' : c.videoLocal ? 'O vídeo novo só existe neste navegador.' : 'A capa nova só existe neste navegador.',
+      podeRemoverVideo: c.local ? !!video : !!c.videoLocal, videoMeta: video ? [video.quem, video.duracao].filter(Boolean).join(' · ') : '',
+      abrirVideoForm: () => this.abrirVideoForm(c), removerVideo: () => this.aplicarVideo(c.id, null),
       remover: (e) => this.pedirRemoverCase(c.id, e) };
   }
   computeCases() {
@@ -1349,7 +1396,7 @@ class Component extends DCLogic {
       casesList, casesCount: casesList.length, semCases: casesTodos.length===0, semResultadoCases: casesTodos.length>0 && casesList.length===0,
       caseFilterGroups, caseActiveChips, hasCaseFilters: caseActiveChips.length>0, clearCaseFilters:()=>this.setState({ caseFilters:{ escopo:[], segmento:[], ano:[], ferramenta:[] } }),
       caseQuery: s.caseQuery, onCaseQuery:(e)=>this.setState({ caseQuery:e.target.value }),
-      caseSel, hasCaseSel: !!caseSel, casesRecentes, hasCasesRecentes: casesRecentes.length>0,
+      caseSel, hasCaseSel: !!caseSel, ...this.videoFormVals(s, caseSel), casesRecentes, hasCasesRecentes: casesRecentes.length>0,
       confirmRemoverAberto: !!confirmRemoverCase, confirmRemoverNome: confirmRemoverCase ? confirmRemoverCase.cliente : '',
       confirmRemover:()=>this.removerCase(s.confirmRemoverId), cancelarRemover:()=>this.cancelarRemoverCase(),
       // formulário de case
