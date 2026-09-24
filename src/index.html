@@ -185,7 +185,8 @@
       .hg-wrap{flex-wrap:wrap!important}
       .hg-header{flex-wrap:wrap;height:auto!important;padding:10px 16px!important;row-gap:6px}
       .hg-nav{order:3;width:100%;margin-left:0!important;padding-bottom:2px}
-      .hg-capa{height:220px!important}
+      .hg-capa{height:250px!important}
+      .hg-capa-legenda{right:16px!important;bottom:58px!important}
     }
     .hg-cols>*,.hg-g2>*,.hg-g3>*,.hg-g4>*{min-width:0}
     @keyframes ciepGrow{from{height:0;opacity:0}to{opacity:1}}
@@ -291,7 +292,7 @@
         <sc-for list="{{ casesRecentes }}" as="c" hint-placeholder-count="3">
           <article onclick="{{ c.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:11px;transition:transform .15s ease" style-hover="transform:translateY(-3px)">
             <div style="position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#EEF3F5;border:1px solid #E7EEF1;box-shadow:0 10px 26px -18px rgba(22,59,69,0.35)">
-              <sc-if value="{{ c.hasFoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ c.fotoSrc }}" alt="{{ c.cliente }}" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+              <sc-if value="{{ c.hasFoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ c.fotoSrc }}" alt="{{ c.cliente }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block"></sc-if>
               <sc-if value="{{ c.semFoto }}" hint-placeholder-val="{{ true }}"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:{{ c.placeholderBg }}"><span style="font-family:'Schibsted Grotesk';font-size:46px;font-weight:700;letter-spacing:-0.02em;color:{{ c.escopoCor }};opacity:0.7">{{ c.inicial }}</span></div></sc-if>
               <span style="position:absolute;top:10px;left:10px;max-width:calc(100% - 84px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }};box-shadow:0 1px 4px rgba(0,0,0,0.08)">{{ c.escopoNome }}</span>
               <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:10px;right:10px;font-size:11px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:4px 8px;border-radius:6px" title="Só neste navegador · envie ao CIEP">Só aqui</span></sc-if>
@@ -1367,7 +1368,7 @@
           <sc-for list="{{ casesList }}" as="c" hint-placeholder-count="6">
             <article onclick="{{ c.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:11px;transition:transform .15s ease" style-hover="transform:translateY(-3px)">
               <div style="position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#EEF3F5;border:1px solid #E7EEF1;box-shadow:0 10px 26px -18px rgba(22,59,69,0.35)">
-                <sc-if value="{{ c.hasFoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ c.fotoSrc }}" alt="{{ c.cliente }}" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+                <sc-if value="{{ c.hasFoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ c.fotoSrc }}" alt="{{ c.cliente }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block"></sc-if>
                 <sc-if value="{{ c.semFoto }}" hint-placeholder-val="{{ true }}"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:{{ c.placeholderBg }}"><span style="font-family:'Schibsted Grotesk';font-size:46px;font-weight:700;letter-spacing:-0.02em;color:{{ c.escopoCor }};opacity:0.7">{{ c.inicial }}</span></div></sc-if>
                 <span style="position:absolute;top:10px;left:10px;max-width:calc(100% - 84px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }};box-shadow:0 1px 4px rgba(0,0,0,0.08)">{{ c.escopoNome }}</span>
                 <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:10px;right:10px;font-size:11px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:4px 8px;border-radius:6px" title="Só neste navegador · envie ao CIEP">Só aqui</span></sc-if>
@@ -1398,15 +1399,31 @@
     <div class="hg-cols" style="display:grid;grid-template-columns:1fr 312px;gap:30px;align-items:start">
       <div>
         <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;margin-bottom:18px;overflow:hidden">
+          <!-- Capa: a foto aparece inteira (contain) sobre um fundo desfocado dela mesma, em qualquer proporção -->
           <sc-if value="{{ caseSel.hasFoto }}" hint-placeholder-val="{{ false }}">
-            <div style="margin:-28px -28px 22px;background:#EEF3F5"><img class="hg-capa" sc-camel-src="{{ caseSel.fotoSrc }}" alt="{{ caseSel.cliente }}" style="width:100%;height:360px;object-fit:cover;display:block"></div>
-            <sc-if value="{{ caseSel.hasFotoLegenda }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;color:#8AA0A7;margin:-12px 0 16px">{{ caseSel.fotoLegenda }}</div></sc-if>
+            <div class="hg-capa" style="position:relative;margin:-28px -28px 24px;height:380px;overflow:hidden;background:#163B45">
+              <img sc-camel-src="{{ caseSel.fotoSrc }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(28px) brightness(0.75) saturate(1.15)">
+              <img sc-camel-src="{{ caseSel.fotoSrc }}" alt="{{ caseSel.cliente }}" style="position:relative;display:block;width:100%;height:100%;object-fit:contain">
+              <div style="position:absolute;left:0;right:0;bottom:0;height:45%;background:linear-gradient(to top,rgba(10,24,28,0.62),rgba(10,24,28,0))"></div>
+              <sc-if value="{{ caseSel.hasFotoLegenda }}" hint-placeholder-val="{{ false }}"><div class="hg-capa-legenda" style="position:absolute;left:20px;right:190px;bottom:17px;color:#fff;font-size:13px;line-height:1.4;text-shadow:0 1px 4px rgba(0,0,0,0.4)">{{ caseSel.fotoLegenda }}</div></sc-if>
+              <div style="position:absolute;right:14px;bottom:14px;display:flex;gap:6px">
+                <button onclick="{{ caseSel.escolherCapa }}" style="display:flex;align-items:center;gap:6px;border:none;background:rgba(255,255,255,0.92);color:#163B45;font-size:12.5px;font-weight:600;padding:7px 11px;border-radius:9px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,0.2)" style-hover="background:#fff;color:#1E7C92"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 8.5A1.5 1.5 0 015.5 7h2.3l1.4-2h5.6l1.4 2h2.3A1.5 1.5 0 0120 8.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 17.5v-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"></circle></svg>Trocar foto</button>
+                <sc-if value="{{ caseSel.podeRemoverCapa }}" hint-placeholder-val="{{ false }}"><button onclick="{{ caseSel.removerCapa }}" style="border:none;background:rgba(255,255,255,0.92);color:#B23B47;font-size:12.5px;font-weight:600;padding:7px 11px;border-radius:9px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,0.2)" style-hover="background:#fff">Remover capa</button></sc-if>
+              </div>
+            </div>
           </sc-if>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px">
-            <button onclick="{{ caseSel.escolherCapa }}" style="display:flex;align-items:center;gap:7px;border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:7px 12px;border-radius:9px;cursor:pointer" style-hover="border-color:#9FD7E2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 8.5A1.5 1.5 0 015.5 7h2.3l1.4-2h5.6l1.4 2h2.3A1.5 1.5 0 0120 8.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 17.5v-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"></circle></svg>{{ caseSel.capaLabelFicha }}</button>
-            <sc-if value="{{ caseSel.podeRemoverCapa }}" hint-placeholder-val="{{ false }}"><button onclick="{{ caseSel.removerCapa }}" style="border:none;background:transparent;color:#9DAEB4;font-size:13px;font-weight:600;padding:7px 6px;cursor:pointer" style-hover="color:#B23B47">Remover capa</button></sc-if>
-            <sc-if value="{{ caseSel.capaLocal }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:5px 10px;border-radius:7px">Capa só neste navegador</span><button onclick="{{ caseSel.baixar }}" style="border:none;background:transparent;color:#1E7C92;font-size:13px;font-weight:600;padding:7px 4px;cursor:pointer">Baixar case (.json) para enviar ao CIEP</button></sc-if>
-          </div>
+          <sc-if value="{{ caseSel.semFoto }}" hint-placeholder-val="{{ true }}">
+            <div style="position:relative;margin:-28px -28px 24px;height:170px;overflow:hidden;background:{{ caseSel.placeholderBg }};display:flex;align-items:center;justify-content:center">
+              <span style="font-family:'Schibsted Grotesk';font-size:56px;font-weight:800;color:rgba(22,59,69,0.18);letter-spacing:-0.02em">{{ caseSel.inicial }}</span>
+              <button onclick="{{ caseSel.escolherCapa }}" style="position:absolute;right:14px;bottom:14px;display:flex;align-items:center;gap:7px;border:none;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:8px 13px;border-radius:10px;cursor:pointer;box-shadow:0 2px 10px rgba(22,59,69,0.18)" style-hover="background:#F4FAFC"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 8.5A1.5 1.5 0 015.5 7h2.3l1.4-2h5.6l1.4 2h2.3A1.5 1.5 0 0120 8.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 17.5v-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"></circle></svg>Adicionar foto de capa</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ caseSel.capaLocal }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#FFFBF2;border:1px solid #F1DFB0;border-radius:11px;padding:9px 12px;margin:-8px 0 18px">
+              <span style="font-size:12.5px;color:#7A6330;flex:1;min-width:200px">A capa nova só existe neste navegador. Baixe o case e envie ao CIEP para publicar.</span>
+              <button onclick="{{ caseSel.baixar }}" style="border:none;background:#3DAFC7;color:#fff;font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:8px;cursor:pointer">Baixar case (.json)</button>
+            </div>
+          </sc-if>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
             <button onclick="{{ caseSel.abrirEscopo }}" style="border:none;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:7px;background:{{ caseSel.escopoBg }};color:{{ caseSel.escopoCor }};cursor:pointer">{{ caseSel.escopoNome }}</button>
             <span style="font-size:12.5px;color:#5E747B;background:#EFF4F5;padding:5px 11px;border-radius:7px">{{ caseSel.segmento }}</span>
