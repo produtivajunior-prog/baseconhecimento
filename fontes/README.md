@@ -47,10 +47,43 @@ daquela ferramenta precisa ser refeito.
 
 ### Arquivos-fonte dos escopos
 
+**Base desde 2026-09-24: `[PPGP 2026] Revisão dos Escopos`** (`fontes/ppgp-2026/revisao-dos-escopos.pdf`).
+São 16 slides, um por escopo, cada um com seis quadros: O que estudar · Escopo (as etapas) ·
+Cases/Cronogramas · Entregáveis · O que saber · Pontos de risco. O Hangar mostra exatamente esses
+os escopos que a Produtiva executa. Quem não está no documento saiu do acervo:
+
+- **Removidos:** Gestão à Vista, PCP e Estruturação de Modelo de Negócio.
+- **Fundidos:** Gamificação, Mapeamento de Cultura e DCO + Prosel viraram *Cultura, Gamificação e
+  Prosel*, como no slide 5. Os ids antigos ficam em `antigosIds`, e links antigos continuam abrindo o escopo.
+- **Novo:** Automação (slide 15).
+- **Descontinuado:** EVE (slide 6). A Produtiva não executa mais esse escopo, então ele fica em
+  `removidos.descontinuados` do mapa e o `rascunho.mjs --escopos` ignora o slide.
+
+O fluxo tem três passos:
+
+1. `python3 tools/ppgp-extrair.py` gera `fontes/ppgp-2026/revisao-dos-escopos.json`. É uma extração
+   **verbatim**, sem correção, com o sha256 do PDF. Exige `pip install pdfplumber`.
+2. `fontes/escopos-mapa.json` é a curadoria. Para cada escopo ele guarda:
+   - o texto de exibição, com erros de digitação e caixa alta corrigidos (o original fica em `ppgp`);
+   - nome, grupo e descrição;
+   - as ferramentas da Biblioteca ligadas a cada etapa, entregável e item de estudo;
+   - o Cronograma Base no Drive, quando existe.
+3. `node tools/rascunho.mjs --escopos` compara o mapa com o PDF, coluna por coluna e na ordem do slide,
+   e **recusa** qualquer item a mais, a menos ou alterado sem registro.
+
+Pendências abertas com o CIEP (ficam em `pendencias` de cada escopo):
+
+- O slide de **Custeio e Precificação** repete as colunas Escopo e Entregáveis de Gerenciamento Financeiro.
+- O documento marca alguns itens com `*`/`**` sem legenda. O Hangar mostra esses itens com ✱.
+- **Prosel** aparece no título do slide 5, mas não tem etapas próprias.
+- "Planejamento Financeiro" aparece na coluna Cases do slide 9. O Hangar trata esse item como cronograma, não como cliente.
+
+Arquivos antigos, mantidos só como registro e para os links de cronograma:
+
 | Arquivo | Id | Dono |
 |---|---|---|
-| Resumão dos escopos (macroetapas por escopo) | `1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0` | thiagomelo@ |
-| Checklist Escopos (ativos × despriorizados) | `1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE` | thiagomelo@ |
+| Resumão dos escopos (base anterior, substituída pelo PPGP 2026) | `1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0` | thiagomelo@ |
+| Checklist Escopos (ativos × despriorizados — não se aplica mais) | `1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE` | thiagomelo@ |
 | Cronograma Base — Plano de Marketing | `10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ` | thiagomelo@ |
 | Cronograma Base — Mapeamento e modelagem | `13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE` | thiagomelo@ |
 | Cronograma Base — Gerenciamento financeiro | `1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo` | thiagomelo@ |
@@ -126,7 +159,7 @@ Os títulos `##` acima são os que `tools/rascunho.mjs` reconhece. Texto fora de
 ```bash
 node tools/rascunho.mjs --inventario          # atualiza fontes/inventario.json (hash, uso, dono)
 node tools/rascunho.mjs pmmc                  # fontes/drive + fontes/hangar → src/data/rascunhos/pmmc.json
-node tools/rascunho.mjs --escopos             # Resumão + Checklist + cronogramas → rascunhos/escopo-*.json
+node tools/rascunho.mjs --escopos             # PPGP 2026 + escopos-mapa → rascunhos/escopo-*.json (confere contra o PDF)
 ```
 
 O rascunho tem os mesmos campos de `ferramentas.json` mais:
@@ -175,7 +208,8 @@ node tools/pack.mjs && node tools/verify.mjs
 ```
 
 `promover` faz o merge por `id` em `ferramentas.json` ou `escopos.json`, ordena e apaga o
-rascunho. `pack` nunca lê `src/data/rascunhos/`, então o bundle só contém conteúdo aprovado.
+rascunho. Para escopos, `fontes/escopos-mapa.json` é a lista oficial: quem não está nele sai de
+`escopos.json`, e a ordem segue a do PPGP 2026. `pack` nunca lê `src/data/rascunhos/`, então o bundle só contém conteúdo aprovado.
 Para um bundle de pré-visualização com os rascunhos, use `node tools/pack.mjs --com-rascunhos`
 (os itens entram com status "Em revisão" e o arquivo vai para `dist/Hangar.preview.html`).
 

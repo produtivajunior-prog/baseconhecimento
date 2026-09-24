@@ -1,29 +1,50 @@
 {
   "passos": [
     {
+      "id": "produtiva",
+      "titulo": "Entenda como a Produtiva funciona",
+      "texto": "Antes do primeiro projeto, conheça as áreas da empresa, quem procurar para cada assunto e como um projeto nasce: do SDR que marca a reunião de diagnóstico até a execução e o CSAT.",
+      "acao": {
+        "tela": "produtiva",
+        "label": "Como funciona a Produtiva"
+      }
+    },
+    {
       "id": "escopos",
       "titulo": "Entenda como um projeto é organizado",
-      "texto": "Todo projeto da Produtiva tem 1 gerente e 2 consultores e segue um escopo: uma sequência de etapas, cada uma com ferramentas e entregáveis. Abra um escopo ativo e leia a linha do tempo antes de qualquer outra coisa.",
-      "acao": { "tela": "escopos", "label": "Ver os escopos" }
+      "texto": "Todo projeto da Produtiva tem 1 gerente e 2 consultores e segue um dos escopos da Produtiva. Abra o escopo do seu projeto e leia na ordem: o que estudar, o que saber do cliente, os pontos de risco, as etapas com as ferramentas, os entregáveis e os projetos que a Produtiva já fez.",
+      "acao": {
+        "tela": "escopos",
+        "label": "Ver os escopos"
+      }
     },
     {
       "id": "ferramentas",
       "titulo": "Conheça as ferramentas que aparecem em quase todo projeto",
       "texto": "A lista abaixo é calculada a partir dos escopos: são as ferramentas mapeadas em mais etapas. Abra cada uma e leia 'Quando usar' e o passo a passo.",
-      "acao": { "tela": "biblioteca", "label": "Abrir a Biblioteca" },
+      "acao": {
+        "tela": "biblioteca",
+        "label": "Abrir a Biblioteca"
+      },
       "listaFerramentas": true
     },
     {
       "id": "case",
       "titulo": "Leia um case parecido com o seu projeto",
       "texto": "Procure pelo segmento do cliente ou pelo escopo. Veja os resultados, os aprendizados e o vídeo da equipe. Se ficar dúvida, use 'Pergunte a quem fez' na ficha do case.",
-      "acao": { "tela": "cases", "label": "Ver os cases" }
+      "acao": {
+        "tela": "cases",
+        "label": "Ver os cases"
+      }
     },
     {
       "id": "reuniao",
       "titulo": "Prepare a reunião com o cliente",
-      "texto": "Na ficha de qualquer ferramenta, 'Material para a reunião' gera uma versão para imprimir: perguntas-chave com espaço para anotar, passo a passo e, quando existe, o canvas em branco.",
-      "acao": { "tela": "biblioteca", "label": "Escolher uma ferramenta" }
+      "texto": "Na página do escopo, 'Roteiro do Diagnóstico Inicial' gera uma folha para imprimir com o que saber do cliente (com espaço para anotar), os pontos de risco para alinhar e os entregáveis. Para uma ferramenta específica, use 'Material para a reunião' na ficha dela.",
+      "acao": {
+        "tela": "escopos",
+        "label": "Escolher o escopo"
+      }
     },
     {
       "id": "siglas",
@@ -35,28 +56,46 @@
       "id": "registrar",
       "titulo": "Ao fechar o projeto, registre o case",
       "texto": "Leva uns 15 minutos: história, resultados, ferramentas usadas, documentos, foto e o vídeo da equipe. É o que vai ajudar o próximo consultor a fazer um projeto parecido.",
-      "acao": { "tela": "novo-case", "label": "Cadastrar um case" }
+      "acao": {
+        "tela": "novo-case",
+        "label": "Cadastrar um case"
+      }
     }
   ],
   "glossario": [
-    { "sigla": "Escopo", "nome": null, "definicao": "Linha de serviço da Produtiva (ex.: Mapeamento e Modelagem de Processos). Cada escopo é uma sequência de etapas com ferramentas e entregáveis. Os 'ativos' são os vendidos hoje; os 'despriorizados' seguem documentados.", "origem": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE", "pendente": false },
-    { "sigla": "Etapa", "nome": null, "definicao": "Bloco de trabalho dentro de um escopo, na ordem em que o projeto acontece (Iniciação, Mapeamento, Finalização…). Cada etapa tem duração de referência no Cronograma Base.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false },
-    { "sigla": "Cronograma Base", "nome": null, "definicao": "Planilha-modelo de cada escopo com as etapas, a semana em que acontecem, os marcos e as ferramentas usadas. É a origem da linha do tempo mostrada na tela Escopos.", "origem": "drive:10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ", "pendente": false },
-    { "sigla": "Resumão dos escopos", "nome": null, "definicao": "Documento que lista as macroetapas de todos os escopos, ativos e despriorizados. Base do cadastro de escopos do Hangar.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false },
-    { "sigla": "RAC", "nome": null, "definicao": "Marco da etapa de Iniciação nos Cronogramas Base, ligado à coleta de informações com o cliente (aparece como 'RAC — Coleta de informações' na primeira semana). A expansão da sigla ainda precisa ser confirmada com o CIEP.", "origem": "drive:13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE", "pendente": true },
-    { "sigla": "RAF", "nome": null, "definicao": "Marco da etapa de Finalização nos Cronogramas Base, na última semana do projeto. A expansão da sigla ainda precisa ser confirmada com o CIEP.", "origem": "drive:13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE", "pendente": true },
-    { "sigla": "CIEP", "nome": null, "definicao": "Área da Produtiva responsável pelo acervo de ferramentas e metodologias. Aprova o conteúdo do Hangar e publica os cases enviados pelos membros.", "origem": "manual:produtivajunior@gmail.com", "pendente": true },
-    { "sigla": "Gerente e consultores", "nome": null, "definicao": "A equipe padrão de um projeto: 1 gerente e 2 consultores. É assim que o case registra a equipe.", "origem": "manual:produtivajunior@gmail.com", "pendente": false },
-    { "sigla": "Case", "nome": null, "definicao": "Registro de um projeto finalizado: cliente, escopo, equipe, história, resultados, documentos, foto e vídeo. Fica no Banco de Cases para servir de referência.", "origem": "manual:produtivajunior@gmail.com", "pendente": false },
-    { "sigla": "Map e Mod", "nome": "Mapeamento e Modelagem de Processos", "definicao": "Escopo de Produção: entende o macroprocesso, mapeia os processos AS IS, aponta causas raízes e modela os processos TO BE, deixando rotina, DCO e manual do setor implantados.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false },
-    { "sigla": "AS IS / TO BE", "nome": "Como é / Como deve ser", "definicao": "Os dois retratos de um processo no Map e Mod: como ele funciona hoje (AS IS) e como deve funcionar depois da modelagem (TO BE).", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false },
-    { "sigla": "DCO", "nome": null, "definicao": "Entregável da etapa final do Map e Mod, implantado junto com a rotina e o manual do setor. A expansão da sigla ainda precisa ser confirmada com o CIEP.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": true },
-    { "sigla": "PCP", "nome": "Planejamento e Controle da Produção", "definicao": "Escopo de Produção: entende e classifica o sistema de produção, mapeia e analisa tempos e entrega ferramenta de controle, programação e controle da produção.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false },
-    { "sigla": "EVE", "nome": null, "definicao": "Escopo listado no Resumão dos escopos. A expansão da sigla e a descrição ainda precisam ser confirmadas com o CIEP.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": true },
-    { "sigla": "PMMC", "nome": "Process Map Model Canvas", "definicao": "Canvas de 10 blocos para mapear um processo numa página só: fornecedores, insumos, atividades, saídas, clientes, indicadores e controles. Metodologia própria do CIEP.", "origem": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr", "pendente": false },
-    { "sigla": "BMC", "nome": "Business Model Canvas", "definicao": "Canvas de 9 blocos que descreve o modelo de negócio da empresa. Costuma abrir a etapa de Iniciação de vários escopos.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false },
-    { "sigla": "SWOT", "nome": "Forças, Fraquezas, Oportunidades e Ameaças", "definicao": "Matriz que cruza o ambiente interno (forças e fraquezas) com o externo (oportunidades e ameaças) para orientar a estratégia.", "origem": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8", "pendente": false },
-    { "sigla": "Modelo-padrão", "nome": null, "definicao": "Arquivo do Drive com o formato oficial de uma ferramenta (planilha, canvas ou apresentação). Fica em 'Templates e anexos' na ficha e é o que a IA segue ao preencher.", "origem": "manual:produtivajunior@gmail.com", "pendente": false },
-    { "sigla": "Hangar Academy", "nome": null, "definicao": "Site (Google Sites) que reunia o conteúdo do CIEP antes do Hangar. As páginas ainda estão sendo migradas para cá.", "origem": "manual:produtivajunior@gmail.com", "pendente": false }
+    {"sigla": "Escopo", "nome": null, "definicao": "Linha de serviço da Produtiva (ex.: Processos — Mapeamento e Modelagem). São 16, conforme a Revisão dos Escopos do PPGP 2026. Cada escopo tem o que estudar, o que saber do cliente, pontos de risco, etapas, entregáveis e cases já feitos.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf", "pendente": false},
+    {"sigla": "Etapa", "nome": null, "definicao": "Bloco de trabalho dentro de um escopo, na ordem em que o projeto acontece (Entendimento de negócio, Mapeamento, Modelagem…). As etapas do Hangar seguem a coluna 'Escopo' da Revisão dos Escopos (PPGP 2026).", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf", "pendente": false},
+    {"sigla": "Cronograma Base", "nome": null, "definicao": "Planilha-modelo de um escopo com as etapas, a semana em que acontecem e os marcos. Quando existe, a página do escopo tem o botão 'Cronograma base no Drive'.", "origem": "drive:10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ", "pendente": false},
+    {"sigla": "Resumão dos escopos", "nome": null, "definicao": "Documento antigo que listava as macroetapas de todos os escopos. Foi substituído pela Revisão dos Escopos do PPGP 2026 como base do Hangar.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false},
+    {"sigla": "RAC", "nome": "Reunião de Alinhamento com o Cliente", "definicao": "Primeira reunião do projeto: o closer passa a condução para o gerente, a equipe de consultores é apresentada ao cliente e é mostrado como o projeto vai andar.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "RAF", "nome": "Reunião de Alinhamento Final", "definicao": "Reunião de encerramento com o gestor: apresenta a trajetória do projeto e as entregas feitas, e colhe a percepção do gestor sobre o projeto.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "CIEP", "nome": null, "definicao": "Subnúcleo da área de Projetos responsável pela criação de novos escopos e novos produtos da Produtiva.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Case", "nome": null, "definicao": "Registro de um projeto finalizado: cliente, escopo, equipe, história, resultados, documentos, foto e vídeo. Fica no Banco de Cases para servir de referência.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Map e Mod", "nome": "Mapeamento e Modelagem de Processos", "definicao": "Escopo de Produção: entende o macroprocesso, mapeia os processos AS IS, aponta causas raízes e modela os processos TO BE, deixando rotina, DCO e manual do setor implantados.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false},
+    {"sigla": "AS IS / TO BE", "nome": "Como é / Como deve ser", "definicao": "Os dois retratos de um processo no Map e Mod: como ele funciona hoje (AS IS) e como deve funcionar depois da modelagem (TO BE).", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false},
+    {"sigla": "DCO", "nome": "Descritivos de Cargos e Organograma", "definicao": "Ferramenta de gestão que padroniza as atividades dos colaboradores: define as atribuições de cada cargo, os pré-requisitos para ocupá-lo e as competências técnicas e comportamentais exigidas.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "PMMC", "nome": "Process Map Model Canvas", "definicao": "Canvas de 10 blocos para mapear um processo numa página só: fornecedores, insumos, atividades, saídas, clientes, indicadores e controles. Metodologia própria do CIEP.", "origem": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr", "pendente": false},
+    {"sigla": "BMC", "nome": "Business Model Canvas", "definicao": "Canvas de 9 blocos que descreve o modelo de negócio da empresa. Costuma abrir a etapa de Iniciação de vários escopos.", "origem": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0", "pendente": false},
+    {"sigla": "SWOT", "nome": "Forças, Fraquezas, Oportunidades e Ameaças", "definicao": "Matriz que cruza o ambiente interno (forças e fraquezas) com o externo (oportunidades e ameaças) para orientar a estratégia.", "origem": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8", "pendente": false},
+    {"sigla": "Hangar Academy", "nome": null, "definicao": "Site (Google Sites) que reunia o conteúdo do CIEP antes do Hangar. As páginas ainda estão sendo migradas para cá.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "PPGP 2026 — Revisão dos Escopos", "nome": null, "definicao": "Documento que descreve os escopos da Produtiva, um slide por escopo: o que estudar, escopo (etapas), cases/cronogramas, entregáveis, o que saber e pontos de risco. É a base da tela Escopos. A expansão da sigla PPGP ainda precisa ser confirmada.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf", "pendente": true},
+    {"sigla": "MVV", "nome": "Missão, Visão e Valores", "definicao": "Diretrizes da empresa revisadas ou criadas no Planejamento Estratégico e coletadas no escopo de Cultura.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p4", "pendente": false},
+    {"sigla": "TAM SAM SOM", "nome": "Mercado Endereçável Total · Endereçável Aproveitável · Alcançável Aproveitável", "definicao": "Dimensiona o mercado em três níveis, do potencial total do setor (TAM) ao mercado disponível na região de atuação (SAM) e à parcela que a empresa consegue de fato capturar (SOM).", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "OKR · BSC · MWB", "nome": "Objectives and Key Results · Balanced Scorecard · Must Win Battles", "definicao": "Metodologias de acompanhamento estratégico que o cliente escolhe no Planejamento Estratégico.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Cliente oculto", "nome": null, "definicao": "Visita ou contato feito como se fosse um cliente comum para avaliar o atendimento. Pode ser externo (da concorrência) ou interno (da própria empresa). Aparece em Estruturação Comercial, Planejamento de Marketing e Idealização.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p2", "pendente": false},
+    {"sigla": "POP", "nome": "Procedimento Operacional Padrão", "definicao": "Documento passo a passo de como uma atividade deve ser feita. Entregável de Processos e Gestão de Estoque.", "origem": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p10", "pendente": false},
+    {"sigla": "SDR", "nome": null, "definicao": "Pessoa do Marketing (comercial) que prospecta empresas: liga, qualifica o lead e marca a reunião de diagnóstico.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Closer", "nome": null, "definicao": "Pessoa do Marketing (comercial) que conduz a reunião de diagnóstico, entende a dor do cliente, faz o repasse ao gerente e apresenta a proposta ao gestor.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Lead", "nome": null, "definicao": "Empresa que pode virar cliente. O SDR qualifica o lead antes de marcar a reunião de diagnóstico.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "CS", "nome": "Customer Success", "definicao": "Subnúcleo da área de Projetos. Cada projeto tem uma pessoa de CS, que aplica o CSAT e acompanha a percepção do gestor e dos consultores.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "CSAT", "nome": "Customer Satisfaction", "definicao": "Formulário de satisfação aplicado pelo CS em cada projeto, com a percepção do gestor e dos consultores alocados.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "CIT", "nome": null, "definicao": "Subnúcleo da área de Projetos voltado à tecnologia: desenvolvimento tecnológico e sistemas internos da Produtiva, e apoio a outros consultores nessa parte.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Endomarketing", "nome": null, "definicao": "Ações da Gestão de Pessoas para integrar toda a empresa.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Feedback 360", "nome": null, "definicao": "Avaliação conduzida pela Gestão de Pessoas que junta a visão de várias pessoas sobre o desenvolvimento de cada membro. Complementa o feedback one a one.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "PIPJ", "nome": "Programa de Incentivo Produtiva Júnior", "definicao": "Valor mensal de cada membro para investir no próprio desenvolvimento (cursos, eventos, materiais e equipamentos). Varia com o cargo, reconhecimentos, avaliações e pontos no plano de punição. Veja 'Como funciona › Auxílios e reembolsos'.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Caju", "nome": null, "definicao": "Cartão corporativo da Produtiva. É onde cai o saldo semanal do auxílio alimentação.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Pipefy", "nome": null, "definicao": "Ferramenta onde fica o formulário 'Processos de Pagamento', usado para pedir reembolsos, como o de gasolina.", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "MEJ", "nome": "Movimento Empresa Júnior", "definicao": "Rede das empresas juniores. Eventos do MEJ contam para o auxílio alimentação e para o uso do PIPJ (não vale para festas e integração).", "origem": "manual:produtivajunior@gmail.com", "pendente": false},
+    {"sigla": "Rotina-PJ", "nome": null, "definicao": "Canal do Slack onde o membro justifica o uso do auxílio alimentação quando não há duas reuniões em turnos diferentes.", "origem": "manual:produtivajunior@gmail.com", "pendente": false}
   ]
 }

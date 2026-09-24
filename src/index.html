@@ -162,11 +162,12 @@
     .hg-nav::-webkit-scrollbar{display:none}
     .hg-nav button{white-space:nowrap}
     .hg-clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal!important}
+    .hg-clamp3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
     .hg-only-m{display:none!important}
     @media (max-width:960px){
       .hg-cols{grid-template-columns:1fr!important}
       .hg-aside{position:static!important;max-height:none!important}
-      .hg-g3{grid-template-columns:1fr 1fr!important}
+      .hg-g3,.hg-g4{grid-template-columns:1fr 1fr!important}
     }
     @media (max-width:680px){
       .hg-main{padding-left:16px!important;padding-right:16px!important}
@@ -174,7 +175,7 @@
       .hg-hero{padding:44px 16px 40px!important}
       .hg-hero h1{font-size:34px!important}
       .hg-hero p{font-size:16px!important}
-      .hg-g2,.hg-g3,.hg-form{grid-template-columns:1fr!important}
+      .hg-g2,.hg-g3,.hg-g4,.hg-form{grid-template-columns:1fr!important}
       .hg-hide-m{display:none!important}
       .hg-only-m{display:flex!important}
       .hg-filtros{display:none!important}
@@ -184,19 +185,21 @@
       .hg-wrap{flex-wrap:wrap!important}
       .hg-header{flex-wrap:wrap;height:auto!important;padding:10px 16px!important;row-gap:6px}
       .hg-nav{order:3;width:100%;margin-left:0!important;padding-bottom:2px}
-      .hg-capa{height:220px!important}
+      .hg-capa{height:250px!important}
+      .hg-capa-legenda{right:16px!important;bottom:58px!important}
     }
-    .hg-cols>*,.hg-g2>*,.hg-g3>*{min-width:0}
+    .hg-cols>*,.hg-g2>*,.hg-g3>*,.hg-g4>*{min-width:0}
     @keyframes ciepGrow{from{height:0;opacity:0}to{opacity:1}}
     @keyframes ciepSpin{to{transform:rotate(360deg)}}
   </style>
 </helmet>
 
 <div style="font-family:'Figtree',sans-serif;color:#172A30;background:#F6F9FA;min-height:100vh;-webkit-font-smoothing:antialiased">
+  <input id="hangar-capa-input" type="file" accept="image/*" onchange="{{ onCapaArquivo }}" style="display:none" aria-hidden="true">
 
   <!-- ============ TOP NAV ============ -->
   <header style="position:sticky;top:0;z-index:30;background:rgba(255,255,255,0.88);backdrop-filter:blur(10px);border-bottom:1px solid #E7EEF1">
-    <div class="hg-header" style="max-width:1200px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;gap:28px">
+    <div class="hg-header" style="max-width:1200px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;gap:18px">
       <div onclick="{{ goHome }}" style="display:flex;align-items:center;gap:11px;cursor:pointer;flex:none">
         <img src="3ef4b086-390f-48b4-b543-ba27789b2a30" alt="Produtiva Júnior" style="height:30px;width:auto;display:block">
         <div style="display:flex;flex-direction:column;line-height:1.05">
@@ -204,9 +207,9 @@
           <span style="font-size:11px;color:#8AA0A7;font-weight:500;letter-spacing:0.04em">PRODUTIVA JÚNIOR</span>
         </div>
       </div>
-      <nav class="hg-nav" style="display:flex;align-items:center;gap:4px;margin-left:6px;min-width:0">
+      <nav class="hg-nav" style="display:flex;align-items:center;gap:2px;margin-left:0;min-width:0">
         <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
-          <button onclick="{{ n.go }}" style="border:none;background:{{ n.bg }};color:{{ n.color }};font-size:14.5px;font-weight:{{ n.weight }};padding:8px 14px;border-radius:9px;cursor:pointer">{{ n.label }}</button>
+          <button onclick="{{ n.go }}" style="border:none;background:{{ n.bg }};color:{{ n.color }};font-size:14px;font-weight:{{ n.weight }};padding:8px 11px;border-radius:9px;cursor:pointer">{{ n.label }}</button>
         </sc-for>
       </nav>
       <div style="flex:1"></div>
@@ -273,7 +276,7 @@
       </div>
       </sc-if>
       <sc-if value="{{ semEscopos }}" hint-placeholder-val="{{ false }}">
-        <div style="background:#fff;border:1px dashed #C9DBE0;border-radius:16px;padding:26px;text-align:center;color:#8AA0A7;font-size:14px">Os escopos ainda não foram cadastrados. Veja <b>fontes/README.md</b> para gerar o rascunho a partir do Resumão dos escopos.</div>
+        <div style="background:#fff;border:1px dashed #C9DBE0;border-radius:16px;padding:26px;text-align:center;color:#8AA0A7;font-size:14px">Os escopos ainda não foram cadastrados. Veja <b>fontes/README.md</b> para gerar o rascunho a partir do PPGP 2026.</div>
       </sc-if>
 
       <!-- Cases recentes -->
@@ -289,7 +292,7 @@
         <sc-for list="{{ casesRecentes }}" as="c" hint-placeholder-count="3">
           <article onclick="{{ c.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:11px;transition:transform .15s ease" style-hover="transform:translateY(-3px)">
             <div style="position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#EEF3F5;border:1px solid #E7EEF1;box-shadow:0 10px 26px -18px rgba(22,59,69,0.35)">
-              <sc-if value="{{ c.hasFoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ c.fotoSrc }}" alt="{{ c.cliente }}" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+              <sc-if value="{{ c.hasFoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ c.fotoSrc }}" alt="{{ c.cliente }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block"></sc-if>
               <sc-if value="{{ c.semFoto }}" hint-placeholder-val="{{ true }}"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:{{ c.placeholderBg }}"><span style="font-family:'Schibsted Grotesk';font-size:46px;font-weight:700;letter-spacing:-0.02em;color:{{ c.escopoCor }};opacity:0.7">{{ c.inicial }}</span></div></sc-if>
               <span style="position:absolute;top:10px;left:10px;max-width:calc(100% - 84px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }};box-shadow:0 1px 4px rgba(0,0,0,0.08)">{{ c.escopoNome }}</span>
               <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:10px;right:10px;font-size:11px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:4px 8px;border-radius:6px" title="Só neste navegador · envie ao CIEP">Só aqui</span></sc-if>
@@ -313,33 +316,15 @@
         </div>
       </sc-if>
 
-      <!-- Novidades + Recomendados -->
-      <div class="hg-cols" style="display:grid;grid-template-columns:1.55fr 1fr;gap:26px;margin-top:54px">
-        <div style="min-width:0">
-          <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin-bottom:18px">Novidades</h2>
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <sc-for list="{{ novidades }}" as="item" hint-placeholder-count="3">
-              <article onclick="{{ item.open }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:14px;padding:16px 18px;cursor:pointer;display:flex;align-items:center;gap:16px" style-hover="border-color:#C6E4EC">
-                <div style="flex:none;width:46px;height:46px;border-radius:11px;background:{{ item.tipoBg }};display:flex;align-items:center;justify-content:center;color:{{ item.tipoColor }};font-family:'Schibsted Grotesk';font-weight:700;font-size:17px">{{ item.initial }}</div>
-                <div style="flex:1;min-width:0">
-                  <div style="display:flex;align-items:center;gap:8px">
-                    <h3 style="font-size:15.5px;font-weight:600;color:#163B45">{{ item.nome }}</h3>
-                    <span style="font-size:11px;font-weight:600;color:#2E9DB5;background:#EAF6F9;padding:2px 8px;border-radius:6px">Novo</span>
-                  </div>
-                  <p class="hg-clamp2" style="font-size:13.5px;color:#7C9097;margin:3px 0 0;line-height:1.45">{{ item.descricao }}</p>
-                </div>
-                <span class="hg-hide-m" style="font-size:12.5px;color:#9DAEB4;flex:none">{{ item.atualizadoFmt }}</span>
-              </article>
-            </sc-for>
-          </div>
-        </div>
+      <!-- Recomendados -->
+      <div style="margin-top:54px">
         <div>
           <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin-bottom:18px">Recomendados para projetos</h2>
           <div style="background:linear-gradient(155deg,#1B4651 0%,#28697A 100%);border-radius:18px;padding:22px;color:#fff">
             <sc-if value="{{ hasRecomendados }}" hint-placeholder-val="{{ true }}"><p style="font-size:14px;color:#BFE2EA;margin:0 0 16px;line-height:1.5">Ferramentas de uso frequente nos projetos, prontas para aplicar.</p></sc-if>
             <sc-if value="{{ semRecomendados }}" hint-placeholder-val="{{ false }}">
               <p style="font-size:14px;color:#BFE2EA;margin:0 0 16px;line-height:1.5">Ainda sem ferramentas marcadas como uso frequente. Enquanto isso, atalhos:</p>
-              <div style="display:flex;flex-direction:column;gap:10px">
+              <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
                 <sc-for list="{{ atalhos }}" as="item" hint-placeholder-count="3">
                   <button onclick="{{ item.go }}" style="text-align:left;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.06);border-radius:11px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:11px" style-hover="background:rgba(255,255,255,0.12)">
                     <span style="width:8px;height:8px;border-radius:50%;background:#7FD3E3;flex:none"></span>
@@ -349,7 +334,7 @@
                 </sc-for>
               </div>
             </sc-if>
-            <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
               <sc-for list="{{ recomendados }}" as="item" hint-placeholder-count="3">
                 <button onclick="{{ item.open }}" style="text-align:left;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.06);border-radius:11px;padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:11px" style-hover="background:rgba(255,255,255,0.12)">
                   <span style="width:8px;height:8px;border-radius:50%;background:#7FD3E3;flex:none"></span>
@@ -562,16 +547,16 @@
           <sc-if value="{{ sel.hasUso }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;flex-wrap:wrap;gap:8px">
               <sc-for list="{{ sel.usoEmEscopos }}" as="u" hint-placeholder-count="2">
-                <button onclick="{{ u.open }}" style="display:flex;align-items:center;gap:8px;border:1px solid #DCE7EB;background:#FAFCFC;color:#163B45;font-size:13.5px;padding:8px 12px;border-radius:10px;cursor:pointer;text-align:left" style-hover="border-color:#9FD7E2;background:#EAF6F9">
+                <button onclick="{{ u.open }}" title="{{ u.dica }}" style="display:flex;align-items:center;gap:8px;border:1px solid #DCE7EB;background:#FAFCFC;color:#163B45;font-size:13.5px;padding:8px 12px;border-radius:10px;cursor:pointer;text-align:left" style-hover="border-color:#9FD7E2;background:#EAF6F9">
                   <span style="font-weight:600">{{ u.escopoNome }}</span>
                   <span style="color:#9DAEB4">›</span>
-                  <span style="color:#5E747B">{{ u.ordem }}. {{ u.etapaNome }}</span>
+                  <span style="color:#5E747B">{{ u.detalhe }}</span>
                 </button>
               </sc-for>
             </div>
           </sc-if>
           <sc-if value="{{ sel.semUso }}" hint-placeholder-val="{{ true }}">
-            <p style="font-size:13.5px;color:#8AA0A7;margin:0">Ainda não vinculada a uma etapa de escopo. O vínculo é definido no Cronograma Base do escopo, não na ferramenta.</p>
+            <p style="font-size:13.5px;color:#8AA0A7;margin:0">Ainda não vinculada a nenhum dos escopos do PPGP 2026. O vínculo é definido no escopo (fontes/escopos-mapa.json), não na ferramenta.</p>
           </sc-if>
         </div>
 
@@ -1042,7 +1027,7 @@
 
       <div style="display:flex;align-items:center;gap:12px;padding-top:6px;border-top:1px solid #F0F4F5">
         <div style="flex:1;font-size:13px;color:#8AA0A7;display:flex;align-items:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#B6C4C9" stroke-width="1.7"></circle><path d="M12 8.5v4M12 15.6h.01" stroke="#B6C4C9" stroke-width="1.8" stroke-linecap="round"></path></svg>A página completa, o card e a ficha são gerados automaticamente.</div>
-        <button style="border:1px solid #DCE7EB;background:#fff;color:#5E747B;font-size:14px;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer">Salvar rascunho</button>
+        <button onclick="{{ salvarRascunhoForm }}" style="border:1px solid #DCE7EB;background:#fff;color:#5E747B;font-size:14px;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer">Salvar rascunho</button>
         <button onclick="{{ publish }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 22px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">Publicar conteúdo</button>
       </div>
     </div>
@@ -1055,15 +1040,28 @@
   <main class="hg-main" style="max-width:1200px;margin:0 auto;padding:34px 28px 80px">
 
     <sc-if value="{{ noEscopoSel }}" hint-placeholder-val="{{ true }}">
-      <div style="margin-bottom:8px">
-        <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em">Escopos</h1>
-        <p style="font-size:15px;color:#7C9097;margin:6px 0 0;max-width:720px;line-height:1.5">As linhas de serviço da Produtiva Júnior. Cada escopo tem suas etapas em sequência, e as ferramentas aparecem dentro da etapa em que são usadas — do jeito que o projeto acontece.</p>
+      <div class="hg-stack" style="display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:8px">
+        <div>
+          <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em">Escopos</h1>
+          <p style="font-size:15px;color:#7C9097;margin:6px 0 0;max-width:720px;line-height:1.5">Os {{ escoposCount }} escopos da Produtiva, conforme a Revisão dos Escopos (PPGP 2026). Cada um mostra o que estudar antes, o que perguntar ao cliente, os pontos de risco, as etapas com as ferramentas, os entregáveis e os projetos que a Produtiva já fez.</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #DCE7EB;border-radius:12px;padding:10px 14px;min-width:280px;flex:0 1 380px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#8AA0A7" stroke-width="1.8"></circle><path d="M20 20l-3.5-3.5" stroke="#8AA0A7" stroke-width="1.8" stroke-linecap="round"></path></svg>
+          <input value="{{ escopoBusca }}" oninput="{{ onEscopoBusca }}" placeholder="Entregável, ferramenta, cliente, etapa…" aria-label="Buscar nos escopos" style="flex:1;border:none;outline:none;font-size:14.5px;background:transparent;min-width:0">
+          <sc-if value="{{ hasEscopoBusca }}" hint-placeholder-val="{{ false }}"><button onclick="{{ limparEscopoBusca }}" aria-label="Limpar busca" style="border:none;background:transparent;color:#8AA0A7;font-size:18px;line-height:1;cursor:pointer;padding:0 2px">×</button></sc-if>
+        </div>
       </div>
+      <sc-if value="{{ hasEscopoBusca }}" hint-placeholder-val="{{ false }}">
+        <p style="font-size:13.5px;color:#5E747B;margin:10px 0 0">{{ escoposAchados }} escopo(s) com "{{ escopoBusca }}" no conteúdo.</p>
+      </sc-if>
+      <sc-if value="{{ semEscopoAchado }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:22px;background:#fff;border:1px dashed #C9DBE0;border-radius:16px;padding:28px;text-align:center;color:#8AA0A7;font-size:14.5px">Nenhum escopo cita isso. Tente o nome de uma ferramenta, de um entregável ou de um cliente.</div>
+      </sc-if>
       <sc-if value="{{ semEscopos }}" hint-placeholder-val="{{ false }}">
-        <div style="margin-top:28px;background:#fff;border:1px dashed #C9DBE0;border-radius:16px;padding:32px;text-align:center;color:#8AA0A7;font-size:14.5px">Nenhum escopo cadastrado ainda. O rascunho é gerado a partir do Resumão dos escopos — veja <b>fontes/README.md</b>.</div>
+        <div style="margin-top:28px;background:#fff;border:1px dashed #C9DBE0;border-radius:16px;padding:32px;text-align:center;color:#8AA0A7;font-size:14.5px">Nenhum escopo cadastrado ainda. O rascunho é gerado a partir do PPGP 2026 — veja <b>fontes/README.md</b>.</div>
       </sc-if>
       <sc-for list="{{ escoposPorGrupo }}" as="g" hint-placeholder-count="3">
-        <div style="margin-top:34px">
+        <div id="{{ g.ancora }}" style="margin-top:34px;scroll-margin-top:90px">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
             <span style="width:10px;height:10px;border-radius:3px;background:{{ g.cor }}"></span>
             <h2 style="font-size:19px;font-weight:700;color:#163B45;letter-spacing:-0.01em">{{ g.label }}</h2>
@@ -1071,13 +1069,13 @@
           <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
             <sc-for list="{{ g.escopos }}" as="e" hint-placeholder-count="3">
               <article onclick="{{ e.pick }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:12px" style-hover="border-color:#C6E4EC;box-shadow:0 12px 30px -18px rgba(22,59,69,0.25)">
-                <div style="display:flex;align-items:center;justify-content:space-between">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
                   <span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:{{ e.grupoBg }};color:{{ e.grupoCor }}">{{ e.grupoLabel }}</span>
-                  <sc-if value="{{ e.despriorizado }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;font-weight:600;color:#9DAEB4;background:#F2F6F7;padding:3px 9px;border-radius:6px">Despriorizado</span></sc-if>
+                  <span style="font-size:11.5px;color:#9DAEB4">{{ e.fonteLabel }}</span>
                 </div>
                 <div>
                   <h3 style="font-size:17.5px;font-weight:600;color:#163B45;line-height:1.25">{{ e.nome }}</h3>
-                  <p style="font-size:13.5px;color:#5E747B;margin:6px 0 0;line-height:1.5">{{ e.descricao }}</p>
+                  <p class="hg-clamp3" style="font-size:13.5px;color:#5E747B;margin:6px 0 0;line-height:1.5">{{ e.descricao }}</p>
                 </div>
                 <div style="font-size:12.5px;color:#8AA0A7;margin-top:auto;padding-top:4px">{{ e.resumo }}</div>
               </article>
@@ -1090,25 +1088,172 @@
     <sc-if value="{{ hasEscopoSel }}" hint-placeholder-val="{{ false }}">
       <button onclick="{{ goEscopos }}" style="display:flex;align-items:center;gap:7px;border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;margin-bottom:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#1E7C92" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Todos os escopos</button>
 
-      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;margin-bottom:22px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
           <span style="font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:7px;background:{{ escopoSel.grupoBg }};color:{{ escopoSel.grupoCor }}">{{ escopoSel.grupoLabel }}</span>
-          <span style="font-size:12.5px;color:#5E747B;background:#EFF4F5;padding:5px 11px;border-radius:7px">{{ escopoSel.statusLabel }}</span>
+          <sc-if value="{{ escopoSel.hasFonte }}" hint-placeholder-val="{{ true }}"><span style="font-size:12.5px;color:#5E747B;background:#EFF4F5;padding:5px 11px;border-radius:7px">{{ escopoSel.fonteLabel }}</span></sc-if>
         </div>
         <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">{{ escopoSel.nome }}</h1>
-        <p style="font-size:16.5px;color:#5E747B;margin:12px 0 0;line-height:1.55;max-width:720px">{{ escopoSel.descricao }}</p>
-        <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:20px;padding-top:18px;border-top:1px solid #F0F4F5">
+        <p style="font-size:16.5px;color:#5E747B;margin:12px 0 0;line-height:1.55;max-width:760px">{{ escopoSel.descricao }}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:22px;margin-top:20px;padding-top:18px;border-top:1px solid #F0F4F5">
           <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Etapas</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.nEtapas }}</div></div>
-          <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Ferramentas mapeadas</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.nFerr }}</div></div>
+          <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Entregáveis</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.nEntregaveis }}</div></div>
+          <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Ferramentas</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.nFerr }}</div></div>
+          <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Projetos já feitos</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.nCases }}</div></div>
           <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Responsável</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.respNome }}</div></div>
+        </div>
+        <div class="hg-wrap" style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+          <button onclick="{{ escopoSel.abrirRoteiro }}" style="display:flex;align-items:center;gap:8px;border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 16px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M7 8V3h10v5M7 17H4v-7h16v7h-3M7 14h10v7H7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path></svg>Roteiro do Diagnóstico Inicial</button>
+          <button onclick="{{ escopoSel.baixarRoteiro }}" style="border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:14px;font-weight:600;padding:10px 14px;border-radius:11px;cursor:pointer" style-hover="border-color:#9FD7E2">Baixar (.html)</button>
+          <sc-if value="{{ escopoSel.hasCronograma }}" hint-placeholder-val="{{ false }}"><a href="{{ escopoSel.cronogramaUrl }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:7px;text-decoration:none;border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:14px;font-weight:600;padding:10px 14px;border-radius:11px" style-hover="border-color:#9FD7E2">Cronograma base no Drive ↗</a></sc-if>
         </div>
       </div>
 
-      <sc-if value="{{ escopoSel.hasCases }}" hint-placeholder-val="{{ false }}">
-      <div style="margin-bottom:22px">
-        <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px">Cases deste escopo</div>
-        <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
-          <sc-for list="{{ escopoSel.cases }}" as="c" hint-placeholder-count="3">
+      <!-- atalhos das seções -->
+      <nav class="hg-nav hg-aside" aria-label="Seções do escopo" style="display:flex;gap:8px;margin-bottom:22px;position:sticky;top:68px;z-index:5;background:rgba(246,249,250,0.94);backdrop-filter:blur(6px);padding:10px 0">
+        <button onclick="{{ escopoSel.irEstudar }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">1 · O que estudar</button>
+        <button onclick="{{ escopoSel.irReuniao }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">2 · Diagnóstico Inicial</button>
+        <button onclick="{{ escopoSel.irEtapas }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">3 · Etapas</button>
+        <button onclick="{{ escopoSel.irEntregaveis }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">4 · Entregáveis</button>
+        <button onclick="{{ escopoSel.irCases }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">5 · Cases e cronogramas</button>
+      </nav>
+
+      <!-- 1. O que estudar -->
+      <section id="esc-estudar" style="scroll-margin-top:130px;margin-bottom:30px">
+        <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.05em;text-transform:uppercase">1 · Antes do projeto</div>
+        <h2 style="font-size:21px;font-weight:700;color:#163B45;margin:4px 0 4px">O que estudar</h2>
+        <p style="font-size:14px;color:#7C9097;margin:0 0 14px;line-height:1.5">O que a equipe precisa dominar antes da primeira reunião. Quando o tema tem ficha na Biblioteca, o atalho aparece embaixo.</p>
+        <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          <sc-for list="{{ escopoSel.estudar }}" as="x" hint-placeholder-count="3">
+            <div style="background:#fff;border:1px solid #E7EEF1;border-radius:14px;padding:15px 16px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;gap:10px;align-items:flex-start">
+                <span style="flex:none;width:26px;height:26px;border-radius:8px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 015.5 4H11v15H5.5A1.5 1.5 0 014 17.5v-12zM20 5.5A1.5 1.5 0 0018.5 4H13v15h5.5a1.5 1.5 0 001.5-1.5v-12z" stroke="#1E7C92" stroke-width="1.7" stroke-linejoin="round"></path></svg></span>
+                <span style="font-size:14.5px;color:#163B45;line-height:1.45;font-weight:500">{{ x.nome }}<sc-if value="{{ x.marcado }}" hint-placeholder-val="{{ false }}"><span title="Item destacado com asterisco no PPGP 2026" style="color:#C9942A;font-weight:700"> ✱</span></sc-if></span>
+              </div>
+              <sc-if value="{{ x.hasFerramentas }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:36px">
+                  <sc-for list="{{ x.ferramentas }}" as="f" hint-placeholder-count="1"><button onclick="{{ f.open }}" style="border:1px solid #CFE6EC;background:#F4FAFC;color:#1E7C92;font-size:12px;font-weight:600;padding:4px 9px;border-radius:7px;cursor:pointer" style-hover="background:#EAF6F9">{{ f.nome }} ›</button></sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- 2. Reunião: o que saber + pontos de risco -->
+      <section id="esc-reuniao" style="scroll-margin-top:130px;margin-bottom:30px">
+        <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.05em;text-transform:uppercase">2 · Diagnóstico Inicial</div>
+        <h2 style="font-size:21px;font-weight:700;color:#163B45;margin:4px 0 4px">O que saber do cliente e onde o projeto costuma dar errado</h2>
+        <p style="font-size:14px;color:#7C9097;margin:0 0 14px;line-height:1.5">Marque cada pergunta à medida que o cliente responde (fica salvo neste navegador). O roteiro para imprimir traz as duas listas com espaço para anotar.</p>
+        <div class="hg-g2" style="display:grid;grid-template-columns:1.25fr 1fr;gap:16px;align-items:start">
+          <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 20px 14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px">
+              <div style="font-size:15px;font-weight:700;color:#163B45">O que saber</div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="font-size:12.5px;color:#5E747B">{{ escopoSel.nSaberFeitos }} de {{ escopoSel.nSaber }} levantados</span>
+                <sc-if value="{{ escopoSel.hasSaberFeitos }}" hint-placeholder-val="{{ false }}"><button onclick="{{ escopoSel.limparSaber }}" style="border:none;background:transparent;color:#1E7C92;font-size:12.5px;font-weight:600;cursor:pointer;padding:0">Limpar</button></sc-if>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ escopoSel.saber }}" as="q" hint-placeholder-count="4">
+                <button onclick="{{ q.toggle }}" role="checkbox" aria-checked="{{ q.feito }}" style="display:flex;align-items:flex-start;gap:11px;text-align:left;border:1px solid {{ q.border }};background:{{ q.bg }};border-radius:11px;padding:10px 12px;cursor:pointer" style-hover="border-color:#9FD7E2">
+                  <sc-if value="{{ q.feito }}" hint-placeholder-val="{{ false }}"><span style="flex:none;width:18px;height:18px;border-radius:5px;background:#2E9D5B;display:flex;align-items:center;justify-content:center;margin-top:1px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></sc-if>
+                  <sc-if value="{{ q.pendente }}" hint-placeholder-val="{{ true }}"><span style="flex:none;width:18px;height:18px;border-radius:5px;border:1.8px solid #9DAEB4;margin-top:1px"></span></sc-if>
+                  <span style="font-size:14.5px;color:{{ q.cor }};line-height:1.45;text-decoration:{{ q.risco }}">{{ q.texto }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#FFFBF3;border:1px solid #F2E2C2;border-radius:16px;padding:20px">
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3l9.5 17h-19L12 3z" stroke="#B7791F" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 10v4.5M12 17.5v.01" stroke="#B7791F" stroke-width="2" stroke-linecap="round"></path></svg>
+              <div style="font-size:15px;font-weight:700;color:#7A4E0E">Pontos de risco</div>
+            </div>
+            <p style="font-size:13px;color:#9A6B17;margin:0 0 12px;line-height:1.45">Deixe claro na reunião o que a Produtiva faz e o que depende do cliente.</p>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ escopoSel.riscos }}" as="r" hint-placeholder-count="2">
+                <div style="display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid #F2E2C2;border-radius:10px;padding:10px 12px">
+                  <span style="flex:none;width:7px;height:7px;border-radius:50%;background:#C9942A;margin-top:7px"></span>
+                  <span style="font-size:14.5px;color:#5C3D0B;line-height:1.45">{{ r }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Etapas -->
+      <section id="esc-etapas" style="scroll-margin-top:130px;margin-bottom:18px">
+        <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.05em;text-transform:uppercase">3 · Execução</div>
+        <h2 style="font-size:21px;font-weight:700;color:#163B45;margin:4px 0 4px">Etapas do escopo</h2>
+        <p style="font-size:14px;color:#7C9097;margin:0 0 16px;line-height:1.5">Na ordem do PPGP 2026. As ferramentas embaixo de cada etapa abrem a ficha na Biblioteca.</p>
+      </section>
+      <sc-for list="{{ escopoEtapas }}" as="et" hint-placeholder-count="4">
+        <sc-if value="{{ et.novaFrente }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:10px;margin:6px 0 12px 68px"><span style="font-size:12px;font-weight:700;color:#6A5FB0;background:#EFEDFB;padding:4px 11px;border-radius:7px;letter-spacing:0.03em;text-transform:uppercase">Frente: {{ et.frenteLabel }}</span></div>
+        </sc-if>
+        <div style="display:grid;grid-template-columns:52px minmax(0,1fr);gap:16px">
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <span style="width:40px;height:40px;border-radius:50%;background:#163B45;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">{{ et.num }}</span>
+            <span style="flex:1;width:2px;background:{{ et.linhaBg }};margin:6px 0"></span>
+          </div>
+          <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px 22px;margin-bottom:12px">
+            <h3 style="font-size:16.5px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk';line-height:1.35">{{ et.nome }}<sc-if value="{{ et.marcado }}" hint-placeholder-val="{{ false }}"><span title="Item destacado com asterisco no PPGP 2026" style="color:#C9942A"> ✱</span></sc-if></h3>
+            <sc-if value="{{ et.hasFerramentas }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+                <sc-for list="{{ et.ferramentas }}" as="item" hint-placeholder-count="2">
+                  <div onclick="{{ item.open }}" style="display:flex;align-items:center;gap:13px;padding:10px 14px;border:1px solid #EEF3F5;border-radius:11px;cursor:pointer" style-hover="border-color:#C6E4EC;background:#FAFCFC">
+                    <div style="flex:none;width:34px;height:34px;border-radius:9px;background:{{ item.tipoBg }};color:{{ item.tipoColor }};display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:15px">{{ item.initial }}</div>
+                    <div style="flex:1;min-width:0">
+                      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-size:14.5px;font-weight:600;color:#163B45">{{ item.nome }}</span><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;background:{{ item.tipoBg }};color:{{ item.tipoColor }}">{{ item.tipo }}</span></div>
+                      <p class="hg-clamp2" style="font-size:13px;color:#7C9097;margin:2px 0 0;line-height:1.45">{{ item.descricao }}</p>
+                    </div>
+                    <span class="hg-hide-m" style="flex:none;font-size:12px;font-weight:600;padding:4px 9px;border-radius:6px;background:{{ item.complexBg }};color:{{ item.complexColor }}">{{ item.complexidade }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-for>
+
+      <!-- 4. Entregáveis -->
+      <section id="esc-entregaveis" style="scroll-margin-top:130px;margin:18px 0 30px">
+        <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.05em;text-transform:uppercase">4 · O que o cliente recebe</div>
+        <h2 style="font-size:21px;font-weight:700;color:#163B45;margin:4px 0 4px">Entregáveis</h2>
+        <p style="font-size:14px;color:#7C9097;margin:0 0 14px;line-height:1.5">Tudo o que este escopo pode entregar, conforme o PPGP 2026. Combine com o cliente quais entram no projeto dele.</p>
+        <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+          <sc-for list="{{ escopoSel.entregaveis }}" as="x" hint-placeholder-count="6">
+            <div style="background:#fff;border:1px solid #E7EEF1;border-radius:13px;padding:13px 15px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;gap:10px;align-items:flex-start">
+                <span style="flex:none;width:22px;height:22px;border-radius:6px;background:#E7F4EC;display:flex;align-items:center;justify-content:center;margin-top:1px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#2E7D52" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                <span style="font-size:14px;color:#163B45;line-height:1.45;font-weight:500">{{ x.nome }}<sc-if value="{{ x.marcado }}" hint-placeholder-val="{{ false }}"><span title="Item destacado com asterisco no PPGP 2026" style="color:#C9942A;font-weight:700"> ✱</span></sc-if></span>
+              </div>
+              <sc-if value="{{ x.hasFerramentas }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:32px">
+                  <sc-for list="{{ x.ferramentas }}" as="f" hint-placeholder-count="1"><button onclick="{{ f.open }}" style="border:1px solid #CFE6EC;background:#F4FAFC;color:#1E7C92;font-size:12px;font-weight:600;padding:3px 8px;border-radius:7px;cursor:pointer" style-hover="background:#EAF6F9">{{ f.nome }} ›</button></sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- 5. Cases e cronogramas -->
+      <section id="esc-cases" style="scroll-margin-top:130px;margin-bottom:24px">
+        <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.05em;text-transform:uppercase">5 · Quem já fez</div>
+        <div class="hg-stack" style="display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:4px 0 14px">
+          <div>
+            <h2 style="font-size:21px;font-weight:700;color:#163B45;margin:0 0 4px">Cases e cronogramas</h2>
+            <p style="font-size:14px;color:#7C9097;margin:0;line-height:1.5;max-width:720px">Projetos deste escopo que a Produtiva já fez, segundo o PPGP 2026. Use como referência de cronograma e converse com quem participou. Quem tem ficha no Banco de Cases abre direto; os outros podem ganhar ficha agora.</p>
+          </div>
+          <button onclick="{{ escopoSel.cadastrarCase }}" style="border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:14px;font-weight:600;padding:10px 14px;border-radius:11px;cursor:pointer" style-hover="border-color:#9FD7E2">+ Cadastrar case deste escopo</button>
+        </div>
+
+        <sc-if value="{{ escopoSel.hasCases }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:10px">Fichas no Banco de Cases</div>
+          <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px">
+            <sc-for list="{{ escopoSel.cases }}" as="c" hint-placeholder-count="3">
               <article onclick="{{ c.open }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:12px" style-hover="border-color:#C6E4EC;box-shadow:0 12px 30px -18px rgba(22,59,69,0.25)">
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
                   <span style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }}">{{ c.escopoNome }}</span>
@@ -1125,49 +1270,37 @@
                 </div>
                 <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:3px 9px;border-radius:6px;align-self:flex-start">Só neste navegador · envie ao CIEP</span></sc-if>
               </article>
-          </sc-for>
-        </div>
-      </div>
-      </sc-if>
+            </sc-for>
+          </div>
+        </sc-if>
 
-      <!-- Linha do tempo das etapas -->
-      <sc-for list="{{ escopoEtapas }}" as="et" hint-placeholder-count="4">
-        <div style="display:grid;grid-template-columns:52px minmax(0,1fr);gap:16px">
-          <div style="display:flex;flex-direction:column;align-items:center">
-            <span style="width:40px;height:40px;border-radius:50%;background:#163B45;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">{{ et.num }}</span>
-            <span style="flex:1;width:2px;background:{{ et.linhaBg }};margin:6px 0"></span>
-          </div>
-          <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px;margin-bottom:14px">
-            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-              <h3 style="font-size:17px;font-weight:600;color:#163B45;font-family:'Schibsted Grotesk'">{{ et.nome }}</h3>
-              <sc-if value="{{ et.hasDuracao }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:#8AA0A7;background:#EFF4F5;padding:3px 9px;border-radius:6px">{{ et.duracaoRef }}</span></sc-if>
-            </div>
-            <sc-if value="{{ et.hasEntregaveis }}" hint-placeholder-val="{{ false }}">
-              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
-                <span style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase;align-self:center">Entregáveis</span>
-                <sc-for list="{{ et.entregaveis }}" as="en" hint-placeholder-count="2"><span style="font-size:12.5px;color:#2E7D52;background:#E7F4EC;padding:3px 9px;border-radius:6px">{{ en }}</span></sc-for>
-              </div>
-            </sc-if>
-            <sc-if value="{{ et.hasFerramentas }}" hint-placeholder-val="{{ true }}">
-              <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">
-                <sc-for list="{{ et.ferramentas }}" as="item" hint-placeholder-count="2">
-                  <div onclick="{{ item.open }}" style="display:flex;align-items:center;gap:13px;padding:11px 14px;border:1px solid #EEF3F5;border-radius:11px;cursor:pointer" style-hover="border-color:#C6E4EC;background:#FAFCFC">
-                    <div style="flex:none;width:36px;height:36px;border-radius:9px;background:{{ item.tipoBg }};color:{{ item.tipoColor }};display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:15px">{{ item.initial }}</div>
-                    <div style="flex:1;min-width:0">
-                      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-size:14.5px;font-weight:600;color:#163B45">{{ item.nome }}</span><span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;background:{{ item.tipoBg }};color:{{ item.tipoColor }}">{{ item.tipo }}</span></div>
-                      <p class="hg-clamp2" style="font-size:13px;color:#7C9097;margin:2px 0 0;line-height:1.45">{{ item.descricao }}</p>
-                    </div>
-                    <span class="hg-hide-m" style="flex:none;font-size:12px;font-weight:600;padding:4px 9px;border-radius:6px;background:{{ item.complexBg }};color:{{ item.complexColor }}">{{ item.complexidade }}</span>
+        <sc-if value="{{ escopoSel.hasCasesRef }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:10px">Projetos já realizados ({{ escopoSel.nCases }})</div>
+          <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+            <sc-for list="{{ escopoSel.casesRef }}" as="c" hint-placeholder-count="6">
+              <div style="background:#fff;border:1px solid #E7EEF1;border-radius:13px;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;gap:11px">
+                  <span style="flex:none;width:34px;height:34px;border-radius:10px;background:{{ escopoSel.grupoBg }};color:{{ escopoSel.grupoCor }};display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:13px">{{ c.iniciais }}</span>
+                  <span style="flex:1;min-width:0;font-size:14.5px;font-weight:600;color:#163B45;line-height:1.3">{{ c.nome }}</span>
+                  <sc-if value="{{ c.temFicha }}" hint-placeholder-val="{{ false }}"><button onclick="{{ c.abrir }}" style="flex:none;border:none;background:#EAF6F9;color:#1E7C92;font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:8px;cursor:pointer" style-hover="background:#D9EFF5">Ver ficha</button></sc-if>
+                  <sc-if value="{{ c.semFicha }}" hint-placeholder-val="{{ true }}"><button onclick="{{ c.cadastrar }}" title="Cadastrar a ficha deste case no Banco de Cases" style="flex:none;border:1px dashed #C9DBE0;background:#fff;color:#5E747B;font-size:12.5px;font-weight:600;padding:5px 9px;border-radius:8px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">+ ficha</button></sc-if>
+                </div>
+                <sc-if value="{{ c.hasOutros }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding-left:45px">
+                    <span style="font-size:11.5px;color:#9DAEB4">Também em</span>
+                    <sc-for list="{{ c.outros }}" as="o" hint-placeholder-count="1"><button onclick="{{ o.open }}" style="border:none;background:#F2F6F7;color:#5E747B;font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:6px;cursor:pointer" style-hover="background:#EAF6F9;color:#1E7C92">{{ o.nome }}</button></sc-for>
                   </div>
-                </sc-for>
+                </sc-if>
               </div>
-            </sc-if>
-            <sc-if value="{{ et.semFerramentas }}" hint-placeholder-val="{{ false }}">
-              <p style="font-size:13.5px;color:#8AA0A7;margin:12px 0 0">Ferramentas desta etapa ainda não mapeadas no Cronograma Base.</p>
-            </sc-if>
+            </sc-for>
           </div>
-        </div>
-      </sc-for>
+        </sc-if>
+        <sc-if value="{{ escopoSel.hasCronogramasRef }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size:13.5px;color:#5E747B;margin:14px 0 0">Cronograma de referência citado no PPGP: <b>{{ escopoSel.cronogramasRefTexto }}</b>.</p>
+        </sc-if>
+      </section>
+
+      <p style="font-size:12.5px;color:#9DAEB4;margin:26px 0 0;line-height:1.5">Fonte: {{ escopoSel.fonteTexto }}.<sc-if value="{{ escopoSel.hasMarcados }}" hint-placeholder-val="{{ false }}"> ✱ = item destacado com asterisco no documento.</sc-if> Ferramentas vinculadas e descrição são curadoria do CIEP.</p>
     </sc-if>
   </main>
   </sc-if>
@@ -1235,11 +1368,12 @@
           <sc-for list="{{ casesList }}" as="c" hint-placeholder-count="6">
             <article onclick="{{ c.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:11px;transition:transform .15s ease" style-hover="transform:translateY(-3px)">
               <div style="position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#EEF3F5;border:1px solid #E7EEF1;box-shadow:0 10px 26px -18px rgba(22,59,69,0.35)">
-                <sc-if value="{{ c.hasFoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ c.fotoSrc }}" alt="{{ c.cliente }}" style="width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+                <sc-if value="{{ c.hasFoto }}" hint-placeholder-val="{{ false }}"><img sc-camel-src="{{ c.fotoSrc }}" alt="{{ c.cliente }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block"></sc-if>
                 <sc-if value="{{ c.semFoto }}" hint-placeholder-val="{{ true }}"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:{{ c.placeholderBg }}"><span style="font-family:'Schibsted Grotesk';font-size:46px;font-weight:700;letter-spacing:-0.02em;color:{{ c.escopoCor }};opacity:0.7">{{ c.inicial }}</span></div></sc-if>
                 <span style="position:absolute;top:10px;left:10px;max-width:calc(100% - 84px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:7px;background:{{ c.escopoBg }};color:{{ c.escopoCor }};box-shadow:0 1px 4px rgba(0,0,0,0.08)">{{ c.escopoNome }}</span>
                 <sc-if value="{{ c.local }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:10px;right:10px;font-size:11px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:4px 8px;border-radius:6px" title="Só neste navegador · envie ao CIEP">Só aqui</span></sc-if>
                 <sc-if value="{{ c.hasVideo }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;right:10px;bottom:10px;background:rgba(14,26,30,0.72);color:#fff;font-size:11px;font-weight:600;padding:4px 8px;border-radius:6px">▶ vídeo</span></sc-if>
+                <button onclick="{{ c.escolherCapa }}" title="{{ c.capaLabel }}" aria-label="{{ c.capaLabel }} de {{ c.cliente }}" style="position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:6px;border:none;background:rgba(255,255,255,0.92);color:#163B45;font-size:11.5px;font-weight:600;padding:5px 9px;border-radius:8px;cursor:pointer;box-shadow:0 2px 8px rgba(14,26,30,0.18)" style-hover="background:#fff;color:#1E7C92"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 8.5A1.5 1.5 0 015.5 7h2.3l1.4-2h5.6l1.4 2h2.3A1.5 1.5 0 0120 8.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 17.5v-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"></circle></svg>{{ c.capaLabel }}</button>
               </div>
               <div style="padding:0 4px">
                 <h3 style="font-size:16.5px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25">{{ c.cliente }}</h3>
@@ -1265,9 +1399,30 @@
     <div class="hg-cols" style="display:grid;grid-template-columns:1fr 312px;gap:30px;align-items:start">
       <div>
         <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;margin-bottom:18px;overflow:hidden">
+          <!-- Capa: a foto aparece inteira (contain) sobre um fundo desfocado dela mesma, em qualquer proporção -->
           <sc-if value="{{ caseSel.hasFoto }}" hint-placeholder-val="{{ false }}">
-            <div style="margin:-28px -28px 22px;background:#EEF3F5"><img class="hg-capa" sc-camel-src="{{ caseSel.fotoSrc }}" alt="{{ caseSel.cliente }}" style="width:100%;height:360px;object-fit:cover;display:block"></div>
-            <sc-if value="{{ caseSel.hasFotoLegenda }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;color:#8AA0A7;margin:-12px 0 16px">{{ caseSel.fotoLegenda }}</div></sc-if>
+            <div class="hg-capa" style="position:relative;margin:-28px -28px 24px;height:380px;overflow:hidden;background:#163B45">
+              <img sc-camel-src="{{ caseSel.fotoSrc }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(28px) brightness(0.75) saturate(1.15)">
+              <img sc-camel-src="{{ caseSel.fotoSrc }}" alt="{{ caseSel.cliente }}" style="position:relative;display:block;width:100%;height:100%;object-fit:contain">
+              <sc-if value="{{ caseSel.hasFotoLegenda }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:0;right:0;bottom:0;height:45%;background:linear-gradient(to top,rgba(10,24,28,0.62),rgba(10,24,28,0))"></div></sc-if>
+              <sc-if value="{{ caseSel.hasFotoLegenda }}" hint-placeholder-val="{{ false }}"><div class="hg-capa-legenda" style="position:absolute;left:20px;right:190px;bottom:17px;color:#fff;font-size:13px;line-height:1.4;text-shadow:0 1px 4px rgba(0,0,0,0.4)">{{ caseSel.fotoLegenda }}</div></sc-if>
+              <div style="position:absolute;right:14px;bottom:14px;display:flex;gap:6px">
+                <button onclick="{{ caseSel.escolherCapa }}" style="display:flex;align-items:center;gap:6px;border:none;background:rgba(255,255,255,0.92);color:#163B45;font-size:12.5px;font-weight:600;padding:7px 11px;border-radius:9px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,0.2)" style-hover="background:#fff;color:#1E7C92"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 8.5A1.5 1.5 0 015.5 7h2.3l1.4-2h5.6l1.4 2h2.3A1.5 1.5 0 0120 8.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 17.5v-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"></circle></svg>Trocar foto</button>
+                <sc-if value="{{ caseSel.podeRemoverCapa }}" hint-placeholder-val="{{ false }}"><button onclick="{{ caseSel.removerCapa }}" style="border:none;background:rgba(255,255,255,0.92);color:#B23B47;font-size:12.5px;font-weight:600;padding:7px 11px;border-radius:9px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,0.2)" style-hover="background:#fff">Remover capa</button></sc-if>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ caseSel.semFoto }}" hint-placeholder-val="{{ true }}">
+            <div style="position:relative;margin:-28px -28px 24px;height:170px;overflow:hidden;background:{{ caseSel.placeholderBg }};display:flex;align-items:center;justify-content:center">
+              <span style="font-family:'Schibsted Grotesk';font-size:56px;font-weight:800;color:rgba(22,59,69,0.18);letter-spacing:-0.02em">{{ caseSel.inicial }}</span>
+              <button onclick="{{ caseSel.escolherCapa }}" style="position:absolute;right:14px;bottom:14px;display:flex;align-items:center;gap:7px;border:none;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:8px 13px;border-radius:10px;cursor:pointer;box-shadow:0 2px 10px rgba(22,59,69,0.18)" style-hover="background:#F4FAFC"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 8.5A1.5 1.5 0 015.5 7h2.3l1.4-2h5.6l1.4 2h2.3A1.5 1.5 0 0120 8.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 17.5v-9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"></circle></svg>Adicionar foto de capa</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ caseSel.capaLocal }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#FFFBF2;border:1px solid #F1DFB0;border-radius:11px;padding:9px 12px;margin:-8px 0 18px">
+              <span style="font-size:12.5px;color:#7A6330;flex:1;min-width:200px">A capa nova só existe neste navegador. Baixe o case e envie ao CIEP para publicar.</span>
+              <button onclick="{{ caseSel.baixar }}" style="border:none;background:#3DAFC7;color:#fff;font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:8px;cursor:pointer">Baixar case (.json)</button>
+            </div>
           </sc-if>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
             <button onclick="{{ caseSel.abrirEscopo }}" style="border:none;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:7px;background:{{ caseSel.escopoBg }};color:{{ caseSel.escopoCor }};cursor:pointer">{{ caseSel.escopoNome }}</button>
@@ -1562,12 +1717,206 @@
   </main>
   </sc-if>
 
+  <!-- ============ COMO FUNCIONA A PRODUTIVA ============ -->
+  <sc-if value="{{ isProdutiva }}" hint-placeholder-val="{{ false }}">
+  <main class="hg-main" style="max-width:1100px;margin:0 auto;padding:34px 28px 80px">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:#EAF6F9;color:#1E7C92;font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:100px;margin-bottom:14px">Para quem acabou de chegar</div>
+    <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">Como funciona a Produtiva</h1>
+    <p style="font-size:15.5px;color:#5E747B;margin:10px 0 0;line-height:1.55;max-width:720px">Quem é a Produtiva, como ela se organiza, como um projeto nasce e como você é acompanhado. O essencial para entender o dia a dia da empresa.</p>
+
+    <nav class="hg-nav" aria-label="Seções da página" style="display:flex;gap:8px;margin:22px 0 8px">
+      <button onclick="{{ prodIrOQueE }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">O que é a Produtiva</button>
+      <button onclick="{{ prodIrAreas }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">As {{ prodNAreas }} áreas</button>
+      <button onclick="{{ prodIrFluxo }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Como um projeto nasce</button>
+      <button onclick="{{ prodIrMembro }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Como você é acompanhado</button>
+      <sc-if value="{{ hasProdAuxilios }}" hint-placeholder-val="{{ true }}"><button onclick="{{ prodIrAuxilios }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Auxílios e reembolsos</button></sc-if>
+    </nav>
+
+    <!-- 1. O que é a Produtiva -->
+    <section id="prod-oquee" style="scroll-margin-top:90px;margin-top:26px">
+      <div class="hg-stack" style="display:flex;gap:26px;align-items:center;background:linear-gradient(150deg,#1B4651 0%,#28697A 100%);border-radius:20px;padding:28px 30px;color:#fff">
+        <div style="flex:none;text-align:center;min-width:130px">
+          <div style="font-family:'Schibsted Grotesk';font-size:52px;font-weight:800;line-height:1;color:#7FD3E3">{{ prodOQueE.anos }}</div>
+          <div style="font-size:13px;color:#BFE2EA;margin-top:6px">anos de mercado</div>
+        </div>
+        <div style="flex:1;min-width:0">
+          <h2 style="font-size:23px;font-weight:700;letter-spacing:-0.02em">{{ prodOQueE.titulo }}</h2>
+          <p style="font-size:15.5px;color:#DCEFF4;margin:8px 0 0;line-height:1.6">{{ prodOQueE.texto }}</p>
+        </div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin:24px 0 12px">As {{ prodNAtuacao }} grandes áreas de atuação</div>
+      <div class="hg-g4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+        <sc-for list="{{ prodAtuacao }}" as="a" hint-placeholder-count="4">
+          <article onclick="{{ a.abrir }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px;cursor:pointer;display:flex;flex-direction:column;gap:10px" style-hover="border-color:#C6E4EC;box-shadow:0 12px 30px -18px rgba(22,59,69,0.25)">
+            <span style="width:36px;height:36px;border-radius:10px;background:{{ a.bg }};display:flex;align-items:center;justify-content:center"><span style="width:12px;height:12px;border-radius:4px;background:{{ a.cor }}"></span></span>
+            <h3 style="font-size:16.5px;font-weight:700;color:#163B45;line-height:1.25">{{ a.nome }}</h3>
+            <p style="font-size:12.5px;color:#7C9097;line-height:1.45;margin:0">{{ a.escopos }}</p>
+            <span style="margin-top:auto;font-size:13px;font-weight:600;color:{{ a.cor }}">{{ a.resumoEscopos }} ›</span>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 2. As áreas -->
+    <section id="prod-areas" style="scroll-margin-top:90px;margin-top:44px">
+      <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">Como a Produtiva se organiza</h2>
+      <p style="font-size:14.5px;color:#7C9097;margin:6px 0 16px;line-height:1.5">A empresa tem {{ prodNAreas }} áreas. Veja o que cada uma faz e quando procurar cada uma.</p>
+      <div class="hg-wrap" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+        <sc-for list="{{ prodAreas }}" as="a" hint-placeholder-count="5"><button onclick="{{ a.irArea }}" style="display:flex;align-items:center;gap:8px;border:1px solid #DCE7EB;background:#fff;color:#163B45;font-size:13.5px;font-weight:600;padding:7px 12px 7px 8px;border-radius:10px;cursor:pointer" style-hover="border-color:#9FD7E2"><span style="width:24px;height:24px;border-radius:7px;background:{{ a.bg }};color:{{ a.cor }};font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ a.iniciais }}</span>{{ a.nome }}</button></sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <sc-for list="{{ prodAreas }}" as="a" hint-placeholder-count="3">
+          <article id="area-{{ a.id }}" style="scroll-margin-top:90px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px">
+            <div style="display:flex;align-items:center;gap:13px">
+              <span style="flex:none;width:44px;height:44px;border-radius:12px;background:{{ a.bg }};color:{{ a.cor }};display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:800;font-size:16px">{{ a.iniciais }}</span>
+              <div style="min-width:0">
+                <h3 style="font-size:19px;font-weight:700;color:#163B45;letter-spacing:-0.01em">{{ a.nome }}</h3>
+                <p style="font-size:14.5px;color:#5E747B;margin:2px 0 0;line-height:1.5">{{ a.resumo }}</p>
+              </div>
+            </div>
+            <div class="hg-cols" style="display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-top:16px">
+              <div>
+                <div style="font-size:11.5px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px">O que faz</div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <sc-for list="{{ a.faz }}" as="x" hint-placeholder-count="3"><div style="display:flex;gap:9px;align-items:flex-start"><span style="flex:none;width:6px;height:6px;border-radius:50%;background:{{ a.cor }};margin-top:8px"></span><span style="font-size:14.5px;color:#3C545B;line-height:1.5">{{ x }}</span></div></sc-for>
+                </div>
+              </div>
+              <div style="background:#F6F9FA;border-radius:12px;padding:14px 16px;align-self:start">
+                <div style="font-size:11.5px;font-weight:700;color:{{ a.cor }};letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px">Procure quando</div>
+                <p style="font-size:14px;color:#3C545B;margin:0;line-height:1.5">{{ a.procure }}</p>
+              </div>
+            </div>
+            <sc-if value="{{ a.hasSub }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:11.5px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin:18px 0 10px">Subnúcleos</div>
+              <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+                <sc-for list="{{ a.subnucleos }}" as="sn" hint-placeholder-count="3">
+                  <div style="border:1px solid #E7EEF1;border-radius:13px;padding:14px 15px">
+                    <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><span style="font-family:'Schibsted Grotesk';font-size:17px;font-weight:800;color:{{ a.cor }}">{{ sn.sigla }}</span><sc-if value="{{ sn.nome }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px;color:#7C9097">{{ sn.nome }}</span></sc-if></div>
+                    <p style="font-size:13.5px;color:#3C545B;margin:6px 0 0;line-height:1.5">{{ sn.texto }}</p>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 3. Como um projeto nasce -->
+    <section id="prod-fluxo" style="scroll-margin-top:90px;margin-top:44px">
+      <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">{{ prodFluxo.titulo }}</h2>
+      <p style="font-size:14.5px;color:#7C9097;margin:6px 0 18px;line-height:1.5">{{ prodFluxo.texto }}</p>
+      <sc-for list="{{ prodPassos }}" as="f" hint-placeholder-count="5">
+        <div style="display:grid;grid-template-columns:52px minmax(0,1fr);gap:16px">
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <span style="width:40px;height:40px;border-radius:50%;background:#163B45;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;flex:none">{{ f.num }}</span>
+            <span style="flex:1;width:2px;background:{{ f.linhaBg }};margin:6px 0"></span>
+          </div>
+          <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:16px 20px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <h3 style="font-size:16.5px;font-weight:700;color:#163B45">{{ f.titulo }}</h3>
+              <span style="font-size:12px;font-weight:600;color:#1E7C92;background:#EAF6F9;padding:3px 9px;border-radius:6px">{{ f.quem }}</span>
+            </div>
+            <p style="font-size:14.5px;color:#3C545B;margin:6px 0 0;line-height:1.55">{{ f.texto }}</p>
+            <sc-if value="{{ f.hasAcao }}" hint-placeholder-val="{{ false }}"><button onclick="{{ f.ir }}" style="margin-top:10px;border:none;background:transparent;color:#1E7C92;font-size:13.5px;font-weight:600;cursor:pointer;padding:0">{{ f.acaoLabel }} ›</button></sc-if>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+    <!-- 4. Como você é acompanhado -->
+    <section id="prod-membro" style="scroll-margin-top:90px;margin-top:34px">
+      <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">{{ prodMembro.titulo }}</h2>
+      <p style="font-size:14.5px;color:#7C9097;margin:6px 0 16px;line-height:1.5">{{ prodMembro.texto }}</p>
+      <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        <sc-for list="{{ prodMembroItens }}" as="m" hint-placeholder-count="3">
+          <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px">
+            <h3 style="font-size:16px;font-weight:700;color:#163B45">{{ m.titulo }}</h3>
+            <p style="font-size:14px;color:#5E747B;margin:0;line-height:1.5">{{ m.texto }}</p>
+            <span style="margin-top:auto;align-self:flex-start;font-size:12px;font-weight:600;color:#6A5FB0;background:#EFEDFB;padding:3px 9px;border-radius:6px">{{ m.area }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 5. Auxílios e reembolsos -->
+    <sc-if value="{{ hasProdAuxilios }}" hint-placeholder-val="{{ true }}">
+    <section id="prod-auxilios" style="scroll-margin-top:90px;margin-top:40px">
+      <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">{{ prodAuxilios.titulo }}</h2>
+      <p style="font-size:14.5px;color:#7C9097;margin:6px 0 14px;line-height:1.5">{{ prodAuxilios.texto }}</p>
+      <div class="hg-wrap" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+        <sc-for list="{{ prodAuxItens }}" as="x" hint-placeholder-count="5"><button onclick="{{ x.ir }}" style="border:1px solid #CFEBD9;background:#F2FAF5;color:#2E7D52;font-size:13px;font-weight:600;padding:6px 11px;border-radius:9px;cursor:pointer" style-hover="border-color:#9FD3B4">{{ x.titulo }}</button></sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <sc-for list="{{ prodAuxItens }}" as="x" hint-placeholder-count="3">
+          <article id="aux-{{ x.id }}" style="scroll-margin-top:90px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px">
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <span style="flex:none;width:42px;height:42px;border-radius:12px;background:#E9F4EE;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2.5" stroke="#39795B" stroke-width="1.8"></rect><circle cx="12" cy="12" r="2.6" stroke="#39795B" stroke-width="1.8"></circle></svg></span>
+              <div style="flex:1;min-width:0">
+                <h3 style="font-size:18px;font-weight:700;color:#163B45;letter-spacing:-0.01em">{{ x.titulo }}</h3>
+                <p style="font-size:14.5px;color:#5E747B;margin:4px 0 0;line-height:1.55">{{ x.resumo }}</p>
+              </div>
+            </div>
+            <sc-if value="{{ x.hasValores }}" hint-placeholder-val="{{ false }}">
+              <div class="hg-g4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px">
+                <sc-for list="{{ x.valores }}" as="v" hint-placeholder-count="2">
+                  <div style="background:#F6F9FA;border-radius:12px;padding:12px 14px">
+                    <div style="font-size:12px;color:#7C9097;font-weight:600">{{ v.rotulo }}</div>
+                    <div style="font-family:'Schibsted Grotesk';font-size:19px;font-weight:800;color:#2E7D52;margin-top:2px">{{ v.valor }}</div>
+                    <sc-if value="{{ v.hasObs }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#5E747B;margin-top:4px;line-height:1.4">{{ v.obs }}</div></sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ x.hasQuando }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:16px;background:#F2FAF5;border:1px solid #CFEBD9;border-radius:12px;padding:12px 15px">
+                <div style="font-size:11.5px;font-weight:700;color:#2E7D52;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px">Quando vale</div>
+                <sc-for list="{{ x.quando }}" as="q" hint-placeholder-count="1"><div style="display:flex;gap:9px;align-items:flex-start;margin-top:4px"><span style="flex:none;width:6px;height:6px;border-radius:50%;background:#2E9D5B;margin-top:8px"></span><span style="font-size:14px;color:#1F5B3C;line-height:1.5">{{ q }}</span></div></sc-for>
+              </div>
+            </sc-if>
+            <div class="hg-cols" style="display:grid;grid-template-columns:{{ x.colunas }};gap:18px;margin-top:16px">
+              <sc-if value="{{ x.hasPassos }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div style="font-size:11.5px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px">Como pedir</div>
+                  <sc-for list="{{ x.passos }}" as="ps" hint-placeholder-count="3"><div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px"><span style="flex:none;width:22px;height:22px;border-radius:50%;background:#163B45;color:#fff;font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px">{{ ps.n }}</span><span style="font-size:14px;color:#3C545B;line-height:1.5">{{ ps.t }}</span></div></sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ x.hasRegras }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div style="font-size:11.5px;font-weight:700;color:#9A6B17;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px">Regras importantes</div>
+                  <sc-for list="{{ x.regras }}" as="r" hint-placeholder-count="3"><div style="display:flex;gap:9px;align-items:flex-start;margin-bottom:7px"><span style="flex:none;width:6px;height:6px;border-radius:50%;background:#C9942A;margin-top:8px"></span><span style="font-size:14px;color:#3C545B;line-height:1.5">{{ r }}</span></div></sc-for>
+                </div>
+              </sc-if>
+            </div>
+            <sc-if value="{{ x.hasModelo }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:14px">
+                <div style="font-size:11.5px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px">{{ x.modeloTitulo }}</div>
+                <pre style="margin:0;background:#163B45;color:#DCEFF4;border-radius:12px;padding:14px 16px;font:12.5px/1.55 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere">{{ x.modeloTexto }}</pre>
+              </div>
+            </sc-if>
+          </article>
+        </sc-for>
+      </div>
+      <p style="font-size:12.5px;color:#9DAEB4;margin:12px 0 0;line-height:1.5">Dúvidas ou casos fora da regra: procure a {{ prodAuxilios.area }}. Fonte: {{ prodAuxilios.fonte }}</p>
+    </section>
+    </sc-if>
+
+    <div class="hg-stack" style="margin-top:40px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:17px;font-weight:700;color:#163B45">Próximo passo: seu primeiro projeto</div>
+        <p style="font-size:14px;color:#7C9097;margin:4px 0 0">A trilha "Comece aqui" mostra o caminho até a primeira reunião com o cliente.</p>
+      </div>
+      <button onclick="{{ goComece }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">Ir para Comece aqui</button>
+    </div>
+  </main>
+  </sc-if>
+
   <!-- ============ COMECE AQUI (trilha do primeiro projeto + glossário) ============ -->
   <sc-if value="{{ isComece }}" hint-placeholder-val="{{ false }}">
   <main class="hg-main" style="max-width:1000px;margin:0 auto;padding:34px 28px 80px">
     <div style="display:inline-flex;align-items:center;gap:8px;background:#EAF6F9;color:#1E7C92;font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:100px;margin-bottom:14px">Trilha do primeiro projeto</div>
     <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">Seu primeiro projeto na Produtiva</h1>
-    <p style="font-size:15.5px;color:#5E747B;margin:10px 0 0;line-height:1.55;max-width:700px">Seis passos para chegar ao cliente sabendo o que fazer. Marque o que já fez; fica lembrado neste navegador.</p>
+    <p style="font-size:15.5px;color:#5E747B;margin:10px 0 0;line-height:1.55;max-width:700px">{{ trilhaTotal }} passos para chegar ao cliente sabendo o que fazer. Marque o que já fez; fica lembrado neste navegador.</p>
 
     <div style="display:flex;align-items:center;gap:14px;margin:22px 0 26px;background:#fff;border:1px solid #E7EEF1;border-radius:14px;padding:14px 18px">
       <div style="flex:1;height:8px;border-radius:100px;background:#EEF3F5;overflow:hidden"><div style="height:100%;width:{{ trilhaPct }}%;background:#3DAFC7;border-radius:100px;transition:width .3s ease"></div></div>
@@ -1603,19 +1952,6 @@
         </article>
       </sc-for>
     </div>
-
-    <sc-if value="{{ hasResponsaveis }}" hint-placeholder-val="{{ false }}">
-    <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin:44px 0 6px">Quem procurar</h2>
-    <p style="font-size:14.5px;color:#7C9097;margin:0 0 16px">Responsáveis pelos conteúdos do acervo. Dúvida sobre uma ferramenta? Comece por quem cuida dela.</p>
-    <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-      <sc-for list="{{ responsaveis }}" as="r" hint-placeholder-count="4">
-        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px">
-          <div style="width:36px;height:36px;border-radius:50%;background:#163B45;color:#fff;font-weight:600;font-size:12.5px;display:flex;align-items:center;justify-content:center;flex:none">{{ r.iniciais }}</div>
-          <div style="min-width:0"><div style="font-size:14px;font-weight:600;color:#163B45">{{ r.nome }}</div><div style="font-size:12px;color:#8AA0A7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.resumo }}<sc-if value="{{ r.hasEmail }}" hint-placeholder-val="{{ false }}"> · {{ r.email }}</sc-if></div></div>
-        </div>
-      </sc-for>
-    </div>
-    </sc-if>
 
     <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin:44px 0 6px">Glossário</h2>
     <p style="font-size:14.5px;color:#7C9097;margin:0 0 14px">Siglas e nomes que aparecem nos cronogramas, nos escopos e nas conversas. Termos marcados "a confirmar" ainda não têm definição oficial do CIEP.</p>
@@ -1661,6 +1997,12 @@
           <span style="font-size:15px;font-weight:700;color:#163B45;background:#EAF6F9;padding:5px 13px;border-radius:8px">{{ recoLabel }}</span>
           <span style="font-size:14px;color:#7C9097">recomendamos:</span>
         </div>
+        <sc-if value="{{ hasRecoEscopos }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:-6px 0 18px">
+            <span style="font-size:13px;color:#7C9097">Escopos que resolvem isso:</span>
+            <sc-for list="{{ recoEscopos }}" as="e" hint-placeholder-count="1"><button onclick="{{ e.open }}" style="border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:6px 11px;border-radius:9px;cursor:pointer" style-hover="border-color:#9FD7E2;background:#EAF6F9">{{ e.nome }} ›</button></sc-for>
+          </div>
+        </sc-if>
         <div class="hg-g2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
           <sc-for list="{{ recoResults }}" as="item" hint-placeholder-count="2">
             <article onclick="{{ item.open }}" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;cursor:pointer;display:flex;gap:15px;align-items:flex-start" style-hover="border-color:#C6E4EC;box-shadow:0 12px 30px -18px rgba(22,59,69,0.25)">

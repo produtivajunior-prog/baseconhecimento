@@ -10,11 +10,14 @@ class Component extends DCLogic {
     caseQuery: '',
     caseFilters: { escopo: [], segmento: [], ano: [], ferramenta: [] },
     casesLocais: this.carregarLocal('hangar.casesLocais', []),
+    capas: this.carregarLocal('hangar.capas', {}),
     formCase: this.formCaseVazio(),
     caseErro: '',
     caseFiltroFerr: '',
     filtrosAbertos: false,
     trilhaFeitos: this.carregarLocal('hangar.trilha', []),
+    saberFeitos: this.carregarLocal('hangar.saber', {}),
+    escopoBusca: '',
     glossQuery: '',
     eu: this.carregarLocal('hangar.eu', {}),
     open: {},
@@ -24,7 +27,7 @@ class Component extends DCLogic {
     confirmRemoverId: null,
     recoKey: null,
     toast: '',
-    form: this.formVazio(),
+    form: this.carregarLocal('hangar.formRascunho', null) || this.formVazio(),
     extra: this.carregarLocal('hangar.extra', []),
     doc: null,
     aiDocInput: '',
@@ -41,7 +44,7 @@ class Component extends DCLogic {
     applyResult: null,
     applyOpen: false,
     // cadastro — modelo padrão de ferramenta
-    modelos: this.defaultModelos(),
+    modelos: this.carregarLocal('hangar.modelos', []).concat(this.defaultModelos()),
     modeloNome: '',
     modeloFile: null,
     modeloLoading: false,
@@ -68,12 +71,19 @@ class Component extends DCLogic {
   CASES = DADOS.cases;
   // Trilha do primeiro projeto e glossário — src/data/trilha.json.
   TRILHA = DADOS.trilha || { passos: [], glossario: [] };
+  // Página "Como funciona a Produtiva" — src/data/produtiva.json.
+  PRODUTIVA = DADOS.produtiva || { oQueE: { atuacao: [] }, areas: [], fluxo: { passos: [] }, membro: { itens: [] } };
 
   // Persistência local: sem backend, o que o membro cadastra fica neste navegador. Tudo em try/catch:
   // sem localStorage (modo privado, file:// bloqueado) o app segue funcionando, só não lembra.
   carregarLocal(chave, padrao) { try { const v = (typeof localStorage !== 'undefined') && localStorage.getItem(chave); return v ? JSON.parse(v) : padrao; } catch (e) { return padrao; } }
   salvarLocal(chave, valor) { try { if (typeof localStorage !== 'undefined') { localStorage.setItem(chave, JSON.stringify(valor)); return true; } } catch (e) {} return false; }
-  allCases() { return this.state.casesLocais.map(c => ({ ...c, local: true })).concat(this.CASES); }
+  // Capa trocada num case já publicado fica só neste navegador (hangar.capas) até o CIEP publicar o JSON novo.
+  allCases() {
+    const capas = this.state.capas || {};
+    return this.state.casesLocais.map(c => ({ ...c, local: true }))
+      .concat(this.CASES.map(c => capas[c.id] ? { ...c, foto: capas[c.id], capaLocal: true } : c));
+  }
 
   // Link de vídeo → URL embutível. YouTube e Drive; qualquer outro fica só como link.
   embedDe(url) {
@@ -94,8 +104,10 @@ class Component extends DCLogic {
     if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1600';
     return u;
   }
-  // Lê a foto escolhida, reduz para no máximo 1600px e devolve um JPEG em data URL (~100–400 KB).
-  // O case vira um JSON único, então a foto vai dentro dele; por isso o limite de tamanho.
+  // Lê a foto escolhida e devolve uma data URL nítida e leve para ir dentro do case (JSON único):
+  // até 2000px no maior lado; WebP de alta qualidade quando o navegador suporta (texto e logos ficam
+  // limpos, arquivo pequeno), senão JPEG. Se passar de ~900 KB, reduz as dimensões em vez de
+  // degradar a qualidade (JPEG baixo borrava capas com texto, como slides de case).
   lerFoto(file) {
     return new Promise((resolve, reject) => {
       if (!file || !/^image\//.test(file.type || '')) return reject(new Error('Escolha um arquivo de imagem (JPG, PNG ou WebP).'));
@@ -106,13 +118,21 @@ class Component extends DCLogic {
         img.onerror = () => reject(new Error('Não consegui abrir essa imagem.'));
         img.onload = () => {
           try {
-            const MAX = 1600, esc = Math.min(1, MAX / Math.max(img.width, img.height, 1));
-            const w = Math.max(1, Math.round(img.width * esc)), h = Math.max(1, Math.round(img.height * esc));
-            const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
-            const ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); ctx.drawImage(img, 0, 0, w, h);
-            let q = 0.85, out = cv.toDataURL('image/jpeg', q);
-            while (out.length > 700000 && q > 0.45) { q -= 0.1; out = cv.toDataURL('image/jpeg', q); }
-            resolve(out);
+            const LIMITE = 900000;
+            const gerar = (maxLado) => {
+              const esc = Math.min(1, maxLado / Math.max(img.width, img.height, 1));
+              const w = Math.max(1, Math.round(img.width * esc)), h = Math.max(1, Math.round(img.height * esc));
+              const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+              const ctx = cv.getContext('2d'); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+              ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); ctx.drawImage(img, 0, 0, w, h);
+              const webp = cv.toDataURL('image/webp', 0.9);
+              if (/^data:image\/webp/.test(webp) && webp.length <= LIMITE) return webp;
+              for (const q of [0.92, 0.85, 0.78]) { const jpg = cv.toDataURL('image/jpeg', q); if (jpg.length <= LIMITE) return jpg; }
+              return null;
+            };
+            let out = null;
+            for (const lado of [2000, 1600, 1280, 1024]) { out = gerar(lado); if (out) break; }
+            resolve(out || gerar(800) || document.createElement('canvas').toDataURL());
           } catch (e) { reject(new Error('Não consegui processar a imagem.')); }
         };
         img.src = String(r.result);
@@ -128,6 +148,37 @@ class Component extends DCLogic {
   onFotoArquivo(e) { const f = e && e.target && e.target.files && e.target.files[0]; if (f) this.receberFoto(f); try { e.target.value = ''; } catch (x) {} }
   onFotoDrop(e) { if (e && e.preventDefault) e.preventDefault(); const f = e && e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) this.receberFoto(f); }
   onFotoDragOver(e) { if (e && e.preventDefault) e.preventDefault(); }
+  // ---- Foto de capa direto da galeria ou da ficha (sem abrir o formulário)
+  escolherCapa(id, e) {
+    if (e && e.stopPropagation) e.stopPropagation();
+    this._capaAlvo = id;
+    if (typeof document === 'undefined') return;
+    const el = document.getElementById('hangar-capa-input'); if (el) el.click();
+  }
+  onCapaArquivo(e) {
+    const f = e && e.target && e.target.files && e.target.files[0]; const id = this._capaAlvo;
+    try { e.target.value = ''; } catch (x) {}
+    if (!f || !id) return;
+    this.lerFoto(f).then((url) => this.aplicarCapa(id, url), (err) => this.showToast(err.message));
+  }
+  aplicarCapa(id, url) {
+    const local = this.state.casesLocais.find(c => c.id === id);
+    if (local) {
+      const casesLocais = this.state.casesLocais.map(c => c.id === id ? { ...c, foto: url ? { url, legenda: (c.foto && c.foto.legenda) || '' } : null } : c);
+      const ok = this.salvarLocal('hangar.casesLocais', casesLocais);
+      this.setState({ casesLocais });
+      this.showToast(!ok ? 'A capa aparece agora, mas não coube na memória deste navegador: baixe o case para não perder.'
+        : url ? 'Capa atualizada. Baixe o case de novo e envie ao CIEP para publicar a foto para todos.' : 'Capa removida.');
+      return;
+    }
+    const capas = { ...(this.state.capas || {}) };
+    if (url) capas[id] = { url, legenda: '' }; else delete capas[id];
+    const ok = this.salvarLocal('hangar.capas', capas);
+    this.setState({ capas });
+    this.showToast(!ok ? 'A capa aparece agora, mas não coube na memória deste navegador: baixe o case para não perder.'
+      : url ? 'Capa salva neste navegador. Baixe o case (.json) e envie ao CIEP para publicar a foto para todos.' : 'Capa removida.');
+  }
+  removerCapa(id, e) { if (e && e.stopPropagation) e.stopPropagation(); this.aplicarCapa(id, ''); }
   abrirSeletorFoto() { if (typeof document === 'undefined') return; const el = document.getElementById('hangar-foto-input'); if (el) el.click(); }
   removerFoto() { this.setState(st => ({ formCase: { ...st.formCase, fotoDados: '', fotoLink: '', fotoLegenda: '' } })); }
 
@@ -228,6 +279,72 @@ class Component extends DCLogic {
     if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
     this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' gerado. Abra e imprima.' : 'Não consegui gerar o arquivo aqui.');
   }
+  // ---- Roteiro do Diagnóstico Inicial de um escopo (PPGP 2026): o que saber, riscos, entregáveis e etapas.
+  roteiroEscopo(esc) {
+    const e = (t) => this.esc(t);
+    const linhas = '<div class="linhas"><span></span><span></span></div>';
+    const saber = (esc.saber || []).map((q, i) => '<li><b>' + (i + 1) + '.</b> ' + e(q) + linhas + '</li>').join('');
+    const riscos = (esc.riscos || []).map((q) => '<li><span class="cb"></span>' + e(q) + '</li>').join('');
+    const entreg = (esc.entregaveis || []).map((q) => '<li>• ' + e(q.nome) + '</li>').join('');
+    let frente = null;
+    const etapas = (esc.etapas || []).map((q) => { const h = q.frente && q.frente !== frente ? '<li class="fr">' + e(q.frente) + '</li>' : ''; frente = q.frente || frente; return h + '<li><b>' + q.ordem + '.</b> ' + e(q.nome) + '</li>'; }).join('');
+    const estudar = (esc.estudar || []).map((q) => '<li><span class="cb"></span>' + e(q.nome) + '</li>').join('');
+    const pdf = (esc.fontes || []).find(f => f.tipo === 'pdf');
+    return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>' + e(esc.nome) + ' — roteiro do Diagnóstico Inicial</title><style>' +
+      '@page{size:A4;margin:16mm}body{font:12.5pt/1.45 -apple-system,"Segoe UI",Roboto,sans-serif;color:#172A30;margin:0;padding:24px;max-width:190mm}' +
+      'h1{font-size:22pt;margin:0 0 4px}h2{font-size:13pt;margin:22px 0 8px;color:#1E7C92;text-transform:uppercase;letter-spacing:.04em}' +
+      '.meta{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0 6px;font-size:11pt;color:#5E747B}.meta span{border-bottom:1px solid #9DAEB4;min-width:150px;padding:0 4px 2px}' +
+      'ul,ol{margin:0;padding-left:0;list-style:none}li{margin:0 0 8px;page-break-inside:avoid}.cb{display:inline-block;width:11px;height:11px;border:1.5px solid #3C545B;border-radius:3px;margin:0 8px -1px 0}' +
+      '.linhas span{display:block;border-bottom:1px solid #C9DBE0;height:20px}.linhas{margin:4px 0 2px 18px}.cols{columns:2;column-gap:10mm}.fr{font-weight:700;color:#5E747B;margin-top:6px}' +
+      '.risco{background:#FBF1E0;border-radius:8px;padding:10px 14px}.nota{color:#8AA0A7;font-size:9.5pt;margin-top:24px}' +
+      '.print{position:fixed;top:12px;right:12px;border:none;background:#3DAFC7;color:#fff;font:600 11pt sans-serif;padding:9px 14px;border-radius:9px;cursor:pointer}@media print{.print{display:none}body{padding:0}}' +
+      '</style></head><body><button class="print" onclick="window.print()">Imprimir</button>' +
+      '<div style="font-size:9.5pt;color:#8AA0A7;letter-spacing:.06em;text-transform:uppercase">Hangar · Produtiva Júnior · roteiro do Diagnóstico Inicial</div>' +
+      '<h1>' + e(esc.nome) + '</h1><div style="color:#5E747B">' + e(esc.descricao || '') + '</div>' +
+      '<div class="meta"><span>Cliente: </span><span>Data: </span><span>Gerente: </span><span>Consultores: </span></div>' +
+      (saber ? '<h2>O que precisamos saber do cliente</h2><ol>' + saber + '</ol>' : '') +
+      (riscos ? '<h2>Pontos de risco — alinhe na reunião</h2><div class="risco"><ul>' + riscos + '</ul></div>' : '') +
+      (entreg ? '<h2>O que vamos entregar</h2><ul class="cols">' + entreg + '</ul>' : '') +
+      (etapas ? '<h2>Como o projeto acontece</h2><ul class="cols">' + etapas + '</ul>' : '') +
+      (estudar ? '<h2>Para a equipe estudar antes</h2><ul>' + estudar + '</ul>' : '') +
+      '<div class="nota">Fonte: ' + e(pdf ? pdf.nome + ', slide ' + pdf.pagina : 'Hangar') + '.</div></body></html>';
+  }
+  abrirRoteiro(esc) {
+    const html = this.roteiroEscopo(esc); const nome = this.slugDe(esc.nome) + '-diagnostico-inicial.html';
+    if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
+    try { this.abrirLink(URL.createObjectURL(new Blob([html], { type: 'text/html' }))); this.showToast('Roteiro aberto em outra aba. Use Ctrl+P para imprimir.'); }
+    catch (e) { this.showToast('Não consegui abrir aqui. Use "Baixar (.html)".'); }
+  }
+  baixarRoteiro(esc) {
+    const html = this.roteiroEscopo(esc); const nome = this.slugDe(esc.nome) + '-diagnostico-inicial.html';
+    if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
+    this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' gerado. Abra e imprima.' : 'Não consegui gerar o arquivo aqui.');
+  }
+  // Checklist "O que saber" marcado durante a reunião: fica no navegador, por escopo.
+  toggleSaber(escopoId, i) {
+    this.setState(st => {
+      const atual = new Set((st.saberFeitos || {})[escopoId] || []);
+      atual.has(i) ? atual.delete(i) : atual.add(i);
+      const saberFeitos = { ...(st.saberFeitos || {}), [escopoId]: [...atual] };
+      this.salvarLocal('hangar.saber', saberFeitos);
+      return { saberFeitos };
+    });
+  }
+  limparSaber(escopoId) { this.setState(st => { const saberFeitos = { ...(st.saberFeitos || {}), [escopoId]: [] }; this.salvarLocal('hangar.saber', saberFeitos); return { saberFeitos }; }); }
+  irPara(id) { if (typeof document === 'undefined') return; const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  // Índice cliente → escopos em que ele aparece como case de referência no PPGP 2026.
+  clientesPPGP() {
+    if (!this._clientes) {
+      this._clientes = {};
+      for (const e of this.ESCOPOS) for (const c of (e.casesReferencia||[])) {
+        if (c.tipo === 'cronograma') continue;
+        const k = this.normaliza(c.nome);
+        (this._clientes[k] = this._clientes[k] || { nome:c.nome, escopos:[] }).escopos.push(e);
+      }
+    }
+    return this._clientes;
+  }
+
   linhas(t) { return String(t || '').split('\n').map(x => x.trim()).filter(Boolean); }
   fmtMes(s) { const m = /^(\d{4})-(\d{2})$/.exec(s || ''); if (!m) return s || ''; const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']; return meses[+m[2]-1] + ' ' + m[1]; }
 
@@ -292,7 +409,7 @@ class Component extends DCLogic {
   }
   // Gera o arquivo do case para enviar ao CIEP. Guarda o último em window para o smoke conferir.
   baixarJson(c) {
-    const { local, ...limpo } = c;
+    const { local, capaLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const nome = 'case-' + limpo.id + '.json';
     if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json };
@@ -300,7 +417,7 @@ class Component extends DCLogic {
     this.showToast(this.baixarArquivo(nome, json, 'application/json') ? 'Arquivo ' + nome + ' gerado. Envie ao CIEP.' : 'Não consegui gerar o arquivo aqui. Use "Copiar JSON".');
   }
   copiarJson(c) {
-    const { local, ...limpo } = c;
+    const { local, capaLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const ok = () => this.showToast('JSON do case copiado. Cole numa mensagem para o CIEP.');
     try {
@@ -309,7 +426,16 @@ class Component extends DCLogic {
     } catch (e) { this.showToast('Não consegui copiar automaticamente.'); }
   }
   openCase(id) { this.setState({ screen:'case', caseId:id }); if(typeof window!=='undefined') window.scrollTo(0,0); }
-  openNovoCase() { this.setState({ screen:'novo-case', caseErro:'' }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+  openNovoCase(prefill) {
+    const pre = prefill && typeof prefill === 'object' && !prefill.target ? prefill : null;
+    const f = this.state.formCase;
+    // Só preenche o que está vazio: um rascunho em andamento de outro cliente não é apagado.
+    const outro = pre && pre.cliente && f.cliente.trim() && this.normaliza(f.cliente.trim()) !== this.normaliza(pre.cliente);
+    const formCase = pre && !outro ? { ...f, cliente: f.cliente || pre.cliente || '', escopoId: f.escopoId || pre.escopoId || '' } : f;
+    this.setState({ screen:'novo-case', caseErro:'', formCase });
+    if (outro) this.showToast('Você já tem um case em andamento (' + f.cliente + '). Ele foi mantido; use "Limpar" para começar o de ' + pre.cliente + '.');
+    if(typeof window!=='undefined') window.scrollTo(0,0);
+  }
   pedirRemoverCase(id, e) { if(e&&e.stopPropagation)e.stopPropagation(); this.setState({ confirmRemoverId:id }); }
   cancelarRemoverCase() { this.setState({ confirmRemoverId:null }); }
   // Só remove do navegador de quem cadastrou: sem backend, não existe "publicado para todos" a desfazer daqui.
@@ -322,7 +448,7 @@ class Component extends DCLogic {
   }
 
   decorateCase(c) {
-    const escopo = c.escopoId ? this.ESCOPOS.find(e => e.id === c.escopoId) : null;
+    const escopo = c.escopoId ? this.escopoPorId(c.escopoId) : null;
     const escopoNome = escopo ? escopo.nome : (c.escopoNome || 'Escopo não informado');
     const g = escopo ? (this.TAXONOMIA.gruposEscopo[escopo.grupo] || {}) : {};
     const eq = c.equipe || {}; const cons = eq.consultores || [];
@@ -367,6 +493,9 @@ class Component extends DCLogic {
       tags: c.tags || [], hasTags: !!(c.tags && c.tags.length), local: !!c.local,
       cadastradoTexto: 'Cadastrado por ' + ((c.cadastradoPor||{}).nome || '—') + ' · ' + this.fmtData(c.atualizado),
       open: () => this.openCase(c.id), baixar: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.baixarJson(c); }, copiar: () => this.copiarJson(c),
+      escolherCapa: (e) => this.escolherCapa(c.id, e), removerCapa: (e) => this.removerCapa(c.id, e),
+      capaLabel: fotoSrc ? 'Trocar capa' : 'Adicionar capa', capaLabelFicha: fotoSrc ? 'Trocar foto de capa' : 'Adicionar foto de capa',
+      podeRemoverCapa: c.local ? !!fotoSrc : !!c.capaLocal, capaLocal: !!c.capaLocal,
       remover: (e) => this.pedirRemoverCase(c.id, e) };
   }
   computeCases() {
@@ -379,7 +508,7 @@ class Component extends DCLogic {
       if (f.ano.length && !f.ano.includes(ano)) return false;
       if (f.ferramenta.length && !(c.ferramentas||[]).some(x => f.ferramenta.includes(x))) return false;
       if (q) {
-        const escopo = c.escopoId ? this.ESCOPOS.find(e => e.id === c.escopoId) : null;
+        const escopo = c.escopoId ? this.escopoPorId(c.escopoId) : null;
         const eq = c.equipe || {};
         const hay = this.normaliza([c.cliente, c.segmento, c.porte, c.cidade, escopo ? escopo.nome : c.escopoNome, c.resumo, c.desafio, c.solucao, c.depoimentoCliente,
           ...(c.resultados||[]), ...(c.aprendizados||[]), ...(c.tags||[]), (eq.gerente||{}).nome, ...((eq.consultores||[]).map(x=>x.nome)),
@@ -393,7 +522,7 @@ class Component extends DCLogic {
     const todos = this.allCases(); const f = this.state.caseFilters;
     const conta = (lista, chave) => { const m = new Map(); for (const c of lista) for (const v of chave(c)) if (v) m.set(v, (m.get(v)||0)+1); return m; };
     const grupos = [
-      { key:'escopo', label:'Escopo', conta: conta(todos, c => [c.escopoId || ('outro:' + (c.escopoNome||''))]), rotulo: v => v.startsWith('outro:') ? v.slice(6) : ((this.ESCOPOS.find(e=>e.id===v)||{}).nome || v) },
+      { key:'escopo', label:'Escopo', conta: conta(todos, c => [c.escopoId || ('outro:' + (c.escopoNome||''))]), rotulo: v => v.startsWith('outro:') ? v.slice(6) : ((this.escopoPorId(v)||{}).nome || v) },
       { key:'segmento', label:'Segmento', conta: conta(todos, c => [c.segmento]), rotulo: v => v },
       { key:'ano', label:'Ano', conta: conta(todos, c => [((c.periodo||{}).fim || (c.periodo||{}).inicio || c.atualizado || '').slice(0,4)]), rotulo: v => v },
       { key:'ferramenta', label:'Ferramenta usada', conta: conta(todos, c => c.ferramentas||[]), rotulo: v => (this.allData().find(d=>d.id===v)||{}).nome || v },
@@ -440,6 +569,33 @@ class Component extends DCLogic {
     return this._uso[id] || [];
   }
 
+  // Todos os vínculos de uma ferramenta com os escopos do PPGP 2026: etapa, entregável e "o que estudar".
+  // usoDe (só etapas) continua sendo a medida de "mapeada em mais etapas"; aqui é o que a ficha mostra.
+  vinculosDe(id) {
+    if (!this._vinc) {
+      this._vinc = {};
+      for (const e of this.ESCOPOS) {
+        const add = (fid, v) => { const por = (this._vinc[fid] = this._vinc[fid] || {}); (por[e.id] = por[e.id] || { escopo:e, etapas:[], entregaveis:[], estudar:[] })[v.k].push(v.x); };
+        for (const et of (e.etapas||[])) for (const fid of (et.ferramentas||[])) add(fid, { k:'etapas', x:et });
+        for (const en of (e.entregaveis||[])) for (const fid of (en.ferramentas||[])) add(fid, { k:'entregaveis', x:en });
+        for (const es of (e.estudar||[])) for (const fid of (es.ferramentas||[])) add(fid, { k:'estudar', x:es });
+      }
+    }
+    const ordem = this.ESCOPOS.map(e => e.id);
+    return Object.values(this._vinc[id] || {}).sort((a,b) => ordem.indexOf(a.escopo.id) - ordem.indexOf(b.escopo.id)).map(v => {
+      const partes = [];
+      if (v.etapas.length) partes.push((v.etapas.length === 1 ? 'etapa ' : 'etapas ') + v.etapas.map(x => x.ordem).join(', '));
+      if (v.entregaveis.length) partes.push(v.entregaveis.length === 1 ? 'entregável' : v.entregaveis.length + ' entregáveis');
+      if (v.estudar.length) partes.push('o que estudar');
+      return { escopoId:v.escopo.id, escopoNome:v.escopo.nome, detalhe:partes.join(' · '),
+        dica: v.etapas.map(x => x.ordem + '. ' + x.nome).concat(v.entregaveis.map(x => 'Entregável: ' + x.nome)).join('\n'),
+        open:()=>this.openEscopo(v.escopo.id) };
+    });
+  }
+  // Escopos fundidos no PPGP 2026 (ex.: gamificacao → cultura-gamificacao-prosel) guardam o id antigo em
+  // antigosIds: links e cases antigos continuam abrindo o escopo certo.
+  escopoPorId(id) { return this.ESCOPOS.find(e => e.id === id) || this.ESCOPOS.find(e => (e.antigosIds||[]).includes(id)) || null; }
+
   allData() { return this.state.extra.concat(this.DATA); }
   initials(name) { return (name||'').split(' ').filter(w=>w.length>2).slice(0,2).map(w=>w[0]).join('').toUpperCase() || 'C'; }
   extOf(a) { const m=(a.nome||'').match(/\.([a-z0-9]+)$/i); return m?m[1].toUpperCase():(this.ANEXO_STYLE[a.tipo]?this.ANEXO_STYLE[a.tipo].ext:'DOC'); }
@@ -448,6 +604,7 @@ class Component extends DCLogic {
     const ts = this.TIPO_STYLE[it.tipo] || this.TIPO_STYLE['Ferramenta'];
     const cs = this.COMPLEX_STYLE[it.complexidade] || this.COMPLEX_STYLE['Médio'];
     const uso = this.usoDe(it.id);
+    const vinc = this.vinculosDe(it.id);
     return {
       ...it,
       tipoBg: ts.bg, tipoColor: ts.color, visualBg: ts.visual,
@@ -460,8 +617,8 @@ class Component extends DCLogic {
       anexosCount: (it.anexos||[]).length, hasAnexos: (it.anexos||[]).length > 0,
       respNome: this.respNome(it.responsavel), respEmail: this.respEmail(it.responsavel),
       atualizadoFmt: this.fmtData(it.atualizado),
-      usoEmEscopos: uso, usoCount: uso.length, hasUso: uso.length>0, semUso: uso.length===0,
-      usoResumo: uso.length ? (uso.length===1 ? uso[0].escopoNome : uso.length+' escopos') : 'Sem escopo vinculado',
+      usoEmEscopos: vinc, usoCount: uso.length, hasUso: vinc.length>0, semUso: vinc.length===0,
+      usoResumo: vinc.length ? (vinc.length===1 ? vinc[0].escopoNome : vinc.length+' escopos') : 'Sem escopo vinculado',
       open: () => this.openContent(it.id),
       openAnexos: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.setState({ anexosId: it.id }); },
     };
@@ -524,22 +681,52 @@ class Component extends DCLogic {
     const passos = (this.TRILHA.passos || []).map((p, i) => {
       const feito = feitos.has(p.id);
       return { ...p, n: i + 1, feito, pendente: !feito, hasAcao: !!p.acao, acaoLabel: p.acao ? p.acao.label : '',
-        ir: () => { if (!p.acao) return; if (p.acao.tela === 'novo-case') this.openNovoCase(); else this.nav(p.acao.tela); },
+        ir: () => { if (p.acao) this.irTela(p.acao.tela); },
         toggle: () => this.setState(st => { const set = new Set(st.trilhaFeitos || []); set.has(p.id) ? set.delete(p.id) : set.add(p.id); const lista = [...set]; this.salvarLocal('hangar.trilha', lista); return { trilhaFeitos: lista }; }) };
     });
     // ferramentas essenciais: as mapeadas em mais etapas dos escopos; sem escopos, as de uso frequente
     const porUso = data.map(d => ({ d, n: this.usoDe(d.id).length })).filter(x => x.n > 0).sort((a, b) => b.n - a.n).slice(0, 5).map(x => x.d);
     const essenciais = (porUso.length ? porUso : data.filter(d => d.freq === 'Alta').slice(0, 5)).map(dec);
-    // quem procurar: responsáveis que aparecem no acervo
-    const resp = {};
-    for (const d of data) { const nome = this.respNome(d.responsavel); const email = this.respEmail(d.responsavel); if (!nome || nome === '—') continue; (resp[nome] = resp[nome] || { nome, email, iniciais: this.initials(nome), n: 0 }).n++; }
-    const responsaveis = Object.values(resp).sort((a, b) => b.n - a.n).slice(0, 8).map(r => ({ ...r, resumo: r.n + (r.n === 1 ? ' conteúdo' : ' conteúdos'), hasEmail: !!r.email }));
     const q = this.normaliza(s.glossQuery || '');
     const glossario = (this.TRILHA.glossario || []).filter(g => !q || this.normaliza(g.sigla + ' ' + (g.nome || '') + ' ' + g.definicao).includes(q))
       .map(g => ({ ...g, hasNome: !!g.nome, nome: g.nome || '' }));
     return { trilhaPassos: passos, trilhaFeitos: passos.filter(p => p.feito).length, trilhaTotal: passos.length, trilhaPct: passos.length ? Math.round(100 * passos.filter(p => p.feito).length / passos.length) : 0,
-      trilhaCompleta: passos.length > 0 && passos.every(p => p.feito), essenciais, hasEssenciais: essenciais.length > 0, responsaveis, hasResponsaveis: responsaveis.length > 0,
+      trilhaCompleta: passos.length > 0 && passos.every(p => p.feito), essenciais, hasEssenciais: essenciais.length > 0,
       glossario, semGlossario: glossario.length === 0, glossQuery: s.glossQuery, onGlossQuery: (e) => this.setState({ glossQuery: e.target.value }) };
+  }
+  // Ações de conteúdo ({tela, label}) da trilha e da página Como funciona
+  irTela(tela) { if (tela === 'novo-case') this.openNovoCase(); else this.nav(tela); }
+  abrirGrupoEscopo(grupo) {
+    this.setState({ screen:'escopos', escopoId:null, escopoBusca:'' });
+    setTimeout(() => this.irPara('grupo-' + this.slugDe(grupo)), 60);
+  }
+  produtivaVals() {
+    const P = this.PRODUTIVA; const g = this.TAXONOMIA.gruposEscopo;
+    const atuacao = ((P.oQueE || {}).atuacao || []).map(a => {
+      const esc = this.ESCOPOS.filter(e => e.grupo === a.grupo); const cor = (g[a.grupo] || {});
+      return { ...a, cor: cor.cor || '#1E7C92', bg: cor.bg || '#EAF6F9', nEscopos: esc.length,
+        resumoEscopos: esc.length + (esc.length === 1 ? ' escopo' : ' escopos'), escopos: esc.map(e => e.nome).join(' · '),
+        abrir: () => this.abrirGrupoEscopo(a.grupo) };
+    });
+    const paleta = [['#EAF6F9','#1E7C92'],['#EFEDFB','#6A5FB0'],['#E9F4EE','#39795B'],['#FBF0E7','#A5632B'],['#FBE9EA','#B23B47']];
+    const areas = (P.areas || []).map((a, i) => ({ ...a, n: i + 1, bg: paleta[i % paleta.length][0], cor: paleta[i % paleta.length][1], iniciais: this.initials(a.nome),
+      subnucleos: a.subnucleos || [], hasSub: !!(a.subnucleos && a.subnucleos.length),
+      irArea: () => this.irPara('area-' + a.id) }));
+    const passos = ((P.fluxo || {}).passos || []).map((f, i, arr) => ({ ...f, n: i + 1, num: (i < 9 ? '0' : '') + (i + 1), hasAcao: !!f.acao, acaoLabel: f.acao ? f.acao.label : '',
+      ir: () => { if (f.acao) this.irTela(f.acao.tela); }, linhaBg: i === arr.length - 1 ? 'transparent' : '#DCE7EB' }));
+    return { prodOQueE: P.oQueE || {}, prodAtuacao: atuacao, prodNAtuacao: atuacao.length, prodAreas: areas, prodNAreas: areas.length,
+      prodFluxo: P.fluxo || {}, prodPassos: passos, prodMembro: P.membro || {}, prodMembroItens: ((P.membro || {}).itens || []),
+      prodAuxilios: P.auxilios || {}, hasProdAuxilios: !!(P.auxilios && (P.auxilios.itens || []).length),
+      prodAuxItens: ((P.auxilios || {}).itens || []).map(x => ({ ...x,
+        valores: (x.valores || []).map(v => ({ ...v, hasObs: !!v.obs, obs: v.obs || '' })), hasValores: !!(x.valores && x.valores.length),
+        quando: x.quando || [], hasQuando: !!(x.quando && x.quando.length),
+        passos: (x.passos || []).map((t, i) => ({ t, n: i + 1 })), hasPassos: !!(x.passos && x.passos.length),
+        regras: x.regras || [], hasRegras: !!(x.regras && x.regras.length),
+        colunas: (x.passos || []).length && (x.regras || []).length ? '1fr 1fr' : '1fr',
+        hasModelo: !!x.modelo, modeloTitulo: x.modelo ? x.modelo.titulo : '', modeloTexto: x.modelo ? x.modelo.texto : '',
+        ir: () => this.irPara('aux-' + x.id) })),
+      prodIrOQueE: () => this.irPara('prod-oquee'), prodIrAreas: () => this.irPara('prod-areas'), prodIrFluxo: () => this.irPara('prod-fluxo'), prodIrMembro: () => this.irPara('prod-membro'), prodIrAuxilios: () => this.irPara('prod-auxilios'),
+      goProdutiva: () => this.nav('produtiva') };
   }
   nav(screen) { this.setState({ screen, escopoId: screen==='escopos' ? null : this.state.escopoId, caseId: screen==='cases' ? null : this.state.caseId }); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
@@ -557,6 +744,7 @@ class Component extends DCLogic {
       case 'docs': return '#/docs';
       case 'recomendar': return '#/recomendar';
       case 'comece': return '#/comece';
+      case 'produtiva': return '#/produtiva';
       default: return '#/';
     }
   }
@@ -568,7 +756,7 @@ class Component extends DCLogic {
     if (tela === 'biblioteca') this.nav('biblioteca');
     else if (tela === 'ferramenta' && idOk(this.allData(), id)) this.openContent(id);
     else if (tela === 'escopos') this.nav('escopos');
-    else if (tela === 'escopo' && idOk(this.ESCOPOS, id)) this.openEscopo(id);
+    else if (tela === 'escopo' && this.escopoPorId(id)) this.openEscopo(this.escopoPorId(id).id);
     else if (tela === 'cases' && id === 'novo') this.openNovoCase();
     else if (tela === 'cases') this.nav('cases');
     else if (tela === 'case' && idOk(this.allCases(), id)) this.openCase(id);
@@ -576,6 +764,7 @@ class Component extends DCLogic {
     else if (tela === 'docs') this.goDocs();
     else if (tela === 'recomendar') this.nav('recomendar');
     else if (tela === 'comece') this.nav('comece');
+    else if (tela === 'produtiva') this.nav('produtiva');
     else if (this.state.screen !== 'home') this.nav('home');
   }
   componentDidMount() {
@@ -644,7 +833,7 @@ class Component extends DCLogic {
     const groups = [
       { key:'tipo', label:'Tipo de conteúdo', values:Object.keys(tx.tipos) },
       { key:'area', label:'Área de aplicação', field:'categoria', values:Object.keys(tx.categorias) },
-      { key:'escopo', label:'Usada no escopo', options:this.ESCOPOS.map(e=>({ value:e.id, label:e.nome })), match:(d,v)=>this.usoDe(d.id).some(u=>u.escopoId===v) },
+      { key:'escopo', label:'Usada no escopo', options:this.ESCOPOS.map(e=>({ value:e.id, label:e.nome })), match:(d,v)=>this.vinculosDe(d.id).some(u=>u.escopoId===v) },
       { key:'complexidade', label:'Complexidade', values:Object.keys(tx.complexidade) },
       { key:'status', label:'Status', values:Object.keys(tx.status) },
       { key:'freq', label:'Frequência de uso', values:tx.freq },
@@ -696,10 +885,20 @@ class Component extends DCLogic {
       entradas:['—'], saidas:['—'], passos:['Conteúdo gerado automaticamente a partir do cadastro.'],
       perguntas:['—'], cuidados:['—'], exemplos:['—'], anexos:[]
     };
+    this.salvarLocal('hangar.formRascunho', null);
     this.setState(s => { const extra = [item, ...s.extra]; this.salvarLocal('hangar.extra', extra); return { extra, toast:'Conteúdo publicado! Página gerada automaticamente.', form:this.formVazio() }; });
     setTimeout(()=>{ this.openContent(id); this.setState({toast:''}); }, 1100);
   }
 
+  // window.claude.complete só existe quando o Hangar roda dentro do Claude (claude.ai). No Coolify ou no
+  // HTML baixado ela não existe: avisamos isso em vez de um "tente de novo" que nunca vai funcionar.
+  iaDisponivel() { return typeof window !== 'undefined' && !!(window.claude && typeof window.claude.complete === 'function'); }
+  get IA_INDISPONIVEL() { return 'A IA só funciona quando o Hangar é aberto dentro do Claude (claude.ai). Neste endereço, preencha manualmente.'; }
+  salvarRascunhoForm() {
+    const f = this.state.form;
+    if (!f.nome.trim() && !f.descricao.trim()) { this.showToast('Nada para salvar ainda: preencha pelo menos o nome.'); return; }
+    this.showToast(this.salvarLocal('hangar.formRascunho', f) ? 'Rascunho salvo neste navegador. Ele volta preenchido quando você abrir o Cadastrar.' : 'Não consegui salvar o rascunho neste navegador.');
+  }
   goDocs() { this.setState(st=>({ screen:'docs', doc: st.doc || this.defaultDoc() })); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
   parseAIJson(text) {
@@ -732,6 +931,7 @@ class Component extends DCLogic {
   async generateDoc() {
     const d = this.state.doc; const inp = (this.state.aiDocInput||'').trim();
     if (inp.length < 8) { this.setState({ aiError:'Descreva a ferramenta com um pouco mais de detalhe.' }); return; }
+    if (!this.iaDisponivel()) { this.setState({ aiError:this.IA_INDISPONIVEL }); return; }
     this.setState({ aiLoading:true, aiError:'' });
     const isModelo = d.type === 'modelo';
     const tipoLabel = isModelo ? 'modelo editável (template)' : (d.type==='manual' ? 'manual de uso' : 'metodologia');
@@ -756,6 +956,7 @@ class Component extends DCLogic {
   async generateTool() {
     const inp = (this.state.aiToolInput||'').trim();
     if (inp.length < 8) { this.setState({ aiToolError:'Cole ou descreva o conteúdo da ferramenta primeiro.' }); return; }
+    if (!this.iaDisponivel()) { this.setState({ aiToolError:this.IA_INDISPONIVEL }); return; }
     this.setState({ aiToolLoading:true, aiToolError:'' });
     const nomeHint = (this.state.aiToolNome||'').trim();
     const tx = this.TAXONOMIA;
@@ -779,7 +980,7 @@ class Component extends DCLogic {
         perguntas: arr(j.perguntas,['—']), cuidados: arr(j.cuidados,['—']), exemplos: arr(j.exemplos,['—']),
         anexos: [], geradoIA: true
       };
-      this.setState(st=>({ extra:[item, ...st.extra], aiToolLoading:false, aiToolInput:'', aiToolNome:'' }));
+      this.setState(st=>{ const extra = [item, ...st.extra]; this.salvarLocal('hangar.extra', extra); return { extra, aiToolLoading:false, aiToolInput:'', aiToolNome:'' }; });
       this.showToast('Ferramenta gerada por IA e adicionada à biblioteca (em revisão).');
       setTimeout(()=>this.openContent(id), 900);
     } catch(e) {
@@ -798,6 +999,7 @@ class Component extends DCLogic {
   async readModelo() {
     const f = this.state.modeloFile;
     if (!f) { this.setState({ modeloError:'Anexe a imagem ou o PDF do modelo da ferramenta.' }); return; }
+    if (!this.iaDisponivel()) { this.setState({ modeloError:this.IA_INDISPONIVEL }); return; }
     this.setState({ modeloLoading:true, modeloError:'' });
     const nomeHint = (this.state.modeloNome||'').trim() || f.name.replace(/\.[a-z0-9]+$/i,'');
     const schema = '{"nome":string,"sigla":string curto,"layout":"canvas"|"grid","blocos":[{"titulo":string,"dica":string (1 frase do que preencher)}]}';
@@ -810,13 +1012,15 @@ class Component extends DCLogic {
       const id = 'mod-'+Date.now();
       const toolMatch = this.allData().find(d => (d.nome||'').toLowerCase() === (j.nome||nomeHint||'').toLowerCase());
       const modelo = { id, toolId: toolMatch?toolMatch.id:null, nome: j.nome||nomeHint||'Modelo de ferramenta', sigla: j.sigla||'', fonte: f.name, layout: j.layout==='canvas'?'canvas':'grid', registrado:'Lido do anexo', blocos };
-      this.setState(st=>({ modelos:[modelo, ...st.modelos], modeloLoading:false, modeloFile:null, modeloNome:'' }));
+      this.setState(st=>{ const modelos = [modelo, ...st.modelos]; this.salvarModelosLocais(modelos); return { modelos, modeloLoading:false, modeloFile:null, modeloNome:'' }; });
       this.showToast('Modelo-padrão lido e registrado. A IA passará a seguir esse formato.');
     } catch(e) {
       this.setState({ modeloLoading:false, modeloError:'Não consegui ler o modelo agora. Tente outro arquivo ou ajuste o nome.' });
     }
   }
-  removeModelo(id) { this.setState(st=>({ modelos: st.modelos.filter(m=>m.id!==id) })); }
+  removeModelo(id) { this.setState(st=>{ const modelos = st.modelos.filter(m=>m.id!==id); this.salvarModelosLocais(modelos); return { modelos }; }); }
+  // só os modelos que o membro registrou vão para o navegador; os do acervo vêm sempre de modelos.json
+  salvarModelosLocais(modelos) { const doAcervo = new Set((DADOS.modelos||[]).map(m=>m.id)); this.salvarLocal('hangar.modelos', modelos.filter(m=>!doAcervo.has(m.id))); }
 
   updateDoc(patch) { this.setState(st=>({ doc: { ...st.doc, ...patch } })); }
   setDocType(t) { this.updateDoc({ type:t }); }
@@ -827,7 +1031,41 @@ class Component extends DCLogic {
   addBloco() { this.setState(st=>({ doc:{...st.doc, blocos:[...st.doc.blocos, { titulo:'Novo bloco', itens:['Campo de exemplo'], w:'normal' }]} })); }
   removeBloco(i) { this.setState(st=>({ doc:{...st.doc, blocos: st.doc.blocos.filter((_,idx)=>idx!==i)} })); }
   showToast(msg) { this.setState({toast:msg}); setTimeout(()=>this.setState({toast:''}), 2600); }
-  exportDoc(fmt) { this.showToast('Documento exportado ('+fmt+'). Pronto para compartilhar.'); }
+  documentoHtml(d) {
+    const e = (t) => this.esc(t);
+    const isModelo = d.type === 'modelo';
+    const tipo = isModelo ? 'Modelo' : (d.type === 'manual' ? 'Manual de uso' : 'Metodologia');
+    const intro = String(d.intro || '').split('\n').filter(Boolean).map(p => '<p>' + e(p) + '</p>').join('');
+    let corpo = '';
+    if (isModelo) {
+      corpo = '<div class="grade">' + (d.blocos || []).map(b => '<div class="bloco' + (b.w === 'wide' ? ' wide' : '') + '"><b>' + e(b.titulo) + '</b><ul>' + (b.itens || []).map(i => '<li>' + e(i) + '</li>').join('') + '</ul></div>').join('') + '</div>';
+    } else {
+      let grupo = null;
+      corpo = (d.secoes || []).map((x, i) => {
+        const g = x.grupo && x.grupo !== grupo ? '<h2>' + e(x.grupo) + '</h2>' : ''; grupo = x.grupo || grupo;
+        return g + '<section><h3>' + String(i + 1).padStart(2, '0') + '. ' + e(x.titulo) + '</h3><p>' + e(x.descricao) + '</p>' +
+          ((x.perguntas || []).length ? '<div class="perg"><b>Perguntas-chave</b><ul>' + x.perguntas.map(q => '<li>' + e(q) + '</li>').join('') + '</ul></div>' : '') + '</section>';
+      }).join('');
+    }
+    return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>' + e(d.nome) + ' — ' + tipo + '</title><style>' +
+      '@page{size:A4;margin:16mm}body{font:12pt/1.55 -apple-system,"Segoe UI",Roboto,sans-serif;color:#172A30;margin:0;padding:24px;max-width:190mm}' +
+      'h1{font-size:24pt;margin:4px 0}h2{font-size:12pt;margin:24px 0 6px;color:#1E7C92;text-transform:uppercase;letter-spacing:.05em}h3{font-size:13pt;margin:14px 0 4px}' +
+      '.sub{color:#5E747B;font-size:13pt}.meta{font-size:9.5pt;color:#8AA0A7;letter-spacing:.06em;text-transform:uppercase}section{page-break-inside:avoid}' +
+      '.perg{background:#F6F9FA;border-radius:8px;padding:8px 12px;font-size:11pt}.perg ul,.bloco ul{margin:4px 0 0;padding-left:18px}' +
+      '.grade{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.bloco{border:1.5px solid #3C545B;border-radius:8px;padding:10px 12px}.bloco.wide{grid-column:1/-1}' +
+      '.print{position:fixed;top:12px;right:12px;border:none;background:#3DAFC7;color:#fff;font:600 11pt sans-serif;padding:9px 14px;border-radius:9px;cursor:pointer}@media print{.print{display:none}body{padding:0}}' +
+      '</style></head><body><button class="print" onclick="window.print()">Imprimir / salvar PDF</button>' +
+      '<div class="meta">Hangar · Produtiva Júnior · ' + e(tipo) + (d.categoria ? ' · ' + e(d.categoria) : '') + '</div>' +
+      '<h1>' + e(d.nome) + (d.sigla ? ' (' + e(d.sigla) + ')' : '') + '</h1>' + (d.subtitulo ? '<div class="sub">' + e(d.subtitulo) + '</div>' : '') +
+      intro + corpo + '</body></html>';
+  }
+  exportDoc() {
+    const d = this.state.doc; if (!d) return;
+    const nome = this.slugDe(d.nome || 'documento') + '-' + (d.type === 'modelo' ? 'modelo' : d.type === 'manual' ? 'manual' : 'metodologia') + '.html';
+    const html = this.documentoHtml(d);
+    if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json: html };
+    this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' baixado. Abra e use "Imprimir / salvar PDF".' : 'Não consegui gerar o arquivo aqui.');
+  }
   saveDocLibrary() {
     const d = this.state.doc; const isModelo = d.type==='modelo';
     const id = 'doc-'+Date.now();
@@ -847,8 +1085,8 @@ class Component extends DCLogic {
       cuidados:['—'], exemplos:['—'],
       anexos:[{nome:anexoNome, tipo:anexoTipo, descricao:'Documento gerado automaticamente pela plataforma.', versao:'v1.0', data:this.hoje()}]
     };
-    this.setState(st=>({ extra:[item, ...st.extra] }));
-    this.showToast('Documentação salva na biblioteca!');
+    this.setState(st=>{ const extra = [item, ...st.extra]; this.salvarLocal('hangar.extra', extra); return { extra }; });
+    this.showToast('Documentação salva na biblioteca (neste navegador).');
     setTimeout(()=>{ this.openContent(id); }, 1000);
   }
 
@@ -858,23 +1096,26 @@ class Component extends DCLogic {
     const dec = (it) => it ? this.decorate(it) : null;
 
     // nav
-    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
+    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'produtiva',label:'Como funciona'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
     const navItems = navDef.map(n => {
       const active = s.screen===n.key || (n.key==='biblioteca' && s.screen==='conteudo') || (n.key==='cases' && (s.screen==='case' || s.screen==='novo-case'));
       return { label:n.label, go: n.key==='docs' ? ()=>this.goDocs() : ()=>this.nav(n.key), bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
     });
 
-    // home sections — nada de contador fictício: escopos ativos, atualizações reais e uso frequente.
+    // home sections — nada de contador fictício: escopos ativos e uso frequente.
     const decEscopo = (e) => {
       const g = this.TAXONOMIA.gruposEscopo[e.grupo] || { cor:'#1E7C92', bg:'#EAF6F9', label:e.grupo };
       const ferrIds = new Set(); for (const et of (e.etapas||[])) for (const f of (et.ferramentas||[])) ferrIds.add(f);
+      for (const x of (e.entregaveis||[]).concat(e.estudar||[])) for (const f of (x.ferramentas||[])) ferrIds.add(f);
+      const nCases = (e.casesReferencia||[]).filter(c => c.tipo !== 'cronograma').length;
+      const pdf = (e.fontes||[]).find(f => f.tipo === 'pdf');
       return { ...e, grupoLabel:g.label, grupoCor:g.cor, grupoBg:g.bg, ativo:e.status==='ativo', despriorizado:e.status!=='ativo',
         statusLabel: e.status==='ativo' ? 'Ativo' : 'Despriorizado',
-        nEtapas:(e.etapas||[]).length, nFerr:ferrIds.size, respNome:this.respNome(e.responsavel),
-        resumo:(e.etapas||[]).length+' etapas · '+ferrIds.size+' ferramentas', pick:()=>this.openEscopo(e.id) };
+        nEtapas:(e.etapas||[]).length, nFerr:ferrIds.size, nEntregaveis:(e.entregaveis||[]).length, nCases, respNome:this.respNome(e.responsavel),
+        fonteLabel: pdf ? 'PPGP 2026 · slide ' + pdf.pagina : '', hasFonte: !!pdf,
+        resumo:(e.etapas||[]).length+' etapas · '+(e.entregaveis||[]).length+' entregáveis · '+nCases+' cases', pick:()=>this.openEscopo(e.id) };
     };
     const porEscopo = this.ESCOPOS.filter(e=>e.status==='ativo').slice(0,3).map(decEscopo);
-    const novidades = [...data].sort((a,b)=>String(b.atualizado||'').localeCompare(String(a.atualizado||''))).slice(0,3).map(dec);
     const recomendados = data.filter(d=>d.freq==='Alta' && d.status==='Ativo').slice(0,3).map(dec);
 
     const quickChips = this.vivos(this.TAXONOMIA.tipos)
@@ -920,16 +1161,62 @@ class Component extends DCLogic {
 
     // escopos
     const gruposEscopo = this.TAXONOMIA.gruposEscopo;
+    // busca na tela Escopos: nome, descrição, etapas, entregáveis, o que estudar/saber, riscos, clientes e ferramentas
+    const buscaEsc = this.normaliza(s.escopoBusca).trim();
+    const nomeFerr = (fid) => (data.find(d => d.id === fid) || {}).nome || '';
+    const hayEscopo = (e) => this.normaliza([e.nome, e.descricao, ...(e.etapas||[]).map(x=>x.nome), ...(e.entregaveis||[]).map(x=>x.nome), ...(e.estudar||[]).map(x=>x.nome),
+      ...(e.saber||[]), ...(e.riscos||[]), ...(e.casesReferencia||[]).map(x=>x.nome),
+      ...[...(e.etapas||[]), ...(e.entregaveis||[]), ...(e.estudar||[])].flatMap(x => (x.ferramentas||[]).map(nomeFerr))].join(' '));
+    const escoposVisiveis = this.ESCOPOS.filter(e => !buscaEsc || buscaEsc.split(/\s+/).every(t => hayEscopo(e).includes(t)));
     const escoposPorGrupo = Object.keys(gruposEscopo).map(g => ({
-      grupo:g, label:gruposEscopo[g].label||g, cor:gruposEscopo[g].cor, bg:gruposEscopo[g].bg,
-      escopos:this.ESCOPOS.filter(e=>e.grupo===g).sort((a,b)=>(a.status==='ativo'?0:1)-(b.status==='ativo'?0:1)).map(decEscopo),
+      grupo:g, ancora:'grupo-' + this.slugDe(g), label:gruposEscopo[g].label||g, cor:gruposEscopo[g].cor, bg:gruposEscopo[g].bg,
+      escopos:escoposVisiveis.filter(e=>e.grupo===g).map(decEscopo),
     })).filter(g => g.escopos.length);
-    const escopoRaw = s.escopoId ? this.ESCOPOS.find(e=>e.id===s.escopoId) : null;
-    const escopoSel = escopoRaw ? { ...decEscopo(escopoRaw), cases: casesTodos.filter(c => c.escopoId === escopoRaw.id).map(decCase), hasCases: casesTodos.some(c => c.escopoId === escopoRaw.id) } : null;
+    const escopoRaw = s.escopoId ? this.escopoPorId(s.escopoId) : null;
+    const chipFerr = (fid) => { const d = data.find(x => x.id === fid); return d ? { id:d.id, nome:d.nome, open:()=>this.openContent(d.id), emConstrucao: d.status==='Em construção' } : null; };
+    const escopoSel = escopoRaw ? (() => {
+      const e = escopoRaw;
+      const fichas = casesTodos.filter(c => c.escopoId === e.id || (e.antigosIds||[]).includes(c.escopoId));
+      const fichaDe = (nome) => casesTodos.find(c => this.normaliza(c.cliente) === this.normaliza(nome));
+      const feitos = new Set((s.saberFeitos||{})[e.id] || []);
+      const idx = this.clientesPPGP();
+      const cron = (e.fontes||[]).find(f => f.tipo === 'drive-sheet' && /^https:\/\//.test(f.url || ''));
+      const pdf = (e.fontes||[]).find(f => f.tipo === 'pdf');
+      const comFerr = (x) => { const ferramentas = (x.ferramentas||[]).map(chipFerr).filter(Boolean); return { ...x, ferramentas, hasFerramentas: ferramentas.length>0, marcado: !!x.marcado }; };
+      const casesRef = (e.casesReferencia||[]).filter(c => c.tipo !== 'cronograma').map(c => {
+        const ficha = fichaDe(c.nome);
+        const outros = ((idx[this.normaliza(c.nome)] || {}).escopos || []).filter(x => x.id !== e.id);
+        return { nome:c.nome, iniciais:this.initials(c.nome), temFicha:!!ficha, semFicha:!ficha,
+          abrir: () => { if (ficha) this.openCase(ficha.id); },
+          cadastrar: () => this.openNovoCase({ cliente:c.nome, escopoId:e.id }),
+          outros: outros.map(x => ({ nome:x.nome, open:()=>this.openEscopo(x.id) })), hasOutros: outros.length>0 };
+      });
+      const cronogramasRef = (e.casesReferencia||[]).filter(c => c.tipo === 'cronograma').map(c => c.nome);
+      const saber = (e.saber||[]).map((q, i) => ({ texto:q, n:i+1, feito:feitos.has(i), pendente:!feitos.has(i), toggle:()=>this.toggleSaber(e.id, i),
+        bg: feitos.has(i) ? '#F2FAF5' : '#fff', border: feitos.has(i) ? '#BFE3CD' : '#E7EEF1', cor: feitos.has(i) ? '#5E747B' : '#163B45', risco: feitos.has(i) ? 'line-through' : 'none' }));
+      return { ...decEscopo(e),
+        cases: fichas.map(decCase), hasCases: fichas.length > 0,
+        estudar: (e.estudar||[]).map(comFerr), hasEstudar: (e.estudar||[]).length>0,
+        entregaveis: (e.entregaveis||[]).map(comFerr), hasEntregaveis: (e.entregaveis||[]).length>0,
+        saber, hasSaber: saber.length>0, nSaberFeitos: saber.filter(x=>x.feito).length, nSaber: saber.length, hasSaberFeitos: feitos.size>0,
+        limparSaber: () => this.limparSaber(e.id),
+        riscos: (e.riscos||[]), hasRiscos: (e.riscos||[]).length>0,
+        casesRef, hasCasesRef: casesRef.length>0, nCasesComFicha: casesRef.filter(c=>c.temFicha).length,
+        cronogramasRef, hasCronogramasRef: cronogramasRef.length>0, cronogramasRefTexto: cronogramasRef.join(', '),
+        hasCronograma: !!cron, cronogramaUrl: cron ? cron.url : '', cronogramaNome: cron ? cron.nome : '',
+        hasMarcados: [...(e.etapas||[]), ...(e.entregaveis||[]), ...(e.estudar||[])].some(x => x.marcado),
+        fonteTexto: pdf ? pdf.nome + ', slide ' + pdf.pagina : '',
+        abrirRoteiro: () => this.abrirRoteiro(e), baixarRoteiro: () => this.baixarRoteiro(e),
+        cadastrarCase: () => this.openNovoCase({ cliente:'', escopoId:e.id }),
+        irEstudar:()=>this.irPara('esc-estudar'), irReuniao:()=>this.irPara('esc-reuniao'), irEtapas:()=>this.irPara('esc-etapas'), irEntregaveis:()=>this.irPara('esc-entregaveis'), irCases:()=>this.irPara('esc-cases'),
+      };
+    })() : null;
+    let frenteAnt = null;
     const escopoEtapas = escopoRaw ? (escopoRaw.etapas||[]).map((et,i,arr) => {
       const ferramentas = (et.ferramentas||[]).map(fid=>dec(data.find(d=>d.id===fid))).filter(Boolean);
+      const novaFrente = !!et.frente && et.frente !== frenteAnt; if (et.frente) frenteAnt = et.frente;
       return { ...et, num:(et.ordem<10?'0':'')+et.ordem, ferramentas, hasFerramentas:ferramentas.length>0, semFerramentas:ferramentas.length===0,
-        entregaveis:et.entregaveis||[], hasEntregaveis:!!(et.entregaveis&&et.entregaveis.length), hasDuracao:!!et.duracaoRef, duracaoRef:et.duracaoRef||'',
+        novaFrente, frenteLabel: et.frente || '', marcado: !!et.marcado,
         ultima:i===arr.length-1, linhaBg:i===arr.length-1?'transparent':'#DCE7EB' };
     }) : [];
 
@@ -993,6 +1280,7 @@ class Component extends DCLogic {
     });
     const recoDef = this.PROBLEMAS.find(p=>p.key===s.recoKey);
     const recoResults = recoDef ? recoDef.ids.map(id=>dec(data.find(d=>d.id===id))).filter(Boolean) : [];
+    const recoEscopos = recoDef ? (recoDef.escopoIds||[]).map(id => this.escopoPorId(id)).filter(Boolean).map(e => ({ nome:e.nome, open:()=>this.openEscopo(e.id) })) : [];
 
     // documentação
     const doc = s.doc || this.defaultDoc();
@@ -1051,6 +1339,7 @@ class Component extends DCLogic {
       ...this.revisoesVals(),
       // trilha do primeiro projeto + glossário
       isComece: s.screen==='comece', goComece:()=>this.nav('comece'), ...this.trilhaVals(s, data, dec),
+      isProdutiva: s.screen==='produtiva', ...this.produtivaVals(),
       // filtros no celular (biblioteca e cases) e iniciais de quem usa
       filtrosClass: s.filtrosAbertos ? 'hg-open' : '', filtrosLabel: s.filtrosAbertos ? 'Ocultar filtros' : 'Filtros', toggleFiltros:()=>this.setState(st=>({ filtrosAbertos: !st.filtrosAbertos })),
       hasEu: !!(s.eu && s.eu.nome), euNome: (s.eu && s.eu.nome) || '', euIniciais: s.eu && s.eu.nome ? this.initials(s.eu.nome) : '',
@@ -1066,13 +1355,15 @@ class Component extends DCLogic {
       nFerrEscolhidas: fcase.ferramentas.length, docsRows, addDoc:()=>this.setState(st=>({ formCase:{ ...st.formCase, documentos: st.formCase.documentos.concat([{ nome:'', tipo:docTipoOptions[0]?docTipoOptions[0].value:'Outro', url:'' }]) } })),
       videoPreview, hasVideoPreview: !!videoPreview, caseErro: s.caseErro, hasCaseErro: !!s.caseErro,
       fotoPreview, hasFotoPreview: !!fotoPreview, semFotoPreview: !fotoPreview, fotoFonte,
-      onFotoArquivo:(e)=>this.onFotoArquivo(e), onFotoDrop:(e)=>this.onFotoDrop(e), onFotoDragOver:(e)=>this.onFotoDragOver(e), abrirSeletorFoto:()=>this.abrirSeletorFoto(), removerFoto:()=>this.removerFoto(),
+      onCapaArquivo:(e)=>this.onCapaArquivo(e), onFotoArquivo:(e)=>this.onFotoArquivo(e), onFotoDrop:(e)=>this.onFotoDrop(e), onFotoDragOver:(e)=>this.onFotoDragOver(e), abrirSeletorFoto:()=>this.abrirSeletorFoto(), removerFoto:()=>this.removerFoto(),
       publishCase:()=>this.publishCase(), baixarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.baixarJson(this.montarCase(fcase)); }, copiarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.copiarJson(this.montarCase(fcase)); },
       casePronto: !!casePreview, limparCase:()=>this.setState({ formCase:this.formCaseVazio(), caseErro:'' }),
       goHome:()=>this.nav('home'), goBiblioteca:()=>this.nav('biblioteca'), goRecomendar:()=>this.nav('recomendar'), goEscopos:()=>this.nav('escopos'),
       // escopos
       escoposPorGrupo, hasEscopoSel: !!escopoSel, noEscopoSel: !escopoSel, escopoSel, escopoEtapas,
       escoposCount: this.ESCOPOS.length, semEscopos: this.ESCOPOS.length===0,
+      escopoBusca: s.escopoBusca, onEscopoBusca:(e)=>this.setState({ escopoBusca:e.target.value }), limparEscopoBusca:()=>this.setState({ escopoBusca:'' }),
+      hasEscopoBusca: !!buscaEsc, escoposAchados: escoposVisiveis.length, semEscopoAchado: !!buscaEsc && escoposVisiveis.length===0,
       navItems,
       // search
       query: s.query,
@@ -1081,11 +1372,11 @@ class Component extends DCLogic {
       runSearch:()=>this.nav('biblioteca'),
       quickChips,
       // home
-      porEscopo, hasPorEscopo: porEscopo.length>0, novidades, recomendados, hasRecomendados: recomendados.length>0, semRecomendados: recomendados.length===0,
+      porEscopo, hasPorEscopo: porEscopo.length>0, recomendados, hasRecomendados: recomendados.length>0, semRecomendados: recomendados.length===0,
       atalhos: [
         { label:'Qual ferramenta usar?', hint:'Escolha o problema e veja as sugestões', go:()=>this.nav('recomendar') },
         { label:'Registrar um case', hint:'Projeto finalizado vira referência', go:()=>this.openNovoCase() },
-        { label:'Ver os escopos', hint:'Etapas e ferramentas de cada linha de serviço', go:()=>this.nav('escopos') },
+        { label:'Ver os escopos', hint:'O que estudar, perguntar e entregar em cada um dos ' + this.ESCOPOS.length, go:()=>this.nav('escopos') },
       ],
       // biblioteca
       filtered, filterGroups, cardStyles,
@@ -1120,7 +1411,7 @@ class Component extends DCLogic {
       formObjetivo:setF('objetivo'), formProblema:setF('problema'), formTempo:setF('tempo'), formResp:setF('responsavel'),
       publish:()=>this.publish(),
       // recomendar
-      problemas, hasReco: !!recoDef, recoLabel: recoDef?recoDef.label:'', recoResults,
+      problemas, hasReco: !!recoDef, recoLabel: recoDef?recoDef.label:'', recoResults, recoEscopos, hasRecoEscopos: recoEscopos.length>0,
       // documentação — IA
       aiDocInputVal: s.aiDocInput, setAiDocInput:(e)=>this.setState({aiDocInput:e.target.value}),
       aiLoading: s.aiLoading, aiNotLoading: !s.aiLoading, aiError: s.aiError, hasAiError: !!s.aiError,
@@ -1150,7 +1441,7 @@ class Component extends DCLogic {
       docNome:updField('nome'), docSigla:updField('sigla'), docSubtitulo:updField('subtitulo'), docIntro:updField('intro'), docCategoria:updField('categoria'),
       secoesEdit, secoesPrev, introParas, addSecao:()=>this.addSecao(),
       docCount: doc.secoes.length,
-      exportPdf:()=>this.exportDoc('PDF'), saveDoc:()=>this.saveDocLibrary(),
+      exportPdf:()=>this.exportDoc(), saveDoc:()=>this.saveDocLibrary(), salvarRascunhoForm:()=>this.salvarRascunhoForm(),
       // toast
       toastOpen: !!s.toast, toastMsg: s.toast,
     };

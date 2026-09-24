@@ -37,6 +37,7 @@ let escopos = ler('escopos');
 let modelos = ler('modelos');
 let cases = ler('cases');
 let mudou = false;
+let escoposMudaram = false;
 
 // --cases-dir <pasta>: copia os JSON enviados pelos membros para rascunhos/ e promove em seguida
 const di = args.indexOf('--cases-dir');
@@ -89,8 +90,7 @@ for (const nome of alvos) {
 
   if (nome.startsWith('escopo-')) {
     escopos = escopos.filter((e) => e.id !== item.id).concat([item]);
-    const ordemGrupo = { 'PRODUÇÃO': 0, 'FINANCEIRO': 1, 'ESTRATÉGIA': 2 };
-    escopos.sort((a, b) => (ordemGrupo[a.grupo] ?? 9) - (ordemGrupo[b.grupo] ?? 9) || (a.status === 'ativo' ? 0 : 1) - (b.status === 'ativo' ? 0 : 1) || a.nome.localeCompare(b.nome));
+    escoposMudaram = true;
   } else {
     ferramentas = ferramentas.filter((f) => f.id !== item.id).concat([item]);
     ferramentas.sort((a, b) => a.categoria.localeCompare(b.categoria) || a.nome.localeCompare(b.nome));
@@ -100,6 +100,16 @@ for (const nome of alvos) {
   unlinkSync(p);
   console.log(`✓ ${nome} promovido (revisor ${rev.revisor}, ${rev.data})`);
   mudou = true;
+}
+
+// O mapa (fontes/escopos-mapa.json) é a lista oficial de escopos, na ordem do PPGP 2026: quem não está
+// nele sai do acervo; a ordem de exibição dentro de cada grupo segue a do documento.
+if (escoposMudaram) {
+  const mapa = JSON.parse(readFileSync(join(ROOT, 'fontes/escopos-mapa.json'), 'utf8'));
+  const ordem = mapa.escopos.map((d) => d.id);
+  const fora = escopos.filter((e) => !ordem.includes(e.id));
+  if (fora.length) console.log(`removidos do acervo (fora de fontes/escopos-mapa.json): ${fora.map((e) => e.id).join(', ')}`);
+  escopos = escopos.filter((e) => ordem.includes(e.id)).sort((a, b) => ordem.indexOf(a.id) - ordem.indexOf(b.id));
 }
 
 if (mudou) {

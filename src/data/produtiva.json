@@ -1,0 +1,356 @@
+{
+  "_comentario": "Conteúdo da página 'Como funciona a Produtiva' (#/produtiva). Texto ditado pela conta institucional em 2026-09-24. As áreas de atuação ligam aos grupos de escopo de taxonomia.gruposEscopo; a lista de escopos de cada uma é calculada no app a partir de escopos.json.",
+  "origem": "manual:produtivajunior@gmail.com",
+  "atualizado": "2026-09-24",
+  "oQueE": {
+    "titulo": "O que é a Produtiva",
+    "texto": "A Produtiva é uma empresa de gestão empresarial com mais de 17 anos de mercado. Ajudamos empresas a crescer atuando nas grandes áreas da gestão, e cada uma delas vira escopos de projeto que você encontra no Hangar.",
+    "anos": "17+",
+    "atuacao": [
+      {
+        "grupo": "PRODUÇÃO",
+        "nome": "Gestão da Produção"
+      },
+      {
+        "grupo": "FINANCEIRO",
+        "nome": "Gestão Financeira"
+      },
+      {
+        "grupo": "ESTRATÉGIA",
+        "nome": "Gestão Estratégica"
+      },
+      {
+        "grupo": "TECNOLOGIA",
+        "nome": "Gestão da Tecnologia"
+      }
+    ]
+  },
+  "areas": [
+    {
+      "id": "projetos",
+      "nome": "Projetos",
+      "resumo": "É onde os projetos são executados. Todos os membros da Produtiva executam projetos, mas a prioridade é da área de Projetos.",
+      "faz": [
+        "Executa os projetos vendidos, seguindo as etapas do escopo",
+        "Cria novos escopos e produtos, cuida da tecnologia e acompanha a satisfação dos clientes pelos seus subnúcleos"
+      ],
+      "procure": "Vai entrar num projeto, tem dúvida sobre um escopo ou quer saber quem já fez um projeto parecido.",
+      "subnucleos": [
+        {
+          "sigla": "CIEP",
+          "nome": null,
+          "texto": "Criação de novos escopos e novos produtos da Produtiva."
+        },
+        {
+          "sigla": "CIT",
+          "nome": null,
+          "texto": "Parte tecnológica: desenvolvimento de tecnologia e dos sistemas internos da Produtiva. Também auxilia outros consultores nessa parte mais tecnológica."
+        },
+        {
+          "sigla": "CS",
+          "nome": "Customer Success",
+          "texto": "Cada projeto tem uma pessoa de CS, que aplica o formulário CSAT e colhe a percepção do gestor e dos consultores sobre o projeto em que estão alocados."
+        }
+      ]
+    },
+    {
+      "id": "gestao-de-pessoas",
+      "nome": "Gestão de Pessoas",
+      "resumo": "Cuida de quem faz a Produtiva: integra a empresa e acompanha o desenvolvimento de cada membro.",
+      "faz": [
+        "Ações de endomarketing para integrar toda a empresa",
+        "Feedback one a one com os membros",
+        "Feedback 360 para acompanhar o desenvolvimento de cada membro",
+        "Formulários respondidos mensalmente pelos membros"
+      ],
+      "procure": "Quer conversar sobre seu desenvolvimento, dar ou pedir feedback, ou tem dúvida sobre os formulários mensais.",
+      "subnucleos": []
+    },
+    {
+      "id": "vice-presidencia",
+      "nome": "Vice-presidência",
+      "resumo": "É a parte administrativa e financeira: todo o financeiro da empresa passa por aqui.",
+      "faz": [
+        "Cuida do financeiro da Produtiva: todas as contas",
+        "Pagamento de passagens e hospedagens",
+        "Pagamentos de eventos",
+        "Pagamento de auxílios e reembolsos dos membros",
+        "PIPJ: libera as retiradas e analisa os casos fora da regra",
+        "Empréstimo dos computadores da Produtiva"
+      ],
+      "procure": "Tem dúvida sobre pagamentos, passagens, hospedagem, custos de um evento, auxílios, reembolsos, PIPJ ou quer reservar um computador.",
+      "subnucleos": []
+    },
+    {
+      "id": "presidencia",
+      "nome": "Presidência",
+      "resumo": "É o núcleo voltado para eventos, networking e divulgação da Produtiva no mercado.",
+      "faz": [
+        "Constrói os eventos da Produtiva",
+        "Gera networking e conexão com outros empresários",
+        "Cuida da divulgação da Produtiva no mercado"
+      ],
+      "procure": "Quer ajudar num evento, indicar um contato de empresário ou divulgar a Produtiva.",
+      "subnucleos": []
+    },
+    {
+      "id": "marketing",
+      "nome": "Marketing",
+      "resumo": "É o comercial da Produtiva: prospecta empresas e fecha os projetos. Reúne os SDRs, os closers e o diretor comercial.",
+      "faz": [
+        "SDRs prospectam, qualificam o lead e marcam a reunião de diagnóstico",
+        "Closers conduzem a reunião de diagnóstico e apresentam a proposta ao gestor",
+        "O diretor comercial coordena a área"
+      ],
+      "procure": "Conhece uma empresa que pode virar cliente, ou vai receber o repasse de um projeto recém-vendido.",
+      "subnucleos": []
+    }
+  ],
+  "fluxo": {
+    "titulo": "Do primeiro contato ao projeto",
+    "texto": "Como um projeto nasce na Produtiva, passo a passo, e quem cuida de cada etapa.",
+    "passos": [
+      {
+        "quem": "SDR",
+        "titulo": "Prospecção",
+        "texto": "O SDR liga para a empresa, qualifica o lead e marca a reunião de diagnóstico.",
+        "acao": null
+      },
+      {
+        "quem": "Closer",
+        "titulo": "Reunião de diagnóstico",
+        "texto": "O closer vai à reunião de diagnóstico e entende de verdade a dor do cliente.",
+        "acao": {
+          "tela": "escopos",
+          "label": "Ver o Diagnóstico Inicial dos escopos"
+        }
+      },
+      {
+        "quem": "Closer → Gerente",
+        "titulo": "Repasse",
+        "texto": "O closer faz o repasse do que ouviu para o gerente do projeto.",
+        "acao": null
+      },
+      {
+        "quem": "Gerente",
+        "titulo": "Cronograma",
+        "texto": "Com base no repasse, o gerente constrói o cronograma do projeto.",
+        "acao": {
+          "tela": "escopos",
+          "label": "Ver as etapas de cada escopo"
+        }
+      },
+      {
+        "quem": "Closer",
+        "titulo": "Proposta",
+        "texto": "A proposta é feita com base no cronograma. O closer apresenta ao gestor a proposta e tudo o que vai ser feito no projeto.",
+        "acao": null
+      },
+      {
+        "quem": "Equipe do projeto",
+        "titulo": "Execução",
+        "texto": "Projeto fechado, a equipe executa as etapas do escopo. Todos os membros executam projetos, com prioridade para a área de Projetos.",
+        "acao": {
+          "tela": "biblioteca",
+          "label": "Abrir a Biblioteca de ferramentas"
+        }
+      },
+      {
+        "quem": "CS",
+        "titulo": "Acompanhamento",
+        "texto": "A pessoa de CS do projeto aplica o CSAT e acompanha a percepção do gestor e dos consultores.",
+        "acao": null
+      },
+      {
+        "quem": "Equipe do projeto",
+        "titulo": "Case",
+        "texto": "Ao final, a equipe registra o case no Hangar para servir de referência ao próximo projeto parecido.",
+        "acao": {
+          "tela": "novo-case",
+          "label": "Cadastrar um case"
+        }
+      }
+    ]
+  },
+  "membro": {
+    "titulo": "Como você é acompanhado",
+    "texto": "O que faz parte da rotina de todo membro da Produtiva.",
+    "itens": [
+      {
+        "titulo": "Feedback one a one",
+        "texto": "Conversa individual com a Gestão de Pessoas sobre o seu desenvolvimento.",
+        "area": "Gestão de Pessoas"
+      },
+      {
+        "titulo": "Feedback 360",
+        "texto": "Avaliação que junta a visão de várias pessoas com quem você trabalha, para acompanhar a sua evolução.",
+        "area": "Gestão de Pessoas"
+      },
+      {
+        "titulo": "Formulários mensais",
+        "texto": "Todo mês os membros respondem os formulários da Gestão de Pessoas.",
+        "area": "Gestão de Pessoas"
+      },
+      {
+        "titulo": "CSAT do projeto",
+        "texto": "Nos projetos em que você está alocado, a pessoa de CS colhe a percepção do gestor e a sua.",
+        "area": "Projetos · CS"
+      },
+      {
+        "titulo": "Endomarketing",
+        "texto": "Ações para integrar toda a empresa. Participe: é assim que você conhece quem está nas outras áreas.",
+        "area": "Gestão de Pessoas"
+      }
+    ]
+  },
+  "auxilios": {
+    "titulo": "Auxílios e reembolsos",
+    "texto": "A Produtiva apoia os membros no desenvolvimento e nos custos de estar a serviço da PJ. Quem cuida de tudo isso é a Vice-presidência.",
+    "area": "Vice-presidência",
+    "fonte": "Manual financeiro da Produtiva (PIPJ, auxílios, Uber Business, reembolso gasolina e computadores), 2025, com o cartão corporativo atualizado para o Caju.",
+    "cartao": "Caju",
+    "itens": [
+      {
+        "id": "pipj",
+        "titulo": "PIPJ — Programa de Incentivo Produtiva Júnior",
+        "resumo": "Valor mensal para investir no seu desenvolvimento: cursos, eventos, livros, materiais de estudo e de trabalho. O valor depende do cargo e muda com reconhecimentos, avaliações e pontos no plano de punição.",
+        "valores": [
+          {
+            "rotulo": "Cargos operacionais",
+            "valor": "R$ 200/mês",
+            "obs": "+ R$ 50 se Piloto de Elite · + R$ 75 se Líder de Voo"
+          },
+          {
+            "rotulo": "Cargos táticos",
+            "valor": "R$ 200/mês",
+            "obs": "+ R$ 75 se Líder de Voo · + R$ 100 com média mensal de avaliação ≥ 4"
+          },
+          {
+            "rotulo": "Cargos estratégicos",
+            "valor": "R$ 275/mês",
+            "obs": null
+          },
+          {
+            "rotulo": "Descontos (todos)",
+            "valor": "− R$ 15 por ponto",
+            "obs": "no saldo final do plano de punição · − R$ 50 com média de Piloto de Elite ≤ 3"
+          }
+        ],
+        "quando": [],
+        "passos": [],
+        "regras": [
+          "Use para reinvestir em você: cursos, eventos, materiais de estudo e de trabalho. Outro tipo de uso precisa ser pedido ao diretor da Vice-presidência.",
+          "Máximo de R$ 400 por saída. Casos extraordinários: converse antes com o diretor da Vice-presidência.",
+          "Dá para pagar uma compra parcelada com o PIPJ.",
+          "Ordem de prioridade: 1º tecnologia (conserto ou compra de equipamentos para o trabalho), 2º capacitações (cursos, livros, materiais), 3º eventos do MEJ e de representação (não vale para festas e integração), 4º papelaria para a universidade.",
+          "Se a saída deixar o caixa do PIPJ negativo, ela passa para o mês seguinte ou é vetada.",
+          "Os pontos do plano de punição podem ser retirados ao longo do mês; o desconto usa o saldo do último dia.",
+          "Não recebe nem retira PIPJ: quem está em plano de acompanhamento (no mês), em processo de desligamento, com reunião de desligamento agendada ou há mais de 1 mês sem projeto interno ou externo.",
+          "Mesmo dentro das regras, a Vice-presidência pode vetar a retirada conforme a situação financeira da Produtiva."
+        ],
+        "modelo": null
+      },
+      {
+        "id": "gasolina",
+        "titulo": "Reembolso de gasolina",
+        "resumo": "Para viagens a serviço da Produtiva feitas no seu próprio veículo.",
+        "valores": [],
+        "quando": [
+          "Viagem vinculada à empresa (projeto, atividade interna ou situação extraordinária) com o seu próprio meio de transporte."
+        ],
+        "passos": [
+          "Abra a planilha REEMBOLSO GASOLINA, crie uma cópia da aba \"Exemplo Base\" e renomeie com o seu nome.",
+          "Preencha o modelo do carro, a autonomia e troque \"Projeto 1, 2, 3\" pelo nome dos seus projetos.",
+          "Para cada viagem, preencha saída, chegada, motivo, carro, distância e data. O total em litros é calculado sozinho.",
+          "No Pipefy, abra o formulário \"Processos de Pagamento\" e escolha \"Reembolso\". Informe a sua chave Pix (não a do PIPJ) e o seu nome, com a descrição \"Reembolso gasolina [NOME DO PROJETO]\".",
+          "Informe o valor que aparece na célula vinho embaixo do nome do projeto, na sua planilha.",
+          "Selecione \"Consultorias/Assessorias\" e o nome do projeto, e anexe como comprovante um print da sua planilha."
+        ],
+        "regras": [],
+        "modelo": null
+      },
+      {
+        "id": "uber",
+        "titulo": "Uber for Business",
+        "resumo": "Se você não tem veículo ou não pode usá-lo, vá de Uber pela conta corporativa da Produtiva.",
+        "valores": [],
+        "quando": [
+          "Atividade vinculada à empresa sem meio de transporte próprio."
+        ],
+        "passos": [
+          "Confira se está na conta corporativa da Produtiva Júnior e escolha o UberX.",
+          "Confirme o local de partida.",
+          "Escolha o código de despesa: o projeto da visita, ou \"Prospecção\" quando for diagnóstico ou proposta.",
+          "Escolheu o código errado? Dá para alterar depois na própria viagem."
+        ],
+        "regras": [],
+        "modelo": null
+      },
+      {
+        "id": "alimentacao",
+        "titulo": "Auxílio alimentação",
+        "resumo": "Para membros efetivos que estão a serviço da Produtiva de manhã e de tarde. O saldo cai toda semana no cartão corporativo Caju.",
+        "valores": [
+          {
+            "rotulo": "Por refeição (almoço)",
+            "valor": "R$ 30",
+            "obs": null
+          },
+          {
+            "rotulo": "Por semana, no cartão Caju",
+            "valor": "R$ 60",
+            "obs": "equivale a dois auxílios, se a situação financeira da empresa permitir"
+          }
+        ],
+        "quando": [
+          "Dois turnos em eventos do MEJ ou em eventos de representação.",
+          "Eventos internos (RG, Workday, RN e outras reuniões), quando avisado antes e se a situação financeira permitir.",
+          "É necessário justificar o uso no canal \"Rotina-PJ\" do Slack e registrar as atividades no Google Agenda."
+        ],
+        "passos": [
+          "Use o saldo do cartão Caju na refeição.",
+          "Quando não houver duas reuniões em turnos diferentes, justifique no canal \"Rotina-PJ\" do Slack, no modelo abaixo, e registre as atividades no Google Agenda.",
+          "Em construções, detalhe o projeto e os pontos feitos. Marketing usando o contêiner em horário comercial: informe leads abertos, fluxos enviados e ligações feitas."
+        ],
+        "regras": [
+          "No máximo DUAS saídas de até R$ 30 por semana. Não vale, por exemplo, R$ 20 + R$ 40 ou três de R$ 20.",
+          "Sem justificativa, com participação muito curta ou produtividade incompatível: o membro estorna o valor para a Produtiva e pode ter penalidades e o saldo suspenso."
+        ],
+        "modelo": {
+          "titulo": "Modelo para o canal Rotina-PJ",
+          "texto": "[NOME] data\nAtividade turno 1:\nNome da(s) atividade(s) realizada(s) - horário\nAtividade turno 2:\nNome da(s) atividade(s) realizada(s) - horário\n\nExemplo:\n[MARIA BEATRIZ] 15/08\nAtividade turno 1:\nRAC Unimed - 9h às 14h\nAtividade turno 2:\nPlanilha de tempos Nordestão - 15h às 16h\nAlterações planilha Iskisita - 16h às 18h"
+        }
+      },
+      {
+        "id": "computadores",
+        "titulo": "Computadores da Produtiva",
+        "resumo": "A Produtiva tem dois computadores para empréstimo aos membros, em rodízio.",
+        "valores": [
+          {
+            "rotulo": "Computador 1",
+            "valor": "até 7 dias",
+            "obs": "uso pontual e rápido"
+          },
+          {
+            "rotulo": "Computador 2",
+            "valor": "até 30 dias",
+            "obs": "uso mais longo"
+          }
+        ],
+        "quando": [],
+        "passos": [
+          "Veja as datas livres de cada computador no Monday, aba \"Computadores\" (quadro e calendário).",
+          "Preencha o formulário RESERVA DOS COMPUTADORES: seu nome, qual computador, data de retirada e de devolução.",
+          "Depois da reserva, combine com um assessor da Vice-presidência o horário de retirada. No fim do período, combine o horário de devolução para a vistoria."
+        ],
+        "regras": [
+          "Nova reserva só depois de devolver o computador e ele passar pela vistoria.",
+          "O prazo conta a partir da data em que você já pode retirar, não do dia em que retirou.",
+          "Pode reservar de novo em seguida, desde que não coincida com quem quer o mesmo período: a prioridade é de quem não está com computador.",
+          "Devolveu antes? O próximo da fila pode retirar antes."
+        ],
+        "modelo": null
+      }
+    ]
+  }
+}

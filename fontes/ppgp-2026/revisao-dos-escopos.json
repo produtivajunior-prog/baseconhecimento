@@ -1,0 +1,860 @@
+{
+ "_comentario": "Extração verbatim (sem correções) de [PPGP 2026] Revisão dos Escopos. Gerado por tools/ppgp-extrair.py — não editar à mão.",
+ "fonte": {
+  "nome": "[PPGP 2026] Revisão dos Escopos",
+  "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+  "sha256": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8",
+  "paginas": 16,
+  "extraidoEm": "2026-09-24",
+  "colunas": {
+   "estudar": "O que estudar",
+   "escopo": "Escopo",
+   "cases": "Cases/Cronogramas",
+   "entregaveis": "Entregáveis",
+   "saber": "O que saber",
+   "riscos": "Pontos de risco"
+  }
+ },
+ "escopos": [
+  {
+   "pagina": 1,
+   "titulo": "IDEALIZAÇÃO/DESENVOLVIMENTO DE NOVOS PRODUTOS",
+   "estudar": [
+    "Metodologias e prototipação",
+    "Design thinking e Design sprint",
+    "Pesquisas de mercado externas"
+   ],
+   "escopo": [
+    "Entendimento do negócio e do serviço",
+    "Análise de mercado e pesquisa com clientes",
+    "Definição do objetivo e da ideia",
+    "Prototipação [manual e etc]",
+    "Testes"
+   ],
+   "cases": [
+    "Cabugi Solar",
+    "Orathoria",
+    "Unifan",
+    "Vivianny Lopes",
+    "Colégio TOP",
+    "Multcon"
+   ],
+   "entregaveis": [
+    "Relatório de prototipação do produto",
+    "O produto **",
+    "Mapa de empatia e canvas proposta de valor",
+    "Matriz BCG e ansoff",
+    "Pesquisa com clientes",
+    "Matriz de objeção",
+    "Relatório de estratégias de divulgação",
+    "Material de proposta de produtos",
+    "Metas e objetivos [OKRS]",
+    "Grupo focal",
+    "Storyboard",
+    "Roteiro de abordagem",
+    "Cliente oculto",
+    "Análise de branding"
+   ],
+   "saber": [
+    "Entender qual o objetivo",
+    "Entender o que quer alcançar",
+    "Disponibilidade de recursos financeiros"
+   ],
+   "riscos": [
+    "O gestor achar que vamos criar a ideia do zero",
+    "Não ter recursos para investir"
+   ]
+  },
+  {
+   "pagina": 2,
+   "titulo": "ESTRUTURAÇÃO COMERCIAL",
+   "estudar": [
+    "Cliente oculto externo ou interno",
+    "Jornada do cliente",
+    "CRM´S",
+    "Ferramentas comerciais [Roteiro de abordagem, fluxo de cadência, matriz de objeção, Buyer persona, ICP e público alvo, dashboard/indicadores comerciais, material de proposta]"
+   ],
+   "escopo": [
+    "Entendimento de negócio e análise mercado [BMC, swot + jornada do cliente as is e cliente oculto/ pesquisa com clientes e pesquisa externa]",
+    "Mapeamento/Estruturação dos processos comerciais",
+    "Relatórios de melhorias/estratégias e priorização",
+    "Desenho do processo comercial [Jornada do cliente to be] e estruturação dos planos de ação",
+    "Implementação de ferramental de visual [Dashboard e indicadores]",
+    "Definição de rotina e atribuições [manual, RACI e DCO]",
+    "Treinamentos"
+   ],
+   "cases": [
+    "Trópicos Motel",
+    "Raffe",
+    "Pasteis Abibe",
+    "DUO",
+    "Soulfit",
+    "DNA center",
+    "GE Solar",
+    "Lapela",
+    "TR Engenharia",
+    "Amorim Maia",
+    "Lumos",
+    "Container Criativo"
+   ],
+   "entregaveis": [
+    "Roteiro de abordagem",
+    "Matriz de objeções",
+    "Proposta comercial",
+    "BMC e SWOT",
+    "Jornada do cliente",
+    "ferramenta de gerenciamento de clientes",
+    "CRM",
+    "Dashboard e indicadores",
+    "Boas práticas de venda",
+    "Relatório de cliente oculto externo e interno",
+    "Manual comercial",
+    "Fluxo de cadência",
+    "DCO e cronograma de rotina",
+    "Pesquisa com clientes",
+    "Matriz RACI"
+   ],
+   "saber": [
+    "Sistemas/CRM",
+    "Entender as ferramentas comerciais atuais/pedir",
+    "Quantas pessoas da equipe comercial",
+    "Quantos clientes tem/ qual o público",
+    "Qual processo comercial e como chegam nos clientes",
+    "Qual o objetivo da estruturação comercial",
+    "Ver se tem dados dos clientes"
+   ],
+   "riscos": [
+    "Falta de implementação",
+    "Falta de pessoas",
+    "Falta de recurso financeiro",
+    "Culpar a PJ por não vender"
+   ]
+  },
+  {
+   "pagina": 3,
+   "titulo": "PLANEJAMENTO DE MKT.",
+   "estudar": [
+    "Cliente oculto externo ou interno",
+    "Jornada do cliente",
+    "Indicadores CS [LTV, churn]",
+    "Tercerizadas",
+    "Ferramentas de planejamento de marketing [linkedin]"
+   ],
+   "escopo": [
+    "Entendimento de negocio [BMC , swot, cliente oculto e pesquisa com clientes]",
+    "Análise de mercado",
+    "Definição do público alvo [Canvas proposta de valor, mapa de empatia, jornada do cliente] + Definição dos canais de tração",
+    "Estruturação e priorização dos planos de ação [Estratégia de marketing]",
+    "Ferramental visual",
+    "Definição de rotinas e atribuições",
+    "Treinamentos"
+   ],
+   "cases": [
+    "Anjos da noite",
+    "Fomento corretora",
+    "Posto Pinheiro Borges",
+    "Sublims",
+    "Pratas art",
+    "M3TA",
+    "Manipulart"
+   ],
+   "entregaveis": [
+    "Bullseye framework",
+    "Jornada do cliente AS IS E TO BE",
+    "Relatório de cliente oculto externo e interno",
+    "Dashboard e indicadores visuais",
+    "Pesquisa com cliente",
+    "SWOT, BMC, PESTAL**, 5 forças de porter",
+    "4p´s e 8p´s",
+    "ICP, público alvo e cliente ideal",
+    "Roteiro de follow-up com cliente",
+    "Canvas proposta de Valor e Mapa de Empatia",
+    "Matriz BCG e Ansoff"
+   ],
+   "saber": [
+    "Pedir as redes sociais",
+    "Entender base de clientes [Público e a quantidade]",
+    "Entender o modelo negócio/ processo comercial",
+    "Entender objetivo",
+    "Ver a viabilidade de tercerização",
+    "Coletar dados dos clientes"
+   ],
+   "riscos": [
+    "Cliente achar que vamos cuidar do instagram",
+    "Achar que a gente trabalha com tráfego pago"
+   ]
+  },
+  {
+   "pagina": 4,
+   "titulo": "PLANEJAMENTO ESTRATÉGICO",
+   "estudar": [
+    "Diretrizes estratégicas",
+    "A ordem do BSC",
+    "MVV"
+   ],
+   "escopo": [
+    "Entendimento de negócio [BMC, swot e MVV]/ Análise mercado",
+    "Apresentação e priorização metodologias de acompanhamento estratégico",
+    "Criar as metas e construção da ferramenta",
+    "Desdobramento dos planos de ação"
+   ],
+   "cases": [
+    "Leosup",
+    "Bee Delivery 2",
+    "Nego bom bolos",
+    "Marenzo",
+    "Unifacex",
+    "Azienda",
+    "Sim Distribuidora"
+   ],
+   "entregaveis": [
+    "SWOT",
+    "BMC",
+    "MVV",
+    "OKRS, BSC, MWB",
+    "FERRAMENTA DE ACOMPANHAMENTO ESTRATÉGICO",
+    "PLANOS DE AÇÃO",
+    "PESTAL E TAM SAM SOM"
+   ],
+   "saber": [
+    "Se a empresa tem MVV",
+    "Se quer fazer em todos setores",
+    "Se tem preferência por algum tipo de diretrizes estratégicas"
+   ],
+   "riscos": [
+    "Garantia na implementação das metas e objetivos"
+   ]
+  },
+  {
+   "pagina": 5,
+   "titulo": "CULTURA/GAMIFICAÇÃO/PROSEL",
+   "estudar": [
+    "OCAI, IBACO, MLQ-6S, PCO [estudarem modelos]",
+    "Algumas ferramentas e tipos de pesquisas inovadoras",
+    "Perfis de gamificação"
+   ],
+   "escopo": [
+    {
+     "texto": "Mapear os processos e entender os perfis",
+     "frente": "GAMIFICAÇÃO"
+    },
+    {
+     "texto": "Estruturar planos de ação",
+     "frente": "GAMIFICAÇÃO"
+    },
+    {
+     "texto": "Estruturação da gamificação",
+     "frente": "GAMIFICAÇÃO"
+    },
+    {
+     "texto": "Entendimento de negocio + perfil do colaborador + Coleta/revisar MVV",
+     "frente": "CULTURA"
+    },
+    {
+     "texto": "Aplicação das pesquisas",
+     "frente": "CULTURA"
+    },
+    {
+     "texto": "Ferramenta visual",
+     "frente": "CULTURA"
+    },
+    {
+     "texto": "Estruturação de melhorias de cultura e engajamento",
+     "frente": "CULTURA"
+    },
+    {
+     "texto": "Manual do setor e definição de rotina e atribuições",
+     "frente": "CULTURA"
+    }
+   ],
+   "cases": [
+    "Spicy",
+    "Docelândia",
+    "Aram hotéis",
+    "F2 Engenharia",
+    "Focus",
+    "Laniaq",
+    "Casa das meias",
+    "Sterbom"
+   ],
+   "entregaveis": [
+    "Calendário cultural",
+    "Pesquisas como um todo",
+    "Relatório de estratégias de engajamento",
+    "MVV",
+    "Ferramenta visual das respostas",
+    "DCO",
+    "Ferramenta de onboarding"
+   ],
+   "saber": [
+    "Coletar se já tem MVV",
+    "Quantos colaboradores são e quantos setores são",
+    "Qual objetivo do projeto",
+    "Perfil do colaborador"
+   ],
+   "riscos": [
+    "Baixa adesão dos colaboradores",
+    "Falta de agregação de valor para o gestor"
+   ]
+  },
+  {
+   "pagina": 6,
+   "titulo": "EVE",
+   "estudar": [
+    "Premissas do EVE",
+    "Ferramentas de pesquisa de mercado",
+    "Indicadores de EVE",
+    "Planejamento financeiro"
+   ],
+   "escopo": [
+    "ENTENDIMENTO DE NEGÓCIO",
+    "ANÁLISE DE MERCADO",
+    "LEVANTAMENTO DE PREMISSAS E INVESTIMENTOS",
+    "PROJEÇÕES DOS CENÁRIOS E CÁLCULOS DOS INDICADORES",
+    "DEFINIÇÃO DA VIABILIDADE"
+   ],
+   "cases": [
+    "Solo",
+    "Picui"
+   ],
+   "entregaveis": [
+    "SWOT E BMC",
+    "PESTAL",
+    "CAMGPEST",
+    "5 FORÇAS DE PORTER",
+    "CANVAS PROPOSTA DE VALOR",
+    "TAM SAM SOM",
+    "MAPA DE EMPATIA",
+    "DEFINIÇÃO DO PUBLICO ALVO",
+    "ORÇAMENTO DAS PREMISSAS",
+    "FERRAMENTA DE CÁLCULOS DE EVE",
+    "INDICADORES DE EVE",
+    "RELATÓRIO DE VIABILIDADE"
+   ],
+   "saber": [
+    "Necessidade de ferramentas de pesquisa mercado",
+    "Qual é o ponto que ele vai abrir e características dos pontos",
+    "Qual o público que ele vai atingir",
+    "Qual o produto/ serviço que ele vai vender",
+    "Entender ja tem as premissas"
+   ],
+   "riscos": [
+    "Gestor com pressa"
+   ]
+  },
+  {
+   "pagina": 7,
+   "titulo": "GERENCIAMENTO/CONTROLE FINANCEIRO",
+   "estudar": [
+    "Opções de sistemas financeiros",
+    "Classificação de gastos",
+    "Planilhas financeiras",
+    "Indicadores financeiros( + Ren, Liq, EF...)",
+    "DRE",
+    "Regime de caixa",
+    "Níveis de Maturidade"
+   ],
+   "escopo": [
+    "Entendimento de negócio e map dos processos financeiros",
+    "Coleta de dados/tratar dados e classificações de gastos",
+    "Estruturação da DRE",
+    "Parametrização do sistema",
+    "Estruturação de indicadores",
+    "Desdobramento dos planos de ação",
+    "Modelagem dos processos",
+    "Relatório de saúde financeira**",
+    "Definição de rotina e atribuições",
+    "Treinamentos"
+   ],
+   "cases": [
+    "Aerotour",
+    "Kouzina",
+    "Nego bom bolos",
+    "Mossoro cap",
+    "Locapp",
+    "NOV",
+    "Verde Interior Paisagismo",
+    "CM Eng",
+    "Aries",
+    "Laboratório Prime"
+   ],
+   "entregaveis": [
+    "Classificação de gastos",
+    "Manual de classificação de gastos",
+    "Manual de indicadores",
+    "Relatório de saúde financeira",
+    "DRE",
+    "Sistema/planilha de gerenciamento",
+    "Manual de processos financeiros",
+    "Processos desenhados/modelados",
+    "Dashboard visual com indicadores",
+    "DCO",
+    "Relatório de planos de ação"
+   ],
+   "saber": [
+    "Dados financeiros",
+    "Sistema",
+    "Classificação de gastos",
+    "Indicadores (Quais tem)",
+    "Pessoas no setor",
+    "Objetivo"
+   ],
+   "riscos": [
+    "Sem dados financeiros",
+    "Sem rotina e adesão do preenchimento da ferramenta"
+   ]
+  },
+  {
+   "pagina": 8,
+   "titulo": "CUSTEIO E PRECIFICAÇÃO",
+   "estudar": [
+    "Opções de sistemas financeiros",
+    "Classificação de gastos",
+    "Planilhas financeiras",
+    "Indicadores financeiros",
+    "DRE",
+    "Regime de caixa"
+   ],
+   "escopo": [
+    "Entendimento de negócio e map dos processos financeiros",
+    "Coleta de dados/tratar dados e classificações de gastos",
+    "Estruturação da DRE",
+    "Parametrização do sistema",
+    "Estruturação de indicadores",
+    "Desdobramento dos planos de ação",
+    "Modelagem dos processos",
+    "Relatório de saúde financeira**",
+    "Definição de rotina e atribuições",
+    "Treinamentos"
+   ],
+   "cases": [
+    "Verde Interior Paisagismo",
+    "Lab Prime",
+    "EJB Engenharia"
+   ],
+   "entregaveis": [
+    "Classificação de gastos",
+    "Manual de classificação de gastos",
+    "Manual de indicadores",
+    "Relatório de saúde financeira",
+    "DRE",
+    "Sistema/planilha de gerenciamento",
+    "Manual de processos financeiros",
+    "Processos desenhados/modelados",
+    "Dashboard visual com indicadores",
+    "DCO",
+    "Relatório de planos de ação"
+   ],
+   "saber": [
+    "Dados financeiros",
+    "Sistema",
+    "Classificação de gastos",
+    "Indicadores (Quais tem)",
+    "Pessoas no setor",
+    "Objetivo"
+   ],
+   "riscos": [
+    "Sem dados financeiros",
+    "Sem rotina e adesão do preenchimento da ferramenta"
+   ]
+  },
+  {
+   "pagina": 9,
+   "titulo": "PLANEJAMENTO FINANCEIRO",
+   "estudar": [
+    "Cenários de planejamento financeiro",
+    "Pesquisa de mercado"
+   ],
+   "escopo": [
+    "Entendimento do negócio + levantamento dos dados e das classificação dos gastos",
+    "Análise de mercado",
+    "Criação de cenários/projeções",
+    "Ferramenta visual",
+    "Planos de ação",
+    "Manualização"
+   ],
+   "cases": [
+    "Locapp",
+    "Planejamento Financeiro",
+    "Verde Interior Paisagismo"
+   ],
+   "entregaveis": [
+    "TAM SAM SOM",
+    "PESTAL E 5 FORÇAS DE PORTER",
+    "SWOT",
+    "PLANILHA DE PLANEJAMENTO FINANCEIRO",
+    "CENÁRIOS",
+    "MANUAL DE PLANEJAMENTO FINANCEIRO"
+   ],
+   "saber": [
+    "Horizonte de tempo do planejamento financeiro",
+    "Dados financeiros",
+    "Classificação dos gastos",
+    "Verificar sem tem DRE"
+   ],
+   "riscos": [
+    "Incerteza dos números",
+    "Falta de dados (so tem como se ter planejamento se já tiver com certa maturidade de dados"
+   ]
+  },
+  {
+   "pagina": 10,
+   "titulo": "PROCESSOS [MAP E MOD]",
+   "estudar": [
+    "Linguagens [ANSI, ASME, BPMN, BLUEPRINT, POP´S]",
+    "Ferramentas da qualidade",
+    "Ferramentas de priorização",
+    "Ferramenta de entendimento de negócio",
+    "Conceitos de 8 desperdicios do lean",
+    "Sincronismo organizacional"
+   ],
+   "escopo": [
+    "Entendimento de negocio [SIPOC, macroprocesso, mapa de contexto, BMC e cadeia de valor]",
+    "Mapeamento dos processos [Process map model canvas + fluxogramas]",
+    "Diagnóstico e priorização [Relatório de melhorias]",
+    "Planos de ação",
+    "Modelagem/desenho dos processos + Atualização dos pop´s",
+    "Definição de indicadores de sucesso/ criação de ferramenta visual",
+    "Definição de rotina e atribuições [Manual, treinamento, cronograma de rotina]",
+    "Cronograma de implementação**"
+   ],
+   "cases": [
+    "Plana edificações",
+    "Lavanderia Arco-iris",
+    "Nego bom bolos",
+    "Nordestão",
+    "Sushideli",
+    "Mazzano",
+    "Aqua Coco",
+    "CM Eng",
+    "Assmed"
+   ],
+   "entregaveis": [
+    "Fluxogramas",
+    "Pops",
+    "BMC, sipoc, map de contexto, cadeia de valor, process map model canvas",
+    "Matriz de priorização",
+    "Relatório diagnóstico",
+    "Manual",
+    "RACI",
+    "Treinamentos",
+    "Cronograma de rotina",
+    "DCO",
+    "Ferramental visual de indicadores",
+    "Ferramenta de rotina",
+    "Folha de verificação**"
+   ],
+   "saber": [
+    "O que faz mais sentido pop, fluxograma ou adaptações",
+    "Se o gestor sabe o que quer melhorar",
+    "Quantidade de setores/funcionários",
+    "Média de processo/complexidade por setor",
+    "Se existe sistema",
+    "Se ja tem fluxogramas mapeados",
+    "Avaliarem se so mapeia ou se modela também"
+   ],
+   "riscos": [
+    "Pouco ou muito tempo em cronograma para mapear processos/modelar",
+    "Ser flexivei para implementar as mod",
+    "Validar com as pessoas que vão usar as ferramentas , o operacional"
+   ]
+  },
+  {
+   "pagina": 11,
+   "titulo": "GESTÃO DE ESTOQUE",
+   "estudar": [
+    "Indicadores de estoque",
+    "Nivel de serviços",
+    "Tipos de estoque",
+    "Estudo de inventário **",
+    "Sistemas de estoque",
+    "5S"
+   ],
+   "escopo": [
+    "Entendimento do negócio",
+    "Entendimento da estrutura do estoque",
+    "Mapeamento dos processos AS IS de ressuprimento e armazenagem",
+    "Análise das necessidades dos clientes",
+    "Análise e tratamento de dados sobre o estoque",
+    "Análise da curva ABC e priorização dos produtos",
+    "Entendimento dos custos de armazenagem",
+    "Organização da área de materiais",
+    "Definição do método de controle do estoque",
+    "Estabelecer o armazenamento de materiais*",
+    "Definição dos indicadores para o gerenciamento do estoque",
+    "Modelagens dos processos TO BE",
+    "Construção da ferramenta de acompanhamento de estoque",
+    "Criação de planos de ação"
+   ],
+   "cases": [
+    "Cabugi Solar",
+    "Lenny Cakes",
+    "Sushideli",
+    "Mazzano",
+    "CEOF",
+    "Plana edificações",
+    "DMS",
+    "Mardel",
+    "Construtora Dantas",
+    "Caxangá",
+    "DOIS A",
+    "MÍDIA DIGITAL"
+   ],
+   "entregaveis": [
+    "BMC, macroprocesso",
+    "Fluxogramas, Pop´s",
+    "DCO",
+    "RACI",
+    "Manual",
+    "Videos do sistema",
+    "Curva abc",
+    "planilha de controle de estoque",
+    "Indicadores de estoque",
+    "Relatório de 5S"
+   ],
+   "saber": [
+    "Sistema de estoque",
+    "Se tem inventário/frequência",
+    "Quantos SKU´S ele tem",
+    "Quantos itens",
+    "Se tem uma pessoa resp para o estoque",
+    "Processo de compra/conferência e alimentação no estoque",
+    "Se tem indicadores",
+    "Os produtos tem sazonalidade?"
+   ],
+   "riscos": [
+    "Cliente não implementar",
+    "Achar que vamos contar o estoque"
+   ]
+  },
+  {
+   "pagina": 12,
+   "titulo": "ADEQUAÇÃO DE LAYOUT",
+   "estudar": [
+    "Tipos de layout",
+    "Tipos de restrição",
+    "8 desperdicios",
+    "Ferramentas de layout",
+    "Formas de gestão a vista [linkedin]"
+   ],
+   "escopo": [
+    "ENTENDIMENTO",
+    "MAPEAMENTO",
+    "LEVANTAR RESTRIÇÕES",
+    "FERRAMENTA DE ANÁLISE DOS PROCESSOS",
+    "MODELAGENS",
+    "DESENHO DE OPÇÕES",
+    "SIMULAÇÃO",
+    "INDICADORES"
+   ],
+   "cases": [
+    "Vegfood",
+    "Leny cakes",
+    "Refine",
+    "DOIS A",
+    "ALICE LIMPEZA"
+   ],
+   "entregaveis": [
+    "Diagrama de relações",
+    "Mapofluxograma",
+    "Relatorio de analise de layout",
+    "Diagrama de espaguete",
+    "Plano de implementação",
+    "Fluxogramas",
+    "Desenho de opções de layout"
+   ],
+   "saber": [
+    "Planta baixa",
+    "Restrições de layout",
+    "Tamanho do espaço",
+    "Se o gestor ta disposto a investir",
+    "Macroprocesso produtivo",
+    "Quantidade de processos/funcionários"
+   ],
+   "riscos": [
+    "Gestor não implementar",
+    "Agregação de valor",
+    "Ausência de informações necessárias",
+    "Espaço não permitir mudanças"
+   ]
+  },
+  {
+   "pagina": 13,
+   "titulo": "CAPACIDADE PRODUTIVA",
+   "estudar": [
+    "Entender relações com outros escopos",
+    "Cálculo do N",
+    "Ter noção da linha lógica para cálculo",
+    "Impactos que o estudo vai trazer"
+   ],
+   "escopo": [
+    "Estudo sobre o serviço",
+    "Entendimento da empresa",
+    "Mapeamento dos processos",
+    "Modelagem dos processos",
+    "Construção de ferramenta",
+    "Definir os elementos",
+    "Cálculo do N",
+    "Cronometragem",
+    "Tempo médio, velocidade e FT",
+    "DEFINIÇÃO DO TN E TP",
+    "Capacidade produtiva",
+    "Construção de ferramenta de acompanhamento e mensuração",
+    "Relatório de capacidade produtiva + análise crítica"
+   ],
+   "cases": [
+    "Verde fruits",
+    "Vegfood",
+    "Alice Limpeza",
+    "Aqua Coco"
+   ],
+   "entregaveis": [
+    "Fluxogramas",
+    "Macroprocesso",
+    "Ferramenta de cap produtiva",
+    "Manual e vídeos",
+    "Ferramenta visual de acompanhamento",
+    "Relatório do estudo"
+   ],
+   "saber": [
+    "Sazonalidade",
+    "Macroprocesso produtivo",
+    "Funcionários",
+    "Indicadores atuais",
+    "Demanda puxada ou empurrada",
+    "Famílias produtos"
+   ],
+   "riscos": [
+    "Projetos online",
+    "Má adesão dos funcionários",
+    "Complexidade do projeto",
+    "Processo despadronizado"
+   ]
+  },
+  {
+   "pagina": 14,
+   "titulo": "PREVISÃO DE DEMANDA",
+   "estudar": [
+    "Previsão de demanda qualitativa e quantitativas",
+    "MAD",
+    "Tipos de demanda e sazonalidade",
+    "Estudo do Mercado e da Empresa"
+   ],
+   "escopo": [
+    "Alinhar objetivo da previsão",
+    "Coleta/análise de dados históricos",
+    "Definir horizonte de tempo",
+    "Definir método da previsão",
+    "Construir ferramenta/ cálculo",
+    "da previsão",
+    "Construir MAD",
+    "Manual de implementação e documentação",
+    "Treinamento e acompanhamento"
+   ],
+   "cases": [
+    "Granja filadélfia",
+    "Hidroglass",
+    "Caxangá",
+    "Alice Limpeza",
+    "Sim Distribuidora"
+   ],
+   "entregaveis": [
+    "Relatório de análise de demanda [Sazonalidade]",
+    "Ferramenta de cálculos de previsão de demanda",
+    "Planos de ação",
+    "Macroprocesso"
+   ],
+   "saber": [
+    "Produtos e famílias existentes",
+    "Sazonalidade",
+    "Histórico de dados",
+    "Macroprocesso produtivo",
+    "Promoções"
+   ],
+   "riscos": [
+    "Não ter dados históricos"
+   ]
+  },
+  {
+   "pagina": 15,
+   "titulo": "AUTOMAÇÃO",
+   "estudar": [
+    "Plataofrmas Low-code",
+    "N8N",
+    "Engenharia de Prompt"
+   ],
+   "escopo": [
+    "ENTENDIMENTO DO NEGÓCIO",
+    "Mapeamento dos processos e entendimento das necessidades",
+    "Desenvolvimento do sistema e/ou automações",
+    "Testes e Validações",
+    "Documentação e Treinamentos"
+   ],
+   "cases": [
+    "Atlantis Divers",
+    "MJ Oliveira"
+   ],
+   "entregaveis": [
+    "Process map model canvas",
+    "Relatório de Diagnóstico",
+    "Mapa de Contexto",
+    "Relatório de Melhorias",
+    "Matriz RACI",
+    "Sistema 100% funcional",
+    "Indicadores Estruturados",
+    "Documentação do Sistema"
+   ],
+   "saber": [
+    "Como o processo ocorre",
+    "Quais setores se comunicam nesse processo",
+    "Qual a maior dor e maior retrabalho",
+    "Quais sistemas são utilizados"
+   ],
+   "riscos": [
+    "Gestor com pressa",
+    "Complexidade do Sistema",
+    "Dificuldade de conseguir acessos (ex: API'S)",
+    "Adaptabilidade da Equipe ao uso"
+   ]
+  },
+  {
+   "pagina": 16,
+   "titulo": "PESQUISA DE MERCADO",
+   "estudar": [
+    "TIPOS DE PESQUISA",
+    "PERPLEXITY",
+    "ECONOMAPAS",
+    "ESTRATÉGIAS BASEADO NA PESQUISA"
+   ],
+   "escopo": [
+    "ENTENDIMENTO DA DEMANDA",
+    "DEFINIÇÃO DO TIPO DE PESQUISA",
+    "COLETA DE DADOS",
+    "ANÁLISE DOS DADOS",
+    "RELATÓRIO FINAL"
+   ],
+   "cases": [
+    "SHOPPING 10",
+    "KERENSI",
+    "LUMOS",
+    "Adolfo"
+   ],
+   "entregaveis": [
+    "RELATÓRIO DA PESQUISA",
+    "TAM SAM SOM",
+    "DASHBOARD",
+    "UX RESEARCH CANVAS",
+    "PLANO DA PESQUISA"
+   ],
+   "saber": [
+    "OBJETIVO PRINCIPAL DA PESQUISA",
+    "FORMA DE COLETA",
+    "CÁLCULO DA AMOSTRAGEM"
+   ],
+   "riscos": [
+    "Gestor já ter noção do resultado da pesquisa",
+    "não agregar valor"
+   ]
+  }
+ ]
+}

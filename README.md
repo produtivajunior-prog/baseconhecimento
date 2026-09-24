@@ -19,8 +19,9 @@ fontes/            de onde vem cada texto (ver fontes/README.md)
   drive/<id>.txt          texto extraído de cada PDF/planilha do Drive, com cabeçalho e hash
   hangar/<slug>.md        páginas do Hangar Academy coladas à mão
   inventario.json         índice dos arquivos extraídos
+  ppgp-2026/              [PPGP 2026] Revisão dos Escopos: o PDF (base dos escopos) e a extração verbatim
   ferramentas-mapa.json   por ferramenta: categoria, anexos (ids do Drive), entradas/saídas, stubs
-  escopos-mapa.json       por escopo: coluna do Resumão, cronograma base, ferramentas por etapa
+  escopos-mapa.json       por escopo: texto curado do PPGP, ferramentas por etapa/entregável, cronograma base
 src/
   index.html       marcação da interface (sintaxe <sc-if> / <sc-for> do dc-runtime)
   app.js           lógica: class Component extends DCLogic
@@ -28,14 +29,15 @@ src/
   data/            o acervo, como dado editável
     taxonomia.json          fonte única de tipos, categorias, grupos de escopo, status, cores
     ferramentas.json        ferramentas promovidas (27: 26 do acervo real + n8n; 20 ainda "Em construção")
-    escopos.json            escopos promovidos, com etapas ordenadas e ferramentas por etapa
+    escopos.json            os 15 escopos do PPGP 2026 em execução: estudar, etapas (com ferramentas), entregáveis, saber, riscos, cases
     problemas.json          problemas → ferramentas (tela "Recomendar")
     modelos.json            modelos-padrão (blocos que a IA preenche)
     documento-padrao.json   documento PMMC (10 seções, do PDF oficial)
+    produtiva.json          página "Como funciona a Produtiva": áreas, subnúcleos, fluxo comercial
     rascunhos/              rascunhos gerados de fontes/, aguardando revisão — NUNCA entram no pack
 assets/            logo e fontes; index.json mapeia uuid ↔ arquivo
 vendor/            dc-runtime.js, React embutido e o invólucro do bundle
-tools/             pack / verify / rascunho / promover / smoke / unpack
+tools/             pack / verify / rascunho / promover / smoke / unpack / ppgp-extrair.py
 dist/              artefatos gerados — não editar à mão
 ```
 
@@ -87,8 +89,24 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   uma ferramenta ou case, usar o botão "voltar" do navegador e recarregar sem perder a tela. Funciona em `file://`.
 - **Teclado**: `/` foca a busca da tela; `Esc` fecha a janela de anexos; foco visível em todos os controles.
 - **Comece aqui** (`#/comece`): trilha do primeiro projeto em seis passos marcáveis (ficam no navegador), as
-  ferramentas mapeadas em mais etapas, quem procurar e o glossário. Os termos vêm de `src/data/trilha.json`,
+  ferramentas mapeadas em mais etapas e o glossário. Os termos vêm de `src/data/trilha.json`,
   cada um com `origem`; os marcados `pendente: true` aparecem como "a confirmar" até o CIEP validar.
+- **Como funciona a Produtiva** (`#/produtiva`): página de boas-vindas com o que é a Produtiva e as áreas
+  de atuação (cada uma abre os escopos do grupo), as 5 áreas da empresa com "o que faz" e "procure quando",
+  os subnúcleos de Projetos (CIEP, CIT, CS), o caminho do primeiro contato ao projeto (SDR → closer → gerente
+  → proposta → execução → CSAT → case) e como o membro é acompanhado. O conteúdo fica em
+  `src/data/produtiva.json` e é validado pelo `verify`.
+- **Escopos** (`#/escopos`): os 15 escopos da Revisão dos Escopos (PPGP 2026) que a Produtiva executa (o EVE foi descontinuado), com busca por entregável, ferramenta,
+  cliente ou etapa. Cada escopo tem cinco blocos: o que estudar, o Diagnóstico Inicial, as etapas, os entregáveis e os cases.
+  - **Diagnóstico Inicial:** checklist "O que saber" (as marcações ficam no navegador) e os pontos de risco.
+  - **Etapas:** mostram as ferramentas da Biblioteca e, em Cultura, as frentes.
+  - **Cases:** os projetos que a Produtiva já fez, ligados ao Banco de Cases. O botão "+ ficha" abre o cadastro já preenchido.
+  - **Roteiro do Diagnóstico Inicial:** gera a folha para imprimir.
+  - **Links antigos:** `#/escopo/gamificacao` e outros ids de escopos fundidos redirecionam para o escopo novo.
+- **Foto de capa dos cases**: cada card da galeria de Cases tem o botão "Adicionar capa" / "Trocar capa", e a ficha
+  tem "Adicionar/Trocar foto de capa" e "Remover capa". A foto é reduzida no navegador (JPEG ≤ ~700 KB). Em case
+  que só existe neste navegador, ela vai direto para o case; em case já publicado, fica só neste navegador
+  (`hangar.capas`) com o aviso para baixar o JSON e enviar ao CIEP.
 - **Material para a reunião**: na ficha da ferramenta, "Abrir material para imprimir" gera uma página com
   perguntas-chave, o que pedir ao cliente, passo a passo e, quando há modelo em canvas, o canvas em branco.
 - **Pergunte a quem fez**: na ficha do case, botões de e-mail e WhatsApp para a equipe, com a mensagem já
@@ -124,10 +142,9 @@ do `dist/Hangar.html` e dê push. Testar localmente: `docker build -t hangar . &
 | | |
 |---|---|
 | ✅ **React via unpkg.com** | **Resolvido.** O `dc-runtime` baixava React de CDN em runtime; sem internet a página renderizava o template cru, com `{{ item.nome }}` visível na tela. React 18.3.1 agora vai embutido no bundle, carregado antes do runtime. Verificado em Chromium com o unpkg inacessível. |
-| 🔴 **`window.claude.complete`** | Só existe dentro do sandbox de artifacts da Claude.ai. Como a distribuição é por download do HTML, **as 4 funcionalidades de IA falham em 100% das tentativas** hoje, com mensagem que sugere erro do usuário. Exige backend — não dá para resolver dentro do bundle. |
+| 🔴 **`window.claude.complete`** | Só existe quando o Hangar roda dentro do Claude (claude.ai). No Coolify e no HTML baixado, **as funcionalidades de IA (Criar com IA, Modelo-padrão, Gerar documentação e Aplicar ferramenta) não funcionam**; desde 2026-09-24 o app avisa isso com clareza em vez de pedir para "tentar de novo". Exige backend. O "Modelo-padrão" também só envia o nome do arquivo à IA, não o conteúdo do anexo. |
 
-Além disso: nada persiste (F5 apaga tudo), não há login, e os anexos são apenas metadados —
-nenhum arquivo existe por trás dos botões "Baixar".
+Além disso: o que cada membro cadastra (ferramentas, documentação, modelos-padrão, cases, rascunhos) fica só no navegador dele até o CIEP publicar; não há login; e os anexos das ferramentas são links do Drive.
 
 > Ruído esperado no console em `file://`: `dc-runtime.js:154` faz `fetch(location.href)` para
 > recarregar o template (recurso de editor). É bloqueado por CORS, já tratado pelo `.catch()`
@@ -141,10 +158,10 @@ Detalhes e o resto do inventário no [DIAGNOSTICO.md](DIAGNOSTICO.md).
    (BMC, BPMN, SIPOC, RACI, Jornada, PCO, IBACO, FIB, MLQ, DCO, Gamificação, n8n…). O caminho mais curto é
    trazer as páginas do Hangar Academy com `tools/hangar-extrator.js` + `node tools/hangar-importar.mjs`
    (seção 2 de `fontes/README.md`) e regerar os rascunhos.
-2. **Donos de área revisam a primeira carga**: os 47 conteúdos (27 ferramentas + 20 escopos) foram aprovados pela conta institucional
-   em 2026-09-15; cada dono confere os da sua área até 2026-12-15 (`node tools/revisao.mjs`).
-3. **Escopos despriorizados** (11) estão publicados sem ferramentas mapeadas, porque não têm Cronograma
-   Base; thiagomelo@ decide se entram na linha do tempo.
+2. **Donos de área revisam a primeira carga**: as 27 ferramentas (2026-09-15) e os 15 escopos do PPGP 2026 (2026-09-24)
+   foram aprovados pela conta institucional; cada dono confere os da sua área na próxima revisão (`node tools/revisao.mjs`).
+3. **Pendências do PPGP 2026** com o CIEP: o significado dos itens marcados com ✱, o slide de Custeio e
+   Precificação (que repete o de Gerenciamento Financeiro) e as etapas de Prosel. Ver `fontes/README.md`.
 4. **Glossário**: o CIEP confirma os termos "a confirmar" em `src/data/trilha.json`.
 
 Fora do escopo desta reconstrução e ainda abertos: backend para a IA, persistência, login e

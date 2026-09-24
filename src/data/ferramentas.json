@@ -988,7 +988,7 @@
   },
   {
     "id": "dco",
-    "nome": "DCO (Descritivo de Cargo e Ordem de serviço)",
+    "nome": "DCO (Descritivos de Cargos e Organograma)",
     "tipo": "Template",
     "categoria": "Metodologias",
     "complexidade": "Médio",

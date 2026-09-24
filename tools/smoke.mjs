@@ -8,10 +8,14 @@
  * O que ele garante:
  *   - a página renderiza sem "{{ … }}" cru na tela (o sintoma clássico de runtime que não subiu);
  *   - com unpkg.com bloqueado o app continua (React embutido);
- *   - Escopos → escopo → etapa → ferramenta → ficha abre e mostra "Usado em";
+ *   - Cadastrar e Documentação: rascunho, publicação após F5, download do documento e IA indisponível fora do Claude;
+ *   - Como funciona a Produtiva: menu, áreas, subnúcleos, fluxo comercial e atalho para os escopos;
+ *   - Escopos (PPGP 2026): busca, os 5 blocos do escopo, checklist "O que saber" após F5, roteiro imprimível,
+ *     etapa → ferramenta → "Usado em", link antigo redirecionando e "+ ficha" preenchendo o cadastro de case;
  *   - a busca por um termo de dentro dos passos encontra a ferramenta;
  *   - o botão do anexo abre uma URL do Drive numa aba nova;
  *   - Banco de cases: cadastro com foto → publicar → ficha com capa, vídeo e documento → JSON → galeria após recarregar;
+ *     capa trocada/removida direto na galeria e na ficha;
  *   - screenshot em dist/<nome>-smoke.png (ignorado pelo git).
  *
  * Precisa do pacote playwright (npx playwright@1 …) e de um Chromium; sem os dois, sai com aviso.
@@ -51,24 +55,100 @@ check(!/\{\{/.test(await texto()), 'nenhum "{{" cru na tela (runtime subiu sem u
 check((await page.locator('#__bundler_err').count()) === 0, 'sem painel vermelho de erro do bundle na tela');
 check(/Por escopo|Escopos/.test(await texto()), 'home renderizou a seção "Por escopo"');
 
-// Escopos → escopo → etapa → ferramenta
+// Como funciona a Produtiva: menu → página com as 5 áreas, subnúcleos, fluxo comercial → área de atuação abre Escopos
+await page.getByRole('button', { name: 'Como funciona', exact: true }).first().click();
+await page.waitForTimeout(300);
+{
+  const t = await texto();
+  check(/#\/produtiva$/.test(await page.evaluate(() => location.hash)) && /Como funciona a Produtiva/.test(t), 'página "Como funciona a Produtiva" abriu pelo menu (#/produtiva)');
+  check(['Gestão de Pessoas', 'Vice-presidência', 'Presidência', 'Marketing', 'Projetos'].every((x) => t.includes(x)) && ['CIEP', 'CIT', 'CSAT'].every((x) => t.includes(x)), 'página mostra as 5 áreas e os subnúcleos de Projetos');
+  check(/SDR/.test(t) && /Closer/.test(t) && /Cronograma/.test(t) && /Proposta/.test(t), 'fluxo do primeiro contato ao projeto aparece (SDR → closer → gerente → proposta)');
+  check(['PIPJ', 'Reembolso de gasolina', 'Uber for Business', 'Auxílio alimentação', 'Computadores da Produtiva', 'Rotina-PJ', 'Caju'].every((x) => t.includes(x)) && !/Flash/i.test(t) && /auxílios e reembolsos dos membros/.test(t), 'Auxílios e reembolsos traz PIPJ, gasolina, Uber, alimentação (cartão Caju, sem Flash) e computadores');
+  await page.locator('main article', { hasText: 'Gestão da Tecnologia' }).first().click(); await page.waitForTimeout(400);
+  check(/#\/escopos$/.test(await page.evaluate(() => location.hash)) && /Automação/.test(await texto()), 'área de atuação "Gestão da Tecnologia" abre a tela Escopos');
+}
+
+// Cadastrar (manual) e Documentação: rascunho, publicação que sobrevive ao F5, download real e IA indisponível fora do Claude
+await page.evaluate(() => { location.hash = '#/cadastrar'; }); await page.waitForTimeout(400);
+await page.getByRole('button', { name: 'Preencher manualmente' }).click(); await page.waitForTimeout(200);
+await page.getByPlaceholder('Ex.: Matriz de Priorização GUT').last().fill('Ferramenta Smoke');
+await page.getByPlaceholder('Uma frase que resume o que é e para que serve').fill('Criada pelo smoke.');
+await page.getByRole('button', { name: 'Salvar rascunho' }).click(); await page.waitForTimeout(200);
+await page.reload(); await page.waitForTimeout(1200);
+await page.getByRole('button', { name: 'Preencher manualmente' }).click(); await page.waitForTimeout(200);
+check((await page.getByPlaceholder('Ex.: Matriz de Priorização GUT').last().inputValue()) === 'Ferramenta Smoke', 'Cadastrar: "Salvar rascunho" guarda o formulário e ele volta depois do F5');
+await page.getByRole('button', { name: 'Publicar conteúdo' }).click(); await page.waitForTimeout(1500);
+await page.reload(); await page.waitForTimeout(1200);
+check(/#\/ferramenta\/novo-/.test(await page.evaluate(() => location.hash)) && /Ferramenta Smoke/.test(await texto()), 'Cadastrar: conteúdo publicado abre a página e continua depois do F5');
+await page.getByRole('button', { name: 'Cadastrar', exact: true }).first().click(); await page.waitForTimeout(300);
+await page.getByRole('button', { name: 'Criar com IA' }).click(); await page.waitForTimeout(200);
+await page.getByPlaceholder(/Cole aqui o material/).fill('A matriz GUT prioriza problemas por gravidade, urgência e tendência.');
+await page.locator('main button', { hasText: /Gerar/ }).first().click(); await page.waitForTimeout(400);
+check(/só funciona quando o Hangar é aberto dentro do Claude/.test(await texto()), 'Cadastrar com IA fora do Claude explica que a IA não está disponível');
+await page.getByRole('button', { name: 'Documentação', exact: true }).first().click(); await page.waitForTimeout(400);
+await page.getByRole('button', { name: 'Baixar' }).click(); await page.waitForTimeout(300);
+{
+  const dl = await page.evaluate(() => window.__hangarUltimoDownload);
+  check(!!dl && /\.html$/.test(dl.nome) && /Process Map Model Canvas/.test(dl.json) && /Perguntas-chave/.test(dl.json), `Documentação: "Baixar" gera o documento em HTML (${dl ? dl.nome : 'nada'})`);
+}
+await page.getByRole('button', { name: 'Salvar na biblioteca' }).click(); await page.waitForTimeout(1400);
+await page.reload(); await page.waitForTimeout(1200);
+check(/#\/ferramenta\/doc-/.test(await page.evaluate(() => location.hash)) && /Process Map Model Canvas/.test(await texto()), 'Documentação: "Salvar na biblioteca" cria o item e ele continua depois do F5');
+await page.evaluate(() => { localStorage.removeItem('hangar.extra'); localStorage.removeItem('hangar.formRascunho'); location.hash = '#/'; }); await page.reload(); await page.waitForTimeout(1200);
+
+// Escopos (PPGP 2026) → busca → escopo em 5 blocos → checklist → roteiro → etapa → ferramenta
 await page.getByRole('button', { name: 'Escopos', exact: true }).first().click();
 await page.waitForTimeout(300);
 const temEscopos = !/Nenhum escopo cadastrado/.test(await texto());
 check(true, temEscopos ? 'tela Escopos lista escopos' : 'tela Escopos vazia (nenhum escopo promovido ainda) — pulando navegação por etapa');
 if (temEscopos) {
-  // prefere um escopo com ferramentas mapeadas ("N etapas · M ferramentas", M > 0)
-  const comFerr = page.locator('article', { hasText: /etapas · [1-9]/ });
-  await ((await comFerr.count()) ? comFerr.first() : page.locator('article', { hasText: /etapas/ }).first()).click();
-  await page.waitForTimeout(300);
-  check(/ferramentas mapeadas/i.test(await texto()), 'abriu um escopo com a linha do tempo das etapas');
+  const nCards = await page.locator('main article').count();
+  check(/Revisão dos Escopos \(PPGP 2026\)/.test(await texto()) && nCards >= 15, `tela Escopos cita o PPGP 2026 e lista ${nCards} escopos`);
+  check(!/Estudo de Viabilidade|\bEVE\b/.test(await texto()), 'EVE (descontinuado) não aparece na tela Escopos');
+  const busca = page.getByPlaceholder(/Entregável, ferramenta, cliente/);
+  await busca.fill('curva abc'); await page.waitForTimeout(300);
+  const achados = await page.locator('main article').count();
+  check(achados >= 1 && achados < nCards && /Gestão de Estoque/.test(await texto()), `busca "curva abc" nos escopos filtra para ${achados} escopo(s), com Gestão de Estoque`);
+  await busca.fill(''); await page.waitForTimeout(200);
+
+  await page.locator('main article', { hasText: 'Estruturação Comercial' }).first().click();
+  await page.waitForTimeout(400);
+  const t = await texto();
+  check(['O que estudar', 'Diagnóstico Inicial', 'O que saber', 'Pontos de risco', 'Etapas do escopo', 'Entregáveis', 'Cases e cronogramas'].every((x) => t.includes(x)), 'escopo abriu com os 5 blocos (estudar, Diagnóstico Inicial, etapas, entregáveis, cases)');
+  check(/Culpar a PJ por não vender/.test(t) && /Trópicos Motel/.test(t) && /Matriz de objeções/.test(t), 'risco, case e entregável do slide 2 do PPGP aparecem na tela');
+
+  // checklist "O que saber": marca, conta e sobrevive ao F5
+  await page.locator('main [role="checkbox"]').first().click(); await page.waitForTimeout(250);
+  check(/1 de \d+ levantados/.test(await texto()), 'marcar uma pergunta de "O que saber" atualiza o contador');
+  await page.reload(); await page.waitForTimeout(1200);
+  check(/1 de \d+ levantados/.test(await texto()), 'checklist continua marcado depois de recarregar (localStorage)');
+  await page.getByRole('button', { name: 'Limpar', exact: true }).first().click(); await page.waitForTimeout(200);
+
+  // roteiro do Diagnóstico Inicial
+  await page.getByRole('button', { name: /Roteiro do Diagnóstico Inicial/ }).click(); await page.waitForTimeout(300);
+  {
+    const mat = await page.evaluate(() => window.__hangarUltimoMaterial);
+    check(!!mat && /roteiro do Diagnóstico Inicial/i.test(mat.html) && mat.html.includes('Culpar a PJ por não vender') && mat.html.includes('Quantas pessoas da equipe comercial'), `roteiro imprimível traz o que saber e os riscos (${mat ? mat.nome : 'nada'})`);
+    await page.evaluate(() => { window.__abertoNoDrive = null; });
+  }
+
+  // etapa → ferramenta → "Usado em"
   const chip = page.locator('main span', { hasText: /^(Baixo|Médio|Alto)$/ });
-  const nFerr = await chip.count();
-  if (nFerr) {
+  if (await chip.count()) {
     await chip.first().click();
     await page.waitForTimeout(300);
-    check(/usado em/i.test(await texto()), 'ficha da ferramenta abriu a partir da etapa e mostra "Usado em"');
-  } else check(true, 'etapa sem ferramentas mapeadas — ficha não testada por aqui');
+    check(/usado em/i.test(await texto()) && /Estruturação Comercial/.test(await texto()), 'ficha da ferramenta abriu a partir da etapa e mostra "Usado em" com o escopo');
+  } else check(false, 'Estruturação Comercial sem ferramentas nas etapas');
+
+  // link antigo de escopo fundido redireciona; frentes aparecem na linha do tempo
+  await page.evaluate(() => { location.hash = '#/escopo/gamificacao'; }); await page.waitForTimeout(500);
+  check(/cultura-gamificacao-prosel/.test(await page.evaluate(() => location.hash)) && /Frente: Gamificação/i.test(await texto()), 'link antigo #/escopo/gamificacao abre Cultura, Gamificação e Prosel com as frentes');
+
+  // "+ ficha" de um projeto já realizado abre o cadastro com cliente e escopo preenchidos
+  await page.getByRole('button', { name: '+ ficha' }).first().click(); await page.waitForTimeout(300);
+  const cli = await page.locator('main input').first().inputValue();
+  check(/cases\/novo/.test(await page.evaluate(() => location.hash)) && cli === 'Spicy', `"+ ficha" abre o cadastro de case com o cliente preenchido (${cli})`);
+  await page.getByRole('button', { name: 'Limpar', exact: true }).last().click(); await page.waitForTimeout(200);
 }
 
 // material para a reunião: ficha da primeira ferramenta → abre uma aba (blob:) com o HTML imprimível
@@ -176,7 +256,7 @@ const PNG_1PX = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0l
 await page.locator('#hangar-foto-input').setInputFiles({ name: 'foto.png', mimeType: 'image/png', buffer: PNG_1PX });
 await page.waitForSelector('img[alt="Pré-visualização da foto"]', { timeout: 5000 }).catch(() => {});
 const fotoPrev = await page.locator('img[alt="Pré-visualização da foto"]').first().getAttribute('src').catch(() => null);
-check(!!fotoPrev && /^data:image\/jpeg;base64,/.test(fotoPrev), 'foto enviada virou pré-visualização JPEG (data URL) no formulário');
+check(!!fotoPrev && /^data:image\/(webp|jpeg);base64,/.test(fotoPrev), 'foto enviada virou pré-visualização WebP/JPEG (data URL) no formulário');
 await page.getByPlaceholder('Ex.: Equipe com o gestor na entrega final').fill('Equipe na entrega');
 await page.getByText('Seu nome *').locator('..').locator('input').fill('Pessoa do Smoke');
 await page.getByRole('button', { name: 'Publicar no meu Hangar' }).click();
@@ -197,7 +277,7 @@ check(/Proposta\.pdf/.test(t) && /Abrir PDF/.test(t), 'ficha lista o PDF anexado
   check(!!url && /^blob:/.test(url), `"Abrir PDF" abre um blob: (não um data: bloqueado pelo Chrome) — ${url ? url.slice(0, 24) : 'nada'}`);
   await page.evaluate(() => { window.__abertoNoDrive = null; });
 }
-check((await page.locator('main img[alt="Padaria Smoke"][src^="data:image/jpeg"]').count()) > 0 && /Equipe na entrega/.test(t), 'ficha mostra a foto de capa com a legenda');
+check((await page.locator('main img[alt="Padaria Smoke"][src^="data:image/"]').count()) > 0 && /Equipe na entrega/.test(t), 'ficha mostra a foto de capa com a legenda');
 check(/Só neste navegador/i.test(t), 'ficha avisa que o case só existe neste navegador');
 check(/Pergunte a quem fez/.test(t), 'ficha tem o bloco "Pergunte a quem fez"');
 {
@@ -209,7 +289,7 @@ await page.waitForTimeout(200);
 const dl = await page.evaluate(() => window.__hangarUltimoDownload);
 let caseJson = null; try { caseJson = dl && JSON.parse(dl.json); } catch {}
 check(!!caseJson && caseJson.cliente === 'Padaria Smoke' && caseJson.equipe.consultores.length === 2 && /^case-.*\.json$/.test(dl.nome), `"Baixar case" gerou ${dl ? dl.nome : 'nada'} com JSON válido`);
-check(!!caseJson && caseJson.foto && /^data:image\/jpeg;base64,/.test(caseJson.foto.url) && caseJson.foto.legenda === 'Equipe na entrega', 'JSON do case leva a foto embutida e a legenda');
+check(!!caseJson && caseJson.foto && /^data:image\/(webp|jpeg);base64,/.test(caseJson.foto.url) && caseJson.foto.legenda === 'Equipe na entrega', 'JSON do case leva a foto embutida e a legenda');
 check(!!caseJson && caseJson.equipe.gerente.whatsapp === '84999990000', 'JSON do case guarda o WhatsApp só com dígitos');
 // busca e persistência
 await page.reload(); await page.waitForTimeout(1200);
@@ -224,6 +304,23 @@ check(/Equipe do projeto/i.test(await texto()), 'clicar na foto abre a ficha do 
 check(/^#\/case\//.test(await page.evaluate(() => location.hash)), `URL acompanha a tela (${await page.evaluate(() => location.hash)})`);
 await page.goBack(); await page.waitForTimeout(400);
 check(/Banco de cases/i.test(await texto()) && !/Equipe do projeto/i.test(await texto()), 'botão "voltar" do navegador volta para a lista de cases');
+// foto de capa direto da galeria e da ficha, sem abrir o formulário
+{
+  const card = page.locator('main article', { hasText: 'Padaria Smoke' }).first();
+  check((await card.getByRole('button', { name: /Trocar capa/ }).count()) === 1, 'card da galeria com foto oferece "Trocar capa"');
+  await page.locator('article img[alt="Padaria Smoke"]').first().click(); await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Remover capa' }).click(); await page.waitForTimeout(300);
+  check((await page.locator('main img[alt="Padaria Smoke"]').count()) === 0 && /Adicionar foto de capa/.test(await texto()), 'ficha: "Remover capa" tira a foto e oferece "Adicionar foto de capa"');
+  await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); await page.waitForTimeout(300);
+  await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
+  const card2 = page.locator('main article', { hasText: 'Padaria Smoke' }).first();
+  const [fc] = await Promise.all([page.waitForEvent('filechooser'), card2.getByRole('button', { name: /Adicionar capa/ }).click()]);
+  await fc.setFiles({ name: 'capa.png', mimeType: 'image/png', buffer: PNG_1PX }); await page.waitForTimeout(800);
+  check(/#\/cases$/.test(await page.evaluate(() => location.hash)) && (await page.locator('article img[alt="Padaria Smoke"][src^="data:image/"]').count()) > 0, 'galeria: "Adicionar capa" no card põe a foto sem abrir a ficha');
+  await page.reload(); await page.waitForTimeout(1200);
+  await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
+  check((await page.locator('article img[alt="Padaria Smoke"][src^="data:image/"]').count()) > 0, 'capa nova continua depois de recarregar (localStorage)');
+}
 await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(400);
 check(/^Biblioteca/m.test(await texto()) || (await page.getByPlaceholder(/Buscar por nome/).count()) > 0, 'mudar o hash na URL troca de tela (#/biblioteca)');
 await page.keyboard.press('/'); await page.waitForTimeout(100);

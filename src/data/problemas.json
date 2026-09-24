@@ -30,7 +30,8 @@
       "swot"
     ],
     "escopoIds": [
-      "pesquisa-de-mercado"
+      "pesquisa-de-mercado",
+      "plano-de-marketing"
     ],
     "origem": "categoria Entendimento"
   },
@@ -45,8 +46,7 @@
       "banco-de-indicadores"
     ],
     "escopoIds": [
-      "custeio-e-precificacao",
-      "gerenciamento-financeiro"
+      "custeio-e-precificacao"
     ],
     "origem": "etapas do escopo custeio-e-precificacao"
   },
@@ -104,7 +104,8 @@
       "dre"
     ],
     "escopoIds": [
-      "gerenciamento-financeiro"
+      "gerenciamento-financeiro",
+      "planejamento-estrategico"
     ],
     "origem": "ferramentas de indicadores nas etapas dos escopos"
   },
@@ -120,9 +121,84 @@
       "dco"
     ],
     "escopoIds": [
-      "mapeamento-de-cultura",
-      "gamificacao"
+      "cultura-gamificacao-prosel"
     ],
-    "origem": "categoria Pesquisas de cultura + escopos de cultura e gamificação"
+    "origem": "categoria Pesquisas de cultura + escopo Cultura, Gamificação e Prosel (PPGP 2026)"
+  },
+  {
+    "key": "lancar",
+    "label": "Lançar um produto ou negócio",
+    "ids": [
+      "cpv",
+      "ux-research-canvas",
+      "bmc",
+      "swot",
+      "pestel",
+      "porter"
+    ],
+    "escopoIds": [
+      "idealizacao-de-novos-produtos"
+    ],
+    "origem": "escopo Idealização de Novos Produtos (PPGP 2026): entregáveis e etapas"
+  },
+  {
+    "key": "planejar-financas",
+    "label": "Planejar as finanças",
+    "ids": [
+      "dre",
+      "banco-de-indicadores",
+      "pestel",
+      "porter",
+      "swot"
+    ],
+    "escopoIds": [
+      "planejamento-financeiro"
+    ],
+    "origem": "escopo Planejamento Financeiro (PPGP 2026)"
+  },
+  {
+    "key": "estoque",
+    "label": "Organizar o estoque",
+    "ids": [
+      "curva-abc",
+      "bpmn",
+      "banco-de-indicadores",
+      "raci",
+      "dco"
+    ],
+    "escopoIds": [
+      "gestao-de-estoque"
+    ],
+    "origem": "escopo Gestão de Estoque (PPGP 2026): entregáveis"
+  },
+  {
+    "key": "produzir",
+    "label": "Produzir mais e melhor",
+    "ids": [
+      "bpmn",
+      "banco-de-indicadores",
+      "pmmc"
+    ],
+    "escopoIds": [
+      "capacidade-produtiva",
+      "layout",
+      "previsao-de-demanda"
+    ],
+    "origem": "escopos Capacidade Produtiva, Adequação de Layout e Previsão de Demanda (PPGP 2026)"
+  },
+  {
+    "key": "automatizar",
+    "label": "Automatizar tarefas",
+    "ids": [
+      "n8n",
+      "pmmc",
+      "mapa-de-contexto",
+      "bpmn",
+      "raci"
+    ],
+    "escopoIds": [
+      "automacao"
+    ],
+    "origem": "escopo Automação (PPGP 2026): estudar e entregáveis"
   }
 ]
