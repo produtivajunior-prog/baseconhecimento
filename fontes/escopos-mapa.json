@@ -1,220 +1,895 @@
 {
-  "_comentario": "Mapa curado que liga cada escopo às suas fontes e diz qual ferramenta entra em qual macroetapa. As macroetapas em si vêm verbatim do Resumão (tools/rascunho.mjs --escopos); este arquivo só acrescenta o que exige julgamento: descrição, vínculo ferramenta↔etapa (lido dos Cronogramas Base) e entregáveis. Tudo aqui é origem 'manual' e passa por revisão de thiagomelo@.",
-  "resumaoId": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-  "checklistId": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-  "responsavel": { "nome": "Thiago Melo", "email": "thiagomelo@produtivajunior.com.br" },
+  "_comentario": "Mapa curado dos escopos. A base é o [PPGP 2026] Revisão dos Escopos (fontes/ppgp-2026/): cada item aqui corresponde a um item do slide (campo \"ppgp\" guarda o original quando o texto foi corrigido; sem \"ppgp\", o texto é idêntico). O que exige julgamento e não está no documento mora só aqui: nome de exibição, grupo, descrição, ferramentas vinculadas a cada etapa, entregável e item de estudo, e o link do Cronograma Base no Drive. tools/rascunho.mjs --escopos confere item a item contra o PPGP e recusa qualquer item a mais, a menos ou alterado sem registro.",
+  "fonte": "fontes/ppgp-2026/revisao-dos-escopos.json",
+  "responsavel": {"nome":"Thiago Melo","email":"thiagomelo@produtivajunior.com.br"},
+  "removidos": {
+    "_comentario": "Escopos que saíram do Hangar em 2026-09-24 por não estarem no PPGP 2026 (os 16 escopos atuais). Os ids fundidos redirecionam para o escopo novo.",
+    "pedidoPor": "produtivajunior@gmail.com",
+    "em": "2026-09-24",
+    "ids": ["gestao-a-vista","pcp","modelo-de-negocio"],
+    "fundidos": {"gamificacao":"cultura-gamificacao-prosel","mapeamento-de-cultura":"cultura-gamificacao-prosel","dco-prosel":"cultura-gamificacao-prosel"}
+  },
   "escopos": [
     {
-      "id": "map-e-model",
-      "nome": "Mapeamento e Modelagem de Processos",
-      "colunaResumao": "Map e model",
-      "checklist": "Mapeamento e modelagem de processos",
-      "cronogramaId": "13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE",
-      "descricao": "Entende o macroprocesso, mapeia os processos AS IS de um setor, aponta causas raízes e oportunidades, modela os processos TO BE e deixa rotina, DCO e manual do setor implantados.",
-      "ferramentasPorEtapa": {
-        "1": ["bmc", "mapa-de-contexto", "pmmc"],
-        "2": ["pmmc", "bpmn", "sipoc"],
-        "4": ["bpmn"],
-        "5": ["raci"],
-        "6": ["dco"]
-      },
-      "entregaveisPorEtapa": {
-        "1": ["BMC + Macroprocesso", "Process Map Model Canvas"],
-        "2": ["Fluxogramas AS IS"],
-        "3": ["Relatório de causas raízes e oportunidades de melhoria"],
-        "4": ["Modelagens dos processos + Implementação + Treinamentos"],
-        "7": ["Manual do setor + DCO"]
-      }
-    },
-    {
-      "id": "gerenciamento-financeiro",
-      "nome": "Gerenciamento Financeiro",
-      "colunaResumao": "GERENCIAMENTO",
-      "checklist": "Gerenciamento Financeiro",
-      "cronogramaId": "1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo",
-      "descricao": "Mapeia os processos financeiros, classifica gastos, parametriza sistema ou constrói a planilha de gerenciamento, define indicadores e dashboard e documenta a rotina do setor.",
-      "ferramentasPorEtapa": {
-        "1": ["bmc", "pmmc"],
-        "2": ["pmmc", "bpmn"],
-        "5": ["dre"],
-        "6": ["banco-de-indicadores"],
-        "7": ["banco-de-indicadores"],
-        "9": ["bpmn", "dco"]
-      },
-      "entregaveisPorEtapa": {
-        "1": ["BMC + Macroprocesso", "Process Map Model Canvas do setor financeiro"],
-        "2": ["Processos AS IS + Relatório de melhorias"],
-        "3": ["Gastos classificados + Manual de classificação de gastos"],
-        "5": ["Sistema parametrizado ou planilha de gerenciamento financeiro"],
-        "6": ["Indicadores financeiros"],
-        "8": ["Dashboard Financeiro"],
-        "9": ["Manual do setor financeiro + Implementação"]
-      }
-    },
-    {
-      "id": "custeio-e-precificacao",
-      "nome": "Custeio e Precificação",
-      "colunaResumao": "Custeio e precificação",
-      "checklist": "Custeio e precificação",
-      "cronogramaId": "1LIe3FcON0dRXcErSfzRFVg-aZTcPUlbe0S2UAf-Unbw",
-      "descricao": "Levanta e classifica os gastos, prioriza produtos pela curva ABC, define método de custeio e rateio, chega ao DRE e ao markup por produto e fecha com indicadores e plano de ação.",
-      "ferramentasPorEtapa": {
-        "1": ["bmc", "bpmn"],
-        "3": ["curva-abc"],
-        "7": ["dre"],
-        "8": ["markup"],
-        "9": ["matriz-de-concorrentes"],
-        "10": ["banco-de-indicadores"]
-      },
-      "entregaveisPorEtapa": {
-        "1": ["Fluxogramas AS IS destacando custos"],
-        "3": ["Curva ABC + Método de custeio"],
-        "4": ["Gastos classificados"],
-        "7": ["DRE dos produtos"],
-        "8": ["Markup dos produtos"],
-        "9": ["Matriz de concorrentes"],
-        "10": ["Indicadores financeiros"],
-        "11": ["Planos de ação + Estratégias"]
-      }
+      "id": "idealizacao-de-novos-produtos",
+      "nome": "Idealização e Desenvolvimento de Novos Produtos",
+      "pagina": 1,
+      "ppgpTitulo": "IDEALIZAÇÃO/DESENVOLVIMENTO DE NOVOS PRODUTOS",
+      "grupo": "ESTRATÉGIA",
+      "descricao": "Parte do objetivo do cliente para definir a ideia do novo produto ou serviço, valida com análise de mercado e pesquisa com clientes, prototipa e testa antes de lançar.",
+      "estudar": [
+        {"nome":"Metodologias e prototipação","ferramentas":[]},
+        {"nome":"Design thinking e Design sprint","ferramentas":[]},
+        {"nome":"Pesquisas de mercado externas","ferramentas":[]}
+      ],
+      "etapas": [
+        {"nome":"Entendimento do negócio e do serviço","ferramentas":["bmc"]},
+        {"nome":"Análise de mercado e pesquisa com clientes","ferramentas":["cpv","ux-research-canvas"]},
+        {"nome":"Definição do objetivo e da ideia","ferramentas":["cpv"]},
+        {"nome":"Prototipação [manual etc.]","ppgp":"Prototipação [manual e etc]","ferramentas":[]},
+        {"nome":"Testes","ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"Relatório de prototipação do produto","ferramentas":[]},
+        {"nome":"O produto","ppgp":"O produto **","marcado":true,"ferramentas":[]},
+        {"nome":"Mapa de empatia e canvas proposta de valor","ferramentas":["cpv"]},
+        {"nome":"Matriz BCG e Ansoff","ppgp":"Matriz BCG e ansoff","ferramentas":[]},
+        {"nome":"Pesquisa com clientes","ferramentas":[]},
+        {"nome":"Matriz de objeção","ferramentas":[]},
+        {"nome":"Relatório de estratégias de divulgação","ferramentas":[]},
+        {"nome":"Material de proposta de produtos","ferramentas":[]},
+        {"nome":"Metas e objetivos [OKRs]","ppgp":"Metas e objetivos [OKRS]","ferramentas":[]},
+        {"nome":"Grupo focal","ferramentas":[]},
+        {"nome":"Storyboard","ferramentas":[]},
+        {"nome":"Roteiro de abordagem","ferramentas":[]},
+        {"nome":"Cliente oculto","ferramentas":[]},
+        {"nome":"Análise de branding","ferramentas":[]}
+      ],
+      "saber": ["Entender qual o objetivo","Entender o que quer alcançar","Disponibilidade de recursos financeiros"],
+      "riscos": ["O gestor achar que vamos criar a ideia do zero","Não ter recursos para investir"],
+      "cases": ["Cabugi Solar","Orathoria","Unifan","Vivianny Lopes","Colégio TOP","Multcon"]
     },
     {
       "id": "estruturacao-comercial",
       "nome": "Estruturação Comercial",
-      "colunaResumao": "ESTRUTURAÇÃO COMERCIAL",
-      "checklist": "Estruturação comercial (2 ways)",
+      "pagina": 2,
+      "ppgpTitulo": "ESTRUTURAÇÃO COMERCIAL",
+      "grupo": "ESTRATÉGIA",
+      "descricao": "Entende o negócio e o mercado, mapeia e redesenha o processo comercial (jornada do cliente AS IS e TO BE), implanta dashboard de indicadores e deixa rotina, manual comercial e treinamento para a equipe de vendas.",
       "cronogramaId": "1HeM7YZv0vgQCTkn6ZOzS11h9jELTGUqkmtaITIOEp10",
-      "descricao": "Mapeia o processo comercial, faz cliente oculto e matriz de concorrentes, desenha a jornada do cliente AS IS e TO BE, constrói o ICP e entrega as ferramentas comerciais (CRM, roteiro, matriz de objeções, cadência).",
-      "ferramentasPorEtapa": {
-        "1": ["bmc", "pmmc"],
-        "2": ["matriz-de-concorrentes"],
-        "3": ["bpmn"],
-        "4": ["jornada-do-cliente"],
-        "5": ["icp"],
-        "7": ["jornada-do-cliente"],
-        "8": ["bpmn"]
-      },
-      "entregaveisPorEtapa": {
-        "1": ["BMC + Macroprocesso comercial", "Process Map Model Canvas comercial"],
-        "2": ["Relatório dos clientes ocultos + Matriz de concorrentes"],
-        "3": ["Fluxogramas AS IS"],
-        "4": ["Jornada do cliente AS IS + ICP"],
-        "6": ["CRM, Roteiro de abordagem, Matriz de objeções, Templates de mensagem, Fluxo de cadência"]
-      }
+      "estudar": [
+        {"nome":"Cliente oculto externo ou interno","ferramentas":[]},
+        {"nome":"Jornada do cliente","ferramentas":["jornada-do-cliente"]},
+        {"nome":"CRMs","ppgp":"CRM´S","ferramentas":[]},
+        {
+          "nome": "Ferramentas comerciais [roteiro de abordagem, fluxo de cadência, matriz de objeção, buyer persona, ICP e público-alvo, dashboard/indicadores comerciais, material de proposta]",
+          "ppgp": "Ferramentas comerciais [Roteiro de abordagem, fluxo de cadência, matriz de objeção, Buyer persona, ICP e público alvo, dashboard/indicadores comerciais, material de proposta]",
+          "ferramentas": ["icp","buyer-persona","banco-de-indicadores"]
+        }
+      ],
+      "etapas": [
+        {
+          "nome": "Entendimento de negócio e análise de mercado [BMC, SWOT + jornada do cliente AS IS e cliente oculto/pesquisa com clientes e pesquisa externa]",
+          "ppgp": "Entendimento de negócio e análise mercado [BMC, swot + jornada do cliente as is e cliente oculto/ pesquisa com clientes e pesquisa externa]",
+          "ferramentas": ["bmc","swot","jornada-do-cliente"]
+        },
+        {"nome":"Mapeamento/Estruturação dos processos comerciais","ferramentas":["pmmc","bpmn"]},
+        {"nome":"Relatórios de melhorias/estratégias e priorização","ferramentas":[]},
+        {
+          "nome": "Desenho do processo comercial [jornada do cliente TO BE] e estruturação dos planos de ação",
+          "ppgp": "Desenho do processo comercial [Jornada do cliente to be] e estruturação dos planos de ação",
+          "ferramentas": ["jornada-do-cliente","icp","buyer-persona"]
+        },
+        {
+          "nome": "Implementação de ferramental visual [dashboard e indicadores]",
+          "ppgp": "Implementação de ferramental de visual [Dashboard e indicadores]",
+          "ferramentas": ["banco-de-indicadores"]
+        },
+        {"nome":"Definição de rotina e atribuições [manual, RACI e DCO]","ferramentas":["raci","dco"]},
+        {"nome":"Treinamentos","ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"Roteiro de abordagem","ferramentas":[]},
+        {"nome":"Matriz de objeções","ferramentas":[]},
+        {"nome":"Proposta comercial","ferramentas":[]},
+        {"nome":"BMC e SWOT","ferramentas":["bmc","swot"]},
+        {"nome":"Jornada do cliente","ferramentas":["jornada-do-cliente"]},
+        {"nome":"Ferramenta de gerenciamento de clientes","ppgp":"ferramenta de gerenciamento de clientes","ferramentas":[]},
+        {"nome":"CRM","ferramentas":[]},
+        {"nome":"Dashboard e indicadores","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Boas práticas de venda","ferramentas":[]},
+        {"nome":"Relatório de cliente oculto externo e interno","ferramentas":[]},
+        {"nome":"Manual comercial","ferramentas":[]},
+        {"nome":"Fluxo de cadência","ferramentas":[]},
+        {"nome":"DCO e cronograma de rotina","ferramentas":["dco"]},
+        {"nome":"Pesquisa com clientes","ferramentas":[]},
+        {"nome":"Matriz RACI","ferramentas":["raci"]}
+      ],
+      "saber": [
+        "Sistemas/CRM",
+        {"texto":"Entender as ferramentas comerciais atuais (pedir para ver)","ppgp":"Entender as ferramentas comerciais atuais/pedir"},
+        "Quantas pessoas da equipe comercial",
+        {"texto":"Quantos clientes tem e qual é o público","ppgp":"Quantos clientes tem/ qual o público"},
+        "Qual processo comercial e como chegam nos clientes",
+        "Qual o objetivo da estruturação comercial",
+        "Ver se tem dados dos clientes"
+      ],
+      "riscos": ["Falta de implementação","Falta de pessoas","Falta de recurso financeiro","Culpar a PJ por não vender"],
+      "cases": [
+        "Trópicos Motel",
+        "Raffe",
+        "Pasteis Abibe",
+        "DUO",
+        "Soulfit",
+        {"nome":"DNA Center","ppgp":"DNA center"},
+        "GE Solar",
+        "Lapela",
+        "TR Engenharia",
+        "Amorim Maia",
+        "Lumos",
+        "Container Criativo"
+      ]
     },
     {
       "id": "plano-de-marketing",
-      "nome": "Plano de Marketing",
-      "colunaResumao": "PLANO DE MKT",
-      "checklist": "Plano de marketing e vendas (2 ways)",
+      "nome": "Planejamento de Marketing",
+      "pagina": 3,
+      "ppgpTitulo": "PLANEJAMENTO DE MKT.",
+      "grupo": "ESTRATÉGIA",
+      "descricao": "Entende o negócio e o cliente (cliente oculto e pesquisa), analisa o mercado, define público-alvo e canais de tração e entrega a estratégia de marketing priorizada, com ferramental visual, rotina e treinamento.",
       "cronogramaId": "10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ",
-      "descricao": "Diagnostica o marketing da empresa, analisa ambiente e concorrentes, define público-alvo e buyer persona, desenha a jornada do cliente, escolhe canais de tração e entrega estratégias com ferramenta de acompanhamento.",
-      "ferramentasPorEtapa": {
-        "1": ["bmc"],
-        "2": ["swot", "pestel", "matriz-de-concorrentes"],
-        "4": ["icp", "buyer-persona"],
-        "5": ["jornada-do-cliente"],
-        "9": ["banco-de-indicadores"]
-      },
-      "entregaveisPorEtapa": {
-        "1": ["BMC", "8 P's do marketing"],
-        "2": ["SWOT + PESTEL + Matriz de concorrentes"],
-        "3": ["Dashboard e relatório com compilado das respostas"],
-        "4": ["ICP e Buyer Persona"],
-        "5": ["Bullseye Framework + Jornada do cliente"],
-        "7": ["Relatório de estratégias + Ferramenta de suporte"]
-      }
+      "estudar": [
+        {"nome":"Cliente oculto externo ou interno","ferramentas":[]},
+        {"nome":"Jornada do cliente","ferramentas":["jornada-do-cliente"]},
+        {"nome":"Indicadores de CS [LTV, churn]","ppgp":"Indicadores CS [LTV, churn]","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Terceirizadas","ppgp":"Tercerizadas","ferramentas":[]},
+        {"nome":"Ferramentas de planejamento de marketing [LinkedIn]","ppgp":"Ferramentas de planejamento de marketing [linkedin]","ferramentas":[]}
+      ],
+      "etapas": [
+        {
+          "nome": "Entendimento de negócio [BMC, SWOT, cliente oculto e pesquisa com clientes]",
+          "ppgp": "Entendimento de negocio [BMC , swot, cliente oculto e pesquisa com clientes]",
+          "ferramentas": ["bmc","swot"]
+        },
+        {"nome":"Análise de mercado","ferramentas":["pestel","porter"]},
+        {
+          "nome": "Definição do público-alvo [canvas de proposta de valor, mapa de empatia, jornada do cliente] + definição dos canais de tração",
+          "ppgp": "Definição do público alvo [Canvas proposta de valor, mapa de empatia, jornada do cliente] + Definição dos canais de tração",
+          "ferramentas": ["cpv","jornada-do-cliente","icp","buyer-persona"]
+        },
+        {
+          "nome": "Estruturação e priorização dos planos de ação [estratégia de marketing]",
+          "ppgp": "Estruturação e priorização dos planos de ação [Estratégia de marketing]",
+          "ferramentas": []
+        },
+        {"nome":"Ferramental visual","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Definição de rotinas e atribuições","ferramentas":["raci","dco"]},
+        {"nome":"Treinamentos","ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"Bullseye framework","ferramentas":[]},
+        {"nome":"Jornada do cliente AS IS e TO BE","ppgp":"Jornada do cliente AS IS E TO BE","ferramentas":["jornada-do-cliente"]},
+        {"nome":"Relatório de cliente oculto externo e interno","ferramentas":[]},
+        {"nome":"Dashboard e indicadores visuais","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Pesquisa com cliente","ferramentas":[]},
+        {
+          "nome": "SWOT, BMC, PESTAL e 5 forças de Porter",
+          "ppgp": "SWOT, BMC, PESTAL**, 5 forças de porter",
+          "marcado": true,
+          "ferramentas": ["bmc","swot","pestel","porter"]
+        },
+        {"nome":"4Ps e 8Ps","ppgp":"4p´s e 8p´s","ferramentas":[]},
+        {"nome":"ICP, público-alvo e cliente ideal","ppgp":"ICP, público alvo e cliente ideal","ferramentas":["icp"]},
+        {"nome":"Roteiro de follow-up com cliente","ferramentas":[]},
+        {"nome":"Canvas de proposta de valor e mapa de empatia","ppgp":"Canvas proposta de Valor e Mapa de Empatia","ferramentas":["cpv"]},
+        {"nome":"Matriz BCG e Ansoff","ferramentas":[]}
+      ],
+      "saber": [
+        "Pedir as redes sociais",
+        {"texto":"Entender a base de clientes [público e quantidade]","ppgp":"Entender base de clientes [Público e a quantidade]"},
+        {"texto":"Entender o modelo de negócio e o processo comercial","ppgp":"Entender o modelo negócio/ processo comercial"},
+        {"texto":"Entender o objetivo","ppgp":"Entender objetivo"},
+        {"texto":"Ver a viabilidade de terceirização","ppgp":"Ver a viabilidade de tercerização"},
+        "Coletar dados dos clientes"
+      ],
+      "riscos": [
+        {"texto":"Cliente achar que vamos cuidar do Instagram","ppgp":"Cliente achar que vamos cuidar do instagram"},
+        "Achar que a gente trabalha com tráfego pago"
+      ],
+      "cases": [
+        {"nome":"Anjos da Noite","ppgp":"Anjos da noite"},
+        {"nome":"Fomento Corretora","ppgp":"Fomento corretora"},
+        "Posto Pinheiro Borges",
+        "Sublims",
+        {"nome":"Pratas Art","ppgp":"Pratas art"},
+        "M3TA",
+        "Manipulart"
+      ]
     },
     {
       "id": "planejamento-estrategico",
       "nome": "Planejamento Estratégico",
-      "colunaResumao": "PLANEJAMENTO  ESTRATÉGICO",
-      "checklist": "Planejamento estratégico",
+      "pagina": 4,
+      "ppgpTitulo": "PLANEJAMENTO ESTRATÉGICO",
+      "grupo": "ESTRATÉGIA",
+      "descricao": "Revisa ou cria missão, visão e valores, analisa o ambiente, escolhe com o cliente a metodologia de acompanhamento (OKRs, BSC ou MWB), define as metas, constrói a ferramenta de acompanhamento estratégico e desdobra os planos de ação.",
       "cronogramaId": "1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE",
-      "descricao": "Revisa missão, visão e valores, analisa ambiente com SWOT, PESTEL e 5 Forças, cruza dados de pesquisa e estrutura metas, objetivos e acompanhamento estratégico com planos de ação.",
-      "ferramentasPorEtapa": {
-        "1": ["bmc"],
-        "3": ["swot", "pestel", "porter"],
-        "4": ["estudo-de-segmento"],
-        "5": ["banco-de-indicadores"]
-      },
-      "entregaveisPorEtapa": {
-        "1": ["BMC"],
-        "2": ["MVV atualizado"],
-        "3": ["SWOT + PESTEL + 5 Forças de Porter"],
-        "4": ["Dashboard com dados primários + Relatório de dados secundários"],
-        "5": ["Planilha de PE + Acompanhamento estratégico"],
-        "6": ["Planos de ação"]
-      }
+      "estudar": [{"nome":"Diretrizes estratégicas","ferramentas":[]},{"nome":"A ordem do BSC","ferramentas":[]},{"nome":"MVV","ferramentas":[]}],
+      "etapas": [
+        {
+          "nome": "Entendimento de negócio [BMC, SWOT e MVV] e análise de mercado",
+          "ppgp": "Entendimento de negócio [BMC, swot e MVV]/ Análise mercado",
+          "ferramentas": ["bmc","swot","pestel","porter"]
+        },
+        {
+          "nome": "Apresentação e priorização das metodologias de acompanhamento estratégico",
+          "ppgp": "Apresentação e priorização metodologias de acompanhamento estratégico",
+          "ferramentas": []
+        },
+        {"nome":"Criação das metas e construção da ferramenta","ppgp":"Criar as metas e construção da ferramenta","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Desdobramento dos planos de ação","ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"SWOT","ferramentas":["swot"]},
+        {"nome":"BMC","ferramentas":["bmc"]},
+        {"nome":"MVV","ferramentas":[]},
+        {"nome":"OKRs, BSC e MWB","ppgp":"OKRS, BSC, MWB","ferramentas":[]},
+        {"nome":"Ferramenta de acompanhamento estratégico","ppgp":"FERRAMENTA DE ACOMPANHAMENTO ESTRATÉGICO","ferramentas":[]},
+        {"nome":"Planos de ação","ppgp":"PLANOS DE AÇÃO","ferramentas":[]},
+        {"nome":"PESTAL e TAM SAM SOM","ppgp":"PESTAL E TAM SAM SOM","ferramentas":["pestel"]}
+      ],
+      "saber": [
+        "Se a empresa tem MVV",
+        {"texto":"Se quer fazer em todos os setores","ppgp":"Se quer fazer em todos setores"},
+        {"texto":"Se tem preferência por algum tipo de diretriz estratégica","ppgp":"Se tem preferência por algum tipo de diretrizes estratégicas"}
+      ],
+      "riscos": ["Garantia na implementação das metas e objetivos"],
+      "cases": ["Leosup","Bee Delivery 2",{"nome":"Nego Bom Bolos","ppgp":"Nego bom bolos"},"Marenzo","Unifacex","Azienda","Sim Distribuidora"]
     },
     {
-      "id": "mapeamento-de-cultura",
-      "nome": "Mapeamento de Cultura",
-      "colunaResumao": "MAPEAMENTO  DE CULTURA",
-      "checklist": "Mapeamento de cultura",
+      "id": "cultura-gamificacao-prosel",
+      "nome": "Cultura, Gamificação e Prosel",
+      "pagina": 5,
+      "ppgpTitulo": "CULTURA/GAMIFICAÇÃO/PROSEL",
+      "grupo": "ESTRATÉGIA",
+      "descricao": "Um escopo com duas frentes. Gamificação: mapeia processos e perfis e estrutura a gamificação. Cultura: entende o perfil dos colaboradores, coleta ou revisa o MVV, aplica as pesquisas e estrutura melhorias de cultura e engajamento. Entrega calendário cultural, DCO e ferramenta de onboarding.",
       "cronogramaId": "1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4",
-      "descricao": "Aplica as pesquisas de cultura (PCO, IBACO, FIB, OCAI), analisa as respostas em dashboard, formula estratégias de engajamento com gestores e colaboradores e acompanha a implementação.",
-      "ferramentasPorEtapa": {
-        "1": ["bmc"],
-        "2": ["pco", "ibaco", "fib", "mlq"]
-      },
-      "entregaveisPorEtapa": {
-        "1": ["Perfil dos colaboradores"],
-        "2": ["PCO, IBACO, FIB, OCAI"],
-        "3": ["Dashboard com respostas + Análise"],
-        "4": ["Estratégias de engajamento"],
-        "6": ["Implementação"]
-      }
+      "antigosIds": ["gamificacao","mapeamento-de-cultura","dco-prosel"],
+      "pendencias": ["O PPGP 2026 junta Prosel neste escopo, mas não lista etapas próprias de Prosel."],
+      "estudar": [
+        {"nome":"OCAI, IBACO, MLQ-6S e PCO [estudar os modelos]","ppgp":"OCAI, IBACO, MLQ-6S, PCO [estudarem modelos]","ferramentas":["ibaco","mlq","pco"]},
+        {"nome":"Algumas ferramentas e tipos de pesquisas inovadoras","ferramentas":[]},
+        {"nome":"Perfis de gamificação","ferramentas":["gamificacao"]}
+      ],
+      "etapas": [
+        {"nome":"Mapear os processos e entender os perfis","frente":"Gamificação","ferramentas":["bpmn","gamificacao"]},
+        {"nome":"Estruturar planos de ação","frente":"Gamificação","ferramentas":[]},
+        {"nome":"Estruturação da gamificação","frente":"Gamificação","ferramentas":["gamificacao"]},
+        {
+          "nome": "Entendimento de negócio + perfil do colaborador + coleta/revisão do MVV",
+          "ppgp": "Entendimento de negocio + perfil do colaborador + Coleta/revisar MVV",
+          "frente": "Cultura",
+          "ferramentas": ["bmc"]
+        },
+        {"nome":"Aplicação das pesquisas","frente":"Cultura","ferramentas":["pco","ibaco","mlq","fib"]},
+        {"nome":"Ferramenta visual","frente":"Cultura","ferramentas":[]},
+        {"nome":"Estruturação de melhorias de cultura e engajamento","frente":"Cultura","ferramentas":[]},
+        {"nome":"Manual do setor e definição de rotina e atribuições","frente":"Cultura","ferramentas":["dco"]}
+      ],
+      "entregaveis": [
+        {"nome":"Calendário cultural","ferramentas":[]},
+        {"nome":"Pesquisas como um todo","ferramentas":["pco","ibaco","mlq","fib"]},
+        {"nome":"Relatório de estratégias de engajamento","ferramentas":[]},
+        {"nome":"MVV","ferramentas":[]},
+        {"nome":"Ferramenta visual das respostas","ferramentas":[]},
+        {"nome":"DCO","ferramentas":["dco"]},
+        {"nome":"Ferramenta de onboarding","ferramentas":[]}
+      ],
+      "saber": [
+        {"texto":"Se já tem MVV","ppgp":"Coletar se já tem MVV"},
+        {"texto":"Quantos colaboradores e quantos setores existem","ppgp":"Quantos colaboradores são e quantos setores são"},
+        "Qual objetivo do projeto",
+        "Perfil do colaborador"
+      ],
+      "riscos": ["Baixa adesão dos colaboradores","Falta de agregação de valor para o gestor"],
+      "cases": [
+        "Spicy",
+        "Docelândia",
+        {"nome":"Aram Hotéis","ppgp":"Aram hotéis"},
+        "F2 Engenharia",
+        "Focus",
+        "Laniaq",
+        {"nome":"Casa das Meias","ppgp":"Casa das meias"},
+        "Sterbom"
+      ]
     },
     {
-      "id": "gamificacao",
-      "nome": "Gamificação",
-      "colunaResumao": "GAMIFICAÇÃO",
-      "checklist": "Gamificação",
-      "cronogramaId": "1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4",
-      "descricao": "Entende o perfil dos colaboradores e os processos, constrói critérios, pontuações e tema da gamificação, entrega manual e ferramenta de acompanhamento e define estratégias de engajamento.",
-      "ferramentasPorEtapa": {
-        "1": ["bmc"],
-        "3": ["pco"],
-        "4": ["bpmn"],
-        "5": ["bpmn"],
-        "6": ["gamificacao"]
-      },
-      "entregaveisPorEtapa": {
-        "3": ["Perfil dos colaboradores"],
-        "6": ["Critérios de pontuação da gamificação", "Manual da gamificação"],
-        "7": ["Ferramenta de acompanhamento"],
-        "8": ["Estratégias de engajamento e planos de ação"]
-      }
+      "id": "eve",
+      "nome": "EVE (Estudo de Viabilidade Econômica)",
+      "pagina": 6,
+      "ppgpTitulo": "EVE",
+      "grupo": "FINANCEIRO",
+      "descricao": "Mostra se um novo negócio ou ponto vale o investimento: entende o negócio, analisa o mercado, levanta premissas e investimentos, projeta cenários, calcula os indicadores de viabilidade e entrega o relatório de viabilidade.",
+      "estudar": [
+        {"nome":"Premissas do EVE","ferramentas":[]},
+        {"nome":"Ferramentas de pesquisa de mercado","ferramentas":[]},
+        {"nome":"Indicadores de EVE","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Planejamento financeiro","ferramentas":[]}
+      ],
+      "etapas": [
+        {"nome":"Entendimento de negócio","ppgp":"ENTENDIMENTO DE NEGÓCIO","ferramentas":["bmc","swot"]},
+        {"nome":"Análise de mercado","ppgp":"ANÁLISE DE MERCADO","ferramentas":["pestel","porter","cpv"]},
+        {"nome":"Levantamento de premissas e investimentos","ppgp":"LEVANTAMENTO DE PREMISSAS E INVESTIMENTOS","ferramentas":[]},
+        {"nome":"Projeções dos cenários e cálculos dos indicadores","ppgp":"PROJEÇÕES DOS CENÁRIOS E CÁLCULOS DOS INDICADORES","ferramentas":[]},
+        {"nome":"Definição da viabilidade","ppgp":"DEFINIÇÃO DA VIABILIDADE","ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"SWOT e BMC","ppgp":"SWOT E BMC","ferramentas":["bmc","swot"]},
+        {"nome":"PESTAL","ferramentas":["pestel"]},
+        {"nome":"CAMGPEST","ferramentas":[]},
+        {"nome":"5 forças de Porter","ppgp":"5 FORÇAS DE PORTER","ferramentas":["porter"]},
+        {"nome":"Canvas de proposta de valor","ppgp":"CANVAS PROPOSTA DE VALOR","ferramentas":["cpv"]},
+        {"nome":"TAM SAM SOM","ferramentas":[]},
+        {"nome":"Mapa de empatia","ppgp":"MAPA DE EMPATIA","ferramentas":[]},
+        {"nome":"Definição do público-alvo","ppgp":"DEFINIÇÃO DO PUBLICO ALVO","ferramentas":[]},
+        {"nome":"Orçamento das premissas","ppgp":"ORÇAMENTO DAS PREMISSAS","ferramentas":[]},
+        {"nome":"Ferramenta de cálculos de EVE","ppgp":"FERRAMENTA DE CÁLCULOS DE EVE","ferramentas":[]},
+        {"nome":"Indicadores de EVE","ppgp":"INDICADORES DE EVE","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Relatório de viabilidade","ppgp":"RELATÓRIO DE VIABILIDADE","ferramentas":[]}
+      ],
+      "saber": [
+        {"texto":"Se há necessidade de ferramentas de pesquisa de mercado","ppgp":"Necessidade de ferramentas de pesquisa mercado"},
+        {"texto":"Qual é o ponto que ele vai abrir e as características do ponto","ppgp":"Qual é o ponto que ele vai abrir e características dos pontos"},
+        "Qual o público que ele vai atingir",
+        {"texto":"Qual o produto ou serviço que ele vai vender","ppgp":"Qual o produto/ serviço que ele vai vender"},
+        {"texto":"Se já tem as premissas","ppgp":"Entender ja tem as premissas"}
+      ],
+      "riscos": ["Gestor com pressa"],
+      "cases": ["Solo",{"nome":"Picuí","ppgp":"Picui"}]
+    },
+    {
+      "id": "gerenciamento-financeiro",
+      "nome": "Gerenciamento e Controle Financeiro",
+      "pagina": 7,
+      "ppgpTitulo": "GERENCIAMENTO/CONTROLE FINANCEIRO",
+      "grupo": "FINANCEIRO",
+      "descricao": "Mapeia os processos financeiros, trata os dados e classifica os gastos, estrutura a DRE, parametriza o sistema ou a planilha de gerenciamento, define indicadores e dashboard, modela os processos e deixa rotina, manuais e treinamento.",
+      "cronogramaId": "1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo",
+      "estudar": [
+        {"nome":"Opções de sistemas financeiros","ferramentas":[]},
+        {"nome":"Classificação de gastos","ferramentas":[]},
+        {"nome":"Planilhas financeiras","ferramentas":[]},
+        {
+          "nome": "Indicadores financeiros (rentabilidade, liquidez, eficiência…)",
+          "ppgp": "Indicadores financeiros( + Ren, Liq, EF...)",
+          "ferramentas": ["banco-de-indicadores"]
+        },
+        {"nome":"DRE","ferramentas":["dre"]},
+        {"nome":"Regime de caixa","ferramentas":[]},
+        {"nome":"Níveis de maturidade","ppgp":"Níveis de Maturidade","ferramentas":[]}
+      ],
+      "etapas": [
+        {
+          "nome": "Entendimento de negócio e mapeamento dos processos financeiros",
+          "ppgp": "Entendimento de negócio e map dos processos financeiros",
+          "ferramentas": ["bmc","pmmc","bpmn"]
+        },
+        {"nome":"Coleta e tratamento de dados e classificação de gastos","ppgp":"Coleta de dados/tratar dados e classificações de gastos","ferramentas":[]},
+        {"nome":"Estruturação da DRE","ferramentas":["dre"]},
+        {"nome":"Parametrização do sistema","ferramentas":[]},
+        {"nome":"Estruturação de indicadores","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Desdobramento dos planos de ação","ferramentas":[]},
+        {"nome":"Modelagem dos processos","ferramentas":["bpmn"]},
+        {"nome":"Relatório de saúde financeira","ppgp":"Relatório de saúde financeira**","marcado":true,"ferramentas":[]},
+        {"nome":"Definição de rotina e atribuições","ferramentas":["dco","raci"]},
+        {"nome":"Treinamentos","ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"Classificação de gastos","ferramentas":[]},
+        {"nome":"Manual de classificação de gastos","ferramentas":[]},
+        {"nome":"Manual de indicadores","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Relatório de saúde financeira","ferramentas":[]},
+        {"nome":"DRE","ferramentas":["dre"]},
+        {"nome":"Sistema/planilha de gerenciamento","ferramentas":[]},
+        {"nome":"Manual de processos financeiros","ferramentas":[]},
+        {"nome":"Processos desenhados/modelados","ferramentas":[]},
+        {"nome":"Dashboard visual com indicadores","ferramentas":["banco-de-indicadores"]},
+        {"nome":"DCO","ferramentas":["dco"]},
+        {"nome":"Relatório de planos de ação","ferramentas":[]}
+      ],
+      "saber": [
+        "Dados financeiros",
+        {"texto":"Sistema (qual usa)","ppgp":"Sistema"},
+        "Classificação de gastos",
+        {"texto":"Indicadores (quais já tem)","ppgp":"Indicadores (Quais tem)"},
+        "Pessoas no setor",
+        "Objetivo"
+      ],
+      "riscos": [
+        "Sem dados financeiros",
+        {"texto":"Sem rotina e sem adesão ao preenchimento da ferramenta","ppgp":"Sem rotina e adesão do preenchimento da ferramenta"}
+      ],
+      "cases": [
+        "Aerotour",
+        "Kouzina",
+        {"nome":"Nego Bom Bolos","ppgp":"Nego bom bolos"},
+        {"nome":"Mossoró Cap","ppgp":"Mossoro cap"},
+        "Locapp",
+        "NOV",
+        "Verde Interior Paisagismo",
+        "CM Eng",
+        "Aries",
+        "Laboratório Prime"
+      ]
+    },
+    {
+      "id": "custeio-e-precificacao",
+      "nome": "Custeio e Precificação",
+      "pagina": 8,
+      "ppgpTitulo": "CUSTEIO E PRECIFICAÇÃO",
+      "grupo": "FINANCEIRO",
+      "descricao": "Levanta e classifica os gastos para chegar ao custo e ao preço dos produtos: mapeia os processos financeiros, estrutura a DRE e os indicadores, parametriza o sistema ou a planilha e deixa rotina, manuais e treinamento.",
+      "cronogramaId": "1LIe3FcON0dRXcErSfzRFVg-aZTcPUlbe0S2UAf-Unbw",
+      "pendencias": [
+        "No PPGP 2026, as colunas Escopo e Entregáveis deste slide são idênticas às de Gerenciamento/Controle Financeiro. Confirmar com o CIEP se é intencional."
+      ],
+      "estudar": [
+        {"nome":"Opções de sistemas financeiros","ferramentas":[]},
+        {"nome":"Classificação de gastos","ferramentas":[]},
+        {"nome":"Planilhas financeiras","ferramentas":[]},
+        {"nome":"Indicadores financeiros","ferramentas":["banco-de-indicadores"]},
+        {"nome":"DRE","ferramentas":["dre"]},
+        {"nome":"Regime de caixa","ferramentas":[]}
+      ],
+      "etapas": [
+        {
+          "nome": "Entendimento de negócio e mapeamento dos processos financeiros",
+          "ppgp": "Entendimento de negócio e map dos processos financeiros",
+          "ferramentas": ["bmc","pmmc","bpmn"]
+        },
+        {"nome":"Coleta e tratamento de dados e classificação de gastos","ppgp":"Coleta de dados/tratar dados e classificações de gastos","ferramentas":[]},
+        {"nome":"Estruturação da DRE","ferramentas":["dre","markup"]},
+        {"nome":"Parametrização do sistema","ferramentas":[]},
+        {"nome":"Estruturação de indicadores","ferramentas":["banco-de-indicadores","markup"]},
+        {"nome":"Desdobramento dos planos de ação","ferramentas":[]},
+        {"nome":"Modelagem dos processos","ferramentas":["bpmn"]},
+        {"nome":"Relatório de saúde financeira","ppgp":"Relatório de saúde financeira**","marcado":true,"ferramentas":[]},
+        {"nome":"Definição de rotina e atribuições","ferramentas":["dco","raci"]},
+        {"nome":"Treinamentos","ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"Classificação de gastos","ferramentas":[]},
+        {"nome":"Manual de classificação de gastos","ferramentas":[]},
+        {"nome":"Manual de indicadores","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Relatório de saúde financeira","ferramentas":[]},
+        {"nome":"DRE","ferramentas":["dre"]},
+        {"nome":"Sistema/planilha de gerenciamento","ferramentas":[]},
+        {"nome":"Manual de processos financeiros","ferramentas":[]},
+        {"nome":"Processos desenhados/modelados","ferramentas":[]},
+        {"nome":"Dashboard visual com indicadores","ferramentas":["banco-de-indicadores"]},
+        {"nome":"DCO","ferramentas":["dco"]},
+        {"nome":"Relatório de planos de ação","ferramentas":[]}
+      ],
+      "saber": [
+        "Dados financeiros",
+        {"texto":"Sistema (qual usa)","ppgp":"Sistema"},
+        "Classificação de gastos",
+        {"texto":"Indicadores (quais já tem)","ppgp":"Indicadores (Quais tem)"},
+        "Pessoas no setor",
+        "Objetivo"
+      ],
+      "riscos": [
+        "Sem dados financeiros",
+        {"texto":"Sem rotina e sem adesão ao preenchimento da ferramenta","ppgp":"Sem rotina e adesão do preenchimento da ferramenta"}
+      ],
+      "cases": ["Verde Interior Paisagismo",{"nome":"Laboratório Prime","ppgp":"Lab Prime"},"EJB Engenharia"]
+    },
+    {
+      "id": "planejamento-financeiro",
+      "nome": "Planejamento Financeiro",
+      "pagina": 9,
+      "ppgpTitulo": "PLANEJAMENTO FINANCEIRO",
+      "grupo": "FINANCEIRO",
+      "descricao": "Parte dos dados financeiros e da classificação de gastos para construir cenários e projeções, apoiados em análise de mercado, e entrega a planilha de planejamento financeiro com ferramenta visual, planos de ação e manual.",
+      "estudar": [
+        {"nome":"Cenários de planejamento financeiro","ferramentas":[]},
+        {"nome":"Pesquisa de mercado","ferramentas":[]}
+      ],
+      "etapas": [
+        {
+          "nome": "Entendimento do negócio + levantamento dos dados e da classificação dos gastos",
+          "ppgp": "Entendimento do negócio + levantamento dos dados e das classificação dos gastos",
+          "ferramentas": ["dre"]
+        },
+        {"nome":"Análise de mercado","ferramentas":["pestel","porter","swot"]},
+        {"nome":"Criação de cenários/projeções","ferramentas":[]},
+        {"nome":"Ferramenta visual","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Planos de ação","ferramentas":[]},
+        {"nome":"Manualização","ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"TAM SAM SOM","ferramentas":[]},
+        {"nome":"PESTAL e 5 forças de Porter","ppgp":"PESTAL E 5 FORÇAS DE PORTER","ferramentas":["pestel","porter"]},
+        {"nome":"SWOT","ferramentas":["swot"]},
+        {"nome":"Planilha de planejamento financeiro","ppgp":"PLANILHA DE PLANEJAMENTO FINANCEIRO","ferramentas":[]},
+        {"nome":"Cenários","ppgp":"CENÁRIOS","ferramentas":[]},
+        {"nome":"Manual de planejamento financeiro","ppgp":"MANUAL DE PLANEJAMENTO FINANCEIRO","ferramentas":[]}
+      ],
+      "saber": [
+        "Horizonte de tempo do planejamento financeiro",
+        "Dados financeiros",
+        "Classificação dos gastos",
+        {"texto":"Verificar se tem DRE","ppgp":"Verificar sem tem DRE"}
+      ],
+      "riscos": [
+        "Incerteza dos números",
+        {
+          "texto": "Falta de dados (só dá para fazer planejamento se a empresa já tiver certa maturidade de dados)",
+          "ppgp": "Falta de dados (so tem como se ter planejamento se já tiver com certa maturidade de dados"
+        }
+      ],
+      "cases": ["Locapp",{"nome":"Planejamento Financeiro","tipo":"cronograma"},"Verde Interior Paisagismo"]
+    },
+    {
+      "id": "map-e-model",
+      "nome": "Processos (Mapeamento e Modelagem)",
+      "pagina": 10,
+      "ppgpTitulo": "PROCESSOS [MAP E MOD]",
+      "grupo": "PRODUÇÃO",
+      "descricao": "Entende o negócio (SIPOC, macroprocesso, mapa de contexto, BMC, cadeia de valor), mapeia os processos com PMMC e fluxogramas, diagnostica e prioriza melhorias, modela os processos e atualiza os POPs, define indicadores e deixa manual, treinamento e cronograma de rotina.",
+      "cronogramaId": "13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE",
+      "estudar": [
+        {"nome":"Linguagens [ANSI, ASME, BPMN, blueprint, POPs]","ppgp":"Linguagens [ANSI, ASME, BPMN, BLUEPRINT, POP´S]","ferramentas":["bpmn"]},
+        {"nome":"Ferramentas da qualidade","ferramentas":[]},
+        {"nome":"Ferramentas de priorização","ferramentas":[]},
+        {"nome":"Ferramenta de entendimento de negócio","ferramentas":[]},
+        {"nome":"Conceitos dos 8 desperdícios do Lean","ppgp":"Conceitos de 8 desperdicios do lean","ferramentas":[]},
+        {"nome":"Sincronismo organizacional","ferramentas":[]}
+      ],
+      "etapas": [
+        {
+          "nome": "Entendimento de negócio [SIPOC, macroprocesso, mapa de contexto, BMC e cadeia de valor]",
+          "ppgp": "Entendimento de negocio [SIPOC, macroprocesso, mapa de contexto, BMC e cadeia de valor]",
+          "ferramentas": ["sipoc","mapa-de-contexto","bmc"]
+        },
+        {
+          "nome": "Mapeamento dos processos [Process Map Model Canvas + fluxogramas]",
+          "ppgp": "Mapeamento dos processos [Process map model canvas + fluxogramas]",
+          "ferramentas": ["pmmc","bpmn"]
+        },
+        {"nome":"Diagnóstico e priorização [relatório de melhorias]","ppgp":"Diagnóstico e priorização [Relatório de melhorias]","ferramentas":[]},
+        {"nome":"Planos de ação","ferramentas":[]},
+        {
+          "nome": "Modelagem/desenho dos processos + atualização dos POPs",
+          "ppgp": "Modelagem/desenho dos processos + Atualização dos pop´s",
+          "ferramentas": ["bpmn"]
+        },
+        {
+          "nome": "Definição de indicadores de sucesso e criação de ferramenta visual",
+          "ppgp": "Definição de indicadores de sucesso/ criação de ferramenta visual",
+          "ferramentas": ["banco-de-indicadores"]
+        },
+        {
+          "nome": "Definição de rotina e atribuições [manual, treinamento, cronograma de rotina]",
+          "ppgp": "Definição de rotina e atribuições [Manual, treinamento, cronograma de rotina]",
+          "ferramentas": ["raci","dco"]
+        },
+        {"nome":"Cronograma de implementação","ppgp":"Cronograma de implementação**","marcado":true,"ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"Fluxogramas","ferramentas":["bpmn"]},
+        {"nome":"POPs","ppgp":"Pops","ferramentas":[]},
+        {
+          "nome": "BMC, SIPOC, mapa de contexto, cadeia de valor e Process Map Model Canvas",
+          "ppgp": "BMC, sipoc, map de contexto, cadeia de valor, process map model canvas",
+          "ferramentas": ["bmc","mapa-de-contexto","pmmc","sipoc"]
+        },
+        {"nome":"Matriz de priorização","ferramentas":[]},
+        {"nome":"Relatório diagnóstico","ferramentas":[]},
+        {"nome":"Manual","ferramentas":[]},
+        {"nome":"RACI","ferramentas":["raci"]},
+        {"nome":"Treinamentos","ferramentas":[]},
+        {"nome":"Cronograma de rotina","ferramentas":[]},
+        {"nome":"DCO","ferramentas":["dco"]},
+        {"nome":"Ferramental visual de indicadores","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Ferramenta de rotina","ferramentas":[]},
+        {"nome":"Folha de verificação","ppgp":"Folha de verificação**","marcado":true,"ferramentas":[]}
+      ],
+      "saber": [
+        {"texto":"O que faz mais sentido: POP, fluxograma ou adaptações","ppgp":"O que faz mais sentido pop, fluxograma ou adaptações"},
+        "Se o gestor sabe o que quer melhorar",
+        "Quantidade de setores/funcionários",
+        "Média de processo/complexidade por setor",
+        "Se existe sistema",
+        {"texto":"Se já tem fluxogramas mapeados","ppgp":"Se ja tem fluxogramas mapeados"},
+        {"texto":"Avaliar se só mapeia ou se modela também","ppgp":"Avaliarem se so mapeia ou se modela também"}
+      ],
+      "riscos": [
+        {
+          "texto": "Pouco ou muito tempo no cronograma para mapear e modelar processos",
+          "ppgp": "Pouco ou muito tempo em cronograma para mapear processos/modelar"
+        },
+        {"texto":"Ser flexível para implementar as modelagens","ppgp":"Ser flexivei para implementar as mod"},
+        {"texto":"Validar com quem vai usar as ferramentas: o operacional","ppgp":"Validar com as pessoas que vão usar as ferramentas , o operacional"}
+      ],
+      "cases": [
+        {"nome":"Plana Edificações","ppgp":"Plana edificações"},
+        {"nome":"Lavanderia Arco-Íris","ppgp":"Lavanderia Arco-iris"},
+        {"nome":"Nego Bom Bolos","ppgp":"Nego bom bolos"},
+        "Nordestão",
+        "Sushideli",
+        "Mazzano",
+        "Aqua Coco",
+        "CM Eng",
+        "Assmed"
+      ]
+    },
+    {
+      "id": "gestao-de-estoque",
+      "nome": "Gestão de Estoque",
+      "pagina": 11,
+      "ppgpTitulo": "GESTÃO DE ESTOQUE",
+      "grupo": "PRODUÇÃO",
+      "descricao": "Entende a estrutura do estoque, mapeia ressuprimento e armazenagem, trata os dados e prioriza os produtos pela curva ABC, organiza a área de materiais (5S), define o método de controle e os indicadores, modela os processos TO BE e constrói a ferramenta de acompanhamento do estoque.",
+      "estudar": [
+        {"nome":"Indicadores de estoque","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Nível de serviço","ppgp":"Nivel de serviços","ferramentas":[]},
+        {"nome":"Tipos de estoque","ferramentas":[]},
+        {"nome":"Estudo de inventário","ppgp":"Estudo de inventário **","marcado":true,"ferramentas":[]},
+        {"nome":"Sistemas de estoque","ferramentas":[]},
+        {"nome":"5S","ferramentas":[]}
+      ],
+      "etapas": [
+        {"nome":"Entendimento do negócio","ferramentas":["bmc"]},
+        {"nome":"Entendimento da estrutura do estoque","ferramentas":[]},
+        {"nome":"Mapeamento dos processos AS IS de ressuprimento e armazenagem","ferramentas":["bpmn"]},
+        {"nome":"Análise das necessidades dos clientes","ferramentas":[]},
+        {"nome":"Análise e tratamento de dados sobre o estoque","ferramentas":[]},
+        {"nome":"Análise da curva ABC e priorização dos produtos","ferramentas":["curva-abc"]},
+        {"nome":"Entendimento dos custos de armazenagem","ferramentas":[]},
+        {"nome":"Organização da área de materiais","ferramentas":[]},
+        {"nome":"Definição do método de controle do estoque","ferramentas":[]},
+        {"nome":"Estabelecer o armazenamento de materiais","ppgp":"Estabelecer o armazenamento de materiais*","marcado":true,"ferramentas":[]},
+        {"nome":"Definição dos indicadores para o gerenciamento do estoque","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Modelagens dos processos TO BE","ferramentas":["bpmn"]},
+        {"nome":"Construção da ferramenta de acompanhamento de estoque","ferramentas":[]},
+        {"nome":"Criação de planos de ação","ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"BMC e macroprocesso","ppgp":"BMC, macroprocesso","ferramentas":["bmc"]},
+        {"nome":"Fluxogramas e POPs","ppgp":"Fluxogramas, Pop´s","ferramentas":["bpmn"]},
+        {"nome":"DCO","ferramentas":["dco"]},
+        {"nome":"RACI","ferramentas":["raci"]},
+        {"nome":"Manual","ferramentas":[]},
+        {"nome":"Vídeos do sistema","ppgp":"Videos do sistema","ferramentas":[]},
+        {"nome":"Curva ABC","ppgp":"Curva abc","ferramentas":["curva-abc"]},
+        {"nome":"Planilha de controle de estoque","ppgp":"planilha de controle de estoque","ferramentas":[]},
+        {"nome":"Indicadores de estoque","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Relatório de 5S","ferramentas":[]}
+      ],
+      "saber": [
+        "Sistema de estoque",
+        {"texto":"Se faz inventário e com que frequência","ppgp":"Se tem inventário/frequência"},
+        {"texto":"Quantos SKUs tem","ppgp":"Quantos SKU´S ele tem"},
+        "Quantos itens",
+        {"texto":"Se tem uma pessoa responsável pelo estoque","ppgp":"Se tem uma pessoa resp para o estoque"},
+        {"texto":"Processo de compra, conferência e alimentação do estoque","ppgp":"Processo de compra/conferência e alimentação no estoque"},
+        "Se tem indicadores",
+        {"texto":"Se os produtos têm sazonalidade","ppgp":"Os produtos tem sazonalidade?"}
+      ],
+      "riscos": ["Cliente não implementar","Achar que vamos contar o estoque"],
+      "cases": [
+        "Cabugi Solar",
+        "Lenny Cakes",
+        "Sushideli",
+        "Mazzano",
+        "CEOF",
+        {"nome":"Plana Edificações","ppgp":"Plana edificações"},
+        "DMS",
+        "Mardel",
+        "Construtora Dantas",
+        "Caxangá",
+        {"nome":"Dois A","ppgp":"DOIS A"},
+        {"nome":"Mídia Digital","ppgp":"MÍDIA DIGITAL"}
+      ]
+    },
+    {
+      "id": "layout",
+      "nome": "Adequação de Layout",
+      "pagina": 12,
+      "ppgpTitulo": "ADEQUAÇÃO DE LAYOUT",
+      "grupo": "PRODUÇÃO",
+      "descricao": "Entende e mapeia os processos, levanta as restrições do espaço, analisa os fluxos (mapofluxograma, diagrama de espaguete, diagrama de relações), desenha e simula opções de layout e define indicadores e plano de implementação.",
+      "estudar": [
+        {"nome":"Tipos de layout","ferramentas":[]},
+        {"nome":"Tipos de restrição","ferramentas":[]},
+        {"nome":"8 desperdícios","ppgp":"8 desperdicios","ferramentas":[]},
+        {"nome":"Ferramentas de layout","ferramentas":[]},
+        {"nome":"Formas de gestão à vista [LinkedIn]","ppgp":"Formas de gestão a vista [linkedin]","ferramentas":[]}
+      ],
+      "etapas": [
+        {"nome":"Entendimento","ppgp":"ENTENDIMENTO","ferramentas":[]},
+        {"nome":"Mapeamento","ppgp":"MAPEAMENTO","ferramentas":["bpmn"]},
+        {"nome":"Levantar restrições","ppgp":"LEVANTAR RESTRIÇÕES","ferramentas":[]},
+        {"nome":"Ferramenta de análise dos processos","ppgp":"FERRAMENTA DE ANÁLISE DOS PROCESSOS","ferramentas":[]},
+        {"nome":"Modelagens","ppgp":"MODELAGENS","ferramentas":["bpmn"]},
+        {"nome":"Desenho de opções","ppgp":"DESENHO DE OPÇÕES","ferramentas":[]},
+        {"nome":"Simulação","ppgp":"SIMULAÇÃO","ferramentas":[]},
+        {"nome":"Indicadores","ppgp":"INDICADORES","ferramentas":["banco-de-indicadores"]}
+      ],
+      "entregaveis": [
+        {"nome":"Diagrama de relações","ferramentas":[]},
+        {"nome":"Mapofluxograma","ferramentas":[]},
+        {"nome":"Relatório de análise de layout","ppgp":"Relatorio de analise de layout","ferramentas":[]},
+        {"nome":"Diagrama de espaguete","ferramentas":[]},
+        {"nome":"Plano de implementação","ferramentas":[]},
+        {"nome":"Fluxogramas","ferramentas":["bpmn"]},
+        {"nome":"Desenho de opções de layout","ferramentas":[]}
+      ],
+      "saber": [
+        "Planta baixa",
+        "Restrições de layout",
+        "Tamanho do espaço",
+        {"texto":"Se o gestor está disposto a investir","ppgp":"Se o gestor ta disposto a investir"},
+        "Macroprocesso produtivo",
+        "Quantidade de processos/funcionários"
+      ],
+      "riscos": ["Gestor não implementar","Agregação de valor","Ausência de informações necessárias","Espaço não permitir mudanças"],
+      "cases": ["Vegfood",{"nome":"Lenny Cakes","ppgp":"Leny cakes"},"Refine",{"nome":"Dois A","ppgp":"DOIS A"},{"nome":"Alice Limpeza","ppgp":"ALICE LIMPEZA"}]
+    },
+    {
+      "id": "capacidade-produtiva",
+      "nome": "Capacidade Produtiva",
+      "pagina": 13,
+      "ppgpTitulo": "CAPACIDADE PRODUTIVA",
+      "grupo": "PRODUÇÃO",
+      "descricao": "Entende o serviço e a empresa, mapeia e modela os processos, cronometra as atividades, calcula o tamanho da amostra (N), o tempo normal e o tempo padrão e chega à capacidade produtiva, com ferramenta de acompanhamento e relatório com análise crítica.",
+      "estudar": [
+        {"nome":"Entender relações com outros escopos","ferramentas":[]},
+        {"nome":"Cálculo do N","ferramentas":[]},
+        {"nome":"Ter noção da linha lógica para cálculo","ferramentas":[]},
+        {"nome":"Impactos que o estudo vai trazer","ferramentas":[]}
+      ],
+      "etapas": [
+        {"nome":"Estudo sobre o serviço","ferramentas":[]},
+        {"nome":"Entendimento da empresa","ferramentas":[]},
+        {"nome":"Mapeamento dos processos","ferramentas":["bpmn"]},
+        {"nome":"Modelagem dos processos","ferramentas":["bpmn"]},
+        {"nome":"Construção de ferramenta","ferramentas":[]},
+        {"nome":"Definir os elementos","ferramentas":[]},
+        {"nome":"Cálculo do N","ferramentas":[]},
+        {"nome":"Cronometragem","ferramentas":[]},
+        {"nome":"Tempo médio, velocidade e FT","ferramentas":[]},
+        {"nome":"Definição do TN e TP","ppgp":"DEFINIÇÃO DO TN E TP","ferramentas":[]},
+        {"nome":"Capacidade produtiva","ferramentas":[]},
+        {"nome":"Construção de ferramenta de acompanhamento e mensuração","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Relatório de capacidade produtiva + análise crítica","ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"Fluxogramas","ferramentas":["bpmn"]},
+        {"nome":"Macroprocesso","ferramentas":[]},
+        {"nome":"Ferramenta de capacidade produtiva","ppgp":"Ferramenta de cap produtiva","ferramentas":[]},
+        {"nome":"Manual e vídeos","ferramentas":[]},
+        {"nome":"Ferramenta visual de acompanhamento","ferramentas":[]},
+        {"nome":"Relatório do estudo","ferramentas":[]}
+      ],
+      "saber": [
+        "Sazonalidade",
+        "Macroprocesso produtivo",
+        "Funcionários",
+        "Indicadores atuais",
+        "Demanda puxada ou empurrada",
+        {"texto":"Famílias de produtos","ppgp":"Famílias produtos"}
+      ],
+      "riscos": ["Projetos online","Má adesão dos funcionários","Complexidade do projeto","Processo despadronizado"],
+      "cases": [{"nome":"Verde Fruits","ppgp":"Verde fruits"},"Vegfood","Alice Limpeza","Aqua Coco"]
+    },
+    {
+      "id": "previsao-de-demanda",
+      "nome": "Previsão de Demanda",
+      "pagina": 14,
+      "ppgpTitulo": "PREVISÃO DE DEMANDA",
+      "grupo": "PRODUÇÃO",
+      "descricao": "Alinha o objetivo da previsão, coleta e analisa o histórico, define horizonte e método, constrói a ferramenta de cálculo e o MAD e fecha com manual, treinamento e acompanhamento.",
+      "estudar": [
+        {"nome":"Previsão de demanda qualitativa e quantitativa","ppgp":"Previsão de demanda qualitativa e quantitativas","ferramentas":[]},
+        {"nome":"MAD","ferramentas":[]},
+        {"nome":"Tipos de demanda e sazonalidade","ferramentas":[]},
+        {"nome":"Estudo do mercado e da empresa","ppgp":"Estudo do Mercado e da Empresa","ferramentas":[]}
+      ],
+      "etapas": [
+        {"nome":"Alinhar objetivo da previsão","ferramentas":[]},
+        {"nome":"Coleta e análise de dados históricos","ppgp":"Coleta/análise de dados históricos","ferramentas":[]},
+        {"nome":"Definir horizonte de tempo","ferramentas":[]},
+        {"nome":"Definir método da previsão","ferramentas":[]},
+        {"nome":"Construir a ferramenta de cálculo da previsão","ppgp":["Construir ferramenta/ cálculo","da previsão"],"ferramentas":[]},
+        {"nome":"Construir MAD","ferramentas":[]},
+        {"nome":"Manual de implementação e documentação","ferramentas":[]},
+        {"nome":"Treinamento e acompanhamento","ferramentas":[]}
+      ],
+      "entregaveis": [
+        {"nome":"Relatório de análise de demanda [Sazonalidade]","ferramentas":[]},
+        {"nome":"Ferramenta de cálculos de previsão de demanda","ferramentas":[]},
+        {"nome":"Planos de ação","ferramentas":[]},
+        {"nome":"Macroprocesso","ferramentas":[]}
+      ],
+      "saber": ["Produtos e famílias existentes","Sazonalidade","Histórico de dados","Macroprocesso produtivo","Promoções"],
+      "riscos": ["Não ter dados históricos"],
+      "cases": [{"nome":"Granja Filadélfia","ppgp":"Granja filadélfia"},"Hidroglass","Caxangá","Alice Limpeza","Sim Distribuidora"]
+    },
+    {
+      "id": "automacao",
+      "nome": "Automação",
+      "pagina": 15,
+      "ppgpTitulo": "AUTOMAÇÃO",
+      "grupo": "PRODUÇÃO",
+      "descricao": "Entende o negócio, mapeia os processos e as necessidades, desenvolve o sistema ou as automações (plataformas low-code, n8n), testa, valida e entrega o sistema funcionando com documentação e treinamento.",
+      "estudar": [
+        {"nome":"Plataformas low-code","ppgp":"Plataofrmas Low-code","ferramentas":[]},
+        {"nome":"N8N","ferramentas":["n8n"]},
+        {"nome":"Engenharia de prompt","ppgp":"Engenharia de Prompt","ferramentas":[]}
+      ],
+      "etapas": [
+        {"nome":"Entendimento do negócio","ppgp":"ENTENDIMENTO DO NEGÓCIO","ferramentas":["pmmc","mapa-de-contexto"]},
+        {"nome":"Mapeamento dos processos e entendimento das necessidades","ferramentas":["pmmc","bpmn"]},
+        {"nome":"Desenvolvimento do sistema e/ou automações","ferramentas":["n8n"]},
+        {"nome":"Testes e validações","ppgp":"Testes e Validações","ferramentas":[]},
+        {"nome":"Documentação e treinamentos","ppgp":"Documentação e Treinamentos","ferramentas":["raci"]}
+      ],
+      "entregaveis": [
+        {"nome":"Process Map Model Canvas","ppgp":"Process map model canvas","ferramentas":["pmmc"]},
+        {"nome":"Relatório de diagnóstico","ppgp":"Relatório de Diagnóstico","ferramentas":[]},
+        {"nome":"Mapa de contexto","ppgp":"Mapa de Contexto","ferramentas":["mapa-de-contexto"]},
+        {"nome":"Relatório de melhorias","ppgp":"Relatório de Melhorias","ferramentas":[]},
+        {"nome":"Matriz RACI","ferramentas":["raci"]},
+        {"nome":"Sistema 100% funcional","ferramentas":[]},
+        {"nome":"Indicadores estruturados","ppgp":"Indicadores Estruturados","ferramentas":["banco-de-indicadores"]},
+        {"nome":"Documentação do sistema","ppgp":"Documentação do Sistema","ferramentas":[]}
+      ],
+      "saber": ["Como o processo ocorre","Quais setores se comunicam nesse processo","Qual a maior dor e maior retrabalho","Quais sistemas são utilizados"],
+      "riscos": [
+        "Gestor com pressa",
+        {"texto":"Complexidade do sistema","ppgp":"Complexidade do Sistema"},
+        {"texto":"Dificuldade de conseguir acessos (ex.: APIs)","ppgp":"Dificuldade de conseguir acessos (ex: API'S)"},
+        {"texto":"Adaptação da equipe ao uso","ppgp":"Adaptabilidade da Equipe ao uso"}
+      ],
+      "cases": ["Atlantis Divers","MJ Oliveira"]
     },
     {
       "id": "pesquisa-de-mercado",
       "nome": "Pesquisa de Mercado",
-      "colunaResumao": "PESQUISA DE MERCADO",
-      "checklist": "Pesquisa de mercado",
+      "pagina": 16,
+      "ppgpTitulo": "PESQUISA DE MERCADO",
+      "grupo": "ESTRATÉGIA",
+      "descricao": "Entende a demanda do cliente, define o tipo de pesquisa e o plano (objetivo, forma de coleta e amostra), coleta e analisa os dados e entrega o relatório final com dashboard e estratégias baseadas na pesquisa.",
       "cronogramaId": "1zJV0aRDaxQNZfvHg1C_ABxY4u7TrMF5M-ErMRsHx-30",
-      "descricao": "Define a pesquisa e a metodologia, elabora as ferramentas de coleta, coleta e interpreta os dados em dashboard e entrega relatório final com ICP, SWOT e planos de ação.",
-      "ferramentasPorEtapa": {
-        "1": ["estudo-de-segmento", "porter"],
-        "2": ["ux-research-canvas"],
-        "7": ["icp", "swot", "cpv"]
-      },
-      "entregaveisPorEtapa": {
-        "2": ["UX Research Canvas", "Modelos de pesquisa + Estratégias de coleta"],
-        "4": ["Amostragem definida + Ferramentas de pesquisa"],
-        "6": ["Dashboard da pesquisa + Relatório de dados secundários"],
-        "7": ["Relatório de ICP + estratégias de marketing/comerciais"]
-      }
-    },
-    { "id": "gestao-a-vista", "nome": "Gestão à Vista", "colunaResumao": "GESTÃO A VISTA", "checklist": null, "cronogramaId": null, "descricao": "Mapeia e modela os processos, define rotina e ferramenta de rotina e estrutura o layout da gestão à vista com guia de implementação." },
-    { "id": "pcp", "nome": "PCP", "colunaResumao": "PCP", "checklist": null, "cronogramaId": null, "descricao": "Entende e classifica o sistema de produção, mapeia e analisa tempos, modela e entrega ferramenta de controle, programação e controle da produção." },
-    { "id": "capacidade-produtiva", "nome": "Capacidade Produtiva", "colunaResumao": "CAPACIDADE PRODUTIVA", "checklist": "Capacidade Produtiva", "cronogramaId": null, "descricao": "Mapeia e modela os processos, cronometra e calcula tempos normal e padrão e chega à capacidade produtiva com ferramenta de acompanhamento e relatório crítico." },
-    { "id": "layout", "nome": "Layout", "colunaResumao": "LAYOUT", "checklist": "Layout", "cronogramaId": null, "descricao": "Levanta restrições, analisa e modela os processos, desenha e simula opções de layout e define indicadores." },
-    { "id": "previsao-de-demanda", "nome": "Previsão de Demanda", "colunaResumao": "PREVISÃO DE  DEMANDA", "checklist": "Previsão de demanda", "cronogramaId": null, "descricao": "Alinha o objetivo da previsão, analisa o histórico, escolhe método e horizonte, constrói a ferramenta de cálculo e o MAD e treina a equipe." },
-    { "id": "gestao-de-estoque", "nome": "Gestão de Estoque", "colunaResumao": "GESTÃO DE  ESTOQUE", "checklist": "Gestão de estoque", "cronogramaId": null, "descricao": "Mapeia ressuprimento e armazenagem, analisa curva ABC e custos, define método de controle e armazenamento, indicadores, modelagens TO BE e planos de ação." },
-    { "id": "planejamento-financeiro", "nome": "Planejamento Financeiro", "colunaResumao": "PLANEJAMENTO", "checklist": "Planejamento Financeiro", "cronogramaId": null, "descricao": "Trata dados, cria cenários, levanta investimentos, define indicadores, monta DRE e ferramenta visual e fecha com planos de ação e manualização." },
-    { "id": "eve", "nome": "EVE (Estudo de Viabilidade Econômica)", "colunaResumao": "EVE", "checklist": null, "cronogramaId": null, "descricao": "Analisa mercado, levanta investimentos e premissas, projeta o financeiro e calcula indicadores de viabilidade." },
-    { "id": "dco-prosel", "nome": "DCO + Prosel", "colunaResumao": "DCO + PROSEL", "checklist": null, "cronogramaId": null, "descricao": "Analisa contexto e cargos com entrevistas, monta descritivos de cargo e organograma, implementa e monitora frente à rotina." },
-    { "id": "idealizacao-de-novos-produtos", "nome": "Idealização de Novos Produtos", "colunaResumao": "IDEALIZAÇÃO DE NOVOS PRODUTOS", "checklist": null, "cronogramaId": null, "descricao": "Analisa mercado, constrói e prioriza ideias com ICP, Buyer Persona, CPV e SWOT, estrutura o novo produto e o lançamento." },
-    { "id": "modelo-de-negocio", "nome": "Estruturação de Modelo de Negócio", "colunaResumao": "ESTRUTURAÇÃO DE  MODELO DE NEGÓCIO", "checklist": null, "cronogramaId": null, "descricao": "Analisa mercado e concorrentes, entende o cliente e define recursos, processos e stakeholders do modelo de negócio." }
+      "estudar": [
+        {"nome":"Tipos de pesquisa","ppgp":"TIPOS DE PESQUISA","ferramentas":[]},
+        {"nome":"Perplexity","ppgp":"PERPLEXITY","ferramentas":[]},
+        {"nome":"Economapas","ppgp":"ECONOMAPAS","ferramentas":[]},
+        {"nome":"Estratégias baseadas na pesquisa","ppgp":"ESTRATÉGIAS BASEADO NA PESQUISA","ferramentas":[]}
+      ],
+      "etapas": [
+        {"nome":"Entendimento da demanda","ppgp":"ENTENDIMENTO DA DEMANDA","ferramentas":[]},
+        {"nome":"Definição do tipo de pesquisa","ppgp":"DEFINIÇÃO DO TIPO DE PESQUISA","ferramentas":["ux-research-canvas"]},
+        {"nome":"Coleta de dados","ppgp":"COLETA DE DADOS","ferramentas":[]},
+        {"nome":"Análise dos dados","ppgp":"ANÁLISE DOS DADOS","ferramentas":[]},
+        {"nome":"Relatório final","ppgp":"RELATÓRIO FINAL","ferramentas":["banco-de-indicadores"]}
+      ],
+      "entregaveis": [
+        {"nome":"Relatório da pesquisa","ppgp":"RELATÓRIO DA PESQUISA","ferramentas":[]},
+        {"nome":"TAM SAM SOM","ferramentas":[]},
+        {"nome":"Dashboard","ppgp":"DASHBOARD","ferramentas":["banco-de-indicadores"]},
+        {"nome":"UX Research Canvas","ppgp":"UX RESEARCH CANVAS","ferramentas":["ux-research-canvas"]},
+        {"nome":"Plano da pesquisa","ppgp":"PLANO DA PESQUISA","ferramentas":[]}
+      ],
+      "saber": [
+        {"texto":"Objetivo principal da pesquisa","ppgp":"OBJETIVO PRINCIPAL DA PESQUISA"},
+        {"texto":"Forma de coleta","ppgp":"FORMA DE COLETA"},
+        {"texto":"Cálculo da amostragem","ppgp":"CÁLCULO DA AMOSTRAGEM"}
+      ],
+      "riscos": ["Gestor já ter noção do resultado da pesquisa",{"texto":"Não agregar valor","ppgp":"não agregar valor"}],
+      "cases": [{"nome":"Shopping 10","ppgp":"SHOPPING 10"},{"nome":"Kerensi","ppgp":"KERENSI"},{"nome":"Lumos","ppgp":"LUMOS"},"Adolfo"]
+    }
   ]
 }

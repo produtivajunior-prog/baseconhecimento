@@ -1,26 +1,1906 @@
 [
   {
-    "id": "map-e-model",
-    "nome": "Mapeamento e Modelagem de Processos",
-    "grupo": "PRODUÇÃO",
+    "id": "idealizacao-de-novos-produtos",
+    "nome": "Idealização e Desenvolvimento de Novos Produtos",
+    "grupo": "ESTRATÉGIA",
     "status": "ativo",
-    "descricao": "Entende o macroprocesso, mapeia os processos AS IS de um setor, aponta causas raízes e oportunidades, modela os processos TO BE e deixa rotina, DCO e manual do setor implantados.",
+    "descricao": "Parte do objetivo do cliente para definir a ideia do novo produto ou serviço, valida com análise de mercado e pesquisa com clientes, prototipa e testa antes de lançar.",
     "responsavel": {
       "nome": "Thiago Melo",
       "email": "thiagomelo@produtivajunior.com.br"
     },
     "fontes": [
       {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 1,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Metodologias e prototipação",
+        "ferramentas": []
       },
       {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+        "nome": "Design thinking e Design sprint",
+        "ferramentas": []
+      },
+      {
+        "nome": "Pesquisas de mercado externas",
+        "ferramentas": []
+      }
+    ],
+    "etapas": [
+      {
+        "id": "entendimento-do-negocio-e-do-servico",
+        "ordem": 1,
+        "nome": "Entendimento do negócio e do serviço",
+        "ferramentas": [
+          "bmc"
+        ]
+      },
+      {
+        "id": "analise-de-mercado-e-pesquisa-com-client",
+        "ordem": 2,
+        "nome": "Análise de mercado e pesquisa com clientes",
+        "ferramentas": [
+          "cpv",
+          "ux-research-canvas"
+        ]
+      },
+      {
+        "id": "definicao-do-objetivo-e-da-ideia",
+        "ordem": 3,
+        "nome": "Definição do objetivo e da ideia",
+        "ferramentas": [
+          "cpv"
+        ]
+      },
+      {
+        "id": "prototipacao-manual-etc",
+        "ordem": 4,
+        "nome": "Prototipação [manual etc.]",
+        "ferramentas": []
+      },
+      {
+        "id": "testes",
+        "ordem": 5,
+        "nome": "Testes",
+        "ferramentas": []
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "Relatório de prototipação do produto",
+        "ferramentas": []
+      },
+      {
+        "nome": "O produto",
+        "ferramentas": [],
+        "marcado": true
+      },
+      {
+        "nome": "Mapa de empatia e canvas proposta de valor",
+        "ferramentas": [
+          "cpv"
+        ]
+      },
+      {
+        "nome": "Matriz BCG e Ansoff",
+        "ferramentas": []
+      },
+      {
+        "nome": "Pesquisa com clientes",
+        "ferramentas": []
+      },
+      {
+        "nome": "Matriz de objeção",
+        "ferramentas": []
+      },
+      {
+        "nome": "Relatório de estratégias de divulgação",
+        "ferramentas": []
+      },
+      {
+        "nome": "Material de proposta de produtos",
+        "ferramentas": []
+      },
+      {
+        "nome": "Metas e objetivos [OKRs]",
+        "ferramentas": []
+      },
+      {
+        "nome": "Grupo focal",
+        "ferramentas": []
+      },
+      {
+        "nome": "Storyboard",
+        "ferramentas": []
+      },
+      {
+        "nome": "Roteiro de abordagem",
+        "ferramentas": []
+      },
+      {
+        "nome": "Cliente oculto",
+        "ferramentas": []
+      },
+      {
+        "nome": "Análise de branding",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Entender qual o objetivo",
+      "Entender o que quer alcançar",
+      "Disponibilidade de recursos financeiros"
+    ],
+    "riscos": [
+      "O gestor achar que vamos criar a ideia do zero",
+      "Não ter recursos para investir"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Cabugi Solar"
+      },
+      {
+        "nome": "Orathoria"
+      },
+      {
+        "nome": "Unifan"
+      },
+      {
+        "nome": "Vivianny Lopes"
+      },
+      {
+        "nome": "Colégio TOP"
+      },
+      {
+        "nome": "Multcon"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p1",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p1",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p1",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p1",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p1",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p1",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Marcados com asterisco no PPGP 2026 (significado a confirmar com o CIEP): O produto"
+    ]
+  },
+  {
+    "id": "estruturacao-comercial",
+    "nome": "Estruturação Comercial",
+    "grupo": "ESTRATÉGIA",
+    "status": "ativo",
+    "descricao": "Entende o negócio e o mercado, mapeia e redesenha o processo comercial (jornada do cliente AS IS e TO BE), implanta dashboard de indicadores e deixa rotina, manual comercial e treinamento para a equipe de vendas.",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "fontes": [
+      {
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 2,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      },
+      {
+        "tipo": "drive-sheet",
+        "id": "1HeM7YZv0vgQCTkn6ZOzS11h9jELTGUqkmtaITIOEp10",
+        "nome": "Cronograma Base Estruturação Comercial  - Thiago Melo",
+        "hash": "c126f989e3d9d6c3c260a047f0220e320681ef1b03f4495db3bbf55327b724a3",
+        "url": "https://docs.google.com/spreadsheets/d/1HeM7YZv0vgQCTkn6ZOzS11h9jELTGUqkmtaITIOEp10/edit"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Cliente oculto externo ou interno",
+        "ferramentas": []
+      },
+      {
+        "nome": "Jornada do cliente",
+        "ferramentas": [
+          "jornada-do-cliente"
+        ]
+      },
+      {
+        "nome": "CRMs",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ferramentas comerciais [roteiro de abordagem, fluxo de cadência, matriz de objeção, buyer persona, ICP e público-alvo, dashboard/indicadores comerciais, material de proposta]",
+        "ferramentas": [
+          "icp",
+          "buyer-persona",
+          "banco-de-indicadores"
+        ]
+      }
+    ],
+    "etapas": [
+      {
+        "id": "entendimento-de-negocio-e-analise-de-mer",
+        "ordem": 1,
+        "nome": "Entendimento de negócio e análise de mercado [BMC, SWOT + jornada do cliente AS IS e cliente oculto/pesquisa com clientes e pesquisa externa]",
+        "ferramentas": [
+          "bmc",
+          "swot",
+          "jornada-do-cliente"
+        ]
+      },
+      {
+        "id": "mapeamento-estruturacao-dos-processos-co",
+        "ordem": 2,
+        "nome": "Mapeamento/Estruturação dos processos comerciais",
+        "ferramentas": [
+          "pmmc",
+          "bpmn"
+        ]
+      },
+      {
+        "id": "relatorios-de-melhorias-estrategias-e-pr",
+        "ordem": 3,
+        "nome": "Relatórios de melhorias/estratégias e priorização",
+        "ferramentas": []
+      },
+      {
+        "id": "desenho-do-processo-comercial-jornada-do",
+        "ordem": 4,
+        "nome": "Desenho do processo comercial [jornada do cliente TO BE] e estruturação dos planos de ação",
+        "ferramentas": [
+          "jornada-do-cliente",
+          "icp",
+          "buyer-persona"
+        ]
+      },
+      {
+        "id": "implementacao-de-ferramental-visual-dash",
+        "ordem": 5,
+        "nome": "Implementação de ferramental visual [dashboard e indicadores]",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "id": "definicao-de-rotina-e-atribuicoes-manual",
+        "ordem": 6,
+        "nome": "Definição de rotina e atribuições [manual, RACI e DCO]",
+        "ferramentas": [
+          "raci",
+          "dco"
+        ]
+      },
+      {
+        "id": "treinamentos",
+        "ordem": 7,
+        "nome": "Treinamentos",
+        "ferramentas": []
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "Roteiro de abordagem",
+        "ferramentas": []
+      },
+      {
+        "nome": "Matriz de objeções",
+        "ferramentas": []
+      },
+      {
+        "nome": "Proposta comercial",
+        "ferramentas": []
+      },
+      {
+        "nome": "BMC e SWOT",
+        "ferramentas": [
+          "bmc",
+          "swot"
+        ]
+      },
+      {
+        "nome": "Jornada do cliente",
+        "ferramentas": [
+          "jornada-do-cliente"
+        ]
+      },
+      {
+        "nome": "Ferramenta de gerenciamento de clientes",
+        "ferramentas": []
+      },
+      {
+        "nome": "CRM",
+        "ferramentas": []
+      },
+      {
+        "nome": "Dashboard e indicadores",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "Boas práticas de venda",
+        "ferramentas": []
+      },
+      {
+        "nome": "Relatório de cliente oculto externo e interno",
+        "ferramentas": []
+      },
+      {
+        "nome": "Manual comercial",
+        "ferramentas": []
+      },
+      {
+        "nome": "Fluxo de cadência",
+        "ferramentas": []
+      },
+      {
+        "nome": "DCO e cronograma de rotina",
+        "ferramentas": [
+          "dco"
+        ]
+      },
+      {
+        "nome": "Pesquisa com clientes",
+        "ferramentas": []
+      },
+      {
+        "nome": "Matriz RACI",
+        "ferramentas": [
+          "raci"
+        ]
+      }
+    ],
+    "saber": [
+      "Sistemas/CRM",
+      "Entender as ferramentas comerciais atuais (pedir para ver)",
+      "Quantas pessoas da equipe comercial",
+      "Quantos clientes tem e qual é o público",
+      "Qual processo comercial e como chegam nos clientes",
+      "Qual o objetivo da estruturação comercial",
+      "Ver se tem dados dos clientes"
+    ],
+    "riscos": [
+      "Falta de implementação",
+      "Falta de pessoas",
+      "Falta de recurso financeiro",
+      "Culpar a PJ por não vender"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Trópicos Motel"
+      },
+      {
+        "nome": "Raffe"
+      },
+      {
+        "nome": "Pasteis Abibe"
+      },
+      {
+        "nome": "DUO"
+      },
+      {
+        "nome": "Soulfit"
+      },
+      {
+        "nome": "DNA Center"
+      },
+      {
+        "nome": "GE Solar"
+      },
+      {
+        "nome": "Lapela"
+      },
+      {
+        "nome": "TR Engenharia"
+      },
+      {
+        "nome": "Amorim Maia"
+      },
+      {
+        "nome": "Lumos"
+      },
+      {
+        "nome": "Container Criativo"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p2",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p2",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p2",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p2",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p2",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p2",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    }
+  },
+  {
+    "id": "plano-de-marketing",
+    "nome": "Planejamento de Marketing",
+    "grupo": "ESTRATÉGIA",
+    "status": "ativo",
+    "descricao": "Entende o negócio e o cliente (cliente oculto e pesquisa), analisa o mercado, define público-alvo e canais de tração e entrega a estratégia de marketing priorizada, com ferramental visual, rotina e treinamento.",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "fontes": [
+      {
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 3,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      },
+      {
+        "tipo": "drive-sheet",
+        "id": "10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ",
+        "nome": "Cronograma Base Plano de Marketing - Thiago Melo",
+        "hash": "58b713b88aa525b17b9655c87aace773ed23b4ab58da51f51987047a576553b8",
+        "url": "https://docs.google.com/spreadsheets/d/10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ/edit"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Cliente oculto externo ou interno",
+        "ferramentas": []
+      },
+      {
+        "nome": "Jornada do cliente",
+        "ferramentas": [
+          "jornada-do-cliente"
+        ]
+      },
+      {
+        "nome": "Indicadores de CS [LTV, churn]",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "Terceirizadas",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ferramentas de planejamento de marketing [LinkedIn]",
+        "ferramentas": []
+      }
+    ],
+    "etapas": [
+      {
+        "id": "entendimento-de-negocio-bmc-swot-cliente",
+        "ordem": 1,
+        "nome": "Entendimento de negócio [BMC, SWOT, cliente oculto e pesquisa com clientes]",
+        "ferramentas": [
+          "bmc",
+          "swot"
+        ]
+      },
+      {
+        "id": "analise-de-mercado",
+        "ordem": 2,
+        "nome": "Análise de mercado",
+        "ferramentas": [
+          "pestel",
+          "porter"
+        ]
+      },
+      {
+        "id": "definicao-do-publico-alvo-canvas-de-prop",
+        "ordem": 3,
+        "nome": "Definição do público-alvo [canvas de proposta de valor, mapa de empatia, jornada do cliente] + definição dos canais de tração",
+        "ferramentas": [
+          "cpv",
+          "jornada-do-cliente",
+          "icp",
+          "buyer-persona"
+        ]
+      },
+      {
+        "id": "estruturacao-e-priorizacao-dos-planos-de",
+        "ordem": 4,
+        "nome": "Estruturação e priorização dos planos de ação [estratégia de marketing]",
+        "ferramentas": []
+      },
+      {
+        "id": "ferramental-visual",
+        "ordem": 5,
+        "nome": "Ferramental visual",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "id": "definicao-de-rotinas-e-atribuicoes",
+        "ordem": 6,
+        "nome": "Definição de rotinas e atribuições",
+        "ferramentas": [
+          "raci",
+          "dco"
+        ]
+      },
+      {
+        "id": "treinamentos",
+        "ordem": 7,
+        "nome": "Treinamentos",
+        "ferramentas": []
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "Bullseye framework",
+        "ferramentas": []
+      },
+      {
+        "nome": "Jornada do cliente AS IS e TO BE",
+        "ferramentas": [
+          "jornada-do-cliente"
+        ]
+      },
+      {
+        "nome": "Relatório de cliente oculto externo e interno",
+        "ferramentas": []
+      },
+      {
+        "nome": "Dashboard e indicadores visuais",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "Pesquisa com cliente",
+        "ferramentas": []
+      },
+      {
+        "nome": "SWOT, BMC, PESTAL e 5 forças de Porter",
+        "ferramentas": [
+          "bmc",
+          "swot",
+          "pestel",
+          "porter"
+        ],
+        "marcado": true
+      },
+      {
+        "nome": "4Ps e 8Ps",
+        "ferramentas": []
+      },
+      {
+        "nome": "ICP, público-alvo e cliente ideal",
+        "ferramentas": [
+          "icp"
+        ]
+      },
+      {
+        "nome": "Roteiro de follow-up com cliente",
+        "ferramentas": []
+      },
+      {
+        "nome": "Canvas de proposta de valor e mapa de empatia",
+        "ferramentas": [
+          "cpv"
+        ]
+      },
+      {
+        "nome": "Matriz BCG e Ansoff",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Pedir as redes sociais",
+      "Entender a base de clientes [público e quantidade]",
+      "Entender o modelo de negócio e o processo comercial",
+      "Entender o objetivo",
+      "Ver a viabilidade de terceirização",
+      "Coletar dados dos clientes"
+    ],
+    "riscos": [
+      "Cliente achar que vamos cuidar do Instagram",
+      "Achar que a gente trabalha com tráfego pago"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Anjos da Noite"
+      },
+      {
+        "nome": "Fomento Corretora"
+      },
+      {
+        "nome": "Posto Pinheiro Borges"
+      },
+      {
+        "nome": "Sublims"
+      },
+      {
+        "nome": "Pratas Art"
+      },
+      {
+        "nome": "M3TA"
+      },
+      {
+        "nome": "Manipulart"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p3",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p3",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p3",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p3",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p3",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p3",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Marcados com asterisco no PPGP 2026 (significado a confirmar com o CIEP): SWOT, BMC, PESTAL e 5 forças de Porter"
+    ]
+  },
+  {
+    "id": "planejamento-estrategico",
+    "nome": "Planejamento Estratégico",
+    "grupo": "ESTRATÉGIA",
+    "status": "ativo",
+    "descricao": "Revisa ou cria missão, visão e valores, analisa o ambiente, escolhe com o cliente a metodologia de acompanhamento (OKRs, BSC ou MWB), define as metas, constrói a ferramenta de acompanhamento estratégico e desdobra os planos de ação.",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "fontes": [
+      {
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 4,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      },
+      {
+        "tipo": "drive-sheet",
+        "id": "1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE",
+        "nome": "Cronograma Base Planejamento estratégico - Thiago Melo",
+        "hash": "ad38ac88fcda6aeb9deebaad1065f970d05cd5a75c96ca7670fc3b60730f724d",
+        "url": "https://docs.google.com/spreadsheets/d/1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE/edit"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Diretrizes estratégicas",
+        "ferramentas": []
+      },
+      {
+        "nome": "A ordem do BSC",
+        "ferramentas": []
+      },
+      {
+        "nome": "MVV",
+        "ferramentas": []
+      }
+    ],
+    "etapas": [
+      {
+        "id": "entendimento-de-negocio-bmc-swot-e-mvv-e",
+        "ordem": 1,
+        "nome": "Entendimento de negócio [BMC, SWOT e MVV] e análise de mercado",
+        "ferramentas": [
+          "bmc",
+          "swot",
+          "pestel",
+          "porter"
+        ]
+      },
+      {
+        "id": "apresentacao-e-priorizacao-das-metodolog",
+        "ordem": 2,
+        "nome": "Apresentação e priorização das metodologias de acompanhamento estratégico",
+        "ferramentas": []
+      },
+      {
+        "id": "criacao-das-metas-e-construcao-da-ferram",
+        "ordem": 3,
+        "nome": "Criação das metas e construção da ferramenta",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "id": "desdobramento-dos-planos-de-acao",
+        "ordem": 4,
+        "nome": "Desdobramento dos planos de ação",
+        "ferramentas": []
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "SWOT",
+        "ferramentas": [
+          "swot"
+        ]
+      },
+      {
+        "nome": "BMC",
+        "ferramentas": [
+          "bmc"
+        ]
+      },
+      {
+        "nome": "MVV",
+        "ferramentas": []
+      },
+      {
+        "nome": "OKRs, BSC e MWB",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ferramenta de acompanhamento estratégico",
+        "ferramentas": []
+      },
+      {
+        "nome": "Planos de ação",
+        "ferramentas": []
+      },
+      {
+        "nome": "PESTAL e TAM SAM SOM",
+        "ferramentas": [
+          "pestel"
+        ]
+      }
+    ],
+    "saber": [
+      "Se a empresa tem MVV",
+      "Se quer fazer em todos os setores",
+      "Se tem preferência por algum tipo de diretriz estratégica"
+    ],
+    "riscos": [
+      "Garantia na implementação das metas e objetivos"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Leosup"
+      },
+      {
+        "nome": "Bee Delivery 2"
+      },
+      {
+        "nome": "Nego Bom Bolos"
+      },
+      {
+        "nome": "Marenzo"
+      },
+      {
+        "nome": "Unifacex"
+      },
+      {
+        "nome": "Azienda"
+      },
+      {
+        "nome": "Sim Distribuidora"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p4",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p4",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p4",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p4",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p4",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p4",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    }
+  },
+  {
+    "id": "cultura-gamificacao-prosel",
+    "nome": "Cultura, Gamificação e Prosel",
+    "grupo": "ESTRATÉGIA",
+    "status": "ativo",
+    "descricao": "Um escopo com duas frentes. Gamificação: mapeia processos e perfis e estrutura a gamificação. Cultura: entende o perfil dos colaboradores, coleta ou revisa o MVV, aplica as pesquisas e estrutura melhorias de cultura e engajamento. Entrega calendário cultural, DCO e ferramenta de onboarding.",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "antigosIds": [
+      "gamificacao",
+      "mapeamento-de-cultura",
+      "dco-prosel"
+    ],
+    "fontes": [
+      {
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 5,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      },
+      {
+        "tipo": "drive-sheet",
+        "id": "1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4",
+        "nome": "Cronograma Base Cultura e Gamificação - Thiago Melo",
+        "hash": "1a79a017800ea80d4919f027f5be088d1b47af59d065faf8550d7efa0afb0a1f",
+        "url": "https://docs.google.com/spreadsheets/d/1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4/edit"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "OCAI, IBACO, MLQ-6S e PCO [estudar os modelos]",
+        "ferramentas": [
+          "ibaco",
+          "mlq",
+          "pco"
+        ]
+      },
+      {
+        "nome": "Algumas ferramentas e tipos de pesquisas inovadoras",
+        "ferramentas": []
+      },
+      {
+        "nome": "Perfis de gamificação",
+        "ferramentas": [
+          "gamificacao"
+        ]
+      }
+    ],
+    "etapas": [
+      {
+        "id": "mapear-os-processos-e-entender-os-perfis",
+        "ordem": 1,
+        "nome": "Mapear os processos e entender os perfis",
+        "frente": "Gamificação",
+        "ferramentas": [
+          "bpmn",
+          "gamificacao"
+        ]
+      },
+      {
+        "id": "estruturar-planos-de-acao",
+        "ordem": 2,
+        "nome": "Estruturar planos de ação",
+        "frente": "Gamificação",
+        "ferramentas": []
+      },
+      {
+        "id": "estruturacao-da-gamificacao",
+        "ordem": 3,
+        "nome": "Estruturação da gamificação",
+        "frente": "Gamificação",
+        "ferramentas": [
+          "gamificacao"
+        ]
+      },
+      {
+        "id": "entendimento-de-negocio-perfil-do-colabo",
+        "ordem": 4,
+        "nome": "Entendimento de negócio + perfil do colaborador + coleta/revisão do MVV",
+        "frente": "Cultura",
+        "ferramentas": [
+          "bmc"
+        ]
+      },
+      {
+        "id": "aplicacao-das-pesquisas",
+        "ordem": 5,
+        "nome": "Aplicação das pesquisas",
+        "frente": "Cultura",
+        "ferramentas": [
+          "pco",
+          "ibaco",
+          "mlq",
+          "fib"
+        ]
+      },
+      {
+        "id": "ferramenta-visual",
+        "ordem": 6,
+        "nome": "Ferramenta visual",
+        "frente": "Cultura",
+        "ferramentas": []
+      },
+      {
+        "id": "estruturacao-de-melhorias-de-cultura-e-e",
+        "ordem": 7,
+        "nome": "Estruturação de melhorias de cultura e engajamento",
+        "frente": "Cultura",
+        "ferramentas": []
+      },
+      {
+        "id": "manual-do-setor-e-definicao-de-rotina-e",
+        "ordem": 8,
+        "nome": "Manual do setor e definição de rotina e atribuições",
+        "frente": "Cultura",
+        "ferramentas": [
+          "dco"
+        ]
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "Calendário cultural",
+        "ferramentas": []
+      },
+      {
+        "nome": "Pesquisas como um todo",
+        "ferramentas": [
+          "pco",
+          "ibaco",
+          "mlq",
+          "fib"
+        ]
+      },
+      {
+        "nome": "Relatório de estratégias de engajamento",
+        "ferramentas": []
+      },
+      {
+        "nome": "MVV",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ferramenta visual das respostas",
+        "ferramentas": []
+      },
+      {
+        "nome": "DCO",
+        "ferramentas": [
+          "dco"
+        ]
+      },
+      {
+        "nome": "Ferramenta de onboarding",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Se já tem MVV",
+      "Quantos colaboradores e quantos setores existem",
+      "Qual objetivo do projeto",
+      "Perfil do colaborador"
+    ],
+    "riscos": [
+      "Baixa adesão dos colaboradores",
+      "Falta de agregação de valor para o gestor"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Spicy"
+      },
+      {
+        "nome": "Docelândia"
+      },
+      {
+        "nome": "Aram Hotéis"
+      },
+      {
+        "nome": "F2 Engenharia"
+      },
+      {
+        "nome": "Focus"
+      },
+      {
+        "nome": "Laniaq"
+      },
+      {
+        "nome": "Casa das Meias"
+      },
+      {
+        "nome": "Sterbom"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p5",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p5",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p5",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p5",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p5",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p5",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "O PPGP 2026 junta Prosel neste escopo, mas não lista etapas próprias de Prosel."
+    ]
+  },
+  {
+    "id": "eve",
+    "nome": "EVE (Estudo de Viabilidade Econômica)",
+    "grupo": "FINANCEIRO",
+    "status": "ativo",
+    "descricao": "Mostra se um novo negócio ou ponto vale o investimento: entende o negócio, analisa o mercado, levanta premissas e investimentos, projeta cenários, calcula os indicadores de viabilidade e entrega o relatório de viabilidade.",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "fontes": [
+      {
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 6,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Premissas do EVE",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ferramentas de pesquisa de mercado",
+        "ferramentas": []
+      },
+      {
+        "nome": "Indicadores de EVE",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "Planejamento financeiro",
+        "ferramentas": []
+      }
+    ],
+    "etapas": [
+      {
+        "id": "entendimento-de-negocio",
+        "ordem": 1,
+        "nome": "Entendimento de negócio",
+        "ferramentas": [
+          "bmc",
+          "swot"
+        ]
+      },
+      {
+        "id": "analise-de-mercado",
+        "ordem": 2,
+        "nome": "Análise de mercado",
+        "ferramentas": [
+          "pestel",
+          "porter",
+          "cpv"
+        ]
+      },
+      {
+        "id": "levantamento-de-premissas-e-investimento",
+        "ordem": 3,
+        "nome": "Levantamento de premissas e investimentos",
+        "ferramentas": []
+      },
+      {
+        "id": "projecoes-dos-cenarios-e-calculos-dos-in",
+        "ordem": 4,
+        "nome": "Projeções dos cenários e cálculos dos indicadores",
+        "ferramentas": []
+      },
+      {
+        "id": "definicao-da-viabilidade",
+        "ordem": 5,
+        "nome": "Definição da viabilidade",
+        "ferramentas": []
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "SWOT e BMC",
+        "ferramentas": [
+          "bmc",
+          "swot"
+        ]
+      },
+      {
+        "nome": "PESTAL",
+        "ferramentas": [
+          "pestel"
+        ]
+      },
+      {
+        "nome": "CAMGPEST",
+        "ferramentas": []
+      },
+      {
+        "nome": "5 forças de Porter",
+        "ferramentas": [
+          "porter"
+        ]
+      },
+      {
+        "nome": "Canvas de proposta de valor",
+        "ferramentas": [
+          "cpv"
+        ]
+      },
+      {
+        "nome": "TAM SAM SOM",
+        "ferramentas": []
+      },
+      {
+        "nome": "Mapa de empatia",
+        "ferramentas": []
+      },
+      {
+        "nome": "Definição do público-alvo",
+        "ferramentas": []
+      },
+      {
+        "nome": "Orçamento das premissas",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ferramenta de cálculos de EVE",
+        "ferramentas": []
+      },
+      {
+        "nome": "Indicadores de EVE",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "Relatório de viabilidade",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Se há necessidade de ferramentas de pesquisa de mercado",
+      "Qual é o ponto que ele vai abrir e as características do ponto",
+      "Qual o público que ele vai atingir",
+      "Qual o produto ou serviço que ele vai vender",
+      "Se já tem as premissas"
+    ],
+    "riscos": [
+      "Gestor com pressa"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Solo"
+      },
+      {
+        "nome": "Picuí"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p6",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    }
+  },
+  {
+    "id": "gerenciamento-financeiro",
+    "nome": "Gerenciamento e Controle Financeiro",
+    "grupo": "FINANCEIRO",
+    "status": "ativo",
+    "descricao": "Mapeia os processos financeiros, trata os dados e classifica os gastos, estrutura a DRE, parametriza o sistema ou a planilha de gerenciamento, define indicadores e dashboard, modela os processos e deixa rotina, manuais e treinamento.",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "fontes": [
+      {
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 7,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      },
+      {
+        "tipo": "drive-sheet",
+        "id": "1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo",
+        "nome": "Cronograma Base Gerenciamento financeiro - Thiago Melo",
+        "hash": "35fdda89b2790d76994d6d16d157afb6e2f0f9feed3acb84400449ef8a9ec8cc",
+        "url": "https://docs.google.com/spreadsheets/d/1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo/edit"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Opções de sistemas financeiros",
+        "ferramentas": []
+      },
+      {
+        "nome": "Classificação de gastos",
+        "ferramentas": []
+      },
+      {
+        "nome": "Planilhas financeiras",
+        "ferramentas": []
+      },
+      {
+        "nome": "Indicadores financeiros (rentabilidade, liquidez, eficiência…)",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "DRE",
+        "ferramentas": [
+          "dre"
+        ]
+      },
+      {
+        "nome": "Regime de caixa",
+        "ferramentas": []
+      },
+      {
+        "nome": "Níveis de maturidade",
+        "ferramentas": []
+      }
+    ],
+    "etapas": [
+      {
+        "id": "entendimento-de-negocio-e-mapeamento-dos",
+        "ordem": 1,
+        "nome": "Entendimento de negócio e mapeamento dos processos financeiros",
+        "ferramentas": [
+          "bmc",
+          "pmmc",
+          "bpmn"
+        ]
+      },
+      {
+        "id": "coleta-e-tratamento-de-dados-e-classific",
+        "ordem": 2,
+        "nome": "Coleta e tratamento de dados e classificação de gastos",
+        "ferramentas": []
+      },
+      {
+        "id": "estruturacao-da-dre",
+        "ordem": 3,
+        "nome": "Estruturação da DRE",
+        "ferramentas": [
+          "dre"
+        ]
+      },
+      {
+        "id": "parametrizacao-do-sistema",
+        "ordem": 4,
+        "nome": "Parametrização do sistema",
+        "ferramentas": []
+      },
+      {
+        "id": "estruturacao-de-indicadores",
+        "ordem": 5,
+        "nome": "Estruturação de indicadores",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "id": "desdobramento-dos-planos-de-acao",
+        "ordem": 6,
+        "nome": "Desdobramento dos planos de ação",
+        "ferramentas": []
+      },
+      {
+        "id": "modelagem-dos-processos",
+        "ordem": 7,
+        "nome": "Modelagem dos processos",
+        "ferramentas": [
+          "bpmn"
+        ]
+      },
+      {
+        "id": "relatorio-de-saude-financeira",
+        "ordem": 8,
+        "nome": "Relatório de saúde financeira",
+        "ferramentas": [],
+        "marcado": true
+      },
+      {
+        "id": "definicao-de-rotina-e-atribuicoes",
+        "ordem": 9,
+        "nome": "Definição de rotina e atribuições",
+        "ferramentas": [
+          "dco",
+          "raci"
+        ]
+      },
+      {
+        "id": "treinamentos",
+        "ordem": 10,
+        "nome": "Treinamentos",
+        "ferramentas": []
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "Classificação de gastos",
+        "ferramentas": []
+      },
+      {
+        "nome": "Manual de classificação de gastos",
+        "ferramentas": []
+      },
+      {
+        "nome": "Manual de indicadores",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "Relatório de saúde financeira",
+        "ferramentas": []
+      },
+      {
+        "nome": "DRE",
+        "ferramentas": [
+          "dre"
+        ]
+      },
+      {
+        "nome": "Sistema/planilha de gerenciamento",
+        "ferramentas": []
+      },
+      {
+        "nome": "Manual de processos financeiros",
+        "ferramentas": []
+      },
+      {
+        "nome": "Processos desenhados/modelados",
+        "ferramentas": []
+      },
+      {
+        "nome": "Dashboard visual com indicadores",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "DCO",
+        "ferramentas": [
+          "dco"
+        ]
+      },
+      {
+        "nome": "Relatório de planos de ação",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Dados financeiros",
+      "Sistema (qual usa)",
+      "Classificação de gastos",
+      "Indicadores (quais já tem)",
+      "Pessoas no setor",
+      "Objetivo"
+    ],
+    "riscos": [
+      "Sem dados financeiros",
+      "Sem rotina e sem adesão ao preenchimento da ferramenta"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Aerotour"
+      },
+      {
+        "nome": "Kouzina"
+      },
+      {
+        "nome": "Nego Bom Bolos"
+      },
+      {
+        "nome": "Mossoró Cap"
+      },
+      {
+        "nome": "Locapp"
+      },
+      {
+        "nome": "NOV"
+      },
+      {
+        "nome": "Verde Interior Paisagismo"
+      },
+      {
+        "nome": "CM Eng"
+      },
+      {
+        "nome": "Aries"
+      },
+      {
+        "nome": "Laboratório Prime"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p7",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p7",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p7",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p7",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p7",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p7",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Marcados com asterisco no PPGP 2026 (significado a confirmar com o CIEP): Relatório de saúde financeira"
+    ]
+  },
+  {
+    "id": "custeio-e-precificacao",
+    "nome": "Custeio e Precificação",
+    "grupo": "FINANCEIRO",
+    "status": "ativo",
+    "descricao": "Levanta e classifica os gastos para chegar ao custo e ao preço dos produtos: mapeia os processos financeiros, estrutura a DRE e os indicadores, parametriza o sistema ou a planilha e deixa rotina, manuais e treinamento.",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "fontes": [
+      {
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 8,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      },
+      {
+        "tipo": "drive-sheet",
+        "id": "1LIe3FcON0dRXcErSfzRFVg-aZTcPUlbe0S2UAf-Unbw",
+        "nome": "Cronograma Base Custeio e Precificação - Thiago Melo",
+        "hash": "116752440b21267c97a74c0a54c379d6df73d0a16969a6d23954c75a337422f4",
+        "url": "https://docs.google.com/spreadsheets/d/1LIe3FcON0dRXcErSfzRFVg-aZTcPUlbe0S2UAf-Unbw/edit"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Opções de sistemas financeiros",
+        "ferramentas": []
+      },
+      {
+        "nome": "Classificação de gastos",
+        "ferramentas": []
+      },
+      {
+        "nome": "Planilhas financeiras",
+        "ferramentas": []
+      },
+      {
+        "nome": "Indicadores financeiros",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "DRE",
+        "ferramentas": [
+          "dre"
+        ]
+      },
+      {
+        "nome": "Regime de caixa",
+        "ferramentas": []
+      }
+    ],
+    "etapas": [
+      {
+        "id": "entendimento-de-negocio-e-mapeamento-dos",
+        "ordem": 1,
+        "nome": "Entendimento de negócio e mapeamento dos processos financeiros",
+        "ferramentas": [
+          "bmc",
+          "pmmc",
+          "bpmn"
+        ]
+      },
+      {
+        "id": "coleta-e-tratamento-de-dados-e-classific",
+        "ordem": 2,
+        "nome": "Coleta e tratamento de dados e classificação de gastos",
+        "ferramentas": []
+      },
+      {
+        "id": "estruturacao-da-dre",
+        "ordem": 3,
+        "nome": "Estruturação da DRE",
+        "ferramentas": [
+          "dre",
+          "markup"
+        ]
+      },
+      {
+        "id": "parametrizacao-do-sistema",
+        "ordem": 4,
+        "nome": "Parametrização do sistema",
+        "ferramentas": []
+      },
+      {
+        "id": "estruturacao-de-indicadores",
+        "ordem": 5,
+        "nome": "Estruturação de indicadores",
+        "ferramentas": [
+          "banco-de-indicadores",
+          "markup"
+        ]
+      },
+      {
+        "id": "desdobramento-dos-planos-de-acao",
+        "ordem": 6,
+        "nome": "Desdobramento dos planos de ação",
+        "ferramentas": []
+      },
+      {
+        "id": "modelagem-dos-processos",
+        "ordem": 7,
+        "nome": "Modelagem dos processos",
+        "ferramentas": [
+          "bpmn"
+        ]
+      },
+      {
+        "id": "relatorio-de-saude-financeira",
+        "ordem": 8,
+        "nome": "Relatório de saúde financeira",
+        "ferramentas": [],
+        "marcado": true
+      },
+      {
+        "id": "definicao-de-rotina-e-atribuicoes",
+        "ordem": 9,
+        "nome": "Definição de rotina e atribuições",
+        "ferramentas": [
+          "dco",
+          "raci"
+        ]
+      },
+      {
+        "id": "treinamentos",
+        "ordem": 10,
+        "nome": "Treinamentos",
+        "ferramentas": []
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "Classificação de gastos",
+        "ferramentas": []
+      },
+      {
+        "nome": "Manual de classificação de gastos",
+        "ferramentas": []
+      },
+      {
+        "nome": "Manual de indicadores",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "Relatório de saúde financeira",
+        "ferramentas": []
+      },
+      {
+        "nome": "DRE",
+        "ferramentas": [
+          "dre"
+        ]
+      },
+      {
+        "nome": "Sistema/planilha de gerenciamento",
+        "ferramentas": []
+      },
+      {
+        "nome": "Manual de processos financeiros",
+        "ferramentas": []
+      },
+      {
+        "nome": "Processos desenhados/modelados",
+        "ferramentas": []
+      },
+      {
+        "nome": "Dashboard visual com indicadores",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "DCO",
+        "ferramentas": [
+          "dco"
+        ]
+      },
+      {
+        "nome": "Relatório de planos de ação",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Dados financeiros",
+      "Sistema (qual usa)",
+      "Classificação de gastos",
+      "Indicadores (quais já tem)",
+      "Pessoas no setor",
+      "Objetivo"
+    ],
+    "riscos": [
+      "Sem dados financeiros",
+      "Sem rotina e sem adesão ao preenchimento da ferramenta"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Verde Interior Paisagismo"
+      },
+      {
+        "nome": "Laboratório Prime"
+      },
+      {
+        "nome": "EJB Engenharia"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p8",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p8",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p8",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p8",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p8",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p8",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "No PPGP 2026, as colunas Escopo e Entregáveis deste slide são idênticas às de Gerenciamento/Controle Financeiro. Confirmar com o CIEP se é intencional.",
+      "Marcados com asterisco no PPGP 2026 (significado a confirmar com o CIEP): Relatório de saúde financeira"
+    ]
+  },
+  {
+    "id": "planejamento-financeiro",
+    "nome": "Planejamento Financeiro",
+    "grupo": "FINANCEIRO",
+    "status": "ativo",
+    "descricao": "Parte dos dados financeiros e da classificação de gastos para construir cenários e projeções, apoiados em análise de mercado, e entrega a planilha de planejamento financeiro com ferramenta visual, planos de ação e manual.",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "fontes": [
+      {
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 9,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Cenários de planejamento financeiro",
+        "ferramentas": []
+      },
+      {
+        "nome": "Pesquisa de mercado",
+        "ferramentas": []
+      }
+    ],
+    "etapas": [
+      {
+        "id": "entendimento-do-negocio-levantamento-dos",
+        "ordem": 1,
+        "nome": "Entendimento do negócio + levantamento dos dados e da classificação dos gastos",
+        "ferramentas": [
+          "dre"
+        ]
+      },
+      {
+        "id": "analise-de-mercado",
+        "ordem": 2,
+        "nome": "Análise de mercado",
+        "ferramentas": [
+          "pestel",
+          "porter",
+          "swot"
+        ]
+      },
+      {
+        "id": "criacao-de-cenarios-projecoes",
+        "ordem": 3,
+        "nome": "Criação de cenários/projeções",
+        "ferramentas": []
+      },
+      {
+        "id": "ferramenta-visual",
+        "ordem": 4,
+        "nome": "Ferramenta visual",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "id": "planos-de-acao",
+        "ordem": 5,
+        "nome": "Planos de ação",
+        "ferramentas": []
+      },
+      {
+        "id": "manualizacao",
+        "ordem": 6,
+        "nome": "Manualização",
+        "ferramentas": []
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "TAM SAM SOM",
+        "ferramentas": []
+      },
+      {
+        "nome": "PESTAL e 5 forças de Porter",
+        "ferramentas": [
+          "pestel",
+          "porter"
+        ]
+      },
+      {
+        "nome": "SWOT",
+        "ferramentas": [
+          "swot"
+        ]
+      },
+      {
+        "nome": "Planilha de planejamento financeiro",
+        "ferramentas": []
+      },
+      {
+        "nome": "Cenários",
+        "ferramentas": []
+      },
+      {
+        "nome": "Manual de planejamento financeiro",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Horizonte de tempo do planejamento financeiro",
+      "Dados financeiros",
+      "Classificação dos gastos",
+      "Verificar se tem DRE"
+    ],
+    "riscos": [
+      "Incerteza dos números",
+      "Falta de dados (só dá para fazer planejamento se a empresa já tiver certa maturidade de dados)"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Locapp"
+      },
+      {
+        "nome": "Planejamento Financeiro",
+        "tipo": "cronograma"
+      },
+      {
+        "nome": "Verde Interior Paisagismo"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p9",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p9",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p9",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p9",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p9",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p9",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    }
+  },
+  {
+    "id": "map-e-model",
+    "nome": "Processos (Mapeamento e Modelagem)",
+    "grupo": "PRODUÇÃO",
+    "status": "ativo",
+    "descricao": "Entende o negócio (SIPOC, macroprocesso, mapa de contexto, BMC, cadeia de valor), mapeia os processos com PMMC e fluxogramas, diagnostica e prioriza melhorias, modela os processos e atualiza os POPs, define indicadores e deixa manual, treinamento e cronograma de rotina.",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "fontes": [
+      {
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 10,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
       },
       {
         "tipo": "drive-sheet",
@@ -30,123 +1910,728 @@
         "url": "https://docs.google.com/spreadsheets/d/13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE/edit"
       }
     ],
+    "estudar": [
+      {
+        "nome": "Linguagens [ANSI, ASME, BPMN, blueprint, POPs]",
+        "ferramentas": [
+          "bpmn"
+        ]
+      },
+      {
+        "nome": "Ferramentas da qualidade",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ferramentas de priorização",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ferramenta de entendimento de negócio",
+        "ferramentas": []
+      },
+      {
+        "nome": "Conceitos dos 8 desperdícios do Lean",
+        "ferramentas": []
+      },
+      {
+        "nome": "Sincronismo organizacional",
+        "ferramentas": []
+      }
+    ],
     "etapas": [
       {
-        "id": "entendimento",
+        "id": "entendimento-de-negocio-sipoc-macroproce",
         "ordem": 1,
-        "nome": "Entendimento",
+        "nome": "Entendimento de negócio [SIPOC, macroprocesso, mapa de contexto, BMC e cadeia de valor]",
+        "ferramentas": [
+          "sipoc",
+          "mapa-de-contexto",
+          "bmc"
+        ]
+      },
+      {
+        "id": "mapeamento-dos-processos-process-map-mod",
+        "ordem": 2,
+        "nome": "Mapeamento dos processos [Process Map Model Canvas + fluxogramas]",
+        "ferramentas": [
+          "pmmc",
+          "bpmn"
+        ]
+      },
+      {
+        "id": "diagnostico-e-priorizacao-relatorio-de-m",
+        "ordem": 3,
+        "nome": "Diagnóstico e priorização [relatório de melhorias]",
+        "ferramentas": []
+      },
+      {
+        "id": "planos-de-acao",
+        "ordem": 4,
+        "nome": "Planos de ação",
+        "ferramentas": []
+      },
+      {
+        "id": "modelagem-desenho-dos-processos-atualiza",
+        "ordem": 5,
+        "nome": "Modelagem/desenho dos processos + atualização dos POPs",
+        "ferramentas": [
+          "bpmn"
+        ]
+      },
+      {
+        "id": "definicao-de-indicadores-de-sucesso-e-cr",
+        "ordem": 6,
+        "nome": "Definição de indicadores de sucesso e criação de ferramenta visual",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "id": "definicao-de-rotina-e-atribuicoes-manual",
+        "ordem": 7,
+        "nome": "Definição de rotina e atribuições [manual, treinamento, cronograma de rotina]",
+        "ferramentas": [
+          "raci",
+          "dco"
+        ]
+      },
+      {
+        "id": "cronograma-de-implementacao",
+        "ordem": 8,
+        "nome": "Cronograma de implementação",
+        "ferramentas": [],
+        "marcado": true
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "Fluxogramas",
+        "ferramentas": [
+          "bpmn"
+        ]
+      },
+      {
+        "nome": "POPs",
+        "ferramentas": []
+      },
+      {
+        "nome": "BMC, SIPOC, mapa de contexto, cadeia de valor e Process Map Model Canvas",
         "ferramentas": [
           "bmc",
           "mapa-de-contexto",
-          "pmmc"
-        ],
-        "entregaveis": [
-          "BMC + Macroprocesso",
-          "Process Map Model Canvas"
-        ]
-      },
-      {
-        "id": "mapeamento",
-        "ordem": 2,
-        "nome": "Mapeamento",
-        "ferramentas": [
           "pmmc",
-          "bpmn",
           "sipoc"
-        ],
-        "entregaveis": [
-          "Fluxogramas AS IS"
         ]
       },
       {
-        "id": "relatorio-de-analise",
-        "ordem": 3,
-        "nome": "Relatório de análise",
-        "ferramentas": [],
-        "entregaveis": [
-          "Relatório de causas raízes e oportunidades de melhoria"
-        ]
+        "nome": "Matriz de priorização",
+        "ferramentas": []
       },
       {
-        "id": "modelagens",
-        "ordem": 4,
-        "nome": "Modelagens",
-        "ferramentas": [
-          "bpmn"
-        ],
-        "entregaveis": [
-          "Modelagens dos processos + Implementação + Treinamentos"
-        ]
+        "nome": "Relatório diagnóstico",
+        "ferramentas": []
       },
       {
-        "id": "ferramenta-de-rotina-e-rotina-das-modela",
-        "ordem": 5,
-        "nome": "Ferramenta de rotina e rotina das modelagens",
+        "nome": "Manual",
+        "ferramentas": []
+      },
+      {
+        "nome": "RACI",
         "ferramentas": [
           "raci"
         ]
       },
       {
-        "id": "dco",
-        "ordem": 6,
+        "nome": "Treinamentos",
+        "ferramentas": []
+      },
+      {
+        "nome": "Cronograma de rotina",
+        "ferramentas": []
+      },
+      {
         "nome": "DCO",
         "ferramentas": [
           "dco"
         ]
       },
       {
-        "id": "documentacao-treinamento",
-        "ordem": 7,
-        "nome": "Documentação Treinamento",
-        "ferramentas": [],
-        "entregaveis": [
-          "Manual do setor + DCO"
+        "nome": "Ferramental visual de indicadores",
+        "ferramentas": [
+          "banco-de-indicadores"
         ]
       },
       {
-        "id": "acompanhamento",
-        "ordem": 8,
-        "nome": "Acompanhamento",
+        "nome": "Ferramenta de rotina",
         "ferramentas": []
+      },
+      {
+        "nome": "Folha de verificação",
+        "ferramentas": [],
+        "marcado": true
+      }
+    ],
+    "saber": [
+      "O que faz mais sentido: POP, fluxograma ou adaptações",
+      "Se o gestor sabe o que quer melhorar",
+      "Quantidade de setores/funcionários",
+      "Média de processo/complexidade por setor",
+      "Se existe sistema",
+      "Se já tem fluxogramas mapeados",
+      "Avaliar se só mapeia ou se modela também"
+    ],
+    "riscos": [
+      "Pouco ou muito tempo no cronograma para mapear e modelar processos",
+      "Ser flexível para implementar as modelagens",
+      "Validar com quem vai usar as ferramentas: o operacional"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Plana Edificações"
+      },
+      {
+        "nome": "Lavanderia Arco-Íris"
+      },
+      {
+        "nome": "Nego Bom Bolos"
+      },
+      {
+        "nome": "Nordestão"
+      },
+      {
+        "nome": "Sushideli"
+      },
+      {
+        "nome": "Mazzano"
+      },
+      {
+        "nome": "Aqua Coco"
+      },
+      {
+        "nome": "CM Eng"
+      },
+      {
+        "nome": "Assmed"
       }
     ],
     "revisao": {
       "status": "aprovado",
       "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
       "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/map-e-model (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:13K7E64nP_ReIf-u6WIQ0RUHRwvYxiTGwjYI3Hbxz8TE)"
-    }
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p10",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p10",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p10",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p10",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p10",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p10",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Marcados com asterisco no PPGP 2026 (significado a confirmar com o CIEP): Cronograma de implementação; Folha de verificação"
+    ]
   },
   {
-    "id": "capacidade-produtiva",
-    "nome": "Capacidade Produtiva",
+    "id": "gestao-de-estoque",
+    "nome": "Gestão de Estoque",
     "grupo": "PRODUÇÃO",
-    "status": "despriorizado",
-    "descricao": "Mapeia e modela os processos, cronometra e calcula tempos normal e padrão e chega à capacidade produtiva com ferramenta de acompanhamento e relatório crítico.",
+    "status": "ativo",
+    "descricao": "Entende a estrutura do estoque, mapeia ressuprimento e armazenagem, trata os dados e prioriza os produtos pela curva ABC, organiza a área de materiais (5S), define o método de controle e os indicadores, modela os processos TO BE e constrói a ferramenta de acompanhamento do estoque.",
     "responsavel": {
       "nome": "Thiago Melo",
       "email": "thiagomelo@produtivajunior.com.br"
     },
     "fontes": [
       {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 11,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Indicadores de estoque",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
       },
       {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+        "nome": "Nível de serviço",
+        "ferramentas": []
+      },
+      {
+        "nome": "Tipos de estoque",
+        "ferramentas": []
+      },
+      {
+        "nome": "Estudo de inventário",
+        "ferramentas": [],
+        "marcado": true
+      },
+      {
+        "nome": "Sistemas de estoque",
+        "ferramentas": []
+      },
+      {
+        "nome": "5S",
+        "ferramentas": []
+      }
+    ],
+    "etapas": [
+      {
+        "id": "entendimento-do-negocio",
+        "ordem": 1,
+        "nome": "Entendimento do negócio",
+        "ferramentas": [
+          "bmc"
+        ]
+      },
+      {
+        "id": "entendimento-da-estrutura-do-estoque",
+        "ordem": 2,
+        "nome": "Entendimento da estrutura do estoque",
+        "ferramentas": []
+      },
+      {
+        "id": "mapeamento-dos-processos-as-is-de-ressup",
+        "ordem": 3,
+        "nome": "Mapeamento dos processos AS IS de ressuprimento e armazenagem",
+        "ferramentas": [
+          "bpmn"
+        ]
+      },
+      {
+        "id": "analise-das-necessidades-dos-clientes",
+        "ordem": 4,
+        "nome": "Análise das necessidades dos clientes",
+        "ferramentas": []
+      },
+      {
+        "id": "analise-e-tratamento-de-dados-sobre-o-es",
+        "ordem": 5,
+        "nome": "Análise e tratamento de dados sobre o estoque",
+        "ferramentas": []
+      },
+      {
+        "id": "analise-da-curva-abc-e-priorizacao-dos-p",
+        "ordem": 6,
+        "nome": "Análise da curva ABC e priorização dos produtos",
+        "ferramentas": [
+          "curva-abc"
+        ]
+      },
+      {
+        "id": "entendimento-dos-custos-de-armazenagem",
+        "ordem": 7,
+        "nome": "Entendimento dos custos de armazenagem",
+        "ferramentas": []
+      },
+      {
+        "id": "organizacao-da-area-de-materiais",
+        "ordem": 8,
+        "nome": "Organização da área de materiais",
+        "ferramentas": []
+      },
+      {
+        "id": "definicao-do-metodo-de-controle-do-estoq",
+        "ordem": 9,
+        "nome": "Definição do método de controle do estoque",
+        "ferramentas": []
+      },
+      {
+        "id": "estabelecer-o-armazenamento-de-materiais",
+        "ordem": 10,
+        "nome": "Estabelecer o armazenamento de materiais",
+        "ferramentas": [],
+        "marcado": true
+      },
+      {
+        "id": "definicao-dos-indicadores-para-o-gerenci",
+        "ordem": 11,
+        "nome": "Definição dos indicadores para o gerenciamento do estoque",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "id": "modelagens-dos-processos-to-be",
+        "ordem": 12,
+        "nome": "Modelagens dos processos TO BE",
+        "ferramentas": [
+          "bpmn"
+        ]
+      },
+      {
+        "id": "construcao-da-ferramenta-de-acompanhamen",
+        "ordem": 13,
+        "nome": "Construção da ferramenta de acompanhamento de estoque",
+        "ferramentas": []
+      },
+      {
+        "id": "criacao-de-planos-de-acao",
+        "ordem": 14,
+        "nome": "Criação de planos de ação",
+        "ferramentas": []
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "BMC e macroprocesso",
+        "ferramentas": [
+          "bmc"
+        ]
+      },
+      {
+        "nome": "Fluxogramas e POPs",
+        "ferramentas": [
+          "bpmn"
+        ]
+      },
+      {
+        "nome": "DCO",
+        "ferramentas": [
+          "dco"
+        ]
+      },
+      {
+        "nome": "RACI",
+        "ferramentas": [
+          "raci"
+        ]
+      },
+      {
+        "nome": "Manual",
+        "ferramentas": []
+      },
+      {
+        "nome": "Vídeos do sistema",
+        "ferramentas": []
+      },
+      {
+        "nome": "Curva ABC",
+        "ferramentas": [
+          "curva-abc"
+        ]
+      },
+      {
+        "nome": "Planilha de controle de estoque",
+        "ferramentas": []
+      },
+      {
+        "nome": "Indicadores de estoque",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "Relatório de 5S",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Sistema de estoque",
+      "Se faz inventário e com que frequência",
+      "Quantos SKUs tem",
+      "Quantos itens",
+      "Se tem uma pessoa responsável pelo estoque",
+      "Processo de compra, conferência e alimentação do estoque",
+      "Se tem indicadores",
+      "Se os produtos têm sazonalidade"
+    ],
+    "riscos": [
+      "Cliente não implementar",
+      "Achar que vamos contar o estoque"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Cabugi Solar"
+      },
+      {
+        "nome": "Lenny Cakes"
+      },
+      {
+        "nome": "Sushideli"
+      },
+      {
+        "nome": "Mazzano"
+      },
+      {
+        "nome": "CEOF"
+      },
+      {
+        "nome": "Plana Edificações"
+      },
+      {
+        "nome": "DMS"
+      },
+      {
+        "nome": "Mardel"
+      },
+      {
+        "nome": "Construtora Dantas"
+      },
+      {
+        "nome": "Caxangá"
+      },
+      {
+        "nome": "Dois A"
+      },
+      {
+        "nome": "Mídia Digital"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p11",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p11",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p11",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p11",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p11",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p11",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Marcados com asterisco no PPGP 2026 (significado a confirmar com o CIEP): Estudo de inventário; Estabelecer o armazenamento de materiais"
+    ]
+  },
+  {
+    "id": "layout",
+    "nome": "Adequação de Layout",
+    "grupo": "PRODUÇÃO",
+    "status": "ativo",
+    "descricao": "Entende e mapeia os processos, levanta as restrições do espaço, analisa os fluxos (mapofluxograma, diagrama de espaguete, diagrama de relações), desenha e simula opções de layout e define indicadores e plano de implementação.",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "fontes": [
+      {
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 12,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Tipos de layout",
+        "ferramentas": []
+      },
+      {
+        "nome": "Tipos de restrição",
+        "ferramentas": []
+      },
+      {
+        "nome": "8 desperdícios",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ferramentas de layout",
+        "ferramentas": []
+      },
+      {
+        "nome": "Formas de gestão à vista [LinkedIn]",
+        "ferramentas": []
+      }
+    ],
+    "etapas": [
+      {
+        "id": "entendimento",
+        "ordem": 1,
+        "nome": "Entendimento",
+        "ferramentas": []
+      },
+      {
+        "id": "mapeamento",
+        "ordem": 2,
+        "nome": "Mapeamento",
+        "ferramentas": [
+          "bpmn"
+        ]
+      },
+      {
+        "id": "levantar-restricoes",
+        "ordem": 3,
+        "nome": "Levantar restrições",
+        "ferramentas": []
+      },
+      {
+        "id": "ferramenta-de-analise-dos-processos",
+        "ordem": 4,
+        "nome": "Ferramenta de análise dos processos",
+        "ferramentas": []
+      },
+      {
+        "id": "modelagens",
+        "ordem": 5,
+        "nome": "Modelagens",
+        "ferramentas": [
+          "bpmn"
+        ]
+      },
+      {
+        "id": "desenho-de-opcoes",
+        "ordem": 6,
+        "nome": "Desenho de opções",
+        "ferramentas": []
+      },
+      {
+        "id": "simulacao",
+        "ordem": 7,
+        "nome": "Simulação",
+        "ferramentas": []
+      },
+      {
+        "id": "indicadores",
+        "ordem": 8,
+        "nome": "Indicadores",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      }
+    ],
+    "entregaveis": [
+      {
+        "nome": "Diagrama de relações",
+        "ferramentas": []
+      },
+      {
+        "nome": "Mapofluxograma",
+        "ferramentas": []
+      },
+      {
+        "nome": "Relatório de análise de layout",
+        "ferramentas": []
+      },
+      {
+        "nome": "Diagrama de espaguete",
+        "ferramentas": []
+      },
+      {
+        "nome": "Plano de implementação",
+        "ferramentas": []
+      },
+      {
+        "nome": "Fluxogramas",
+        "ferramentas": [
+          "bpmn"
+        ]
+      },
+      {
+        "nome": "Desenho de opções de layout",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Planta baixa",
+      "Restrições de layout",
+      "Tamanho do espaço",
+      "Se o gestor está disposto a investir",
+      "Macroprocesso produtivo",
+      "Quantidade de processos/funcionários"
+    ],
+    "riscos": [
+      "Gestor não implementar",
+      "Agregação de valor",
+      "Ausência de informações necessárias",
+      "Espaço não permitir mudanças"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Vegfood"
+      },
+      {
+        "nome": "Lenny Cakes"
+      },
+      {
+        "nome": "Refine"
+      },
+      {
+        "nome": "Dois A"
+      },
+      {
+        "nome": "Alice Limpeza"
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
+      "descricao": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p12",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p12",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p12",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p12",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p12",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p12",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    }
+  },
+  {
+    "id": "capacidade-produtiva",
+    "nome": "Capacidade Produtiva",
+    "grupo": "PRODUÇÃO",
+    "status": "ativo",
+    "descricao": "Entende o serviço e a empresa, mapeia e modela os processos, cronometra as atividades, calcula o tamanho da amostra (N), o tempo normal e o tempo padrão e chega à capacidade produtiva, com ferramenta de acompanhamento e relatório com análise crítica.",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "fontes": [
+      {
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 13,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Entender relações com outros escopos",
+        "ferramentas": []
+      },
+      {
+        "nome": "Cálculo do N",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ter noção da linha lógica para cálculo",
+        "ferramentas": []
+      },
+      {
+        "nome": "Impactos que o estudo vai trazer",
+        "ferramentas": []
       }
     ],
     "etapas": [
@@ -166,13 +2651,17 @@
         "id": "mapeamento-dos-processos",
         "ordem": 3,
         "nome": "Mapeamento dos processos",
-        "ferramentas": []
+        "ferramentas": [
+          "bpmn"
+        ]
       },
       {
         "id": "modelagem-dos-processos",
         "ordem": 4,
         "nome": "Modelagem dos processos",
-        "ferramentas": []
+        "ferramentas": [
+          "bpmn"
+        ]
       },
       {
         "id": "construcao-de-ferramenta",
@@ -207,7 +2696,7 @@
       {
         "id": "definicao-do-tn-e-tp",
         "ordem": 10,
-        "nome": "Definição DO TN E TP",
+        "nome": "Definição do TN e TP",
         "ferramentas": []
       },
       {
@@ -220,7 +2709,9 @@
         "id": "construcao-de-ferramenta-de-acompanhamen",
         "ordem": 12,
         "nome": "Construção de ferramenta de acompanhamento e mensuração",
-        "ferramentas": []
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
       },
       {
         "id": "relatorio-de-capacidade-produtiva-analis",
@@ -229,454 +2720,119 @@
         "ferramentas": []
       }
     ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/capacidade-produtiva (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
-    },
-    "pendencias": [
-      "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas",
-      "Checklist Escopos: Sai muito pouco, despriorizando, pode ser feito"
-    ]
-  },
-  {
-    "id": "gestao-a-vista",
-    "nome": "Gestão à Vista",
-    "grupo": "PRODUÇÃO",
-    "status": "despriorizado",
-    "descricao": "Mapeia e modela os processos, define rotina e ferramenta de rotina e estrutura o layout da gestão à vista com guia de implementação.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
+    "entregaveis": [
       {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+        "nome": "Fluxogramas",
+        "ferramentas": [
+          "bpmn"
+        ]
       },
       {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+        "nome": "Macroprocesso",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ferramenta de capacidade produtiva",
+        "ferramentas": []
+      },
+      {
+        "nome": "Manual e vídeos",
+        "ferramentas": []
+      },
+      {
+        "nome": "Ferramenta visual de acompanhamento",
+        "ferramentas": []
+      },
+      {
+        "nome": "Relatório do estudo",
+        "ferramentas": []
       }
     ],
-    "etapas": [
+    "saber": [
+      "Sazonalidade",
+      "Macroprocesso produtivo",
+      "Funcionários",
+      "Indicadores atuais",
+      "Demanda puxada ou empurrada",
+      "Famílias de produtos"
+    ],
+    "riscos": [
+      "Projetos online",
+      "Má adesão dos funcionários",
+      "Complexidade do projeto",
+      "Processo despadronizado"
+    ],
+    "casesReferencia": [
       {
-        "id": "entendimento",
-        "ordem": 1,
-        "nome": "Entendimento",
-        "ferramentas": []
+        "nome": "Verde Fruits"
       },
       {
-        "id": "mapeamento",
-        "ordem": 2,
-        "nome": "Mapeamento",
-        "ferramentas": []
+        "nome": "Vegfood"
       },
       {
-        "id": "relatorio-de-melhorias",
-        "ordem": 3,
-        "nome": "Relatório DE melhorias",
-        "ferramentas": []
+        "nome": "Alice Limpeza"
       },
       {
-        "id": "modelagem",
-        "ordem": 4,
-        "nome": "Modelagem",
-        "ferramentas": []
-      },
-      {
-        "id": "elaboracao-de-rotina",
-        "ordem": 5,
-        "nome": "Elaboração DE rotina",
-        "ferramentas": []
-      },
-      {
-        "id": "ferramenta-de-rotina",
-        "ordem": 6,
-        "nome": "Ferramenta DE rotina",
-        "ferramentas": []
-      },
-      {
-        "id": "estruturar-layout-da-gestao-a-vista",
-        "ordem": 7,
-        "nome": "Estruturar layout DA gestao A vista",
-        "ferramentas": []
-      },
-      {
-        "id": "guia-de-implementacao",
-        "ordem": 8,
-        "nome": "Guia DE implementação",
-        "ferramentas": []
+        "nome": "Aqua Coco"
       }
     ],
     "revisao": {
       "status": "aprovado",
       "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
       "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/gestao-a-vista (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
-    },
-    "pendencias": [
-      "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas"
-    ]
-  },
-  {
-    "id": "gestao-de-estoque",
-    "nome": "Gestão de Estoque",
-    "grupo": "PRODUÇÃO",
-    "status": "despriorizado",
-    "descricao": "Mapeia ressuprimento e armazenagem, analisa curva ABC e custos, define método de controle e armazenamento, indicadores, modelagens TO BE e planos de ação.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "entendimento-do-negocio",
-        "ordem": 1,
-        "nome": "Entendimento do negócio",
-        "ferramentas": []
-      },
-      {
-        "id": "entendimento-da-estrutura-do-estoque",
-        "ordem": 2,
-        "nome": "Entendimento da estrutura do estoque",
-        "ferramentas": []
-      },
-      {
-        "id": "mapeamento-dos-processos-as-is-de-ressup",
-        "ordem": 3,
-        "nome": "Mapeamento dos processos AS IS de ressuprimento e armazenagem",
-        "ferramentas": []
-      },
-      {
-        "id": "analise-das-necessidades-dos-clientes",
-        "ordem": 4,
-        "nome": "Análise das necessidades dos clientes",
-        "ferramentas": []
-      },
-      {
-        "id": "analise-e-tratamento-de-dados-sobre-o-es",
-        "ordem": 5,
-        "nome": "Análise e tratamento de dados sobre o estoque",
-        "ferramentas": []
-      },
-      {
-        "id": "analise-da-curva-abc-e-priorizacao-dos-p",
-        "ordem": 6,
-        "nome": "Análise da curva ABC e priorização dos produtos",
-        "ferramentas": []
-      },
-      {
-        "id": "entendimento-dos-custos-de-armazenagem",
-        "ordem": 7,
-        "nome": "Entendimento dos custos de armazenagem",
-        "ferramentas": []
-      },
-      {
-        "id": "organizacao-da-area-de-materiais",
-        "ordem": 8,
-        "nome": "Organização da área de materiais",
-        "ferramentas": []
-      },
-      {
-        "id": "definicao-do-metodo-de-controle-do-estoq",
-        "ordem": 9,
-        "nome": "Definição do método de controle do estoque",
-        "ferramentas": []
-      },
-      {
-        "id": "estabelecer-o-armazenamento-de-materiais",
-        "ordem": 10,
-        "nome": "Estabelecer o armazenamento de materiais",
-        "ferramentas": []
-      },
-      {
-        "id": "definicao-dos-indicadores-para-o-gerenci",
-        "ordem": 11,
-        "nome": "Definição dos indicadores para o gerenciamento do estoque",
-        "ferramentas": []
-      },
-      {
-        "id": "modelagens-dos-processos-to-be",
-        "ordem": 12,
-        "nome": "Modelagens dos processos TO BE",
-        "ferramentas": []
-      },
-      {
-        "id": "construcao-da-ferramenta-de-acompanhamen",
-        "ordem": 13,
-        "nome": "Construção da ferramenta de acompanhamento de estoque",
-        "ferramentas": []
-      },
-      {
-        "id": "criacao-de-planos-de-acao",
-        "ordem": 14,
-        "nome": "Criação de planos de ação",
-        "ferramentas": []
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/gestao-de-estoque (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
-    },
-    "pendencias": [
-      "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas",
-      "Checklist Escopos: Escopo de pouco domínio da PJ, arriscado fazer"
-    ]
-  },
-  {
-    "id": "layout",
-    "nome": "Layout",
-    "grupo": "PRODUÇÃO",
-    "status": "despriorizado",
-    "descricao": "Levanta restrições, analisa e modela os processos, desenha e simula opções de layout e define indicadores.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "entendimento",
-        "ordem": 1,
-        "nome": "Entendimento",
-        "ferramentas": []
-      },
-      {
-        "id": "mapeamento",
-        "ordem": 2,
-        "nome": "Mapeamento",
-        "ferramentas": []
-      },
-      {
-        "id": "levantar-restricoes",
-        "ordem": 3,
-        "nome": "Levantar restrições",
-        "ferramentas": []
-      },
-      {
-        "id": "ferramenta-de-analise-dos-processos",
-        "ordem": 4,
-        "nome": "Ferramenta DE análise DOS processos",
-        "ferramentas": []
-      },
-      {
-        "id": "modelagens",
-        "ordem": 5,
-        "nome": "Modelagens",
-        "ferramentas": []
-      },
-      {
-        "id": "desenho-de-opcoes",
-        "ordem": 6,
-        "nome": "Desenho DE opções",
-        "ferramentas": []
-      },
-      {
-        "id": "simulacao",
-        "ordem": 7,
-        "nome": "Simulação",
-        "ferramentas": []
-      },
-      {
-        "id": "indicadores",
-        "ordem": 8,
-        "nome": "Indicadores",
-        "ferramentas": []
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/layout (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
-    },
-    "pendencias": [
-      "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas",
-      "Checklist Escopos: Quase não sai e pouco domínio"
-    ]
-  },
-  {
-    "id": "pcp",
-    "nome": "PCP",
-    "grupo": "PRODUÇÃO",
-    "status": "despriorizado",
-    "descricao": "Entende e classifica o sistema de produção, mapeia e analisa tempos, modela e entrega ferramenta de controle, programação e controle da produção.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "entendimento-da-producao",
-        "ordem": 1,
-        "nome": "Entendimento DA produção",
-        "ferramentas": []
-      },
-      {
-        "id": "identificacao-e-classificacao-dos-sistem",
-        "ordem": 2,
-        "nome": "Identificação E classificação DOS sistemas DE produção",
-        "ferramentas": []
-      },
-      {
-        "id": "planejamento-da-producao",
-        "ordem": 3,
-        "nome": "Planejamento DA produção",
-        "ferramentas": []
-      },
-      {
-        "id": "mapeamento",
-        "ordem": 4,
-        "nome": "Mapeamento",
-        "ferramentas": []
-      },
-      {
-        "id": "analise-de-tempo",
-        "ordem": 5,
-        "nome": "Análise DE tempo",
-        "ferramentas": []
-      },
-      {
-        "id": "modelagem",
-        "ordem": 6,
-        "nome": "Modelagem",
-        "ferramentas": []
-      },
-      {
-        "id": "controle-do-pcp-ferramenta",
-        "ordem": 7,
-        "nome": "Controle DO PCP (ferramenta)",
-        "ferramentas": []
-      },
-      {
-        "id": "programacao-da-producao",
-        "ordem": 8,
-        "nome": "Programação DA produção",
-        "ferramentas": []
-      },
-      {
-        "id": "controle-da-producao",
-        "ordem": 9,
-        "nome": "Controle DA produção",
-        "ferramentas": []
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/pcp (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
-    },
-    "pendencias": [
-      "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas"
-    ]
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p13",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p13",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p13",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p13",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p13",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p13",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
+    }
   },
   {
     "id": "previsao-de-demanda",
     "nome": "Previsão de Demanda",
     "grupo": "PRODUÇÃO",
-    "status": "despriorizado",
-    "descricao": "Alinha o objetivo da previsão, analisa o histórico, escolhe método e horizonte, constrói a ferramenta de cálculo e o MAD e treina a equipe.",
+    "status": "ativo",
+    "descricao": "Alinha o objetivo da previsão, coleta e analisa o histórico, define horizonte e método, constrói a ferramenta de cálculo e o MAD e fecha com manual, treinamento e acompanhamento.",
     "responsavel": {
       "nome": "Thiago Melo",
       "email": "thiagomelo@produtivajunior.com.br"
     },
     "fontes": [
       {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 14,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Previsão de demanda qualitativa e quantitativa",
+        "ferramentas": []
       },
       {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+        "nome": "MAD",
+        "ferramentas": []
+      },
+      {
+        "nome": "Tipos de demanda e sazonalidade",
+        "ferramentas": []
+      },
+      {
+        "nome": "Estudo do mercado e da empresa",
+        "ferramentas": []
       }
     ],
     "etapas": [
@@ -687,9 +2843,9 @@
         "ferramentas": []
       },
       {
-        "id": "coleta-analise-de-dados-historicos",
+        "id": "coleta-e-analise-de-dados-historicos",
         "ordem": 2,
-        "nome": "Coleta/análise de dados históricos",
+        "nome": "Coleta e análise de dados históricos",
         "ferramentas": []
       },
       {
@@ -705,9 +2861,9 @@
         "ferramentas": []
       },
       {
-        "id": "construir-ferramenta-calculo-da-previsao",
+        "id": "construir-a-ferramenta-de-calculo-da-pre",
         "ordem": 5,
-        "nome": "Construir ferramenta/ cálculo da previsão",
+        "nome": "Construir a ferramenta de cálculo da previsão",
         "ferramentas": []
       },
       {
@@ -729,853 +2885,232 @@
         "ferramentas": []
       }
     ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/previsao-de-demanda (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
-    },
-    "pendencias": [
-      "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas",
-      "Checklist Escopos: Quase não sai, pouco domínio"
-    ]
-  },
-  {
-    "id": "custeio-e-precificacao",
-    "nome": "Custeio e Precificação",
-    "grupo": "FINANCEIRO",
-    "status": "ativo",
-    "descricao": "Levanta e classifica os gastos, prioriza produtos pela curva ABC, define método de custeio e rateio, chega ao DRE e ao markup por produto e fecha com indicadores e plano de ação.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
+    "entregaveis": [
       {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      },
-      {
-        "tipo": "drive-sheet",
-        "id": "1LIe3FcON0dRXcErSfzRFVg-aZTcPUlbe0S2UAf-Unbw",
-        "nome": "Cronograma Base Custeio e Precificação - Thiago Melo",
-        "hash": "116752440b21267c97a74c0a54c379d6df73d0a16969a6d23954c75a337422f4",
-        "url": "https://docs.google.com/spreadsheets/d/1LIe3FcON0dRXcErSfzRFVg-aZTcPUlbe0S2UAf-Unbw/edit"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "mapeamento",
-        "ordem": 1,
-        "nome": "Mapeamento",
-        "ferramentas": [
-          "bmc",
-          "bpmn"
-        ],
-        "entregaveis": [
-          "Fluxogramas AS IS destacando custos"
-        ]
-      },
-      {
-        "id": "coletar-dados-e-tratar",
-        "ordem": 2,
-        "nome": "Coletar dados e tratar",
+        "nome": "Relatório de análise de demanda [Sazonalidade]",
         "ferramentas": []
       },
       {
-        "id": "curva-abc",
-        "ordem": 3,
-        "nome": "Curva ABC",
-        "ferramentas": [
-          "curva-abc"
-        ],
-        "entregaveis": [
-          "Curva ABC + Método de custeio"
-        ]
-      },
-      {
-        "id": "classificar-gastos",
-        "ordem": 4,
-        "nome": "Classificar gastos",
-        "ferramentas": [],
-        "entregaveis": [
-          "Gastos classificados"
-        ]
-      },
-      {
-        "id": "metodo-de-custeio",
-        "ordem": 5,
-        "nome": "Método de custeio",
+        "nome": "Ferramenta de cálculos de previsão de demanda",
         "ferramentas": []
       },
       {
-        "id": "rateio-rastreio",
-        "ordem": 6,
-        "nome": "Rateio/rastreio",
-        "ferramentas": []
-      },
-      {
-        "id": "dre-por-produto",
-        "ordem": 7,
-        "nome": "DRE (por produto",
-        "ferramentas": [
-          "dre"
-        ],
-        "entregaveis": [
-          "DRE dos produtos"
-        ]
-      },
-      {
-        "id": "markup-por-produto",
-        "ordem": 8,
-        "nome": "Markup (por produto)",
-        "ferramentas": [
-          "markup"
-        ],
-        "entregaveis": [
-          "Markup dos produtos"
-        ]
-      },
-      {
-        "id": "analise-de-mercado",
-        "ordem": 9,
-        "nome": "Análise de mercado",
-        "ferramentas": [
-          "matriz-de-concorrentes"
-        ],
-        "entregaveis": [
-          "Matriz de concorrentes"
-        ]
-      },
-      {
-        "id": "indicadores",
-        "ordem": 10,
-        "nome": "Indicadores",
-        "ferramentas": [
-          "banco-de-indicadores"
-        ],
-        "entregaveis": [
-          "Indicadores financeiros"
-        ]
-      },
-      {
-        "id": "planos-de-acao",
-        "ordem": 11,
         "nome": "Planos de ação",
-        "ferramentas": [],
-        "entregaveis": [
-          "Planos de ação + Estratégias"
-        ]
+        "ferramentas": []
+      },
+      {
+        "nome": "Macroprocesso",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Produtos e famílias existentes",
+      "Sazonalidade",
+      "Histórico de dados",
+      "Macroprocesso produtivo",
+      "Promoções"
+    ],
+    "riscos": [
+      "Não ter dados históricos"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Granja Filadélfia"
+      },
+      {
+        "nome": "Hidroglass"
+      },
+      {
+        "nome": "Caxangá"
+      },
+      {
+        "nome": "Alice Limpeza"
+      },
+      {
+        "nome": "Sim Distribuidora"
       }
     ],
     "revisao": {
       "status": "aprovado",
       "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
       "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/custeio-e-precificacao (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:1LIe3FcON0dRXcErSfzRFVg-aZTcPUlbe0S2UAf-Unbw)"
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p14",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p14",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p14",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p14",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p14",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p14",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
     }
   },
   {
-    "id": "gerenciamento-financeiro",
-    "nome": "Gerenciamento Financeiro",
-    "grupo": "FINANCEIRO",
+    "id": "automacao",
+    "nome": "Automação",
+    "grupo": "PRODUÇÃO",
     "status": "ativo",
-    "descricao": "Mapeia os processos financeiros, classifica gastos, parametriza sistema ou constrói a planilha de gerenciamento, define indicadores e dashboard e documenta a rotina do setor.",
+    "descricao": "Entende o negócio, mapeia os processos e as necessidades, desenvolve o sistema ou as automações (plataformas low-code, n8n), testa, valida e entrega o sistema funcionando com documentação e treinamento.",
     "responsavel": {
       "nome": "Thiago Melo",
       "email": "thiagomelo@produtivajunior.com.br"
     },
     "fontes": [
       {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 15,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
+      }
+    ],
+    "estudar": [
+      {
+        "nome": "Plataformas low-code",
+        "ferramentas": []
       },
       {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+        "nome": "N8N",
+        "ferramentas": [
+          "n8n"
+        ]
       },
       {
-        "tipo": "drive-sheet",
-        "id": "1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo",
-        "nome": "Cronograma Base Gerenciamento financeiro - Thiago Melo",
-        "hash": "35fdda89b2790d76994d6d16d157afb6e2f0f9feed3acb84400449ef8a9ec8cc",
-        "url": "https://docs.google.com/spreadsheets/d/1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo/edit"
+        "nome": "Engenharia de prompt",
+        "ferramentas": []
       }
     ],
     "etapas": [
       {
-        "id": "entendimento",
+        "id": "entendimento-do-negocio",
         "ordem": 1,
-        "nome": "Entendimento",
+        "nome": "Entendimento do negócio",
         "ferramentas": [
-          "bmc",
-          "pmmc"
-        ],
-        "entregaveis": [
-          "BMC + Macroprocesso",
-          "Process Map Model Canvas do setor financeiro"
+          "pmmc",
+          "mapa-de-contexto"
         ]
       },
       {
-        "id": "mapeamento-dos-processos-financeiros",
+        "id": "mapeamento-dos-processos-e-entendimento",
         "ordem": 2,
-        "nome": "Mapeamento dos processos financeiros",
+        "nome": "Mapeamento dos processos e entendimento das necessidades",
         "ferramentas": [
           "pmmc",
           "bpmn"
-        ],
-        "entregaveis": [
-          "Processos AS IS + Relatório de melhorias"
         ]
       },
       {
-        "id": "coleta-de-dados-gastos-entradas",
+        "id": "desenvolvimento-do-sistema-e-ou-automaco",
         "ordem": 3,
-        "nome": "Coleta de dados/ gastos/entradas",
-        "ferramentas": [],
-        "entregaveis": [
-          "Gastos classificados + Manual de classificação de gastos"
+        "nome": "Desenvolvimento do sistema e/ou automações",
+        "ferramentas": [
+          "n8n"
         ]
       },
       {
-        "id": "analise-desses-dados",
+        "id": "testes-e-validacoes",
         "ordem": 4,
-        "nome": "Análise desses dados",
+        "nome": "Testes e validações",
         "ferramentas": []
       },
       {
-        "id": "construir-ferramentas-financeiras-dre-fl",
+        "id": "documentacao-e-treinamentos",
         "ordem": 5,
-        "nome": "Construir ferramentas financeiras (DRE, FLUXO)",
+        "nome": "Documentação e treinamentos",
         "ferramentas": [
-          "dre"
-        ],
-        "entregaveis": [
-          "Sistema parametrizado ou planilha de gerenciamento financeiro"
+          "raci"
         ]
-      },
+      }
+    ],
+    "entregaveis": [
       {
-        "id": "indicadores",
-        "ordem": 6,
-        "nome": "Indicadores",
+        "nome": "Process Map Model Canvas",
         "ferramentas": [
-          "banco-de-indicadores"
-        ],
-        "entregaveis": [
-          "Indicadores financeiros"
-        ]
-      },
-      {
-        "id": "analise-de-indicadores",
-        "ordem": 7,
-        "nome": "Analise de indicadores",
-        "ferramentas": [
-          "banco-de-indicadores"
-        ]
-      },
-      {
-        "id": "dashboard",
-        "ordem": 8,
-        "nome": "Dashboard",
-        "ferramentas": [],
-        "entregaveis": [
-          "Dashboard Financeiro"
-        ]
-      },
-      {
-        "id": "modelagens",
-        "ordem": 9,
-        "nome": "Modelagens",
-        "ferramentas": [
-          "bpmn",
-          "dco"
-        ],
-        "entregaveis": [
-          "Manual do setor financeiro + Implementação"
-        ]
-      },
-      {
-        "id": "planos-de-acao",
-        "ordem": 10,
-        "nome": "Planos de ação",
-        "ferramentas": []
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/gerenciamento (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:1e3Ek0lTrjCMfpRikeOK8pyhVwDvFVbLwf3CfSX2iPJo)"
-    }
-  },
-  {
-    "id": "eve",
-    "nome": "EVE (Estudo de Viabilidade Econômica)",
-    "grupo": "FINANCEIRO",
-    "status": "despriorizado",
-    "descricao": "Analisa mercado, levanta investimentos e premissas, projeta o financeiro e calcula indicadores de viabilidade.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "entendimento",
-        "ordem": 1,
-        "nome": "Entendimento",
-        "ferramentas": []
-      },
-      {
-        "id": "analise-de-mercado",
-        "ordem": 2,
-        "nome": "Análise de mercado",
-        "ferramentas": []
-      },
-      {
-        "id": "levantamento-de-investimentos",
-        "ordem": 3,
-        "nome": "Levantamento de Investimentos",
-        "ferramentas": []
-      },
-      {
-        "id": "levantamento-de-premissas",
-        "ordem": 4,
-        "nome": "Levantamento de premissas",
-        "ferramentas": []
-      },
-      {
-        "id": "projecoes-financeiras",
-        "ordem": 5,
-        "nome": "Projeções financeiras",
-        "ferramentas": []
-      },
-      {
-        "id": "indicadores",
-        "ordem": 6,
-        "nome": "Indicadores",
-        "ferramentas": []
-      },
-      {
-        "id": "estudo-de-viabilidade",
-        "ordem": 7,
-        "nome": "Estudo de viabilidade",
-        "ferramentas": []
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/eve (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
-    },
-    "pendencias": [
-      "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas"
-    ]
-  },
-  {
-    "id": "planejamento-financeiro",
-    "nome": "Planejamento Financeiro",
-    "grupo": "FINANCEIRO",
-    "status": "despriorizado",
-    "descricao": "Trata dados, cria cenários, levanta investimentos, define indicadores, monta DRE e ferramenta visual e fecha com planos de ação e manualização.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "levantar-e-tratar-dados",
-        "ordem": 1,
-        "nome": "Levantar e tratar dados",
-        "ferramentas": []
-      },
-      {
-        "id": "criar-cenarios",
-        "ordem": 2,
-        "nome": "Criar cenários",
-        "ferramentas": []
-      },
-      {
-        "id": "levantar-investimentos",
-        "ordem": 3,
-        "nome": "Levantar investimentos",
-        "ferramentas": []
-      },
-      {
-        "id": "indicadores-financeiros",
-        "ordem": 4,
-        "nome": "Indicadores financeiros",
-        "ferramentas": []
-      },
-      {
-        "id": "fazer-d-r-e",
-        "ordem": 5,
-        "nome": "Fazer D.R.E",
-        "ferramentas": []
-      },
-      {
-        "id": "ferramenta-visual",
-        "ordem": 6,
-        "nome": "Ferramenta visual",
-        "ferramentas": []
-      },
-      {
-        "id": "planos-de-acao",
-        "ordem": 7,
-        "nome": "Planos de ação",
-        "ferramentas": []
-      },
-      {
-        "id": "manualizacao",
-        "ordem": 8,
-        "nome": "Manualização",
-        "ferramentas": []
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/planejamento (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
-    },
-    "pendencias": [
-      "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas",
-      "Checklist Escopos: Escopo deve ser reformulado ?, Pode ser feito"
-    ]
-  },
-  {
-    "id": "estruturacao-comercial",
-    "nome": "Estruturação Comercial",
-    "grupo": "ESTRATÉGIA",
-    "status": "ativo",
-    "descricao": "Mapeia o processo comercial, faz cliente oculto e matriz de concorrentes, desenha a jornada do cliente AS IS e TO BE, constrói o ICP e entrega as ferramentas comerciais (CRM, roteiro, matriz de objeções, cadência).",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      },
-      {
-        "tipo": "drive-sheet",
-        "id": "1HeM7YZv0vgQCTkn6ZOzS11h9jELTGUqkmtaITIOEp10",
-        "nome": "Cronograma Base Estruturação Comercial  - Thiago Melo",
-        "hash": "c126f989e3d9d6c3c260a047f0220e320681ef1b03f4495db3bbf55327b724a3",
-        "url": "https://docs.google.com/spreadsheets/d/1HeM7YZv0vgQCTkn6ZOzS11h9jELTGUqkmtaITIOEp10/edit"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "entendimento",
-        "ordem": 1,
-        "nome": "Entendimento",
-        "ferramentas": [
-          "bmc",
           "pmmc"
-        ],
-        "entregaveis": [
-          "BMC + Macroprocesso comercial",
-          "Process Map Model Canvas comercial"
         ]
       },
       {
-        "id": "analise-de-mercado",
-        "ordem": 2,
-        "nome": "Análise DE mercado",
+        "nome": "Relatório de diagnóstico",
+        "ferramentas": []
+      },
+      {
+        "nome": "Mapa de contexto",
         "ferramentas": [
-          "matriz-de-concorrentes"
-        ],
-        "entregaveis": [
-          "Relatório dos clientes ocultos + Matriz de concorrentes"
+          "mapa-de-contexto"
         ]
       },
       {
-        "id": "mapeamento",
-        "ordem": 3,
-        "nome": "Mapeamento",
+        "nome": "Relatório de melhorias",
+        "ferramentas": []
+      },
+      {
+        "nome": "Matriz RACI",
         "ferramentas": [
-          "bpmn"
-        ],
-        "entregaveis": [
-          "Fluxogramas AS IS"
+          "raci"
         ]
       },
       {
-        "id": "jornada-do-cliente-as-is",
-        "ordem": 4,
-        "nome": "Jornada DO cliente AS IS",
+        "nome": "Sistema 100% funcional",
+        "ferramentas": []
+      },
+      {
+        "nome": "Indicadores estruturados",
         "ferramentas": [
-          "jornada-do-cliente"
-        ],
-        "entregaveis": [
-          "Jornada do cliente AS IS + ICP"
+          "banco-de-indicadores"
         ]
       },
       {
-        "id": "construcao-do-icp",
-        "ordem": 5,
-        "nome": "Construção DO ICP",
-        "ferramentas": [
-          "icp"
-        ]
+        "nome": "Documentação do sistema",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Como o processo ocorre",
+      "Quais setores se comunicam nesse processo",
+      "Qual a maior dor e maior retrabalho",
+      "Quais sistemas são utilizados"
+    ],
+    "riscos": [
+      "Gestor com pressa",
+      "Complexidade do sistema",
+      "Dificuldade de conseguir acessos (ex.: APIs)",
+      "Adaptação da equipe ao uso"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Atlantis Divers"
       },
       {
-        "id": "ferramentas-comerciais",
-        "ordem": 6,
-        "nome": "Ferramentas comerciais",
-        "ferramentas": [],
-        "entregaveis": [
-          "CRM, Roteiro de abordagem, Matriz de objeções, Templates de mensagem, Fluxo de cadência"
-        ]
-      },
-      {
-        "id": "jornada-do-cliente-to-be",
-        "ordem": 7,
-        "nome": "Jornada DO cliente TO BE",
-        "ferramentas": [
-          "jornada-do-cliente"
-        ]
-      },
-      {
-        "id": "modelagens",
-        "ordem": 8,
-        "nome": "Modelagens",
-        "ferramentas": [
-          "bpmn"
-        ]
+        "nome": "MJ Oliveira"
       }
     ],
     "revisao": {
       "status": "aprovado",
       "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
       "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/estruturacao-comercial (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:1HeM7YZv0vgQCTkn6ZOzS11h9jELTGUqkmtaITIOEp10)"
-    }
-  },
-  {
-    "id": "gamificacao",
-    "nome": "Gamificação",
-    "grupo": "ESTRATÉGIA",
-    "status": "ativo",
-    "descricao": "Entende o perfil dos colaboradores e os processos, constrói critérios, pontuações e tema da gamificação, entrega manual e ferramenta de acompanhamento e define estratégias de engajamento.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      },
-      {
-        "tipo": "drive-sheet",
-        "id": "1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4",
-        "nome": "Cronograma Base Cultura e Gamificação - Thiago Melo",
-        "hash": "1a79a017800ea80d4919f027f5be088d1b47af59d065faf8550d7efa0afb0a1f",
-        "url": "https://docs.google.com/spreadsheets/d/1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4/edit"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "estudo-interno-da-empresa",
-        "ordem": 1,
-        "nome": "Estudo interno da empresa",
-        "ferramentas": [
-          "bmc"
-        ]
-      },
-      {
-        "id": "alinhamento-de-expectativas",
-        "ordem": 2,
-        "nome": "Alinhamento de expectativas",
-        "ferramentas": []
-      },
-      {
-        "id": "entendimento-do-perfil-dos-colaboradores",
-        "ordem": 3,
-        "nome": "Entendimento do perfil dos colaboradores",
-        "ferramentas": [
-          "pco"
-        ],
-        "entregaveis": [
-          "Perfil dos colaboradores"
-        ]
-      },
-      {
-        "id": "mapemaneto-dos-processos",
-        "ordem": 4,
-        "nome": "Mapemaneto dos processos",
-        "ferramentas": [
-          "bpmn"
-        ]
-      },
-      {
-        "id": "modelagem-dos-processos",
-        "ordem": 5,
-        "nome": "Modelagem dos processos",
-        "ferramentas": [
-          "bpmn"
-        ]
-      },
-      {
-        "id": "construcao-dos-criterios-pontuacoes-e-te",
-        "ordem": 6,
-        "nome": "Construção dos critérios, pontuações e tema da gamificação",
-        "ferramentas": [
-          "gamificacao"
-        ],
-        "entregaveis": [
-          "Critérios de pontuação da gamificação",
-          "Manual da gamificação"
-        ]
-      },
-      {
-        "id": "construcao-da-ferramenta-de-acompanhamen",
-        "ordem": 7,
-        "nome": "Construção da ferramenta de acompanhamento",
-        "ferramentas": [],
-        "entregaveis": [
-          "Ferramenta de acompanhamento"
-        ]
-      },
-      {
-        "id": "estrategias-de-engajamento",
-        "ordem": 8,
-        "nome": "Estratégias de engajamento",
-        "ferramentas": [],
-        "entregaveis": [
-          "Estratégias de engajamento e planos de ação"
-        ]
-      },
-      {
-        "id": "plano-de-acao",
-        "ordem": 9,
-        "nome": "Plano de ação",
-        "ferramentas": []
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/gamificacao (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4)"
-    }
-  },
-  {
-    "id": "mapeamento-de-cultura",
-    "nome": "Mapeamento de Cultura",
-    "grupo": "ESTRATÉGIA",
-    "status": "ativo",
-    "descricao": "Aplica as pesquisas de cultura (PCO, IBACO, FIB, OCAI), analisa as respostas em dashboard, formula estratégias de engajamento com gestores e colaboradores e acompanha a implementação.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      },
-      {
-        "tipo": "drive-sheet",
-        "id": "1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4",
-        "nome": "Cronograma Base Cultura e Gamificação - Thiago Melo",
-        "hash": "1a79a017800ea80d4919f027f5be088d1b47af59d065faf8550d7efa0afb0a1f",
-        "url": "https://docs.google.com/spreadsheets/d/1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4/edit"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "entendimento",
-        "ordem": 1,
-        "nome": "Entendimento",
-        "ferramentas": [
-          "bmc"
-        ],
-        "entregaveis": [
-          "Perfil dos colaboradores"
-        ]
-      },
-      {
-        "id": "aplicacao-de-pesquisas",
-        "ordem": 2,
-        "nome": "Aplicação DE pesquisas",
-        "ferramentas": [
-          "pco",
-          "ibaco",
-          "fib",
-          "mlq"
-        ],
-        "entregaveis": [
-          "PCO, IBACO, FIB, OCAI"
-        ]
-      },
-      {
-        "id": "analise-das-respostas",
-        "ordem": 3,
-        "nome": "Análise DAS respostas",
-        "ferramentas": [],
-        "entregaveis": [
-          "Dashboard com respostas + Análise"
-        ]
-      },
-      {
-        "id": "formulacao-de-estrategias-de-engajamento",
-        "ordem": 4,
-        "nome": "Formulação DE estratégias DE engajamento",
-        "ferramentas": [],
-        "entregaveis": [
-          "Estratégias de engajamento"
-        ]
-      },
-      {
-        "id": "planos-de-acao",
-        "ordem": 5,
-        "nome": "Planos DE AÇÃO",
-        "ferramentas": []
-      },
-      {
-        "id": "acompanhamento",
-        "ordem": 6,
-        "nome": "Acompanhamento",
-        "ferramentas": [],
-        "entregaveis": [
-          "Implementação"
-        ]
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/mapeamento-de-cultura (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4)"
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p15",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p15",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p15",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p15",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p15",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p15",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
     }
   },
   {
@@ -1583,23 +3118,18 @@
     "nome": "Pesquisa de Mercado",
     "grupo": "ESTRATÉGIA",
     "status": "ativo",
-    "descricao": "Define a pesquisa e a metodologia, elabora as ferramentas de coleta, coleta e interpreta os dados em dashboard e entrega relatório final com ICP, SWOT e planos de ação.",
+    "descricao": "Entende a demanda do cliente, define o tipo de pesquisa e o plano (objetivo, forma de coleta e amostra), coleta e analisa os dados e entrega o relatório final com dashboard e estratégias baseadas na pesquisa.",
     "responsavel": {
       "nome": "Thiago Melo",
       "email": "thiagomelo@produtivajunior.com.br"
     },
     "fontes": [
       {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
+        "tipo": "pdf",
+        "nome": "[PPGP 2026] Revisão dos Escopos",
+        "arquivo": "fontes/ppgp-2026/revisao-dos-escopos.pdf",
+        "pagina": 16,
+        "hash": "44b65a59121778e24e2cb30d9790745ad0c47155b9c4a8a32295961f7070a8a8"
       },
       {
         "tipo": "drive-sheet",
@@ -1609,574 +3139,129 @@
         "url": "https://docs.google.com/spreadsheets/d/1zJV0aRDaxQNZfvHg1C_ABxY4u7TrMF5M-ErMRsHx-30/edit"
       }
     ],
-    "etapas": [
+    "estudar": [
       {
-        "id": "analise-de-mercado",
-        "ordem": 1,
-        "nome": "Análise de mercado",
-        "ferramentas": [
-          "estudo-de-segmento",
-          "porter"
-        ]
+        "nome": "Tipos de pesquisa",
+        "ferramentas": []
       },
       {
-        "id": "definicao-da-pesquisa",
+        "nome": "Perplexity",
+        "ferramentas": []
+      },
+      {
+        "nome": "Economapas",
+        "ferramentas": []
+      },
+      {
+        "nome": "Estratégias baseadas na pesquisa",
+        "ferramentas": []
+      }
+    ],
+    "etapas": [
+      {
+        "id": "entendimento-da-demanda",
+        "ordem": 1,
+        "nome": "Entendimento da demanda",
+        "ferramentas": []
+      },
+      {
+        "id": "definicao-do-tipo-de-pesquisa",
         "ordem": 2,
-        "nome": "Definição da pesquisa",
+        "nome": "Definição do tipo de pesquisa",
         "ferramentas": [
           "ux-research-canvas"
-        ],
-        "entregaveis": [
-          "UX Research Canvas",
-          "Modelos de pesquisa + Estratégias de coleta"
         ]
       },
       {
-        "id": "definicao-da-metodologia",
+        "id": "coleta-de-dados",
         "ordem": 3,
-        "nome": "Definição da metodologia",
+        "nome": "Coleta de dados",
         "ferramentas": []
       },
       {
-        "id": "elaboracao-das-ferramentas",
+        "id": "analise-dos-dados",
         "ordem": 4,
-        "nome": "Elaboração das ferramentas",
-        "ferramentas": [],
-        "entregaveis": [
-          "Amostragem definida + Ferramentas de pesquisa"
-        ]
-      },
-      {
-        "id": "coleta-de-respostas",
-        "ordem": 5,
-        "nome": "Coleta de respostas",
+        "nome": "Análise dos dados",
         "ferramentas": []
       },
       {
-        "id": "analise-e-interpretacao-dos-dados-dashbo",
-        "ordem": 6,
-        "nome": "Análise e interpretação dos dados (Dashboard",
-        "ferramentas": [],
-        "entregaveis": [
-          "Dashboard da pesquisa + Relatório de dados secundários"
-        ]
-      },
-      {
-        "id": "relatorio-final-com-icp-planos-de-acao-s",
-        "ordem": 7,
-        "nome": "Relatório Final com ICP, planos de ação, Swot, etc",
-        "ferramentas": [
-          "icp",
-          "swot",
-          "cpv"
-        ],
-        "entregaveis": [
-          "Relatório de ICP + estratégias de marketing/comerciais"
-        ]
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/pesquisa-de-mercado (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:1zJV0aRDaxQNZfvHg1C_ABxY4u7TrMF5M-ErMRsHx-30)"
-    }
-  },
-  {
-    "id": "planejamento-estrategico",
-    "nome": "Planejamento Estratégico",
-    "grupo": "ESTRATÉGIA",
-    "status": "ativo",
-    "descricao": "Revisa missão, visão e valores, analisa ambiente com SWOT, PESTEL e 5 Forças, cruza dados de pesquisa e estrutura metas, objetivos e acompanhamento estratégico com planos de ação.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      },
-      {
-        "tipo": "drive-sheet",
-        "id": "1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE",
-        "nome": "Cronograma Base Planejamento estratégico - Thiago Melo",
-        "hash": "ad38ac88fcda6aeb9deebaad1065f970d05cd5a75c96ca7670fc3b60730f724d",
-        "url": "https://docs.google.com/spreadsheets/d/1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE/edit"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "entendimento",
-        "ordem": 1,
-        "nome": "Entendimento",
-        "ferramentas": [
-          "bmc"
-        ],
-        "entregaveis": [
-          "BMC"
-        ]
-      },
-      {
-        "id": "analise-do-mvv",
-        "ordem": 2,
-        "nome": "Análise do MVV",
-        "ferramentas": [],
-        "entregaveis": [
-          "MVV atualizado"
-        ]
-      },
-      {
-        "id": "analise-do-ambiente",
-        "ordem": 3,
-        "nome": "Analise do ambiente",
-        "ferramentas": [
-          "swot",
-          "pestel",
-          "porter"
-        ],
-        "entregaveis": [
-          "SWOT + PESTEL + 5 Forças de Porter"
-        ]
-      },
-      {
-        "id": "pesquisa-de-mercado",
-        "ordem": 4,
-        "nome": "Pesquisa de mercado",
-        "ferramentas": [
-          "estudo-de-segmento"
-        ],
-        "entregaveis": [
-          "Dashboard com dados primários + Relatório de dados secundários"
-        ]
-      },
-      {
-        "id": "estruturar-metas-e-objetivos-e-acompanha",
+        "id": "relatorio-final",
         "ordem": 5,
-        "nome": "Estruturar metas e objetivos e acompanhamento estratégico",
-        "ferramentas": [
-          "banco-de-indicadores"
-        ],
-        "entregaveis": [
-          "Planilha de PE + Acompanhamento estratégico"
-        ]
-      },
-      {
-        "id": "planos-de-acao",
-        "ordem": 6,
-        "nome": "Planos de ação",
-        "ferramentas": [],
-        "entregaveis": [
-          "Planos de ação"
-        ]
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/planejamento-estrategico (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:1LGez_RtiWpZTHnEmXpETG_xgtiU6TL4nN4CpeXU2vEE)"
-    }
-  },
-  {
-    "id": "plano-de-marketing",
-    "nome": "Plano de Marketing",
-    "grupo": "ESTRATÉGIA",
-    "status": "ativo",
-    "descricao": "Diagnostica o marketing da empresa, analisa ambiente e concorrentes, define público-alvo e buyer persona, desenha a jornada do cliente, escolhe canais de tração e entrega estratégias com ferramenta de acompanhamento.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      },
-      {
-        "tipo": "drive-sheet",
-        "id": "10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ",
-        "nome": "Cronograma Base Plano de Marketing - Thiago Melo",
-        "hash": "58b713b88aa525b17b9655c87aace773ed23b4ab58da51f51987047a576553b8",
-        "url": "https://docs.google.com/spreadsheets/d/10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ/edit"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "entendimento-de-negocio",
-        "ordem": 1,
-        "nome": "Entendimento de negócio",
-        "ferramentas": [
-          "bmc"
-        ],
-        "entregaveis": [
-          "BMC",
-          "8 P's do marketing"
-        ]
-      },
-      {
-        "id": "analise-de-ambiente",
-        "ordem": 2,
-        "nome": "Análise de ambiente",
-        "ferramentas": [
-          "swot",
-          "pestel",
-          "matriz-de-concorrentes"
-        ],
-        "entregaveis": [
-          "SWOT + PESTEL + Matriz de concorrentes"
-        ]
-      },
-      {
-        "id": "pesquisa-de-mercado",
-        "ordem": 3,
-        "nome": "Pesquisa de mercado",
-        "ferramentas": [],
-        "entregaveis": [
-          "Dashboard e relatório com compilado das respostas"
-        ]
-      },
-      {
-        "id": "construcao-do-publico-alvo-e-buyer-perso",
-        "ordem": 4,
-        "nome": "Construção do público alvo e Buyer Persona",
-        "ferramentas": [
-          "icp",
-          "buyer-persona"
-        ],
-        "entregaveis": [
-          "ICP e Buyer Persona"
-        ]
-      },
-      {
-        "id": "elaboracao-da-jornada-do-cliente",
-        "ordem": 5,
-        "nome": "Elaboração da Jornada do Cliente",
-        "ferramentas": [
-          "jornada-do-cliente"
-        ],
-        "entregaveis": [
-          "Bullseye Framework + Jornada do cliente"
-        ]
-      },
-      {
-        "id": "definir-os-canais-de-tracao",
-        "ordem": 6,
-        "nome": "Definir os canais de tração",
-        "ferramentas": []
-      },
-      {
-        "id": "tracar-estrategias-de-marketing",
-        "ordem": 7,
-        "nome": "Traçar estratégias de marketing",
-        "ferramentas": [],
-        "entregaveis": [
-          "Relatório de estratégias + Ferramenta de suporte"
-        ]
-      },
-      {
-        "id": "constuir-ferramentas-de-suporte",
-        "ordem": 8,
-        "nome": "Constuir ferramentas de suporte",
-        "ferramentas": []
-      },
-      {
-        "id": "definir-indicadores-de-acompanhamento-e",
-        "ordem": 9,
-        "nome": "Definir indicadores de acompanhamento e controle",
+        "nome": "Relatório final",
         "ferramentas": [
           "banco-de-indicadores"
         ]
       }
     ],
+    "entregaveis": [
+      {
+        "nome": "Relatório da pesquisa",
+        "ferramentas": []
+      },
+      {
+        "nome": "TAM SAM SOM",
+        "ferramentas": []
+      },
+      {
+        "nome": "Dashboard",
+        "ferramentas": [
+          "banco-de-indicadores"
+        ]
+      },
+      {
+        "nome": "UX Research Canvas",
+        "ferramentas": [
+          "ux-research-canvas"
+        ]
+      },
+      {
+        "nome": "Plano da pesquisa",
+        "ferramentas": []
+      }
+    ],
+    "saber": [
+      "Objetivo principal da pesquisa",
+      "Forma de coleta",
+      "Cálculo da amostragem"
+    ],
+    "riscos": [
+      "Gestor já ter noção do resultado da pesquisa",
+      "Não agregar valor"
+    ],
+    "casesReferencia": [
+      {
+        "nome": "Shopping 10"
+      },
+      {
+        "nome": "Kerensi"
+      },
+      {
+        "nome": "Lumos"
+      },
+      {
+        "nome": "Adolfo"
+      }
+    ],
     "revisao": {
       "status": "aprovado",
       "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+      "data": "2026-09-24",
+      "proximaRevisao": "2026-12-24",
+      "nota": "Escopos refeitos a partir do [PPGP 2026] Revisão dos Escopos, a pedido da conta institucional (dona do repositório). tools/rascunho.mjs --escopos conferiu item a item contra o documento; ferramentas vinculadas e descrições são curadoria e o dono de área pode reabrir a revisão."
     },
     "origem": {
       "nome": "manual:thiagomelo@produtivajunior.com.br",
+      "grupo": "manual:thiagomelo@produtivajunior.com.br",
       "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/plano-de-mkt (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br (lido de drive:10VQNiyCgZbuoCLCCoUphE6AM_9Ntg_y-4sprsaopLeQ)"
+      "estudar": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p16",
+      "etapas": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p16",
+      "entregaveis": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p16",
+      "saber": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p16",
+      "riscos": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p16",
+      "casesReferencia": "ppgp:fontes/ppgp-2026/revisao-dos-escopos.pdf#p16",
+      "etapas.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "entregaveis.ferramentas": "manual:thiagomelo@produtivajunior.com.br",
+      "estudar.ferramentas": "manual:thiagomelo@produtivajunior.com.br"
     }
-  },
-  {
-    "id": "dco-prosel",
-    "nome": "DCO + Prosel",
-    "grupo": "ESTRATÉGIA",
-    "status": "despriorizado",
-    "descricao": "Analisa contexto e cargos com entrevistas, monta descritivos de cargo e organograma, implementa e monitora frente à rotina.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "entendimento-do-negocio",
-        "ordem": 1,
-        "nome": "Entendimento do Negócio",
-        "ferramentas": []
-      },
-      {
-        "id": "analise-de-contexto",
-        "ordem": 2,
-        "nome": "Análise de Contexto",
-        "ferramentas": []
-      },
-      {
-        "id": "entrevistas-com-os-colaboradores",
-        "ordem": 3,
-        "nome": "Entrevistas com os colaboradores",
-        "ferramentas": []
-      },
-      {
-        "id": "identificacao-e-analise-critica-dos-carg",
-        "ordem": 4,
-        "nome": "Identificação e Analíse Crítica dos cargos",
-        "ferramentas": []
-      },
-      {
-        "id": "definicao-da-configuracao-do-descritivo",
-        "ordem": 5,
-        "nome": "Definição da configuração do Descritivo de Cargo",
-        "ferramentas": []
-      },
-      {
-        "id": "identificacao-e-analise-critica-das-atri",
-        "ordem": 6,
-        "nome": "Identificação e Analíse Crítica das Atribuições",
-        "ferramentas": []
-      },
-      {
-        "id": "montagem-do-descritivo-de-cargo",
-        "ordem": 7,
-        "nome": "Montagem do Descritivo de Cargo",
-        "ferramentas": []
-      },
-      {
-        "id": "construcao-do-organograma",
-        "ordem": 8,
-        "nome": "Construção do Organograma",
-        "ferramentas": []
-      },
-      {
-        "id": "implementacao",
-        "ordem": 9,
-        "nome": "Implementação",
-        "ferramentas": []
-      },
-      {
-        "id": "monitoramento-frente-a-rotina",
-        "ordem": 10,
-        "nome": "Monitoramento frente à rotina",
-        "ferramentas": []
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/dco-prosel (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
-    },
-    "pendencias": [
-      "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas"
-    ]
-  },
-  {
-    "id": "modelo-de-negocio",
-    "nome": "Estruturação de Modelo de Negócio",
-    "grupo": "ESTRATÉGIA",
-    "status": "despriorizado",
-    "descricao": "Analisa mercado e concorrentes, entende o cliente e define recursos, processos e stakeholders do modelo de negócio.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "analise-de-mercado",
-        "ordem": 1,
-        "nome": "Analise DE mercado",
-        "ferramentas": []
-      },
-      {
-        "id": "estudo-de-concorrentes",
-        "ordem": 2,
-        "nome": "Estudo DE concorrentes",
-        "ferramentas": []
-      },
-      {
-        "id": "entender-o-cliente",
-        "ordem": 3,
-        "nome": "Entender O cliente",
-        "ferramentas": []
-      },
-      {
-        "id": "definir-recursos-processos-e-stakeholder",
-        "ordem": 4,
-        "nome": "Definir recursos, processos E stakeholders",
-        "ferramentas": []
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/estruturacao-de-modelo-de-negocio (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
-    },
-    "pendencias": [
-      "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas"
-    ]
-  },
-  {
-    "id": "idealizacao-de-novos-produtos",
-    "nome": "Idealização de Novos Produtos",
-    "grupo": "ESTRATÉGIA",
-    "status": "despriorizado",
-    "descricao": "Analisa mercado, constrói e prioriza ideias com ICP, Buyer Persona, CPV e SWOT, estrutura o novo produto e o lançamento.",
-    "responsavel": {
-      "nome": "Thiago Melo",
-      "email": "thiagomelo@produtivajunior.com.br"
-    },
-    "fontes": [
-      {
-        "tipo": "drive-sheet",
-        "id": "1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0",
-        "nome": "Resumão dos escopos",
-        "hash": "d8614b05a70818b1557f0f127b7136b545eefa64f7287e3660a7584b2958acce"
-      },
-      {
-        "tipo": "drive-doc",
-        "id": "1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE",
-        "nome": "Checklist Escopos",
-        "hash": "3a89107f4f4cf7b3394da17b4a28a24bc4823243f575b14ee1af74212c91ae45"
-      }
-    ],
-    "etapas": [
-      {
-        "id": "entendimento",
-        "ordem": 1,
-        "nome": "Entendimento",
-        "ferramentas": []
-      },
-      {
-        "id": "analise-de-mercado",
-        "ordem": 2,
-        "nome": "Analise DE mercado",
-        "ferramentas": []
-      },
-      {
-        "id": "construcao-e-priorizacao-de-ideias-icp-b",
-        "ordem": 3,
-        "nome": "Construção E priorização DE ideias (icp, bp, cvp, SWOT",
-        "ferramentas": []
-      },
-      {
-        "id": "construcao-de-novo-produto",
-        "ordem": 4,
-        "nome": "Construção DE NOVO produto",
-        "ferramentas": []
-      },
-      {
-        "id": "estruturacao-e-lancamento",
-        "ordem": 5,
-        "nome": "Estruturação E lançamento",
-        "ferramentas": []
-      }
-    ],
-    "revisao": {
-      "status": "aprovado",
-      "revisor": "produtivajunior@gmail.com",
-      "data": "2026-09-15",
-      "proximaRevisao": "2026-12-15",
-      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
-    },
-    "origem": {
-      "nome": "manual:thiagomelo@produtivajunior.com.br",
-      "descricao": "manual:thiagomelo@produtivajunior.com.br",
-      "etapas": "drive:1z773_kmhKUBwtE8kD4EdJIooz4_IgVDe9Vp0Ju0_9L0#coluna/idealizacao-de-novos-produtos (caixa normalizada)",
-      "status": "drive:1jeY1obf5wl2w_LRxfKQhU3mnuj6V6_MJZ8XfV4hXTGE"
-    },
-    "pendencias": [
-      "Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas"
-    ]
   }
 ]

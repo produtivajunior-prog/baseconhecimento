@@ -161,10 +161,47 @@ for (const e of escopos) {
     if (!isStrArr(et.ferramentas)) p(ectx, 'ferramentas[] precisa ser lista de ids');
     for (const fid of et.ferramentas || []) if (!ids.has(fid)) p(ectx, `ferramenta "${fid}" não existe em ferramentas.json`);
     if (et.entregaveis !== undefined && !isStrArr(et.entregaveis)) p(ectx, 'entregaveis[] precisa ser lista de strings');
+    if (et.frente !== undefined && (typeof et.frente !== 'string' || !et.frente)) p(ectx, 'frente precisa ser texto');
+    if (et.marcado !== undefined && et.marcado !== true) p(ectx, 'marcado só pode ser true');
   });
+  // Campos do PPGP 2026 (Revisão dos Escopos): o que estudar, entregáveis, o que saber, riscos e cases
+  for (const campo of ['estudar', 'entregaveis']) {
+    if (e[campo] === undefined) continue;
+    if (!Array.isArray(e[campo])) { p(ctx, `${campo}[] precisa ser lista`); continue; }
+    e[campo].forEach((x, i) => {
+      const ictx = `${ctx}.${campo}[${i}]`;
+      if (!x || typeof x.nome !== 'string' || !x.nome) p(ictx, 'sem nome');
+      if (!isStrArr(x && x.ferramentas)) p(ictx, 'ferramentas[] precisa ser lista de ids');
+      for (const fid of (x && x.ferramentas) || []) if (!ids.has(fid)) p(ictx, `ferramenta "${fid}" não existe em ferramentas.json`);
+    });
+  }
+  for (const campo of ['saber', 'riscos']) if (e[campo] !== undefined && !isStrArr(e[campo])) p(ctx, `${campo}[] precisa ser lista de textos`);
+  if (e.casesReferencia !== undefined) {
+    if (!Array.isArray(e.casesReferencia)) p(ctx, 'casesReferencia[] precisa ser lista');
+    else e.casesReferencia.forEach((c, i) => {
+      if (!c || typeof c.nome !== 'string' || !c.nome) p(`${ctx}.casesReferencia[${i}]`, 'sem nome');
+      if (c && c.tipo !== undefined && c.tipo !== 'cronograma') p(`${ctx}.casesReferencia[${i}]`, 'tipo só pode ser "cronograma"');
+    });
+  }
+  if (e.antigosIds !== undefined && !(isStrArr(e.antigosIds) && e.antigosIds.every((x) => KEBAB.test(x)))) p(ctx, 'antigosIds[] precisa ser lista de ids kebab-case');
+  for (const f of e.fontes || []) {
+    if (f.tipo !== 'pdf') continue;
+    let bytes = null; try { bytes = readFileSync(join(ROOT, f.arquivo || '')); } catch { p(ctx, `fonte PDF "${f.arquivo}" não existe`); }
+    if (bytes && createHash('sha256').update(bytes).digest('hex') !== f.hash) p(ctx, `hash da fonte "${f.arquivo}" não confere: o PDF mudou, rode tools/ppgp-extrair.py e tools/rascunho.mjs --escopos`);
+  }
 }
+// ids antigos (escopos fundidos) redirecionam: não podem colidir com um id vigente nem se repetir
+{
+  const vistos = new Set();
+  for (const e of escopos) for (const a of e.antigosIds || []) {
+    if (escopoIds.has(a)) p(`escopos[${e.id}]`, `antigosIds "${a}" colide com um escopo vigente`);
+    if (vistos.has(a)) p(`escopos[${e.id}]`, `antigosIds "${a}" repetido em mais de um escopo`);
+    vistos.add(a);
+  }
+}
+const somaDe = (campo) => escopos.reduce((n, e) => n + (e[campo]?.length || 0), 0);
 check(!problemas_.some((x) => x.startsWith('escopos')),
-  `escopos.json  ${escopos.length} escopos, ${escopos.reduce((n, e) => n + (e.etapas?.length || 0), 0)} etapas`,
+  `escopos.json  ${escopos.length} escopos, ${somaDe('etapas')} etapas, ${somaDe('entregaveis')} entregáveis, ${somaDe('saber') + somaDe('riscos')} perguntas/riscos, ${somaDe('casesReferencia')} cases de referência`,
   'escopos.json com erros de schema');
 
 // ---------------------------------------------------------------- problemas
@@ -261,12 +298,12 @@ check(!problemas_.some((x) => x.startsWith('cases')), `cases.json  ${cases.lengt
     for (const k of ['titulo', 'texto']) if (typeof t[k] !== 'string' || !t[k]) p(`${ctx}.passos[${i}]`, `"${k}" ausente`);
     if (t.acao !== null && t.acao !== undefined && !(t.acao && ['home','biblioteca','escopos','cases','novo-case','cadastro','recomendar'].includes(t.acao.tela) && typeof t.acao.label === 'string')) p(`${ctx}.passos[${i}]`, 'acao precisa ser null ou {tela válida, label}');
   }
-  const ORIGEM = /^(drive:[A-Za-z0-9_-]+|hangar:[a-z0-9-]+|manual:[^@\s]+@[^@\s]+)$/;
+  const ORIGEM = /^(drive:[A-Za-z0-9_-]+|hangar:[a-z0-9-]+|ppgp:fontes\/[a-z0-9\/._-]+(#p\d+)?|manual:[^@\s]+@[^@\s]+)$/;
   for (const [i, g] of (trilha.glossario || []).entries()) {
     if (typeof g.sigla !== 'string' || !g.sigla) p(`${ctx}.glossario[${i}]`, 'sigla ausente');
     if (g.nome !== null && typeof g.nome !== 'string') p(`${ctx}.glossario[${i}]`, 'nome precisa ser texto ou null');
     if (typeof g.definicao !== 'string' || g.definicao.length < 20) p(`${ctx}.glossario[${i}]`, 'definicao ausente ou curta demais');
-    if (!ORIGEM.test(g.origem || '')) p(`${ctx}.glossario[${i}]`, 'origem precisa ser drive:<id>, hangar:<slug> ou manual:<e-mail>');
+    if (!ORIGEM.test(g.origem || '')) p(`${ctx}.glossario[${i}]`, 'origem precisa ser drive:<id>, hangar:<slug>, ppgp:<arquivo>#p<n> ou manual:<e-mail>');
     if (typeof g.pendente !== 'boolean') p(`${ctx}.glossario[${i}]`, 'pendente precisa ser true/false');
   }
   const pend = (trilha.glossario || []).filter((g) => g.pendente).length;

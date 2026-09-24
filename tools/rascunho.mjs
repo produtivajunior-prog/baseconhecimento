@@ -3,13 +3,13 @@
  * rascunho.mjs — transforma o que está em fontes/ em rascunhos de conteúdo para revisão.
  *
  *   node tools/rascunho.mjs --inventario     fontes/drive/*.txt → fontes/inventario.json
- *   node tools/rascunho.mjs --escopos        Resumão + Checklist + escopos-mapa → src/data/rascunhos/escopo-*.json
+ *   node tools/rascunho.mjs --escopos        PPGP 2026 (fontes/ppgp-2026) + escopos-mapa → src/data/rascunhos/escopo-*.json
  *   node tools/rascunho.mjs pmmc swot …      PDF de metodologia + ferramentas-mapa → src/data/rascunhos/<id>.json
  *   node tools/rascunho.mjs --ferramentas    todas as ferramentas do mapa (inclusive stubs)
  *
  * Regras que não se negociam:
  *   - o texto vem do arquivo-fonte; o que o parser não acha fica null e vai para `pendencias`;
- *   - todo campo carrega `origem` (drive:<id>#<seção> | manual:<e-mail>);
+ *   - todo campo carrega `origem` (drive:<id>#<seção> | ppgp:<arquivo>#p<página> | manual:<e-mail>);
  *   - o rascunho nasce com revisao.status = "rascunho" e nunca entra no pack.
  */
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync } from 'node:fs';
@@ -244,49 +244,71 @@ function ferramenta(def, mapa) {
 }
 
 // ---------------------------------------------------------------- escopos
-function tabela(corpo) {
-  return corpo.split('\n').filter((l) => l.startsWith('|')).map((l) => l.slice(1, -1).split('|').map((c) => limpa(c).replace(/^\[merged\]\s*/, '')));
-}
+// Base: [PPGP 2026] Revisão dos Escopos (fontes/ppgp-2026/, extraído verbatim por tools/ppgp-extrair.py).
+// O mapa curado (fontes/escopos-mapa.json) traz o texto de exibição e as ferramentas vinculadas. Aqui
+// conferimos, coluna a coluna e na ordem do slide, que o mapa corresponde ao documento: nenhum item a
+// mais, nenhum a menos, nenhum alterado sem guardar o original em `ppgp`.
+const COLUNAS_PPGP = { estudar: 'estudar', etapas: 'escopo', entregaveis: 'entregaveis', saber: 'saber', riscos: 'riscos', cases: 'cases' };
+const textoDe = (x) => (typeof x === 'string' ? x : x.nome ?? x.texto);
+const origDe = (x) => (typeof x === 'string' ? [x] : x.ppgp === undefined ? [textoDe(x)] : [].concat(x.ppgp));
 function escopos() {
   const mapa = json(join(ROOT, 'fontes/escopos-mapa.json'));
-  const res = lerFonte(mapa.resumaoId); const chk = lerFonte(mapa.checklistId);
-  if (!res || !chk) throw new Error('extraia o Resumão e o Checklist antes (fontes/drive)');
-  const linhas = tabela(res.corpo);
-  const grupos = linhas[2], nomes = linhas[3];
-  const colunas = {};
-  nomes.forEach((n, i) => { if (n) colunas[semAcento(n)] = { i, grupo: grupos[i], nome: n, etapas: [] }; });
-  for (let r = 4; r < linhas.length; r++) {
-    if (linhas[r].every((c) => !c)) break; // fim da primeira tabela (a segunda aba é o banco de perguntas de repasse)
-    for (const c of Object.values(colunas)) { const v = linhas[r][c.i]; if (v) c.etapas.push(v); }
-  }
-  // Checklist: primeira lista = ativos, segunda = despriorizados
-  const blocos = chk.corpo.split(/\n\s*\n\s*\n/).map((b) => b.split('\n').map((l) => l.replace(/^\s*-\s*/, '').trim()).filter(Boolean)).filter((b) => b.length);
-  const ativos = (blocos[0] || []).map(semAcento);
-  const despri = Object.fromEntries((blocos[1] || []).map((l) => { const [n, ...nota] = l.split(' - '); return [semAcento(n), nota.join(' - ')]; }));
-
+  const ppgp = json(join(ROOT, mapa.fonte));
+  const pdf = ppgp.fonte;
+  const manual = `manual:${mapa.responsavel.email}`;
+  let erros = 0;
+  const erro = (m) => { console.error(`✗ ${m}`); erros++; };
+  for (const sl of ppgp.escopos) if (!mapa.escopos.some((d) => d.pagina === sl.pagina)) erro(`slide ${sl.pagina} (${sl.titulo}) não tem escopo no mapa`);
   for (const def of mapa.escopos) {
-    const col = colunas[semAcento(def.colunaResumao)];
-    if (!col) { console.error(`✗ ${def.id}: coluna "${def.colunaResumao}" não existe no Resumão`); continue; }
-    const chave = def.checklist ? semAcento(def.checklist) : null;
-    const status = chave && ativos.includes(chave) ? 'ativo' : 'despriorizado';
-    const origem = { nome: `manual:${mapa.responsavel.email}`, descricao: `manual:${mapa.responsavel.email}`, etapas: `drive:${res.id}#coluna/${slug(col.nome)} (caixa normalizada)`, status: `drive:${chk.id}` };
-    const cron = def.cronogramaId ? lerFonte(def.cronogramaId) : null;
-    const etapas = col.etapas.map((nome, i) => {
-      const n = i + 1; const et = { id: slug(nome).slice(0, 40).replace(/-$/, ''), ordem: n, nome: caixaNormal(nome).replace(/\*$/, '').trim(), ferramentas: def.ferramentasPorEtapa?.[n] || [] };
-      if (def.entregaveisPorEtapa?.[n]) et.entregaveis = def.entregaveisPorEtapa[n];
-      return et;
+    const sl = ppgp.escopos.find((s) => s.pagina === def.pagina);
+    if (!sl) { erro(`${def.id}: página ${def.pagina} não existe no PPGP`); continue; }
+    let fiel = true;
+    for (const [campo, col] of Object.entries(COLUNAS_PPGP)) {
+      const doc = sl[col].map((x) => (typeof x === 'string' ? x : x.texto));
+      const nosso = (def[campo] || []).flatMap(origDe);
+      const i = doc.findIndex((t, k) => t !== nosso[k]);
+      if (i >= 0 || nosso.length !== doc.length) {
+        const k = i >= 0 ? i : doc.length;
+        erro(`${def.id}.${campo}: diverge do PPGP p.${def.pagina} no item ${k + 1} — documento "${doc[k] ?? '(fim)'}", mapa "${nosso[k] ?? '(fim)'}"`);
+        fiel = false;
+      }
+    }
+    // subtítulos do slide ("GAMIFICAÇÃO:", "CULTURA") viram `frente` da etapa
+    let k = 0;
+    for (const et of def.etapas) {
+      const origs = origDe(et); const x = sl.escopo[k]; k += origs.length;
+      const fr = x && typeof x === 'object' ? x.frente : undefined;
+      if (semAcento(fr || '') !== semAcento(et.frente || '')) { erro(`${def.id}: etapa "${et.nome}" com frente "${et.frente || ''}", no PPGP "${fr || ''}"`); fiel = false; }
+    }
+    if (!fiel) continue;
+
+    const vistos = {};
+    const etapas = def.etapas.map((et, i) => {
+      let id = slug(et.nome).slice(0, 40).replace(/-$/, '');
+      if (vistos[id]) id = `${id}-${++vistos[id]}`; else vistos[id] = 1;
+      return { id, ordem: i + 1, nome: et.nome, ...(et.frente ? { frente: et.frente } : {}), ferramentas: et.ferramentas || [], ...(et.marcado ? { marcado: true } : {}) };
     });
-    // ids de etapa únicos dentro do escopo
-    const vistos = {}; for (const et of etapas) { if (vistos[et.id]) et.id = `${et.id}-${++vistos[et.id]}`; else vistos[et.id] = 1; }
-    if (def.ferramentasPorEtapa || def.entregaveisPorEtapa) origem['etapas.ferramentas'] = cron ? `manual:${mapa.responsavel.email} (lido de drive:${cron.id})` : `manual:${mapa.responsavel.email}`;
-    const fontes = [{ tipo: 'drive-sheet', id: res.id, nome: res.meta.nome, hash: res.hash }, { tipo: 'drive-doc', id: chk.id, nome: chk.meta.nome, hash: chk.hash }];
+    const lista = (arr) => (arr || []).map((x) => ({ nome: x.nome, ferramentas: x.ferramentas || [], ...(x.marcado ? { marcado: true } : {}) }));
+    const estudar = lista(def.estudar), entregaveis = lista(def.entregaveis);
+    const cron = def.cronogramaId ? lerFonte(def.cronogramaId) : null;
+    if (def.cronogramaId && !cron) erro(`${def.id}: cronograma ${def.cronogramaId} não está em fontes/drive`);
+    const fontes = [{ tipo: 'pdf', nome: pdf.nome, arquivo: pdf.arquivo, pagina: def.pagina, hash: pdf.sha256 }];
     if (cron) fontes.push({ tipo: 'drive-sheet', id: cron.id, nome: cron.meta.nome.trim(), hash: cron.hash, url: urlDrive(cron) });
-    const pendencias = [];
-    if (!cron) pendencias.push('Sem Cronograma Base no Drive: ferramentas por etapa não mapeadas');
-    if (despri[chave]) pendencias.push(`Checklist Escopos: ${despri[chave]}`);
-    for (const et of etapas) for (const fid of et.ferramentas) if (!/^[a-z0-9-]+$/.test(fid)) pendencias.push(`etapa ${et.ordem}: id de ferramenta inválido "${fid}"`);
-    salvar(`escopo-${def.id}.json`, { id: def.id, nome: def.nome, grupo: col.grupo, status, descricao: def.descricao, responsavel: mapa.responsavel, fontes, etapas, origem, pendencias, revisao: { status: 'rascunho', revisor: null, data: null } });
+    const ref = `ppgp:${pdf.arquivo}#p${def.pagina}`;
+    const origem = { nome: manual, grupo: manual, descricao: manual, estudar: ref, etapas: ref, entregaveis: ref, saber: ref, riscos: ref, casesReferencia: ref,
+      'etapas.ferramentas': manual, 'entregaveis.ferramentas': manual, 'estudar.ferramentas': manual };
+    const pendencias = [...(def.pendencias || [])];
+    const marcados = [...estudar, ...etapas, ...entregaveis].filter((x) => x.marcado).map((x) => x.nome);
+    if (marcados.length) pendencias.push(`Marcados com asterisco no PPGP 2026 (significado a confirmar com o CIEP): ${marcados.join('; ')}`);
+    salvar(`escopo-${def.id}.json`, {
+      id: def.id, nome: def.nome, grupo: def.grupo, status: 'ativo', descricao: def.descricao, responsavel: mapa.responsavel,
+      ...(def.antigosIds ? { antigosIds: def.antigosIds } : {}),
+      fontes, estudar, etapas, entregaveis, saber: def.saber.map(textoDe), riscos: def.riscos.map(textoDe),
+      casesReferencia: def.cases.map((c) => (typeof c === 'string' ? { nome: c } : { nome: c.nome, ...(c.tipo ? { tipo: c.tipo } : {}) })),
+      origem, pendencias, revisao: { status: 'rascunho', revisor: null, data: null },
+    });
   }
+  if (erros) { console.error(`\n${erros} divergência(s) com o PPGP — corrija fontes/escopos-mapa.json`); process.exitCode = 1; }
 }
 
 // ---------------------------------------------------------------- main

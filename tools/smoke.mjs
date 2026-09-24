@@ -8,7 +8,8 @@
  * O que ele garante:
  *   - a página renderiza sem "{{ … }}" cru na tela (o sintoma clássico de runtime que não subiu);
  *   - com unpkg.com bloqueado o app continua (React embutido);
- *   - Escopos → escopo → etapa → ferramenta → ficha abre e mostra "Usado em";
+ *   - Escopos (PPGP 2026): busca, os 5 blocos do escopo, checklist "O que saber" após F5, roteiro imprimível,
+ *     etapa → ferramenta → "Usado em", link antigo redirecionando e "+ ficha" preenchendo o cadastro de case;
  *   - a busca por um termo de dentro dos passos encontra a ferramenta;
  *   - o botão do anexo abre uma URL do Drive numa aba nova;
  *   - Banco de cases: cadastro com foto → publicar → ficha com capa, vídeo e documento → JSON → galeria após recarregar;
@@ -51,24 +52,58 @@ check(!/\{\{/.test(await texto()), 'nenhum "{{" cru na tela (runtime subiu sem u
 check((await page.locator('#__bundler_err').count()) === 0, 'sem painel vermelho de erro do bundle na tela');
 check(/Por escopo|Escopos/.test(await texto()), 'home renderizou a seção "Por escopo"');
 
-// Escopos → escopo → etapa → ferramenta
+// Escopos (PPGP 2026) → busca → escopo em 5 blocos → checklist → roteiro → etapa → ferramenta
 await page.getByRole('button', { name: 'Escopos', exact: true }).first().click();
 await page.waitForTimeout(300);
 const temEscopos = !/Nenhum escopo cadastrado/.test(await texto());
 check(true, temEscopos ? 'tela Escopos lista escopos' : 'tela Escopos vazia (nenhum escopo promovido ainda) — pulando navegação por etapa');
 if (temEscopos) {
-  // prefere um escopo com ferramentas mapeadas ("N etapas · M ferramentas", M > 0)
-  const comFerr = page.locator('article', { hasText: /etapas · [1-9]/ });
-  await ((await comFerr.count()) ? comFerr.first() : page.locator('article', { hasText: /etapas/ }).first()).click();
-  await page.waitForTimeout(300);
-  check(/ferramentas mapeadas/i.test(await texto()), 'abriu um escopo com a linha do tempo das etapas');
+  const nCards = await page.locator('main article').count();
+  check(/Revisão dos Escopos \(PPGP 2026\)/.test(await texto()) && nCards >= 16, `tela Escopos cita o PPGP 2026 e lista ${nCards} escopos`);
+  const busca = page.getByPlaceholder(/Entregável, ferramenta, cliente/);
+  await busca.fill('curva abc'); await page.waitForTimeout(300);
+  const achados = await page.locator('main article').count();
+  check(achados >= 1 && achados < nCards && /Gestão de Estoque/.test(await texto()), `busca "curva abc" nos escopos filtra para ${achados} escopo(s), com Gestão de Estoque`);
+  await busca.fill(''); await page.waitForTimeout(200);
+
+  await page.locator('main article', { hasText: 'Estruturação Comercial' }).first().click();
+  await page.waitForTimeout(400);
+  const t = await texto();
+  check(['O que estudar', 'O que saber', 'Pontos de risco', 'Etapas do escopo', 'Entregáveis', 'Cases e cronogramas'].every((x) => t.includes(x)), 'escopo abriu com os 5 blocos (estudar, reunião, etapas, entregáveis, cases)');
+  check(/Culpar a PJ por não vender/.test(t) && /Trópicos Motel/.test(t) && /Matriz de objeções/.test(t), 'risco, case e entregável do slide 2 do PPGP aparecem na tela');
+
+  // checklist "O que saber": marca, conta e sobrevive ao F5
+  await page.locator('main [role="checkbox"]').first().click(); await page.waitForTimeout(250);
+  check(/1 de \d+ levantados/.test(await texto()), 'marcar uma pergunta de "O que saber" atualiza o contador');
+  await page.reload(); await page.waitForTimeout(1200);
+  check(/1 de \d+ levantados/.test(await texto()), 'checklist continua marcado depois de recarregar (localStorage)');
+  await page.getByRole('button', { name: 'Limpar', exact: true }).first().click(); await page.waitForTimeout(200);
+
+  // roteiro da reunião de diagnóstico
+  await page.getByRole('button', { name: /Roteiro da reunião de diagnóstico/ }).click(); await page.waitForTimeout(300);
+  {
+    const mat = await page.evaluate(() => window.__hangarUltimoMaterial);
+    check(!!mat && /roteiro da reunião de diagnóstico/i.test(mat.html) && mat.html.includes('Culpar a PJ por não vender') && mat.html.includes('Quantas pessoas da equipe comercial'), `roteiro imprimível traz o que saber e os riscos (${mat ? mat.nome : 'nada'})`);
+    await page.evaluate(() => { window.__abertoNoDrive = null; });
+  }
+
+  // etapa → ferramenta → "Usado em"
   const chip = page.locator('main span', { hasText: /^(Baixo|Médio|Alto)$/ });
-  const nFerr = await chip.count();
-  if (nFerr) {
+  if (await chip.count()) {
     await chip.first().click();
     await page.waitForTimeout(300);
-    check(/usado em/i.test(await texto()), 'ficha da ferramenta abriu a partir da etapa e mostra "Usado em"');
-  } else check(true, 'etapa sem ferramentas mapeadas — ficha não testada por aqui');
+    check(/usado em/i.test(await texto()) && /Estruturação Comercial/.test(await texto()), 'ficha da ferramenta abriu a partir da etapa e mostra "Usado em" com o escopo');
+  } else check(false, 'Estruturação Comercial sem ferramentas nas etapas');
+
+  // link antigo de escopo fundido redireciona; frentes aparecem na linha do tempo
+  await page.evaluate(() => { location.hash = '#/escopo/gamificacao'; }); await page.waitForTimeout(500);
+  check(/cultura-gamificacao-prosel/.test(await page.evaluate(() => location.hash)) && /Frente: Gamificação/i.test(await texto()), 'link antigo #/escopo/gamificacao abre Cultura, Gamificação e Prosel com as frentes');
+
+  // "+ ficha" de um projeto já realizado abre o cadastro com cliente e escopo preenchidos
+  await page.getByRole('button', { name: '+ ficha' }).first().click(); await page.waitForTimeout(300);
+  const cli = await page.locator('main input').first().inputValue();
+  check(/cases\/novo/.test(await page.evaluate(() => location.hash)) && cli === 'Spicy', `"+ ficha" abre o cadastro de case com o cliente preenchido (${cli})`);
+  await page.getByRole('button', { name: 'Limpar', exact: true }).last().click(); await page.waitForTimeout(200);
 }
 
 // material para a reunião: ficha da primeira ferramenta → abre uma aba (blob:) com o HTML imprimível

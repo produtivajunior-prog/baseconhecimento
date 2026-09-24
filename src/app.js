@@ -15,6 +15,8 @@ class Component extends DCLogic {
     caseFiltroFerr: '',
     filtrosAbertos: false,
     trilhaFeitos: this.carregarLocal('hangar.trilha', []),
+    saberFeitos: this.carregarLocal('hangar.saber', {}),
+    escopoBusca: '',
     glossQuery: '',
     eu: this.carregarLocal('hangar.eu', {}),
     open: {},
@@ -228,6 +230,72 @@ class Component extends DCLogic {
     if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
     this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' gerado. Abra e imprima.' : 'Não consegui gerar o arquivo aqui.');
   }
+  // ---- Roteiro da reunião de diagnóstico de um escopo (PPGP 2026): o que saber, riscos, entregáveis e etapas.
+  roteiroEscopo(esc) {
+    const e = (t) => this.esc(t);
+    const linhas = '<div class="linhas"><span></span><span></span></div>';
+    const saber = (esc.saber || []).map((q, i) => '<li><b>' + (i + 1) + '.</b> ' + e(q) + linhas + '</li>').join('');
+    const riscos = (esc.riscos || []).map((q) => '<li><span class="cb"></span>' + e(q) + '</li>').join('');
+    const entreg = (esc.entregaveis || []).map((q) => '<li>• ' + e(q.nome) + '</li>').join('');
+    let frente = null;
+    const etapas = (esc.etapas || []).map((q) => { const h = q.frente && q.frente !== frente ? '<li class="fr">' + e(q.frente) + '</li>' : ''; frente = q.frente || frente; return h + '<li><b>' + q.ordem + '.</b> ' + e(q.nome) + '</li>'; }).join('');
+    const estudar = (esc.estudar || []).map((q) => '<li><span class="cb"></span>' + e(q.nome) + '</li>').join('');
+    const pdf = (esc.fontes || []).find(f => f.tipo === 'pdf');
+    return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>' + e(esc.nome) + ' — roteiro da reunião de diagnóstico</title><style>' +
+      '@page{size:A4;margin:16mm}body{font:12.5pt/1.45 -apple-system,"Segoe UI",Roboto,sans-serif;color:#172A30;margin:0;padding:24px;max-width:190mm}' +
+      'h1{font-size:22pt;margin:0 0 4px}h2{font-size:13pt;margin:22px 0 8px;color:#1E7C92;text-transform:uppercase;letter-spacing:.04em}' +
+      '.meta{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0 6px;font-size:11pt;color:#5E747B}.meta span{border-bottom:1px solid #9DAEB4;min-width:150px;padding:0 4px 2px}' +
+      'ul,ol{margin:0;padding-left:0;list-style:none}li{margin:0 0 8px;page-break-inside:avoid}.cb{display:inline-block;width:11px;height:11px;border:1.5px solid #3C545B;border-radius:3px;margin:0 8px -1px 0}' +
+      '.linhas span{display:block;border-bottom:1px solid #C9DBE0;height:20px}.linhas{margin:4px 0 2px 18px}.cols{columns:2;column-gap:10mm}.fr{font-weight:700;color:#5E747B;margin-top:6px}' +
+      '.risco{background:#FBF1E0;border-radius:8px;padding:10px 14px}.nota{color:#8AA0A7;font-size:9.5pt;margin-top:24px}' +
+      '.print{position:fixed;top:12px;right:12px;border:none;background:#3DAFC7;color:#fff;font:600 11pt sans-serif;padding:9px 14px;border-radius:9px;cursor:pointer}@media print{.print{display:none}body{padding:0}}' +
+      '</style></head><body><button class="print" onclick="window.print()">Imprimir</button>' +
+      '<div style="font-size:9.5pt;color:#8AA0A7;letter-spacing:.06em;text-transform:uppercase">Hangar · Produtiva Júnior · roteiro da reunião de diagnóstico</div>' +
+      '<h1>' + e(esc.nome) + '</h1><div style="color:#5E747B">' + e(esc.descricao || '') + '</div>' +
+      '<div class="meta"><span>Cliente: </span><span>Data: </span><span>Gerente: </span><span>Consultores: </span></div>' +
+      (saber ? '<h2>O que precisamos saber do cliente</h2><ol>' + saber + '</ol>' : '') +
+      (riscos ? '<h2>Pontos de risco — alinhe na reunião</h2><div class="risco"><ul>' + riscos + '</ul></div>' : '') +
+      (entreg ? '<h2>O que vamos entregar</h2><ul class="cols">' + entreg + '</ul>' : '') +
+      (etapas ? '<h2>Como o projeto acontece</h2><ul class="cols">' + etapas + '</ul>' : '') +
+      (estudar ? '<h2>Para a equipe estudar antes</h2><ul>' + estudar + '</ul>' : '') +
+      '<div class="nota">Fonte: ' + e(pdf ? pdf.nome + ', slide ' + pdf.pagina : 'Hangar') + '.</div></body></html>';
+  }
+  abrirRoteiro(esc) {
+    const html = this.roteiroEscopo(esc); const nome = this.slugDe(esc.nome) + '-roteiro-diagnostico.html';
+    if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
+    try { this.abrirLink(URL.createObjectURL(new Blob([html], { type: 'text/html' }))); this.showToast('Roteiro aberto em outra aba. Use Ctrl+P para imprimir.'); }
+    catch (e) { this.showToast('Não consegui abrir aqui. Use "Baixar (.html)".'); }
+  }
+  baixarRoteiro(esc) {
+    const html = this.roteiroEscopo(esc); const nome = this.slugDe(esc.nome) + '-roteiro-diagnostico.html';
+    if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
+    this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' gerado. Abra e imprima.' : 'Não consegui gerar o arquivo aqui.');
+  }
+  // Checklist "O que saber" marcado durante a reunião: fica no navegador, por escopo.
+  toggleSaber(escopoId, i) {
+    this.setState(st => {
+      const atual = new Set((st.saberFeitos || {})[escopoId] || []);
+      atual.has(i) ? atual.delete(i) : atual.add(i);
+      const saberFeitos = { ...(st.saberFeitos || {}), [escopoId]: [...atual] };
+      this.salvarLocal('hangar.saber', saberFeitos);
+      return { saberFeitos };
+    });
+  }
+  limparSaber(escopoId) { this.setState(st => { const saberFeitos = { ...(st.saberFeitos || {}), [escopoId]: [] }; this.salvarLocal('hangar.saber', saberFeitos); return { saberFeitos }; }); }
+  irPara(id) { if (typeof document === 'undefined') return; const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  // Índice cliente → escopos em que ele aparece como case de referência no PPGP 2026.
+  clientesPPGP() {
+    if (!this._clientes) {
+      this._clientes = {};
+      for (const e of this.ESCOPOS) for (const c of (e.casesReferencia||[])) {
+        if (c.tipo === 'cronograma') continue;
+        const k = this.normaliza(c.nome);
+        (this._clientes[k] = this._clientes[k] || { nome:c.nome, escopos:[] }).escopos.push(e);
+      }
+    }
+    return this._clientes;
+  }
+
   linhas(t) { return String(t || '').split('\n').map(x => x.trim()).filter(Boolean); }
   fmtMes(s) { const m = /^(\d{4})-(\d{2})$/.exec(s || ''); if (!m) return s || ''; const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']; return meses[+m[2]-1] + ' ' + m[1]; }
 
@@ -309,7 +377,16 @@ class Component extends DCLogic {
     } catch (e) { this.showToast('Não consegui copiar automaticamente.'); }
   }
   openCase(id) { this.setState({ screen:'case', caseId:id }); if(typeof window!=='undefined') window.scrollTo(0,0); }
-  openNovoCase() { this.setState({ screen:'novo-case', caseErro:'' }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+  openNovoCase(prefill) {
+    const pre = prefill && typeof prefill === 'object' && !prefill.target ? prefill : null;
+    const f = this.state.formCase;
+    // Só preenche o que está vazio: um rascunho em andamento de outro cliente não é apagado.
+    const outro = pre && pre.cliente && f.cliente.trim() && this.normaliza(f.cliente.trim()) !== this.normaliza(pre.cliente);
+    const formCase = pre && !outro ? { ...f, cliente: f.cliente || pre.cliente || '', escopoId: f.escopoId || pre.escopoId || '' } : f;
+    this.setState({ screen:'novo-case', caseErro:'', formCase });
+    if (outro) this.showToast('Você já tem um case em andamento (' + f.cliente + '). Ele foi mantido; use "Limpar" para começar o de ' + pre.cliente + '.');
+    if(typeof window!=='undefined') window.scrollTo(0,0);
+  }
   pedirRemoverCase(id, e) { if(e&&e.stopPropagation)e.stopPropagation(); this.setState({ confirmRemoverId:id }); }
   cancelarRemoverCase() { this.setState({ confirmRemoverId:null }); }
   // Só remove do navegador de quem cadastrou: sem backend, não existe "publicado para todos" a desfazer daqui.
@@ -322,7 +399,7 @@ class Component extends DCLogic {
   }
 
   decorateCase(c) {
-    const escopo = c.escopoId ? this.ESCOPOS.find(e => e.id === c.escopoId) : null;
+    const escopo = c.escopoId ? this.escopoPorId(c.escopoId) : null;
     const escopoNome = escopo ? escopo.nome : (c.escopoNome || 'Escopo não informado');
     const g = escopo ? (this.TAXONOMIA.gruposEscopo[escopo.grupo] || {}) : {};
     const eq = c.equipe || {}; const cons = eq.consultores || [];
@@ -379,7 +456,7 @@ class Component extends DCLogic {
       if (f.ano.length && !f.ano.includes(ano)) return false;
       if (f.ferramenta.length && !(c.ferramentas||[]).some(x => f.ferramenta.includes(x))) return false;
       if (q) {
-        const escopo = c.escopoId ? this.ESCOPOS.find(e => e.id === c.escopoId) : null;
+        const escopo = c.escopoId ? this.escopoPorId(c.escopoId) : null;
         const eq = c.equipe || {};
         const hay = this.normaliza([c.cliente, c.segmento, c.porte, c.cidade, escopo ? escopo.nome : c.escopoNome, c.resumo, c.desafio, c.solucao, c.depoimentoCliente,
           ...(c.resultados||[]), ...(c.aprendizados||[]), ...(c.tags||[]), (eq.gerente||{}).nome, ...((eq.consultores||[]).map(x=>x.nome)),
@@ -393,7 +470,7 @@ class Component extends DCLogic {
     const todos = this.allCases(); const f = this.state.caseFilters;
     const conta = (lista, chave) => { const m = new Map(); for (const c of lista) for (const v of chave(c)) if (v) m.set(v, (m.get(v)||0)+1); return m; };
     const grupos = [
-      { key:'escopo', label:'Escopo', conta: conta(todos, c => [c.escopoId || ('outro:' + (c.escopoNome||''))]), rotulo: v => v.startsWith('outro:') ? v.slice(6) : ((this.ESCOPOS.find(e=>e.id===v)||{}).nome || v) },
+      { key:'escopo', label:'Escopo', conta: conta(todos, c => [c.escopoId || ('outro:' + (c.escopoNome||''))]), rotulo: v => v.startsWith('outro:') ? v.slice(6) : ((this.escopoPorId(v)||{}).nome || v) },
       { key:'segmento', label:'Segmento', conta: conta(todos, c => [c.segmento]), rotulo: v => v },
       { key:'ano', label:'Ano', conta: conta(todos, c => [((c.periodo||{}).fim || (c.periodo||{}).inicio || c.atualizado || '').slice(0,4)]), rotulo: v => v },
       { key:'ferramenta', label:'Ferramenta usada', conta: conta(todos, c => c.ferramentas||[]), rotulo: v => (this.allData().find(d=>d.id===v)||{}).nome || v },
@@ -440,6 +517,33 @@ class Component extends DCLogic {
     return this._uso[id] || [];
   }
 
+  // Todos os vínculos de uma ferramenta com os escopos do PPGP 2026: etapa, entregável e "o que estudar".
+  // usoDe (só etapas) continua sendo a medida de "mapeada em mais etapas"; aqui é o que a ficha mostra.
+  vinculosDe(id) {
+    if (!this._vinc) {
+      this._vinc = {};
+      for (const e of this.ESCOPOS) {
+        const add = (fid, v) => { const por = (this._vinc[fid] = this._vinc[fid] || {}); (por[e.id] = por[e.id] || { escopo:e, etapas:[], entregaveis:[], estudar:[] })[v.k].push(v.x); };
+        for (const et of (e.etapas||[])) for (const fid of (et.ferramentas||[])) add(fid, { k:'etapas', x:et });
+        for (const en of (e.entregaveis||[])) for (const fid of (en.ferramentas||[])) add(fid, { k:'entregaveis', x:en });
+        for (const es of (e.estudar||[])) for (const fid of (es.ferramentas||[])) add(fid, { k:'estudar', x:es });
+      }
+    }
+    const ordem = this.ESCOPOS.map(e => e.id);
+    return Object.values(this._vinc[id] || {}).sort((a,b) => ordem.indexOf(a.escopo.id) - ordem.indexOf(b.escopo.id)).map(v => {
+      const partes = [];
+      if (v.etapas.length) partes.push((v.etapas.length === 1 ? 'etapa ' : 'etapas ') + v.etapas.map(x => x.ordem).join(', '));
+      if (v.entregaveis.length) partes.push(v.entregaveis.length === 1 ? 'entregável' : v.entregaveis.length + ' entregáveis');
+      if (v.estudar.length) partes.push('o que estudar');
+      return { escopoId:v.escopo.id, escopoNome:v.escopo.nome, detalhe:partes.join(' · '),
+        dica: v.etapas.map(x => x.ordem + '. ' + x.nome).concat(v.entregaveis.map(x => 'Entregável: ' + x.nome)).join('\n'),
+        open:()=>this.openEscopo(v.escopo.id) };
+    });
+  }
+  // Escopos fundidos no PPGP 2026 (ex.: gamificacao → cultura-gamificacao-prosel) guardam o id antigo em
+  // antigosIds: links e cases antigos continuam abrindo o escopo certo.
+  escopoPorId(id) { return this.ESCOPOS.find(e => e.id === id) || this.ESCOPOS.find(e => (e.antigosIds||[]).includes(id)) || null; }
+
   allData() { return this.state.extra.concat(this.DATA); }
   initials(name) { return (name||'').split(' ').filter(w=>w.length>2).slice(0,2).map(w=>w[0]).join('').toUpperCase() || 'C'; }
   extOf(a) { const m=(a.nome||'').match(/\.([a-z0-9]+)$/i); return m?m[1].toUpperCase():(this.ANEXO_STYLE[a.tipo]?this.ANEXO_STYLE[a.tipo].ext:'DOC'); }
@@ -448,6 +552,7 @@ class Component extends DCLogic {
     const ts = this.TIPO_STYLE[it.tipo] || this.TIPO_STYLE['Ferramenta'];
     const cs = this.COMPLEX_STYLE[it.complexidade] || this.COMPLEX_STYLE['Médio'];
     const uso = this.usoDe(it.id);
+    const vinc = this.vinculosDe(it.id);
     return {
       ...it,
       tipoBg: ts.bg, tipoColor: ts.color, visualBg: ts.visual,
@@ -460,8 +565,8 @@ class Component extends DCLogic {
       anexosCount: (it.anexos||[]).length, hasAnexos: (it.anexos||[]).length > 0,
       respNome: this.respNome(it.responsavel), respEmail: this.respEmail(it.responsavel),
       atualizadoFmt: this.fmtData(it.atualizado),
-      usoEmEscopos: uso, usoCount: uso.length, hasUso: uso.length>0, semUso: uso.length===0,
-      usoResumo: uso.length ? (uso.length===1 ? uso[0].escopoNome : uso.length+' escopos') : 'Sem escopo vinculado',
+      usoEmEscopos: vinc, usoCount: uso.length, hasUso: vinc.length>0, semUso: vinc.length===0,
+      usoResumo: vinc.length ? (vinc.length===1 ? vinc[0].escopoNome : vinc.length+' escopos') : 'Sem escopo vinculado',
       open: () => this.openContent(it.id),
       openAnexos: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.setState({ anexosId: it.id }); },
     };
@@ -568,7 +673,7 @@ class Component extends DCLogic {
     if (tela === 'biblioteca') this.nav('biblioteca');
     else if (tela === 'ferramenta' && idOk(this.allData(), id)) this.openContent(id);
     else if (tela === 'escopos') this.nav('escopos');
-    else if (tela === 'escopo' && idOk(this.ESCOPOS, id)) this.openEscopo(id);
+    else if (tela === 'escopo' && this.escopoPorId(id)) this.openEscopo(this.escopoPorId(id).id);
     else if (tela === 'cases' && id === 'novo') this.openNovoCase();
     else if (tela === 'cases') this.nav('cases');
     else if (tela === 'case' && idOk(this.allCases(), id)) this.openCase(id);
@@ -644,7 +749,7 @@ class Component extends DCLogic {
     const groups = [
       { key:'tipo', label:'Tipo de conteúdo', values:Object.keys(tx.tipos) },
       { key:'area', label:'Área de aplicação', field:'categoria', values:Object.keys(tx.categorias) },
-      { key:'escopo', label:'Usada no escopo', options:this.ESCOPOS.map(e=>({ value:e.id, label:e.nome })), match:(d,v)=>this.usoDe(d.id).some(u=>u.escopoId===v) },
+      { key:'escopo', label:'Usada no escopo', options:this.ESCOPOS.map(e=>({ value:e.id, label:e.nome })), match:(d,v)=>this.vinculosDe(d.id).some(u=>u.escopoId===v) },
       { key:'complexidade', label:'Complexidade', values:Object.keys(tx.complexidade) },
       { key:'status', label:'Status', values:Object.keys(tx.status) },
       { key:'freq', label:'Frequência de uso', values:tx.freq },
@@ -868,10 +973,14 @@ class Component extends DCLogic {
     const decEscopo = (e) => {
       const g = this.TAXONOMIA.gruposEscopo[e.grupo] || { cor:'#1E7C92', bg:'#EAF6F9', label:e.grupo };
       const ferrIds = new Set(); for (const et of (e.etapas||[])) for (const f of (et.ferramentas||[])) ferrIds.add(f);
+      for (const x of (e.entregaveis||[]).concat(e.estudar||[])) for (const f of (x.ferramentas||[])) ferrIds.add(f);
+      const nCases = (e.casesReferencia||[]).filter(c => c.tipo !== 'cronograma').length;
+      const pdf = (e.fontes||[]).find(f => f.tipo === 'pdf');
       return { ...e, grupoLabel:g.label, grupoCor:g.cor, grupoBg:g.bg, ativo:e.status==='ativo', despriorizado:e.status!=='ativo',
         statusLabel: e.status==='ativo' ? 'Ativo' : 'Despriorizado',
-        nEtapas:(e.etapas||[]).length, nFerr:ferrIds.size, respNome:this.respNome(e.responsavel),
-        resumo:(e.etapas||[]).length+' etapas · '+ferrIds.size+' ferramentas', pick:()=>this.openEscopo(e.id) };
+        nEtapas:(e.etapas||[]).length, nFerr:ferrIds.size, nEntregaveis:(e.entregaveis||[]).length, nCases, respNome:this.respNome(e.responsavel),
+        fonteLabel: pdf ? 'PPGP 2026 · slide ' + pdf.pagina : '', hasFonte: !!pdf,
+        resumo:(e.etapas||[]).length+' etapas · '+(e.entregaveis||[]).length+' entregáveis · '+nCases+' cases', pick:()=>this.openEscopo(e.id) };
     };
     const porEscopo = this.ESCOPOS.filter(e=>e.status==='ativo').slice(0,3).map(decEscopo);
     const novidades = [...data].sort((a,b)=>String(b.atualizado||'').localeCompare(String(a.atualizado||''))).slice(0,3).map(dec);
@@ -920,16 +1029,62 @@ class Component extends DCLogic {
 
     // escopos
     const gruposEscopo = this.TAXONOMIA.gruposEscopo;
+    // busca na tela Escopos: nome, descrição, etapas, entregáveis, o que estudar/saber, riscos, clientes e ferramentas
+    const buscaEsc = this.normaliza(s.escopoBusca).trim();
+    const nomeFerr = (fid) => (data.find(d => d.id === fid) || {}).nome || '';
+    const hayEscopo = (e) => this.normaliza([e.nome, e.descricao, ...(e.etapas||[]).map(x=>x.nome), ...(e.entregaveis||[]).map(x=>x.nome), ...(e.estudar||[]).map(x=>x.nome),
+      ...(e.saber||[]), ...(e.riscos||[]), ...(e.casesReferencia||[]).map(x=>x.nome),
+      ...[...(e.etapas||[]), ...(e.entregaveis||[]), ...(e.estudar||[])].flatMap(x => (x.ferramentas||[]).map(nomeFerr))].join(' '));
+    const escoposVisiveis = this.ESCOPOS.filter(e => !buscaEsc || buscaEsc.split(/\s+/).every(t => hayEscopo(e).includes(t)));
     const escoposPorGrupo = Object.keys(gruposEscopo).map(g => ({
       grupo:g, label:gruposEscopo[g].label||g, cor:gruposEscopo[g].cor, bg:gruposEscopo[g].bg,
-      escopos:this.ESCOPOS.filter(e=>e.grupo===g).sort((a,b)=>(a.status==='ativo'?0:1)-(b.status==='ativo'?0:1)).map(decEscopo),
+      escopos:escoposVisiveis.filter(e=>e.grupo===g).map(decEscopo),
     })).filter(g => g.escopos.length);
-    const escopoRaw = s.escopoId ? this.ESCOPOS.find(e=>e.id===s.escopoId) : null;
-    const escopoSel = escopoRaw ? { ...decEscopo(escopoRaw), cases: casesTodos.filter(c => c.escopoId === escopoRaw.id).map(decCase), hasCases: casesTodos.some(c => c.escopoId === escopoRaw.id) } : null;
+    const escopoRaw = s.escopoId ? this.escopoPorId(s.escopoId) : null;
+    const chipFerr = (fid) => { const d = data.find(x => x.id === fid); return d ? { id:d.id, nome:d.nome, open:()=>this.openContent(d.id), emConstrucao: d.status==='Em construção' } : null; };
+    const escopoSel = escopoRaw ? (() => {
+      const e = escopoRaw;
+      const fichas = casesTodos.filter(c => c.escopoId === e.id || (e.antigosIds||[]).includes(c.escopoId));
+      const fichaDe = (nome) => casesTodos.find(c => this.normaliza(c.cliente) === this.normaliza(nome));
+      const feitos = new Set((s.saberFeitos||{})[e.id] || []);
+      const idx = this.clientesPPGP();
+      const cron = (e.fontes||[]).find(f => f.tipo === 'drive-sheet' && /^https:\/\//.test(f.url || ''));
+      const pdf = (e.fontes||[]).find(f => f.tipo === 'pdf');
+      const comFerr = (x) => { const ferramentas = (x.ferramentas||[]).map(chipFerr).filter(Boolean); return { ...x, ferramentas, hasFerramentas: ferramentas.length>0, marcado: !!x.marcado }; };
+      const casesRef = (e.casesReferencia||[]).filter(c => c.tipo !== 'cronograma').map(c => {
+        const ficha = fichaDe(c.nome);
+        const outros = ((idx[this.normaliza(c.nome)] || {}).escopos || []).filter(x => x.id !== e.id);
+        return { nome:c.nome, iniciais:this.initials(c.nome), temFicha:!!ficha, semFicha:!ficha,
+          abrir: () => { if (ficha) this.openCase(ficha.id); },
+          cadastrar: () => this.openNovoCase({ cliente:c.nome, escopoId:e.id }),
+          outros: outros.map(x => ({ nome:x.nome, open:()=>this.openEscopo(x.id) })), hasOutros: outros.length>0 };
+      });
+      const cronogramasRef = (e.casesReferencia||[]).filter(c => c.tipo === 'cronograma').map(c => c.nome);
+      const saber = (e.saber||[]).map((q, i) => ({ texto:q, n:i+1, feito:feitos.has(i), pendente:!feitos.has(i), toggle:()=>this.toggleSaber(e.id, i),
+        bg: feitos.has(i) ? '#F2FAF5' : '#fff', border: feitos.has(i) ? '#BFE3CD' : '#E7EEF1', cor: feitos.has(i) ? '#5E747B' : '#163B45', risco: feitos.has(i) ? 'line-through' : 'none' }));
+      return { ...decEscopo(e),
+        cases: fichas.map(decCase), hasCases: fichas.length > 0,
+        estudar: (e.estudar||[]).map(comFerr), hasEstudar: (e.estudar||[]).length>0,
+        entregaveis: (e.entregaveis||[]).map(comFerr), hasEntregaveis: (e.entregaveis||[]).length>0,
+        saber, hasSaber: saber.length>0, nSaberFeitos: saber.filter(x=>x.feito).length, nSaber: saber.length, hasSaberFeitos: feitos.size>0,
+        limparSaber: () => this.limparSaber(e.id),
+        riscos: (e.riscos||[]), hasRiscos: (e.riscos||[]).length>0,
+        casesRef, hasCasesRef: casesRef.length>0, nCasesComFicha: casesRef.filter(c=>c.temFicha).length,
+        cronogramasRef, hasCronogramasRef: cronogramasRef.length>0, cronogramasRefTexto: cronogramasRef.join(', '),
+        hasCronograma: !!cron, cronogramaUrl: cron ? cron.url : '', cronogramaNome: cron ? cron.nome : '',
+        hasMarcados: [...(e.etapas||[]), ...(e.entregaveis||[]), ...(e.estudar||[])].some(x => x.marcado),
+        fonteTexto: pdf ? pdf.nome + ', slide ' + pdf.pagina : '',
+        abrirRoteiro: () => this.abrirRoteiro(e), baixarRoteiro: () => this.baixarRoteiro(e),
+        cadastrarCase: () => this.openNovoCase({ cliente:'', escopoId:e.id }),
+        irEstudar:()=>this.irPara('esc-estudar'), irReuniao:()=>this.irPara('esc-reuniao'), irEtapas:()=>this.irPara('esc-etapas'), irEntregaveis:()=>this.irPara('esc-entregaveis'), irCases:()=>this.irPara('esc-cases'),
+      };
+    })() : null;
+    let frenteAnt = null;
     const escopoEtapas = escopoRaw ? (escopoRaw.etapas||[]).map((et,i,arr) => {
       const ferramentas = (et.ferramentas||[]).map(fid=>dec(data.find(d=>d.id===fid))).filter(Boolean);
+      const novaFrente = !!et.frente && et.frente !== frenteAnt; if (et.frente) frenteAnt = et.frente;
       return { ...et, num:(et.ordem<10?'0':'')+et.ordem, ferramentas, hasFerramentas:ferramentas.length>0, semFerramentas:ferramentas.length===0,
-        entregaveis:et.entregaveis||[], hasEntregaveis:!!(et.entregaveis&&et.entregaveis.length), hasDuracao:!!et.duracaoRef, duracaoRef:et.duracaoRef||'',
+        novaFrente, frenteLabel: et.frente || '', marcado: !!et.marcado,
         ultima:i===arr.length-1, linhaBg:i===arr.length-1?'transparent':'#DCE7EB' };
     }) : [];
 
@@ -993,6 +1148,7 @@ class Component extends DCLogic {
     });
     const recoDef = this.PROBLEMAS.find(p=>p.key===s.recoKey);
     const recoResults = recoDef ? recoDef.ids.map(id=>dec(data.find(d=>d.id===id))).filter(Boolean) : [];
+    const recoEscopos = recoDef ? (recoDef.escopoIds||[]).map(id => this.escopoPorId(id)).filter(Boolean).map(e => ({ nome:e.nome, open:()=>this.openEscopo(e.id) })) : [];
 
     // documentação
     const doc = s.doc || this.defaultDoc();
@@ -1073,6 +1229,8 @@ class Component extends DCLogic {
       // escopos
       escoposPorGrupo, hasEscopoSel: !!escopoSel, noEscopoSel: !escopoSel, escopoSel, escopoEtapas,
       escoposCount: this.ESCOPOS.length, semEscopos: this.ESCOPOS.length===0,
+      escopoBusca: s.escopoBusca, onEscopoBusca:(e)=>this.setState({ escopoBusca:e.target.value }), limparEscopoBusca:()=>this.setState({ escopoBusca:'' }),
+      hasEscopoBusca: !!buscaEsc, escoposAchados: escoposVisiveis.length, semEscopoAchado: !!buscaEsc && escoposVisiveis.length===0,
       navItems,
       // search
       query: s.query,
@@ -1085,7 +1243,7 @@ class Component extends DCLogic {
       atalhos: [
         { label:'Qual ferramenta usar?', hint:'Escolha o problema e veja as sugestões', go:()=>this.nav('recomendar') },
         { label:'Registrar um case', hint:'Projeto finalizado vira referência', go:()=>this.openNovoCase() },
-        { label:'Ver os escopos', hint:'Etapas e ferramentas de cada linha de serviço', go:()=>this.nav('escopos') },
+        { label:'Ver os escopos', hint:'O que estudar, perguntar e entregar em cada um dos 16', go:()=>this.nav('escopos') },
       ],
       // biblioteca
       filtered, filterGroups, cardStyles,
@@ -1120,7 +1278,7 @@ class Component extends DCLogic {
       formObjetivo:setF('objetivo'), formProblema:setF('problema'), formTempo:setF('tempo'), formResp:setF('responsavel'),
       publish:()=>this.publish(),
       // recomendar
-      problemas, hasReco: !!recoDef, recoLabel: recoDef?recoDef.label:'', recoResults,
+      problemas, hasReco: !!recoDef, recoLabel: recoDef?recoDef.label:'', recoResults, recoEscopos, hasRecoEscopos: recoEscopos.length>0,
       // documentação — IA
       aiDocInputVal: s.aiDocInput, setAiDocInput:(e)=>this.setState({aiDocInput:e.target.value}),
       aiLoading: s.aiLoading, aiNotLoading: !s.aiLoading, aiError: s.aiError, hasAiError: !!s.aiError,
