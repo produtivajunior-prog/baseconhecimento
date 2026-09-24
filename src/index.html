@@ -209,7 +209,7 @@
       </div>
       <nav class="hg-nav" style="display:flex;align-items:center;gap:2px;margin-left:0;min-width:0">
         <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
-          <button onclick="{{ n.go }}" style="border:none;background:{{ n.bg }};color:{{ n.color }};font-size:14px;font-weight:{{ n.weight }};padding:8px 11px;border-radius:9px;cursor:pointer">{{ n.label }}</button>
+          <button onclick="{{ n.go }}" style="border:none;background:{{ n.bg }};color:{{ n.color }};font-size:14px;font-weight:{{ n.weight }};padding:8px 9px;border-radius:9px;cursor:pointer">{{ n.label }}</button>
         </sc-for>
       </nav>
       <div style="flex:1"></div>
@@ -1729,7 +1729,7 @@
       <button onclick="{{ prodIrAreas }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">As {{ prodNAreas }} áreas</button>
       <button onclick="{{ prodIrFluxo }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Como um projeto nasce</button>
       <button onclick="{{ prodIrMembro }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Como você é acompanhado</button>
-      <sc-if value="{{ hasProdAuxilios }}" hint-placeholder-val="{{ true }}"><button onclick="{{ prodIrAuxilios }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Auxílios e reembolsos</button></sc-if>
+      <sc-if value="{{ hasProdAuxilios }}" hint-placeholder-val="{{ true }}"><button onclick="{{ goAuxilios }}" style="border:1px solid #CFEBD9;background:#F2FAF5;color:#2E7D52;font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:999px;cursor:pointer" style-hover="border-color:#9FD3B4">Auxílios e reembolsos ›</button></sc-if>
     </nav>
 
     <!-- 1. O que é a Produtiva -->
@@ -1839,11 +1839,24 @@
       </div>
     </section>
 
-    <!-- 5. Auxílios e reembolsos -->
+    <div class="hg-stack" style="margin-top:40px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:17px;font-weight:700;color:#163B45">Próximo passo: seu primeiro projeto</div>
+        <p style="font-size:14px;color:#7C9097;margin:4px 0 0">A trilha "Comece aqui" mostra o caminho até a primeira reunião com o cliente.</p>
+      </div>
+      <button onclick="{{ goComece }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">Ir para Comece aqui</button>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ============ AUXÍLIOS E REEMBOLSOS ============ -->
+  <sc-if value="{{ isAuxilios }}" hint-placeholder-val="{{ false }}">
+  <main class="hg-main" style="max-width:1100px;margin:0 auto;padding:34px 28px 80px">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:#E9F4EE;color:#2E7D52;font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:100px;margin-bottom:14px">Para os membros</div>
+    <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">{{ prodAuxilios.titulo }}</h1>
+    <p style="font-size:15.5px;color:#5E747B;margin:10px 0 22px;line-height:1.55;max-width:720px">{{ prodAuxilios.texto }} Veja quanto vale cada um, quando vale e como pedir.</p>
     <sc-if value="{{ hasProdAuxilios }}" hint-placeholder-val="{{ true }}">
-    <section id="prod-auxilios" style="scroll-margin-top:90px;margin-top:40px">
-      <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">{{ prodAuxilios.titulo }}</h2>
-      <p style="font-size:14.5px;color:#7C9097;margin:6px 0 14px;line-height:1.5">{{ prodAuxilios.texto }}</p>
+    <section id="prod-auxilios">
       <div class="hg-wrap" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
         <sc-for list="{{ prodAuxItens }}" as="x" hint-placeholder-count="5"><button onclick="{{ x.ir }}" style="border:1px solid #CFEBD9;background:#F2FAF5;color:#2E7D52;font-size:13px;font-weight:600;padding:6px 11px;border-radius:9px;cursor:pointer" style-hover="border-color:#9FD3B4">{{ x.titulo }}</button></sc-for>
       </div>
@@ -1903,10 +1916,10 @@
 
     <div class="hg-stack" style="margin-top:40px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
       <div>
-        <div style="font-size:17px;font-weight:700;color:#163B45">Próximo passo: seu primeiro projeto</div>
-        <p style="font-size:14px;color:#7C9097;margin:4px 0 0">A trilha "Comece aqui" mostra o caminho até a primeira reunião com o cliente.</p>
+        <div style="font-size:17px;font-weight:700;color:#163B45">Quem cuida disso é a {{ prodAuxilios.area }}</div>
+        <p style="font-size:14px;color:#7C9097;margin:4px 0 0">Veja como a Produtiva se organiza e o que cada área faz.</p>
       </div>
-      <button onclick="{{ goComece }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">Ir para Comece aqui</button>
+      <button onclick="{{ goProdutiva }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">Ir para Como funciona</button>
     </div>
   </main>
   </sc-if>

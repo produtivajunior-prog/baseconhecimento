@@ -725,8 +725,8 @@ class Component extends DCLogic {
         colunas: (x.passos || []).length && (x.regras || []).length ? '1fr 1fr' : '1fr',
         hasModelo: !!x.modelo, modeloTitulo: x.modelo ? x.modelo.titulo : '', modeloTexto: x.modelo ? x.modelo.texto : '',
         ir: () => this.irPara('aux-' + x.id) })),
-      prodIrOQueE: () => this.irPara('prod-oquee'), prodIrAreas: () => this.irPara('prod-areas'), prodIrFluxo: () => this.irPara('prod-fluxo'), prodIrMembro: () => this.irPara('prod-membro'), prodIrAuxilios: () => this.irPara('prod-auxilios'),
-      goProdutiva: () => this.nav('produtiva') };
+      prodIrOQueE: () => this.irPara('prod-oquee'), prodIrAreas: () => this.irPara('prod-areas'), prodIrFluxo: () => this.irPara('prod-fluxo'), prodIrMembro: () => this.irPara('prod-membro'),
+      goProdutiva: () => this.nav('produtiva'), goAuxilios: () => this.nav('auxilios') };
   }
   nav(screen) { this.setState({ screen, escopoId: screen==='escopos' ? null : this.state.escopoId, caseId: screen==='cases' ? null : this.state.caseId }); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
@@ -745,6 +745,7 @@ class Component extends DCLogic {
       case 'recomendar': return '#/recomendar';
       case 'comece': return '#/comece';
       case 'produtiva': return '#/produtiva';
+      case 'auxilios': return '#/auxilios';
       default: return '#/';
     }
   }
@@ -765,6 +766,7 @@ class Component extends DCLogic {
     else if (tela === 'recomendar') this.nav('recomendar');
     else if (tela === 'comece') this.nav('comece');
     else if (tela === 'produtiva') this.nav('produtiva');
+    else if (tela === 'auxilios') this.nav('auxilios');
     else if (this.state.screen !== 'home') this.nav('home');
   }
   componentDidMount() {
@@ -1096,7 +1098,7 @@ class Component extends DCLogic {
     const dec = (it) => it ? this.decorate(it) : null;
 
     // nav
-    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'produtiva',label:'Como funciona'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
+    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'produtiva',label:'Como funciona'},{key:'auxilios',label:'Auxílios'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
     const navItems = navDef.map(n => {
       const active = s.screen===n.key || (n.key==='biblioteca' && s.screen==='conteudo') || (n.key==='cases' && (s.screen==='case' || s.screen==='novo-case'));
       return { label:n.label, go: n.key==='docs' ? ()=>this.goDocs() : ()=>this.nav(n.key), bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
@@ -1339,7 +1341,7 @@ class Component extends DCLogic {
       ...this.revisoesVals(),
       // trilha do primeiro projeto + glossário
       isComece: s.screen==='comece', goComece:()=>this.nav('comece'), ...this.trilhaVals(s, data, dec),
-      isProdutiva: s.screen==='produtiva', ...this.produtivaVals(),
+      isProdutiva: s.screen==='produtiva', isAuxilios: s.screen==='auxilios', ...this.produtivaVals(),
       // filtros no celular (biblioteca e cases) e iniciais de quem usa
       filtrosClass: s.filtrosAbertos ? 'hg-open' : '', filtrosLabel: s.filtrosAbertos ? 'Ocultar filtros' : 'Filtros', toggleFiltros:()=>this.setState(st=>({ filtrosAbertos: !st.filtrosAbertos })),
       hasEu: !!(s.eu && s.eu.nome), euNome: (s.eu && s.eu.nome) || '', euIniciais: s.eu && s.eu.nome ? this.initials(s.eu.nome) : '',

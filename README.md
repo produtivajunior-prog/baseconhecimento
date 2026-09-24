@@ -33,7 +33,7 @@ src/
     problemas.json          problemas → ferramentas (tela "Recomendar")
     modelos.json            modelos-padrão (blocos que a IA preenche)
     documento-padrao.json   documento PMMC (10 seções, do PDF oficial)
-    produtiva.json          página "Como funciona a Produtiva": áreas, subnúcleos, fluxo comercial
+    produtiva.json          páginas "Como funciona" (áreas, subnúcleos, fluxo comercial) e "Auxílios e reembolsos"
     rascunhos/              rascunhos gerados de fontes/, aguardando revisão — NUNCA entram no pack
 assets/            logo e fontes; index.json mapeia uuid ↔ arquivo
 vendor/            dc-runtime.js, React embutido e o invólucro do bundle
@@ -96,6 +96,9 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   os subnúcleos de Projetos (CIEP, CIT, CS), o caminho do primeiro contato ao projeto (SDR → closer → gerente
   → proposta → execução → CSAT → case) e como o membro é acompanhado. O conteúdo fica em
   `src/data/produtiva.json` e é validado pelo `verify`.
+- **Auxílios e reembolsos** (`#/auxilios`, item "Auxílios" do menu): página própria com PIPJ, reembolso de
+  gasolina, Uber for Business, auxílio alimentação e computadores (valores, quando vale, como pedir e
+  regras). Os dados ficam em `auxilios` dentro de `src/data/produtiva.json`.
 - **Escopos** (`#/escopos`): os 15 escopos da Revisão dos Escopos (PPGP 2026) que a Produtiva executa (o EVE foi descontinuado), com busca por entregável, ferramenta,
   cliente ou etapa. Cada escopo tem cinco blocos: o que estudar, o Diagnóstico Inicial, as etapas, os entregáveis e os cases.
   - **Diagnóstico Inicial:** checklist "O que saber" (as marcações ficam no navegador) e os pontos de risco.

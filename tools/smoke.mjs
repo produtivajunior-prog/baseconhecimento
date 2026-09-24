@@ -63,7 +63,18 @@ await page.waitForTimeout(300);
   check(/#\/produtiva$/.test(await page.evaluate(() => location.hash)) && /Como funciona a Produtiva/.test(t), 'página "Como funciona a Produtiva" abriu pelo menu (#/produtiva)');
   check(['Gestão de Pessoas', 'Vice-presidência', 'Presidência', 'Marketing', 'Projetos'].every((x) => t.includes(x)) && ['CIEP', 'CIT', 'CSAT'].every((x) => t.includes(x)), 'página mostra as 5 áreas e os subnúcleos de Projetos');
   check(/SDR/.test(t) && /Closer/.test(t) && /Cronograma/.test(t) && /Proposta/.test(t), 'fluxo do primeiro contato ao projeto aparece (SDR → closer → gerente → proposta)');
-  check(['PIPJ', 'Reembolso de gasolina', 'Uber for Business', 'Auxílio alimentação', 'Computadores da Produtiva', 'Rotina-PJ', 'Caju'].every((x) => t.includes(x)) && !/Flash/i.test(t) && /auxílios e reembolsos dos membros/.test(t), 'Auxílios e reembolsos traz PIPJ, gasolina, Uber, alimentação (cartão Caju, sem Flash) e computadores');
+  check(/auxílios e reembolsos dos membros/.test(t) && !/Reembolso de gasolina|Rotina-PJ|Uber for Business/.test(t), 'Como funciona não traz mais o bloco de auxílios (só a Vice-presidência cita que paga)');
+  // Auxílios e reembolsos virou página própria: atalho da Como funciona, item do menu e F5 em #/auxilios
+  await page.getByRole('button', { name: 'Auxílios e reembolsos ›' }).first().click(); await page.waitForTimeout(300);
+  const ta = await texto();
+  check(/#\/auxilios$/.test(await page.evaluate(() => location.hash)) && /Auxílios e reembolsos/.test(ta), 'atalho da Como funciona abre a página "Auxílios e reembolsos" (#/auxilios)');
+  check(['PIPJ', 'Reembolso de gasolina', 'Uber for Business', 'Auxílio alimentação', 'Computadores da Produtiva', 'Rotina-PJ', 'Caju'].every((x) => ta.includes(x)) && !/Flash/i.test(ta) && !/As \d+ áreas/.test(ta), 'página de auxílios traz PIPJ, gasolina, Uber, alimentação (cartão Caju, sem Flash) e computadores, sem o resto da Como funciona');
+  await page.reload(); await page.waitForTimeout(500);
+  check(/#\/auxilios$/.test(await page.evaluate(() => location.hash)) && /Reembolso de gasolina/.test(await texto()), 'F5 em #/auxilios volta para a página de auxílios');
+  await page.evaluate(() => { location.hash = '#/'; }); await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Auxílios', exact: true }).first().click(); await page.waitForTimeout(300);
+  check(/#\/auxilios$/.test(await page.evaluate(() => location.hash)), 'item "Auxílios" do menu abre a página');
+  await page.getByRole('button', { name: 'Ir para Como funciona' }).click(); await page.waitForTimeout(300);
   await page.locator('main article', { hasText: 'Gestão da Tecnologia' }).first().click(); await page.waitForTimeout(400);
   check(/#\/escopos$/.test(await page.evaluate(() => location.hash)) && /Automação/.test(await texto()), 'área de atuação "Gestão da Tecnologia" abre a tela Escopos');
 }
