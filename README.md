@@ -105,6 +105,20 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
 - Hangar Academy: `tools/hangar-extrator.js` (roda no navegador de quem tem acesso) +
   `node tools/hangar-importar.mjs` trazem as páginas para `fontes/hangar/`. Seção 2 de `fontes/README.md`.
 
+## Publicar na web (Coolify)
+
+O repositório já tem `Dockerfile` + `deploy/nginx.conf`: um nginx que serve `dist/Hangar.html`
+como `index.html` (gzip, HTML sem cache, `/healthz` para health check).
+
+1. No Coolify: **+ New → Application → Public/Private Repository (GitHub)** e escolha
+   `produtivajunior-prog/baseconhecimento`, branch `main` (depois do merge do PR).
+2. **Build Pack: Dockerfile** (caminho `/Dockerfile`), **porta exposta: 80**.
+3. Em **Domains**, informe o domínio (ex.: `https://hangar.seudominio.com.br`); o Coolify emite o HTTPS.
+4. **Deploy.** Com o GitHub App do Coolify, cada push na `main` publica sozinho.
+
+Para atualizar o site: edite `src/`, rode `node tools/pack.mjs && node tools/verify.mjs`, faça commit
+do `dist/Hangar.html` e dê push. Testar localmente: `docker build -t hangar . && docker run -p 8080:80 hangar`.
+
 ## Limitações conhecidas
 
 | | |
