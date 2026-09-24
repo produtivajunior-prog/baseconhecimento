@@ -855,7 +855,9 @@
         "id": "analise-de-mercado",
         "ordem": 9,
         "nome": "Análise de mercado",
-        "ferramentas": [],
+        "ferramentas": [
+          "matriz-de-concorrentes"
+        ],
         "entregaveis": [
           "Matriz de concorrentes"
         ]
@@ -1267,7 +1269,9 @@
         "id": "analise-de-mercado",
         "ordem": 2,
         "nome": "Análise DE mercado",
-        "ferramentas": [],
+        "ferramentas": [
+          "matriz-de-concorrentes"
+        ],
         "entregaveis": [
           "Relatório dos clientes ocultos + Matriz de concorrentes"
         ]
@@ -1619,7 +1623,9 @@
         "id": "definicao-da-pesquisa",
         "ordem": 2,
         "nome": "Definição da pesquisa",
-        "ferramentas": [],
+        "ferramentas": [
+          "ux-research-canvas"
+        ],
         "entregaveis": [
           "UX Research Canvas",
           "Modelos de pesquisa + Estratégias de coleta"
@@ -1846,7 +1852,8 @@
         "nome": "Análise de ambiente",
         "ferramentas": [
           "swot",
-          "pestel"
+          "pestel",
+          "matriz-de-concorrentes"
         ],
         "entregaveis": [
           "SWOT + PESTEL + Matriz de concorrentes"

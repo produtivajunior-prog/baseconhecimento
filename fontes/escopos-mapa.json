@@ -63,6 +63,7 @@
         "3": ["curva-abc"],
         "7": ["dre"],
         "8": ["markup"],
+        "9": ["matriz-de-concorrentes"],
         "10": ["banco-de-indicadores"]
       },
       "entregaveisPorEtapa": {
@@ -85,6 +86,7 @@
       "descricao": "Mapeia o processo comercial, faz cliente oculto e matriz de concorrentes, desenha a jornada do cliente AS IS e TO BE, constrói o ICP e entrega as ferramentas comerciais (CRM, roteiro, matriz de objeções, cadência).",
       "ferramentasPorEtapa": {
         "1": ["bmc", "pmmc"],
+        "2": ["matriz-de-concorrentes"],
         "3": ["bpmn"],
         "4": ["jornada-do-cliente"],
         "5": ["icp"],
@@ -108,7 +110,7 @@
       "descricao": "Diagnostica o marketing da empresa, analisa ambiente e concorrentes, define público-alvo e buyer persona, desenha a jornada do cliente, escolhe canais de tração e entrega estratégias com ferramenta de acompanhamento.",
       "ferramentasPorEtapa": {
         "1": ["bmc"],
-        "2": ["swot", "pestel"],
+        "2": ["swot", "pestel", "matriz-de-concorrentes"],
         "4": ["icp", "buyer-persona"],
         "5": ["jornada-do-cliente"],
         "9": ["banco-de-indicadores"]
@@ -193,6 +195,7 @@
       "descricao": "Define a pesquisa e a metodologia, elabora as ferramentas de coleta, coleta e interpreta os dados em dashboard e entrega relatório final com ICP, SWOT e planos de ação.",
       "ferramentasPorEtapa": {
         "1": ["estudo-de-segmento", "porter"],
+        "2": ["ux-research-canvas"],
         "7": ["icp", "swot", "cpv"]
       },
       "entregaveisPorEtapa": {

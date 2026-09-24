@@ -639,6 +639,62 @@
     ]
   },
   {
+    "id": "matriz-de-concorrentes",
+    "nome": "Matriz de Concorrentes",
+    "tipo": "Ferramenta",
+    "categoria": "Entendimento",
+    "complexidade": "Baixo",
+    "tempo": "2h",
+    "status": "Em construção",
+    "freq": "Alta",
+    "responsavel": {
+      "nome": "Vinícius Moraes",
+      "email": "viniciusmoraes@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Comparação estruturada da empresa com os concorrentes diretos em critérios definidos com o cliente.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "viniciusmoraes@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+      "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+      "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+      "descricao": "manual:viniciusmoraes@produtivajunior.com.br",
+      "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Entregável recorrente nos Cronogramas Base; sem metodologia própria (ver Matriz de Comparativo de Marcas)."
+    ]
+  },
+  {
     "id": "swot",
     "nome": "Matriz SWOT",
     "tipo": "Ferramenta",
@@ -1208,6 +1264,62 @@
     },
     "pendencias": [
       "Etapa do Custeio e Precificação; sem metodologia no Drive."
+    ]
+  },
+  {
+    "id": "ux-research-canvas",
+    "nome": "UX Research Canvas",
+    "tipo": "Ferramenta",
+    "categoria": "Metodologias",
+    "complexidade": "Baixo",
+    "tempo": "1h",
+    "status": "Em construção",
+    "freq": "Baixa",
+    "responsavel": {
+      "nome": "Vinícius Moraes",
+      "email": "viniciusmoraes@produtivajunior.com.br"
+    },
+    "atualizado": "2026-09-07",
+    "descricao": "Canvas que define objetivo, hipóteses, público, método e métricas de uma pesquisa antes de aplicá-la.",
+    "objetivo": "",
+    "problema": "",
+    "quandoUsar": [],
+    "quandoNao": [],
+    "entradas": [],
+    "saidas": [],
+    "passos": [],
+    "perguntas": [],
+    "cuidados": [],
+    "exemplos": [],
+    "anexos": [],
+    "fontes": [
+      {
+        "tipo": "manual",
+        "id": "viniciusmoraes@produtivajunior.com.br",
+        "nome": "Stub: sem arquivo-fonte no Drive",
+        "hash": null
+      }
+    ],
+    "revisao": {
+      "status": "aprovado",
+      "revisor": "produtivajunior@gmail.com",
+      "data": "2026-09-15",
+      "proximaRevisao": "2026-12-15",
+      "nota": "Primeira carga: aprovado pela conta institucional a pedido do dono do repositório, após conferência automática contra as fontes em fontes/drive (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em pendencias). O dono de área pode reabrir a revisão."
+    },
+    "origem": {
+      "nome": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tipo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "categoria": "manual:viniciusmoraes@produtivajunior.com.br",
+      "complexidade": "manual:viniciusmoraes@produtivajunior.com.br",
+      "tempo": "manual:viniciusmoraes@produtivajunior.com.br",
+      "freq": "manual:viniciusmoraes@produtivajunior.com.br",
+      "responsavel": "manual:viniciusmoraes@produtivajunior.com.br",
+      "descricao": "manual:viniciusmoraes@produtivajunior.com.br",
+      "anexos": "manual:viniciusmoraes@produtivajunior.com.br"
+    },
+    "pendencias": [
+      "Método da etapa 'Definição da Pesquisa' no Cronograma Base de Pesquisa de Mercado; sem metodologia no Drive."
     ]
   },
   {

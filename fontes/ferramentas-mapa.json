@@ -566,6 +566,21 @@
       ]
     },
     {
+      "id": "matriz-de-concorrentes",
+      "nome": "Matriz de Concorrentes",
+      "tipo": "Ferramenta",
+      "categoria": "Entendimento",
+      "complexidade": "Baixo",
+      "tempo": "2h",
+      "freq": "Alta",
+      "responsavel": "viniciusmoraes@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Comparação estruturada da empresa com os concorrentes diretos em critérios definidos com o cliente.",
+      "pendencias": [
+        "Entregável recorrente nos Cronogramas Base; sem metodologia própria (ver Matriz de Comparativo de Marcas)."
+      ]
+    },
+    {
       "id": "pestel",
       "nome": "Análise PESTEL",
       "tipo": "Ferramenta",
@@ -714,12 +729,27 @@
       "pendencias": [
         "Só decks de treinamento (Gamificação - PTPJ) e um manual de cliente ([CT] Manual da Gamificação - Meta Concreta); falta metodologia padrão."
       ]
+    },
+    {
+      "id": "ux-research-canvas",
+      "nome": "UX Research Canvas",
+      "tipo": "Ferramenta",
+      "categoria": "Metodologias",
+      "complexidade": "Baixo",
+      "tempo": "1h",
+      "freq": "Baixa",
+      "responsavel": "viniciusmoraes@produtivajunior.com.br",
+      "stub": true,
+      "descricao": "Canvas que define objetivo, hipóteses, público, método e métricas de uma pesquisa antes de aplicá-la.",
+      "pendencias": [
+        "Método da etapa 'Definição da Pesquisa' no Cronograma Base de Pesquisa de Mercado; sem metodologia no Drive."
+      ]
     }
   ],
   "foraDoEscopo": {
     "_comentario": "Ferramentas retiradas do acervo porque não fazem parte dos escopos da Produtiva. Não voltam em rascunho.mjs --ferramentas; os arquivos-fonte continuam em fontes/drive/ só como registro.",
     "removidasEm": "2026-09-24",
     "pedidoPor": "produtivajunior@gmail.com",
-    "ids": ["matriz-de-concorrentes", "mapa-perceptual", "comparativo-de-marcas", "matriz-gracioso", "teoria-da-saliencia", "ux-research-canvas", "cadeia-de-valor"]
+    "ids": ["mapa-perceptual", "comparativo-de-marcas", "matriz-gracioso", "teoria-da-saliencia", "cadeia-de-valor"]
   }
 }

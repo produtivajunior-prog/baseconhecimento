@@ -62,9 +62,8 @@ daquela ferramenta precisa ser refeito.
 
 ### Fora dos escopos da Produtiva (retiradas em 2026-09-24)
 
-Matriz de Concorrentes, Mapa Perceptual, Matriz de Comparativo de Marcas, Matriz Francisco
-Gracioso, Teoria da Saliência, UX Research Canvas e Cadeia de Valor saíram do acervo porque não
-fazem parte dos escopos da Produtiva. Os ids estão em `foraDoEscopo` de
+Mapa Perceptual, Matriz de Comparativo de Marcas, Matriz Francisco Gracioso, Teoria da Saliência
+e Cadeia de Valor saíram do acervo porque não fazem parte dos escopos da Produtiva. Os ids estão em `foraDoEscopo` de
 `fontes/ferramentas-mapa.json`, então `rascunho.mjs --ferramentas` não as traz de volta. Os
 arquivos extraídos continuam em `fontes/drive/` (e no `inventario.json`) só como registro.
 
@@ -165,7 +164,7 @@ Se o dono não responder, gabrielapalma@ (dona da pasta CIEP) aprova. A conta in
 **Primeira carga (2026-09-15):** os 31 rascunhos de ferramentas e os 20 de escopos foram aprovados
 pela conta institucional, a pedido do dono do repositório, após conferência automática contra as
 fontes (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em `pendencias`).
-Os itens "Em construção" (18 em 2026-09-24) continuam com as pendências visíveis na ficha; os donos de área podem
+Os itens "Em construção" (20 em 2026-09-24) continuam com as pendências visíveis na ficha; os donos de área podem
 reabrir qualquer revisão editando `revisao.status`.
 
 ## 5. Promover

@@ -26,6 +26,7 @@
       "estudo-de-segmento",
       "icp",
       "mapa-de-contexto",
+      "matriz-de-concorrentes",
       "swot"
     ],
     "escopoIds": [
@@ -40,6 +41,7 @@
       "curva-abc",
       "dre",
       "markup",
+      "matriz-de-concorrentes",
       "banco-de-indicadores"
     ],
     "escopoIds": [
@@ -53,6 +55,7 @@
     "label": "Estruturar as vendas",
     "ids": [
       "pmmc",
+      "matriz-de-concorrentes",
       "jornada-do-cliente",
       "icp"
     ],
@@ -65,9 +68,11 @@
     "key": "posicionar",
     "label": "Posicionar a marca",
     "ids": [
+      "matriz-de-concorrentes",
       "icp",
       "buyer-persona",
       "jornada-do-cliente",
+      "ux-research-canvas",
       "cpv"
     ],
     "escopoIds": [

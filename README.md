@@ -27,7 +27,7 @@ src/
   tail.html        fechamento do documento
   data/            o acervo, como dado editável
     taxonomia.json          fonte única de tipos, categorias, grupos de escopo, status, cores
-    ferramentas.json        ferramentas promovidas (25: 24 do acervo real + n8n; 18 ainda "Em construção")
+    ferramentas.json        ferramentas promovidas (27: 26 do acervo real + n8n; 20 ainda "Em construção")
     escopos.json            escopos promovidos, com etapas ordenadas e ferramentas por etapa
     problemas.json          problemas → ferramentas (tela "Recomendar")
     modelos.json            modelos-padrão (blocos que a IA preenche)
@@ -123,11 +123,11 @@ Detalhes e o resto do inventário no [DIAGNOSTICO.md](DIAGNOSTICO.md).
 
 ## Próximos passos
 
-1. **Completar os 18 itens "Em construção"**: são as ferramentas sem PDF de metodologia no Drive
+1. **Completar os 20 itens "Em construção"**: são as ferramentas sem PDF de metodologia no Drive
    (BMC, BPMN, SIPOC, RACI, Jornada, PCO, IBACO, FIB, MLQ, DCO, Gamificação, n8n…). O caminho mais curto é
    trazer as páginas do Hangar Academy com `tools/hangar-extrator.js` + `node tools/hangar-importar.mjs`
    (seção 2 de `fontes/README.md`) e regerar os rascunhos.
-2. **Donos de área revisam a primeira carga**: os 45 conteúdos (25 ferramentas + 20 escopos) foram aprovados pela conta institucional
+2. **Donos de área revisam a primeira carga**: os 47 conteúdos (27 ferramentas + 20 escopos) foram aprovados pela conta institucional
    em 2026-09-15; cada dono confere os da sua área até 2026-12-15 (`node tools/revisao.mjs`).
 3. **Escopos despriorizados** (11) estão publicados sem ferramentas mapeadas, porque não têm Cronograma
    Base; thiagomelo@ decide se entram na linha do tempo.
