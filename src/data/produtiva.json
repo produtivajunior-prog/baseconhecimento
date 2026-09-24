@@ -305,7 +305,7 @@
         "quando": [
           "Dois turnos em eventos do MEJ ou em eventos de representação.",
           "Eventos internos (RG, Workday, RN e outras reuniões), quando avisado antes e se a situação financeira permitir.",
-          "Construção de ferramenta ou Workday no turno seguinte, sem duas reuniões em turnos diferentes: vale, mas precisa de justificativa no Slack (veja abaixo)."
+          "É necessário justificar o uso no canal \"Rotina-PJ\" do Slack e registrar as atividades no Google Agenda."
         ],
         "passos": [
           "Use o saldo do cartão Caju na refeição.",
