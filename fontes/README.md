@@ -41,10 +41,6 @@ daquela ferramenta precisa ser refeito.
 | Mapa de Contexto | `1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm` | `161BO5wQ10MHub_X-9ngOWOKkG1pd3ga1` | carloseduardo@ |
 | SWOT | `1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8` | `1-Y_mYRGz1ZxiVVAK1_WyMlZFYjUBjGf7`, `1xSiqIc7gthAaUHSa3RBs1_BMoqQMZRAWU7zQg-xBWUw` | gabrielapalma@ |
 | 5 Forças de Porter | `1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h` | `19FF6AvSQ5YzYieFjahDTW5ShIX9h3qCq`, `1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY` | gabrielapalma@ / heitorqueiroz@ |
-| Mapa Perceptual | `1MCmr8yQSTcVSmXgROEYG9raa1LsobC9K` | `1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg` | viniciusmoraes@ |
-| Matriz Francisco Gracioso | `1Qpmkh9Nc6RqzhLYeIIiGAnNG0j7ZfzWD` | `1HBZuE3NRRU8BOjyUiuxARs65tqoxf58W` | viniciusmoraes@ |
-| Comparativo de Marcas | `1buWpAxUMmWGr7YSVrCZ2hrp5NsLbdJIN` | `1XDvv1MjcPEocNOzk0hgttg7lSmZhnWax` | viniciusmoraes@ |
-| Teoria da Saliência | `1hqTVeBQ_cOFYadqaEkSY39Bma-KjSwWH` | `1sjp_K3sv-IFSORfI7IbqAd7PUGY1aQ2c` | viniciusmoraes@ |
 | CPV / Proposta de Valor | `1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb` | `1QK6lIIWR589W8HG0xWhknAENBw8cwwYD` | laurarodrigues@ |
 | Estudo de Segmento | — | checklist `1KcKyCTQceifhm4btNwmzvW43BEFbQ-Kh` | carloseduardo@ |
 | Banco de Indicadores | — | planilha `1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A` | — |
@@ -64,9 +60,17 @@ daquela ferramenta precisa ser refeito.
 | Cronograma Base — Cultura e Gamificação | `1MzokqJJ0_00xWPRIxRAuoSD_OEo3VAgAcx1sb05kqP4` | thiagomelo@ |
 | Cronograma Base — Custeio e Precificação | `1LIe3FcON0dRXcErSfzRFVg-aZTcPUlbe0S2UAf-Unbw` | thiagomelo@ |
 
+### Fora dos escopos da Produtiva (retiradas em 2026-09-24)
+
+Matriz de Concorrentes, Mapa Perceptual, Matriz de Comparativo de Marcas, Matriz Francisco
+Gracioso, Teoria da Saliência, UX Research Canvas e Cadeia de Valor saíram do acervo porque não
+fazem parte dos escopos da Produtiva. Os ids estão em `foraDoEscopo` de
+`fontes/ferramentas-mapa.json`, então `rascunho.mjs --ferramentas` não as traz de volta. Os
+arquivos extraídos continuam em `fontes/drive/` (e no `inventario.json`) só como registro.
+
 ### Sem metodologia no Drive (só aplicação em cliente ou deck de treinamento)
 
-SIPOC, Matriz RACI, Cadeia de Valor, Jornada do Cliente, BMC, PCO, FIB, IBACO, MLQ, DCO,
+SIPOC, Matriz RACI, Jornada do Cliente, BMC, PCO, FIB, IBACO, MLQ, DCO,
 Gamificação, BPMN. Entram na Biblioteca como **"Em construção"**, com `pendencias[]` dizendo
 o que falta e para quem pedir. O texto dessas páginas existe só no Hangar (seção 2).
 
@@ -161,7 +165,7 @@ Se o dono não responder, gabrielapalma@ (dona da pasta CIEP) aprova. A conta in
 **Primeira carga (2026-09-15):** os 31 rascunhos de ferramentas e os 20 de escopos foram aprovados
 pela conta institucional, a pedido do dono do repositório, após conferência automática contra as
 fontes (tipo e categoria na taxonomia, anexos com URL, campos ausentes registrados em `pendencias`).
-Os 20 itens "Em construção" continuam com as pendências visíveis na ficha; os donos de área podem
+Os itens "Em construção" (18 em 2026-09-24) continuam com as pendências visíveis na ficha; os donos de área podem
 reabrir qualquer revisão editando `revisao.status`.
 
 ## 5. Promover

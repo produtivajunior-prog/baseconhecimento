@@ -3,7 +3,6 @@
     "key": "mapear",
     "label": "Mapear e melhorar processos",
     "ids": [
-      "cadeia-de-valor",
       "bpmn",
       "raci",
       "pmmc",
@@ -27,7 +26,6 @@
       "estudo-de-segmento",
       "icp",
       "mapa-de-contexto",
-      "matriz-de-concorrentes",
       "swot"
     ],
     "escopoIds": [
@@ -42,7 +40,6 @@
       "curva-abc",
       "dre",
       "markup",
-      "matriz-de-concorrentes",
       "banco-de-indicadores"
     ],
     "escopoIds": [
@@ -56,7 +53,6 @@
     "label": "Estruturar as vendas",
     "ids": [
       "pmmc",
-      "matriz-de-concorrentes",
       "jornada-do-cliente",
       "icp"
     ],
@@ -69,15 +65,9 @@
     "key": "posicionar",
     "label": "Posicionar a marca",
     "ids": [
-      "matriz-de-concorrentes",
-      "mapa-perceptual",
-      "comparativo-de-marcas",
       "icp",
       "buyer-persona",
       "jornada-do-cliente",
-      "ux-research-canvas",
-      "matriz-gracioso",
-      "teoria-da-saliencia",
       "cpv"
     ],
     "escopoIds": [

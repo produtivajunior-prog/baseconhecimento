@@ -50,36 +50,6 @@
     ]
   },
   {
-    "id": "mapa-perceptual",
-    "toolId": "mapa-perceptual",
-    "nome": "Mapa Perceptual",
-    "sigla": "MP",
-    "fonte": {
-      "driveId": "1_J4FiNtmhCg4JbRKm8LFZ3jdBhUT2EBg",
-      "nome": "Modelo Padrão - Mapa Perceptual.pdf"
-    },
-    "layout": "grid",
-    "registrado": "Extraído do Modelo Padrão",
-    "blocos": [
-      {
-        "titulo": "Eixo horizontal",
-        "dica": "Atributo e seu oposto (ex.: simples ↔ complexo)."
-      },
-      {
-        "titulo": "Eixo vertical",
-        "dica": "Atributo e seu oposto (ex.: gratuito ↔ pago)."
-      },
-      {
-        "titulo": "Marcas plotadas",
-        "dica": "Até 6 marcas com a posição percebida em cada eixo."
-      },
-      {
-        "titulo": "Leitura",
-        "dica": "Clusters, espaços em branco, marca isolada e posicionamento da empresa."
-      }
-    ]
-  },
-  {
     "id": "pmmc",
     "toolId": "pmmc",
     "nome": "Process Map Model Canvas (PMMC)",

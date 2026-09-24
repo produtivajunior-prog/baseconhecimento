@@ -855,9 +855,7 @@
         "id": "analise-de-mercado",
         "ordem": 9,
         "nome": "Análise de mercado",
-        "ferramentas": [
-          "matriz-de-concorrentes"
-        ],
+        "ferramentas": [],
         "entregaveis": [
           "Matriz de concorrentes"
         ]
@@ -1269,9 +1267,7 @@
         "id": "analise-de-mercado",
         "ordem": 2,
         "nome": "Análise DE mercado",
-        "ferramentas": [
-          "matriz-de-concorrentes"
-        ],
+        "ferramentas": [],
         "entregaveis": [
           "Relatório dos clientes ocultos + Matriz de concorrentes"
         ]
@@ -1616,18 +1612,14 @@
         "nome": "Análise de mercado",
         "ferramentas": [
           "estudo-de-segmento",
-          "porter",
-          "mapa-perceptual",
-          "comparativo-de-marcas"
+          "porter"
         ]
       },
       {
         "id": "definicao-da-pesquisa",
         "ordem": 2,
         "nome": "Definição da pesquisa",
-        "ferramentas": [
-          "ux-research-canvas"
-        ],
+        "ferramentas": [],
         "entregaveis": [
           "UX Research Canvas",
           "Modelos de pesquisa + Estratégias de coleta"
@@ -1658,10 +1650,7 @@
         "id": "analise-e-interpretacao-dos-dados-dashbo",
         "ordem": 6,
         "nome": "Análise e interpretação dos dados (Dashboard",
-        "ferramentas": [
-          "matriz-gracioso",
-          "teoria-da-saliencia"
-        ],
+        "ferramentas": [],
         "entregaveis": [
           "Dashboard da pesquisa + Relatório de dados secundários"
         ]
@@ -1857,10 +1846,7 @@
         "nome": "Análise de ambiente",
         "ferramentas": [
           "swot",
-          "pestel",
-          "matriz-de-concorrentes",
-          "mapa-perceptual",
-          "comparativo-de-marcas"
+          "pestel"
         ],
         "entregaveis": [
           "SWOT + PESTEL + Matriz de concorrentes"
