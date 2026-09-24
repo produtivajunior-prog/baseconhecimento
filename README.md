@@ -89,7 +89,7 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   uma ferramenta ou case, usar o botão "voltar" do navegador e recarregar sem perder a tela. Funciona em `file://`.
 - **Teclado**: `/` foca a busca da tela; `Esc` fecha a janela de anexos; foco visível em todos os controles.
 - **Comece aqui** (`#/comece`): trilha do primeiro projeto em seis passos marcáveis (ficam no navegador), as
-  ferramentas mapeadas em mais etapas, quem procurar e o glossário. Os termos vêm de `src/data/trilha.json`,
+  ferramentas mapeadas em mais etapas e o glossário. Os termos vêm de `src/data/trilha.json`,
   cada um com `origem`; os marcados `pendente: true` aparecem como "a confirmar" até o CIEP validar.
 - **Como funciona a Produtiva** (`#/produtiva`): página de boas-vindas com o que é a Produtiva e as áreas
   de atuação (cada uma abre os escopos do grupo), as 5 áreas da empresa com "o que faz" e "procure quando",

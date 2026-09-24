@@ -637,15 +637,11 @@ class Component extends DCLogic {
     // ferramentas essenciais: as mapeadas em mais etapas dos escopos; sem escopos, as de uso frequente
     const porUso = data.map(d => ({ d, n: this.usoDe(d.id).length })).filter(x => x.n > 0).sort((a, b) => b.n - a.n).slice(0, 5).map(x => x.d);
     const essenciais = (porUso.length ? porUso : data.filter(d => d.freq === 'Alta').slice(0, 5)).map(dec);
-    // quem procurar: responsáveis que aparecem no acervo
-    const resp = {};
-    for (const d of data) { const nome = this.respNome(d.responsavel); const email = this.respEmail(d.responsavel); if (!nome || nome === '—') continue; (resp[nome] = resp[nome] || { nome, email, iniciais: this.initials(nome), n: 0 }).n++; }
-    const responsaveis = Object.values(resp).sort((a, b) => b.n - a.n).slice(0, 8).map(r => ({ ...r, resumo: r.n + (r.n === 1 ? ' conteúdo' : ' conteúdos'), hasEmail: !!r.email }));
     const q = this.normaliza(s.glossQuery || '');
     const glossario = (this.TRILHA.glossario || []).filter(g => !q || this.normaliza(g.sigla + ' ' + (g.nome || '') + ' ' + g.definicao).includes(q))
       .map(g => ({ ...g, hasNome: !!g.nome, nome: g.nome || '' }));
     return { trilhaPassos: passos, trilhaFeitos: passos.filter(p => p.feito).length, trilhaTotal: passos.length, trilhaPct: passos.length ? Math.round(100 * passos.filter(p => p.feito).length / passos.length) : 0,
-      trilhaCompleta: passos.length > 0 && passos.every(p => p.feito), essenciais, hasEssenciais: essenciais.length > 0, responsaveis, hasResponsaveis: responsaveis.length > 0,
+      trilhaCompleta: passos.length > 0 && passos.every(p => p.feito), essenciais, hasEssenciais: essenciais.length > 0,
       glossario, semGlossario: glossario.length === 0, glossQuery: s.glossQuery, onGlossQuery: (e) => this.setState({ glossQuery: e.target.value }) };
   }
   // Ações de conteúdo ({tela, label}) da trilha e da página Como funciona
