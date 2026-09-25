@@ -86,7 +86,9 @@ class Component extends DCLogic {
   // O mesmo vale para o vídeo (hangar.videos): o arquivo fica no Drive/YouTube, o Hangar guarda só o link.
   allCases() {
     const capas = this.state.capas || {}; const videos = this.state.videos || {};
-    return this.state.casesLocais.map(c => ({ ...c, local: true }))
+    // Case que o CIEP já publicou deixa de aparecer como cópia local (senão ficaria duplicado).
+    const publicados = new Set(this.CASES.map(c => c.id));
+    return this.state.casesLocais.filter(c => !publicados.has(c.id)).map(c => ({ ...c, local: true }))
       .concat(this.CASES.map(c => {
         let x = capas[c.id] ? { ...c, foto: capas[c.id], capaLocal: true } : c;
         if (videos[c.id]) x = { ...x, video: videos[c.id], videoLocal: true };
