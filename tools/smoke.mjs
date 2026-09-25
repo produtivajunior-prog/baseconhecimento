@@ -381,6 +381,20 @@ const casesLocaisPos = await page.evaluate(() => { try { return JSON.parse(local
 check(Array.isArray(casesLocaisPos) && casesLocaisPos.length === 0, 'case removido some do localStorage');
 await page.evaluate(() => { try { localStorage.removeItem('hangar.casesLocais'); } catch {} });
 
+// Cases publicados (cases.json): aparecem para todos e a cópia local com o mesmo id não duplica
+{
+  await page.evaluate(() => { location.hash = '#/cases'; }); await page.reload(); await page.waitForTimeout(1200); // limpa a busca "smoke" dos passos anteriores
+  const nPub = await page.locator('main article').count();
+  check(nPub >= 1 && !/Nenhum case ainda/.test(await texto()), `banco de cases mostra os cases publicados (${nPub})`);
+  await page.evaluate(() => {
+    const c = { id: 'atlantis-divers-2026-automacao', cliente: 'Cópia local', segmento: 'x', resumo: 'x', escopoId: null, escopoNome: 'x', equipe: { gerente: { nome: 'a' }, consultores: [{ nome: 'b' }, { nome: 'c' }] } };
+    localStorage.setItem('hangar.casesLocais', JSON.stringify([c]));
+  });
+  await page.reload(); await page.waitForTimeout(1200);
+  check((await page.locator('main article').count()) === nPub && !/Cópia local/.test(await texto()), 'case já publicado não aparece duplicado pela cópia local');
+  await page.evaluate(() => { try { localStorage.removeItem('hangar.casesLocais'); } catch {} });
+}
+
 check(erros.length === 0, erros.length ? `erros de página: ${erros.slice(0, 3).join(' | ')}` : 'nenhum erro de JavaScript');
 
 const shot = join(dirname(alvo), basename(alvo, '.html') + '-smoke.png');
