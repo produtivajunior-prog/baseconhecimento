@@ -63,7 +63,18 @@ await page.waitForTimeout(300);
   check(/#\/produtiva$/.test(await page.evaluate(() => location.hash)) && /Como funciona a Produtiva/.test(t), 'página "Como funciona a Produtiva" abriu pelo menu (#/produtiva)');
   check(['Gestão de Pessoas', 'Vice-presidência', 'Presidência', 'Marketing', 'Projetos'].every((x) => t.includes(x)) && ['CIEP', 'CIT', 'CSAT'].every((x) => t.includes(x)), 'página mostra as 5 áreas e os subnúcleos de Projetos');
   check(/SDR/.test(t) && /Closer/.test(t) && /Cronograma/.test(t) && /Proposta/.test(t), 'fluxo do primeiro contato ao projeto aparece (SDR → closer → gerente → proposta)');
-  check(['PIPJ', 'Reembolso de gasolina', 'Uber for Business', 'Auxílio alimentação', 'Computadores da Produtiva', 'Rotina-PJ', 'Caju'].every((x) => t.includes(x)) && !/Flash/i.test(t) && /auxílios e reembolsos dos membros/.test(t), 'Auxílios e reembolsos traz PIPJ, gasolina, Uber, alimentação (cartão Caju, sem Flash) e computadores');
+  check(/auxílios e reembolsos dos membros/.test(t) && !/Reembolso de gasolina|Rotina-PJ|Uber for Business/.test(t), 'Como funciona não traz mais o bloco de auxílios (só a Vice-presidência cita que paga)');
+  // Auxílios e reembolsos virou página própria: atalho da Como funciona, item do menu e F5 em #/auxilios
+  await page.getByRole('button', { name: 'Auxílios e reembolsos ›' }).first().click(); await page.waitForTimeout(300);
+  const ta = await texto();
+  check(/#\/auxilios$/.test(await page.evaluate(() => location.hash)) && /Auxílios e reembolsos/.test(ta), 'atalho da Como funciona abre a página "Auxílios e reembolsos" (#/auxilios)');
+  check(['PIPJ', 'Reembolso de gasolina', 'Uber for Business', 'Auxílio alimentação', 'Computadores da Produtiva', 'Rotina-PJ', 'Caju'].every((x) => ta.includes(x)) && !/Flash/i.test(ta) && !/As \d+ áreas/.test(ta), 'página de auxílios traz PIPJ, gasolina, Uber, alimentação (cartão Caju, sem Flash) e computadores, sem o resto da Como funciona');
+  await page.reload(); await page.waitForTimeout(500);
+  check(/#\/auxilios$/.test(await page.evaluate(() => location.hash)) && /Reembolso de gasolina/.test(await texto()), 'F5 em #/auxilios volta para a página de auxílios');
+  await page.evaluate(() => { location.hash = '#/'; }); await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Auxílios', exact: true }).first().click(); await page.waitForTimeout(300);
+  check(/#\/auxilios$/.test(await page.evaluate(() => location.hash)), 'item "Auxílios" do menu abre a página');
+  await page.getByRole('button', { name: 'Ir para Como funciona' }).click(); await page.waitForTimeout(300);
   await page.locator('main article', { hasText: 'Gestão da Tecnologia' }).first().click(); await page.waitForTimeout(400);
   check(/#\/escopos$/.test(await page.evaluate(() => location.hash)) && /Automação/.test(await texto()), 'área de atuação "Gestão da Tecnologia" abre a tela Escopos');
 }
@@ -263,7 +274,9 @@ await page.getByRole('button', { name: 'Publicar no meu Hangar' }).click();
 await page.waitForTimeout(400);
 let t = await texto();
 check(/Padaria Smoke/.test(t) && /Equipe do projeto/i.test(t), 'case publicado abriu a ficha');
-check((await page.locator('iframe[src*="youtube.com/embed/"]').count()) > 0, 'ficha do case embute o vídeo');
+check((await page.locator('iframe[src*="youtube.com/embed/"]').count()) === 0 && (await page.getByRole('button', { name: 'Assistir ao vídeo' }).count()) === 1, 'ficha mostra a capa do vídeo com play (sem player preto)');
+await page.getByRole('button', { name: 'Assistir ao vídeo' }).click(); await page.waitForTimeout(300);
+check((await page.locator('iframe[src*="youtube.com/embed/"][src*="autoplay=1"]').count()) === 1, 'clicar na capa abre o player embutido (YouTube com autoplay)');
 check(/Relatório final\.pdf/.test(t) && /Abrir no Drive/.test(t), 'ficha lista o documento com botão do Drive');
 {
   const link = page.getByRole('link', { name: 'Abrir no Drive' }).first();
@@ -320,6 +333,28 @@ check(/Banco de cases/i.test(await texto()) && !/Equipe do projeto/i.test(await 
   await page.reload(); await page.waitForTimeout(1200);
   await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
   check((await page.locator('article img[alt="Padaria Smoke"][src^="data:image/"]').count()) > 0, 'capa nova continua depois de recarregar (localStorage)');
+  // Vídeo num case já cadastrado: remover, adicionar pelo link do Drive (com prévia), sobreviver ao F5 e ir no JSON
+  await page.locator('article img[alt="Padaria Smoke"]').first().click(); await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Remover vídeo', exact: true }).click(); await page.waitForTimeout(300);
+  check((await page.locator('main iframe').count()) === 0 && (await page.getByRole('button', { name: 'Adicionar vídeo' }).count()) === 1, 'ficha: remover o vídeo oferece "Adicionar vídeo"');
+  await page.getByRole('button', { name: 'Adicionar vídeo' }).click(); await page.waitForTimeout(200);
+  await page.getByPlaceholder(/drive\.google\.com\/file\/d\/… ou/).fill('drive.google.com/file/d/abc'); await page.getByRole('button', { name: 'Salvar vídeo' }).click(); await page.waitForTimeout(200);
+  check(/começando com https:\/\//.test(await texto()), 'link sem https:// é recusado com mensagem clara');
+  await page.getByPlaceholder(/drive\.google\.com\/file\/d\/… ou/).fill('https://drive.google.com/file/d/1AtlantisVideo_x/view?usp=sharing');
+  await page.getByPlaceholder('Ex.: 6 min').fill('8 min'); await page.waitForTimeout(200);
+  check((await page.locator('iframe[src="https://drive.google.com/file/d/1AtlantisVideo_x/preview"]').count()) === 1, 'prévia do vídeo do Drive aparece antes de salvar');
+  await page.getByRole('button', { name: 'Salvar vídeo' }).click(); await page.waitForTimeout(300);
+  await page.reload(); await page.waitForTimeout(1200);
+  check((await page.getByRole('button', { name: 'Assistir ao vídeo' }).count()) === 1 && /Gerente e consultores · 8 min · clique para assistir/.test(await texto()) && /Google Drive/.test(await texto()), 'vídeo novo continua na ficha depois de recarregar (capa com origem e duração)');
+  await page.getByRole('button', { name: 'Assistir ao vídeo' }).click(); await page.waitForTimeout(300);
+  check((await page.locator('iframe[src="https://drive.google.com/file/d/1AtlantisVideo_x/preview"]').count()) === 1, 'capa do vídeo do Drive abre o player do Drive');
+  // Host que bloqueia iframes (CSP, como a prévia no Claude): o player some e a capa vira link para o Drive
+  await page.evaluate(() => document.dispatchEvent(new SecurityPolicyViolationEvent('securitypolicyviolation', { blockedURI: 'https://drive.google.com/file/d/x/preview', effectiveDirective: 'frame-src', violatedDirective: 'frame-src', originalPolicy: "frame-src 'none'", disposition: 'enforce', statusCode: 200 }))); await page.waitForTimeout(300);
+  check((await page.locator('main iframe').count()) === 0 && (await page.locator('a.hg-poster[href="https://drive.google.com/file/d/1AtlantisVideo_x/view?usp=sharing"][target="_blank"]').count()) === 1 && /abre no Google Drive ↗/.test(await texto()), 'com iframe bloqueado, a capa vira link que abre o vídeo no Drive');
+  await page.getByRole('button', { name: /Baixar case/ }).first().click(); await page.waitForTimeout(200);
+  const jv = JSON.parse((await page.evaluate(() => window.__hangarUltimoDownload)).json);
+  check(jv.video && jv.video.url === 'https://drive.google.com/file/d/1AtlantisVideo_x/view?usp=sharing' && !('videoLocal' in jv), 'JSON do case leva o link do vídeo novo');
+  await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); await page.waitForTimeout(300);
 }
 await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(400);
 check(/^Biblioteca/m.test(await texto()) || (await page.getByPlaceholder(/Buscar por nome/).count()) > 0, 'mudar o hash na URL troca de tela (#/biblioteca)');

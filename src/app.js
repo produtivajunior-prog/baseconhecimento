@@ -11,6 +11,10 @@ class Component extends DCLogic {
     caseFilters: { escopo: [], segmento: [], ano: [], ferramenta: [] },
     casesLocais: this.carregarLocal('hangar.casesLocais', []),
     capas: this.carregarLocal('hangar.capas', {}),
+    videos: this.carregarLocal('hangar.videos', {}),
+    videoForm: null,
+    videoPlay: null,
+    embedBloqueado: false,
     formCase: this.formCaseVazio(),
     caseErro: '',
     caseFiltroFerr: '',
@@ -79,10 +83,15 @@ class Component extends DCLogic {
   carregarLocal(chave, padrao) { try { const v = (typeof localStorage !== 'undefined') && localStorage.getItem(chave); return v ? JSON.parse(v) : padrao; } catch (e) { return padrao; } }
   salvarLocal(chave, valor) { try { if (typeof localStorage !== 'undefined') { localStorage.setItem(chave, JSON.stringify(valor)); return true; } } catch (e) {} return false; }
   // Capa trocada num case já publicado fica só neste navegador (hangar.capas) até o CIEP publicar o JSON novo.
+  // O mesmo vale para o vídeo (hangar.videos): o arquivo fica no Drive/YouTube, o Hangar guarda só o link.
   allCases() {
-    const capas = this.state.capas || {};
+    const capas = this.state.capas || {}; const videos = this.state.videos || {};
     return this.state.casesLocais.map(c => ({ ...c, local: true }))
-      .concat(this.CASES.map(c => capas[c.id] ? { ...c, foto: capas[c.id], capaLocal: true } : c));
+      .concat(this.CASES.map(c => {
+        let x = capas[c.id] ? { ...c, foto: capas[c.id], capaLocal: true } : c;
+        if (videos[c.id]) x = { ...x, video: videos[c.id], videoLocal: true };
+        return x;
+      }));
   }
 
   // Link de vídeo → URL embutível. YouTube e Drive; qualquer outro fica só como link.
@@ -93,6 +102,15 @@ class Component extends DCLogic {
     m = /drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/.exec(u);
     if (m) return 'https://drive.google.com/file/d/' + m[1] + '/preview';
     return '';
+  }
+  // Miniatura e origem do vídeo, para a capa do player. Se a miniatura não carregar, fica o degradê.
+  videoInfo(url) {
+    const u = String(url || '').trim();
+    let m = /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/.exec(u);
+    if (m) return { fonte: 'YouTube', thumb: 'https://i.ytimg.com/vi/' + m[1] + '/hqdefault.jpg' };
+    m = /drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/.exec(u);
+    if (m) return { fonte: 'Google Drive', thumb: 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1280' };
+    return { fonte: 'Link externo', thumb: '' };
   }
   // Foto do case → URL que um <img> consegue mostrar. Data URL (enviada do computador) passa direto;
   // link do Drive vira a miniatura pública do arquivo (precisa de acesso, como os documentos); outro https fica como está.
@@ -179,6 +197,42 @@ class Component extends DCLogic {
       : url ? 'Capa salva neste navegador. Baixe o case (.json) e envie ao CIEP para publicar a foto para todos.' : 'Capa removida.');
   }
   removerCapa(id, e) { if (e && e.stopPropagation) e.stopPropagation(); this.aplicarCapa(id, ''); }
+  // ---- Vídeo da equipe num case já cadastrado: o vídeo sobe no Drive/YouTube e aqui entra só o link.
+  abrirVideoForm(c) {
+    const v = c.video || {};
+    this.setState({ videoForm: { id: c.id, url: v.url || '', quem: v.quem || 'Gerente e consultores', duracao: v.duracao || '', erro: '' } });
+  }
+  setVideoForm(k, e) { const val = e && e.target ? e.target.value : ''; this.setState(st => ({ videoForm: st.videoForm ? { ...st.videoForm, [k]: val, erro: '' } : null })); }
+  salvarVideoForm() {
+    const f = this.state.videoForm; if (!f) return;
+    const url = f.url.trim();
+    if (!/^https:\/\//.test(url)) { this.setState({ videoForm: { ...f, erro: 'Cole o link completo, começando com https:// (Drive ou YouTube).' } }); return; }
+    this.aplicarVideo(f.id, { url, quem: f.quem.trim(), duracao: f.duracao.trim() });
+  }
+  videoFormVals(s, caseSel) {
+    const f = s.videoForm && caseSel && s.videoForm.id === caseSel.id ? s.videoForm : null;
+    const prev = f ? this.embedDe(f.url) : '';
+    return { videoFormAberto: !!f, videoFormFechado: !f, vf: f || { url: '', quem: '', duracao: '', erro: '' },
+      vfPreview: prev, hasVfPreview: !!prev && !s.embedBloqueado, vfReconhecido: !!prev && !!s.embedBloqueado, vfFonte: f ? this.videoInfo(f.url).fonte : '', vfLinkSemEmbed: !!(f && /^https:\/\//.test(f.url.trim()) && !prev), hasVfErro: !!(f && f.erro),
+      vfUrl: (e) => this.setVideoForm('url', e), vfQuem: (e) => this.setVideoForm('quem', e), vfDuracao: (e) => this.setVideoForm('duracao', e),
+      vfSalvar: () => this.salvarVideoForm(), vfCancelar: () => this.setState({ videoForm: null }) };
+  }
+  aplicarVideo(id, video) {
+    const local = this.state.casesLocais.find(c => c.id === id);
+    let ok;
+    if (local) {
+      const casesLocais = this.state.casesLocais.map(c => c.id === id ? { ...c, video } : c);
+      ok = this.salvarLocal('hangar.casesLocais', casesLocais);
+      this.setState({ casesLocais, videoForm: null });
+    } else {
+      const videos = { ...(this.state.videos || {}) };
+      if (video) videos[id] = video; else delete videos[id];
+      ok = this.salvarLocal('hangar.videos', videos);
+      this.setState({ videos, videoForm: null });
+    }
+    this.showToast(!ok ? 'O vídeo aparece agora, mas não coube na memória deste navegador: baixe o case para não perder.'
+      : video ? 'Vídeo salvo neste navegador. Baixe o case (.json) e envie ao CIEP para publicar para todos.' : 'Vídeo removido.');
+  }
   abrirSeletorFoto() { if (typeof document === 'undefined') return; const el = document.getElementById('hangar-foto-input'); if (el) el.click(); }
   removerFoto() { this.setState(st => ({ formCase: { ...st.formCase, fotoDados: '', fotoLink: '', fotoLegenda: '' } })); }
 
@@ -409,7 +463,7 @@ class Component extends DCLogic {
   }
   // Gera o arquivo do case para enviar ao CIEP. Guarda o último em window para o smoke conferir.
   baixarJson(c) {
-    const { local, capaLocal, ...limpo } = c;
+    const { local, capaLocal, videoLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const nome = 'case-' + limpo.id + '.json';
     if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json };
@@ -417,7 +471,7 @@ class Component extends DCLogic {
     this.showToast(this.baixarArquivo(nome, json, 'application/json') ? 'Arquivo ' + nome + ' gerado. Envie ao CIEP.' : 'Não consegui gerar o arquivo aqui. Use "Copiar JSON".');
   }
   copiarJson(c) {
-    const { local, capaLocal, ...limpo } = c;
+    const { local, capaLocal, videoLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const ok = () => this.showToast('JSON do case copiado. Cole numa mensagem para o CIEP.');
     try {
@@ -425,7 +479,7 @@ class Component extends DCLogic {
       else ok();
     } catch (e) { this.showToast('Não consegui copiar automaticamente.'); }
   }
-  openCase(id) { this.setState({ screen:'case', caseId:id }); if(typeof window!=='undefined') window.scrollTo(0,0); }
+  openCase(id) { this.setState({ screen:'case', caseId:id, videoForm:null, videoPlay:null }); if(typeof window!=='undefined') window.scrollTo(0,0); }
   openNovoCase(prefill) {
     const pre = prefill && typeof prefill === 'object' && !prefill.target ? prefill : null;
     const f = this.state.formCase;
@@ -473,6 +527,7 @@ class Component extends DCLogic {
     });
     const video = c.video && c.video.url ? c.video : null;
     const embed = video ? this.embedDe(video.url) : '';
+    const vInfo = video ? this.videoInfo(video.url) : { fonte: '', thumb: '' };
     const foto = c.foto && c.foto.url ? c.foto : null;
     const fotoSrc = foto ? this.fotoSrc(foto.url) : '';
     // Sem foto, a galeria mostra um cartão na cor do grupo do escopo com as iniciais do cliente.
@@ -496,6 +551,22 @@ class Component extends DCLogic {
       escolherCapa: (e) => this.escolherCapa(c.id, e), removerCapa: (e) => this.removerCapa(c.id, e),
       capaLabel: fotoSrc ? 'Trocar capa' : 'Adicionar capa', capaLabelFicha: fotoSrc ? 'Trocar foto de capa' : 'Adicionar foto de capa',
       podeRemoverCapa: c.local ? !!fotoSrc : !!c.capaLocal, capaLocal: !!c.capaLocal,
+      videoFonte: vInfo.fonte,
+      // Foto do case entra como <img> (data URL tem ';' e quebraria o style); sem foto, a miniatura do vídeo vai no fundo.
+      posterFoto: fotoSrc, hasPosterFoto: !!fotoSrc,
+      posterImagem: !fotoSrc && vInfo.thumb ? "url('" + vInfo.thumb + "')" : 'none',
+      posterGradiente: 'linear-gradient(140deg,#123640 0%,#1B5664 55%,' + (g.cor || '#2E8FA6') + ' 150%)',
+      mostrarPlayer: !!embed && this.state.videoPlay === c.id && !this.state.embedBloqueado,
+      mostrarPoster: !(!!embed && this.state.videoPlay === c.id && !this.state.embedBloqueado),
+      posterTocaAqui: !!embed && !this.state.embedBloqueado, posterAbreFora: !embed || !!this.state.embedBloqueado,
+      videoPlayerSrc: embed ? embed + (/youtube/.test(embed) ? '?autoplay=1&rel=0' : '') : '',
+      tocarVideo: () => this.setState({ videoPlay: c.id }),
+      posterRodapeAqui: [video && video.quem, video && video.duracao, 'clique para assistir'].filter(Boolean).join(' · '),
+      posterRodapeFora: [video && video.quem, video && video.duracao, 'abre ' + (vInfo.fonte === 'Link externo' ? 'o link' : 'no ' + vInfo.fonte) + ' ↗'].filter(Boolean).join(' · '),
+      semVideo: !video, videoLocal: !!c.videoLocal, alteracaoLocal: !!(c.capaLocal || c.videoLocal),
+      avisoLocal: c.capaLocal && c.videoLocal ? 'A capa e o vídeo novos só existem neste navegador.' : c.videoLocal ? 'O vídeo novo só existe neste navegador.' : 'A capa nova só existe neste navegador.',
+      podeRemoverVideo: c.local ? !!video : !!c.videoLocal, videoMeta: video ? [video.quem, video.duracao].filter(Boolean).join(' · ') : '',
+      abrirVideoForm: () => this.abrirVideoForm(c), removerVideo: () => this.aplicarVideo(c.id, null),
       remover: (e) => this.pedirRemoverCase(c.id, e) };
   }
   computeCases() {
@@ -725,8 +796,8 @@ class Component extends DCLogic {
         colunas: (x.passos || []).length && (x.regras || []).length ? '1fr 1fr' : '1fr',
         hasModelo: !!x.modelo, modeloTitulo: x.modelo ? x.modelo.titulo : '', modeloTexto: x.modelo ? x.modelo.texto : '',
         ir: () => this.irPara('aux-' + x.id) })),
-      prodIrOQueE: () => this.irPara('prod-oquee'), prodIrAreas: () => this.irPara('prod-areas'), prodIrFluxo: () => this.irPara('prod-fluxo'), prodIrMembro: () => this.irPara('prod-membro'), prodIrAuxilios: () => this.irPara('prod-auxilios'),
-      goProdutiva: () => this.nav('produtiva') };
+      prodIrOQueE: () => this.irPara('prod-oquee'), prodIrAreas: () => this.irPara('prod-areas'), prodIrFluxo: () => this.irPara('prod-fluxo'), prodIrMembro: () => this.irPara('prod-membro'),
+      goProdutiva: () => this.nav('produtiva'), goAuxilios: () => this.nav('auxilios') };
   }
   nav(screen) { this.setState({ screen, escopoId: screen==='escopos' ? null : this.state.escopoId, caseId: screen==='cases' ? null : this.state.caseId }); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
@@ -745,6 +816,7 @@ class Component extends DCLogic {
       case 'recomendar': return '#/recomendar';
       case 'comece': return '#/comece';
       case 'produtiva': return '#/produtiva';
+      case 'auxilios': return '#/auxilios';
       default: return '#/';
     }
   }
@@ -765,12 +837,21 @@ class Component extends DCLogic {
     else if (tela === 'recomendar') this.nav('recomendar');
     else if (tela === 'comece') this.nav('comece');
     else if (tela === 'produtiva') this.nav('produtiva');
+    else if (tela === 'auxilios') this.nav('auxilios');
     else if (this.state.screen !== 'home') this.nav('home');
   }
   componentDidMount() {
     if (typeof window === 'undefined') return;
     this._onHash = () => { if (this._hashPropria) { this._hashPropria = false; return; } this.aplicarHash(); };
     window.addEventListener('hashchange', this._onHash);
+    // Onde a página não pode embutir Drive/YouTube (CSP do host), o player some e a capa passa a abrir o vídeo em nova aba.
+    this._onCsp = (e) => {
+      const alvo = String((e && (e.blockedURI || e.blockedURL)) || '');
+      if (/frame-src|child-src/.test(String((e && e.effectiveDirective) || '')) || /youtube|drive\.google/.test(alvo)) {
+        if (!this.state.embedBloqueado) this.setState({ embedBloqueado: true, videoPlay: null });
+      }
+    };
+    document.addEventListener('securitypolicyviolation', this._onCsp);
     // "/" foca a busca da tela; Esc fecha a janela de anexos
     this._onKey = (e) => {
       const alvo = e.target || {}; const digitando = /^(INPUT|TEXTAREA|SELECT)$/.test(alvo.tagName || '') || alvo.isContentEditable;
@@ -788,7 +869,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     if (typeof window === 'undefined') return;
-    window.removeEventListener('hashchange', this._onHash); window.removeEventListener('keydown', this._onKey);
+    window.removeEventListener('hashchange', this._onHash); window.removeEventListener('keydown', this._onKey); if (this._onCsp) document.removeEventListener('securitypolicyviolation', this._onCsp);
   }
   openEscopo(id) { this.setState({ screen:'escopos', escopoId:id }); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
@@ -1096,7 +1177,7 @@ class Component extends DCLogic {
     const dec = (it) => it ? this.decorate(it) : null;
 
     // nav
-    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'produtiva',label:'Como funciona'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
+    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'produtiva',label:'Como funciona'},{key:'auxilios',label:'Auxílios'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
     const navItems = navDef.map(n => {
       const active = s.screen===n.key || (n.key==='biblioteca' && s.screen==='conteudo') || (n.key==='cases' && (s.screen==='case' || s.screen==='novo-case'));
       return { label:n.label, go: n.key==='docs' ? ()=>this.goDocs() : ()=>this.nav(n.key), bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
@@ -1339,7 +1420,7 @@ class Component extends DCLogic {
       ...this.revisoesVals(),
       // trilha do primeiro projeto + glossário
       isComece: s.screen==='comece', goComece:()=>this.nav('comece'), ...this.trilhaVals(s, data, dec),
-      isProdutiva: s.screen==='produtiva', ...this.produtivaVals(),
+      isProdutiva: s.screen==='produtiva', isAuxilios: s.screen==='auxilios', ...this.produtivaVals(),
       // filtros no celular (biblioteca e cases) e iniciais de quem usa
       filtrosClass: s.filtrosAbertos ? 'hg-open' : '', filtrosLabel: s.filtrosAbertos ? 'Ocultar filtros' : 'Filtros', toggleFiltros:()=>this.setState(st=>({ filtrosAbertos: !st.filtrosAbertos })),
       hasEu: !!(s.eu && s.eu.nome), euNome: (s.eu && s.eu.nome) || '', euIniciais: s.eu && s.eu.nome ? this.initials(s.eu.nome) : '',
@@ -1347,13 +1428,13 @@ class Component extends DCLogic {
       casesList, casesCount: casesList.length, semCases: casesTodos.length===0, semResultadoCases: casesTodos.length>0 && casesList.length===0,
       caseFilterGroups, caseActiveChips, hasCaseFilters: caseActiveChips.length>0, clearCaseFilters:()=>this.setState({ caseFilters:{ escopo:[], segmento:[], ano:[], ferramenta:[] } }),
       caseQuery: s.caseQuery, onCaseQuery:(e)=>this.setState({ caseQuery:e.target.value }),
-      caseSel, hasCaseSel: !!caseSel, casesRecentes, hasCasesRecentes: casesRecentes.length>0,
+      caseSel, hasCaseSel: !!caseSel, ...this.videoFormVals(s, caseSel), casesRecentes, hasCasesRecentes: casesRecentes.length>0,
       confirmRemoverAberto: !!confirmRemoverCase, confirmRemoverNome: confirmRemoverCase ? confirmRemoverCase.cliente : '',
       confirmRemover:()=>this.removerCase(s.confirmRemoverId), cancelarRemover:()=>this.cancelarRemoverCase(),
       // formulário de case
       formCase: fcase, fc, escopoOptions, porteOptions, docTipoOptions, ferrChips, caseFiltroFerr: s.caseFiltroFerr, onCaseFiltroFerr:(e)=>this.setState({ caseFiltroFerr:e.target.value }),
       nFerrEscolhidas: fcase.ferramentas.length, docsRows, addDoc:()=>this.setState(st=>({ formCase:{ ...st.formCase, documentos: st.formCase.documentos.concat([{ nome:'', tipo:docTipoOptions[0]?docTipoOptions[0].value:'Outro', url:'' }]) } })),
-      videoPreview, hasVideoPreview: !!videoPreview, caseErro: s.caseErro, hasCaseErro: !!s.caseErro,
+      videoPreview, hasVideoPreview: !!videoPreview && !s.embedBloqueado, caseErro: s.caseErro, hasCaseErro: !!s.caseErro,
       fotoPreview, hasFotoPreview: !!fotoPreview, semFotoPreview: !fotoPreview, fotoFonte,
       onCapaArquivo:(e)=>this.onCapaArquivo(e), onFotoArquivo:(e)=>this.onFotoArquivo(e), onFotoDrop:(e)=>this.onFotoDrop(e), onFotoDragOver:(e)=>this.onFotoDragOver(e), abrirSeletorFoto:()=>this.abrirSeletorFoto(), removerFoto:()=>this.removerFoto(),
       publishCase:()=>this.publishCase(), baixarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.baixarJson(this.montarCase(fcase)); }, copiarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.copiarJson(this.montarCase(fcase)); },

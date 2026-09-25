@@ -289,7 +289,7 @@ for (const c of cases) {
 check(!problemas_.some((x) => x.startsWith('cases')), `cases.json  ${cases.length} case(s), referências resolvem`, 'cases.json com erros');
 
 // telas que um botão de conteúdo (trilha, página Como funciona) pode abrir
-const TELAS = ['home', 'biblioteca', 'escopos', 'cases', 'novo-case', 'cadastro', 'recomendar', 'comece', 'produtiva'];
+const TELAS = ['home', 'biblioteca', 'escopos', 'cases', 'novo-case', 'cadastro', 'recomendar', 'comece', 'produtiva', 'auxilios'];
 
 // ---------------------------------------------------------------- trilha (Comece aqui)
 {
