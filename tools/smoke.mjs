@@ -393,6 +393,8 @@ await page.evaluate(() => { try { localStorage.removeItem('hangar.casesLocais');
   await page.reload(); await page.waitForTimeout(1200);
   check((await page.locator('main article').count()) === nPub && !/Cópia local/.test(await texto()), 'case já publicado não aparece duplicado pela cópia local');
   await page.evaluate(() => { try { localStorage.removeItem('hangar.casesLocais'); } catch {} });
+  await page.evaluate(() => { location.hash = '#/case/atlantis-divers-2026-automacao'; }); await page.reload(); await page.waitForTimeout(1200);
+  check((await page.getByRole('button', { name: 'Assistir ao vídeo' }).count()) === 1 && (await page.getByRole('button', { name: /Trocar vídeo|Remover vídeo|Adicionar vídeo/ }).count()) === 0, 'case publicado mostra o vídeo, sem opção de trocar ou remover');
 }
 
 check(erros.length === 0, erros.length ? `erros de página: ${erros.slice(0, 3).join(' | ')}` : 'nenhum erro de JavaScript');
