@@ -391,7 +391,8 @@ class Component extends DCLogic {
   }
 
   linhas(t) { return String(t || '').split('\n').map(x => x.trim()).filter(Boolean); }
-  fmtMes(s) { const m = /^(\d{4})-(\d{2})$/.exec(s || ''); if (!m) return s || ''; const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']; return meses[+m[2]-1] + ' ' + m[1]; }
+  // Aceita "2026-03" (mar 2026) e "2026-03-19" (19 mar 2026).
+  fmtMes(s) { const m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(s || ''); if (!m) return s || ''; const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']; return (m[3] ? +m[3] + ' ' : '') + meses[+m[2]-1] + ' ' + m[1]; }
 
   formCaseVazio() {
     const eu = this.carregarLocal('hangar.eu', {});
@@ -532,7 +533,7 @@ class Component extends DCLogic {
       ferramentas, hasFerramentas: ferramentas.length > 0, docs, nDocs: docs.length, hasDocs: docs.length > 0,
       video, hasVideo: !!video, videoEmbed: embed, hasVideoEmbed: !!embed, videoLink: video ? video.url : '',
       foto, hasFoto: !!fotoSrc, semFoto: !fotoSrc, fotoSrc, fotoLegenda: foto ? (foto.legenda || '') : '', hasFotoLegenda: !!(foto && foto.legenda), inicial, placeholderBg,
-      periodoFmt: periodoFmt || (ano ? String(ano) : ''), ano, duracaoFmt: c.duracaoDias ? c.duracaoDias + ' dias' : '',
+      periodoFmt: periodoFmt || (ano ? String(ano) : ''), ano, duracaoFmt: c.duracaoDias ? c.duracaoDias + (c.duracaoUteis ? ' dias úteis' : ' dias') : '',
       resultados: c.resultados || [], hasResultados: !!(c.resultados && c.resultados.length), resultadoDestaque: (c.resultados && c.resultados[0]) || c.resumo,
       aprendizados: c.aprendizados || [], hasAprendizados: !!(c.aprendizados && c.aprendizados.length),
       hasDesafio: !!c.desafio, hasSolucao: !!c.solucao, hasDepoimento: !!c.depoimentoCliente,

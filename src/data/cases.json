@@ -6,6 +6,12 @@
     "porte": "Pequena",
     "cidade": "Fernando de Noronha",
     "escopoId": "automacao",
+    "periodo": {
+      "inicio": "2026-03-19",
+      "fim": "2026-08-17"
+    },
+    "duracaoDias": 85,
+    "duracaoUteis": true,
     "equipe": {
       "gerente": {
         "nome": "Matheus"
