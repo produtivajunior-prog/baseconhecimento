@@ -112,7 +112,8 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   (`hangar.capas`) com o aviso para baixar o JSON e enviar ao CIEP.
 - **Vídeo dos cases**: a ficha tem "Adicionar vídeo" / "Trocar vídeo" / "Remover vídeo". O arquivo nunca entra no
   Hangar (vídeos passam fácil de 100 MB): sobe no Google Drive ou no YouTube (não listado) e o case guarda só o link,
-  embutido na ficha. Mesma regra da capa: em case já publicado, fica em `hangar.videos` até o CIEP publicar o JSON.
+  embutido na ficha. Só vale para case que ainda está no navegador de quem cadastrou: em case já publicado, o vídeo
+  não pode ser trocado nem removido pelo site (só o CIEP altera, no `cases.json`).
 - **Material para a reunião**: na ficha da ferramenta, "Abrir material para imprimir" gera uma página com
   perguntas-chave, o que pedir ao cliente, passo a passo e, quando há modelo em canvas, o canvas em branco.
 - **Pergunte a quem fez**: na ficha do case, botões de e-mail e WhatsApp para a equipe, com a mensagem já

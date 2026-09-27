@@ -11,7 +11,6 @@ class Component extends DCLogic {
     caseFilters: { escopo: [], segmento: [], ano: [], ferramenta: [] },
     casesLocais: this.carregarLocal('hangar.casesLocais', []),
     capas: this.carregarLocal('hangar.capas', {}),
-    videos: this.carregarLocal('hangar.videos', {}),
     videoForm: null,
     videoPlay: null,
     embedBloqueado: false,
@@ -83,17 +82,13 @@ class Component extends DCLogic {
   carregarLocal(chave, padrao) { try { const v = (typeof localStorage !== 'undefined') && localStorage.getItem(chave); return v ? JSON.parse(v) : padrao; } catch (e) { return padrao; } }
   salvarLocal(chave, valor) { try { if (typeof localStorage !== 'undefined') { localStorage.setItem(chave, JSON.stringify(valor)); return true; } } catch (e) {} return false; }
   // Capa trocada num case já publicado fica só neste navegador (hangar.capas) até o CIEP publicar o JSON novo.
-  // O mesmo vale para o vídeo (hangar.videos): o arquivo fica no Drive/YouTube, o Hangar guarda só o link.
+  // O vídeo de um case publicado não se troca pelo site: só o CIEP altera, no cases.json.
   allCases() {
-    const capas = this.state.capas || {}; const videos = this.state.videos || {};
+    const capas = this.state.capas || {};
     // Case que o CIEP já publicou deixa de aparecer como cópia local (senão ficaria duplicado).
     const publicados = new Set(this.CASES.map(c => c.id));
     return this.state.casesLocais.filter(c => !publicados.has(c.id)).map(c => ({ ...c, local: true }))
-      .concat(this.CASES.map(c => {
-        let x = capas[c.id] ? { ...c, foto: capas[c.id], capaLocal: true } : c;
-        if (videos[c.id]) x = { ...x, video: videos[c.id], videoLocal: true };
-        return x;
-      }));
+      .concat(this.CASES.map(c => capas[c.id] ? { ...c, foto: capas[c.id], capaLocal: true } : c));
   }
 
   // Link de vídeo → URL embutível. YouTube e Drive; qualquer outro fica só como link.
@@ -199,8 +194,10 @@ class Component extends DCLogic {
       : url ? 'Capa salva neste navegador. Baixe o case (.json) e envie ao CIEP para publicar a foto para todos.' : 'Capa removida.');
   }
   removerCapa(id, e) { if (e && e.stopPropagation) e.stopPropagation(); this.aplicarCapa(id, ''); }
-  // ---- Vídeo da equipe num case já cadastrado: o vídeo sobe no Drive/YouTube e aqui entra só o link.
+  // ---- Vídeo da equipe num case que ainda só existe neste navegador: o vídeo sobe no Drive/YouTube e aqui entra só o link.
+  // Case publicado não tem essa opção: ninguém troca o vídeo de todos pelo site.
   abrirVideoForm(c) {
+    if (!c.local) return;
     const v = c.video || {};
     this.setState({ videoForm: { id: c.id, url: v.url || '', quem: v.quem || 'Gerente e consultores', duracao: v.duracao || '', erro: '' } });
   }
@@ -220,20 +217,12 @@ class Component extends DCLogic {
       vfSalvar: () => this.salvarVideoForm(), vfCancelar: () => this.setState({ videoForm: null }) };
   }
   aplicarVideo(id, video) {
-    const local = this.state.casesLocais.find(c => c.id === id);
-    let ok;
-    if (local) {
-      const casesLocais = this.state.casesLocais.map(c => c.id === id ? { ...c, video } : c);
-      ok = this.salvarLocal('hangar.casesLocais', casesLocais);
-      this.setState({ casesLocais, videoForm: null });
-    } else {
-      const videos = { ...(this.state.videos || {}) };
-      if (video) videos[id] = video; else delete videos[id];
-      ok = this.salvarLocal('hangar.videos', videos);
-      this.setState({ videos, videoForm: null });
-    }
+    if (!this.state.casesLocais.some(c => c.id === id)) return;
+    const casesLocais = this.state.casesLocais.map(c => c.id === id ? { ...c, video } : c);
+    const ok = this.salvarLocal('hangar.casesLocais', casesLocais);
+    this.setState({ casesLocais, videoForm: null });
     this.showToast(!ok ? 'O vídeo aparece agora, mas não coube na memória deste navegador: baixe o case para não perder.'
-      : video ? 'Vídeo salvo neste navegador. Baixe o case (.json) e envie ao CIEP para publicar para todos.' : 'Vídeo removido.');
+      : video ? 'Vídeo salvo. Baixe o case (.json) e envie ao CIEP para publicar para todos.' : 'Vídeo removido.');
   }
   abrirSeletorFoto() { if (typeof document === 'undefined') return; const el = document.getElementById('hangar-foto-input'); if (el) el.click(); }
   removerFoto() { this.setState(st => ({ formCase: { ...st.formCase, fotoDados: '', fotoLink: '', fotoLegenda: '' } })); }
@@ -402,7 +391,8 @@ class Component extends DCLogic {
   }
 
   linhas(t) { return String(t || '').split('\n').map(x => x.trim()).filter(Boolean); }
-  fmtMes(s) { const m = /^(\d{4})-(\d{2})$/.exec(s || ''); if (!m) return s || ''; const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']; return meses[+m[2]-1] + ' ' + m[1]; }
+  // Aceita "2026-03" (mar 2026) e "2026-03-19" (19 mar 2026).
+  fmtMes(s) { const m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(s || ''); if (!m) return s || ''; const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']; return (m[3] ? +m[3] + ' ' : '') + meses[+m[2]-1] + ' ' + m[1]; }
 
   formCaseVazio() {
     const eu = this.carregarLocal('hangar.eu', {});
@@ -465,7 +455,7 @@ class Component extends DCLogic {
   }
   // Gera o arquivo do case para enviar ao CIEP. Guarda o último em window para o smoke conferir.
   baixarJson(c) {
-    const { local, capaLocal, videoLocal, ...limpo } = c;
+    const { local, capaLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const nome = 'case-' + limpo.id + '.json';
     if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json };
@@ -473,7 +463,7 @@ class Component extends DCLogic {
     this.showToast(this.baixarArquivo(nome, json, 'application/json') ? 'Arquivo ' + nome + ' gerado. Envie ao CIEP.' : 'Não consegui gerar o arquivo aqui. Use "Copiar JSON".');
   }
   copiarJson(c) {
-    const { local, capaLocal, videoLocal, ...limpo } = c;
+    const { local, capaLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const ok = () => this.showToast('JSON do case copiado. Cole numa mensagem para o CIEP.');
     try {
@@ -543,7 +533,7 @@ class Component extends DCLogic {
       ferramentas, hasFerramentas: ferramentas.length > 0, docs, nDocs: docs.length, hasDocs: docs.length > 0,
       video, hasVideo: !!video, videoEmbed: embed, hasVideoEmbed: !!embed, videoLink: video ? video.url : '',
       foto, hasFoto: !!fotoSrc, semFoto: !fotoSrc, fotoSrc, fotoLegenda: foto ? (foto.legenda || '') : '', hasFotoLegenda: !!(foto && foto.legenda), inicial, placeholderBg,
-      periodoFmt: periodoFmt || (ano ? String(ano) : ''), ano, duracaoFmt: c.duracaoDias ? c.duracaoDias + ' dias' : '',
+      periodoFmt: periodoFmt || (ano ? String(ano) : ''), ano, duracaoFmt: c.duracaoDias ? c.duracaoDias + (c.duracaoUteis ? ' dias úteis' : ' dias') : '',
       resultados: c.resultados || [], hasResultados: !!(c.resultados && c.resultados.length), resultadoDestaque: (c.resultados && c.resultados[0]) || c.resumo,
       aprendizados: c.aprendizados || [], hasAprendizados: !!(c.aprendizados && c.aprendizados.length),
       hasDesafio: !!c.desafio, hasSolucao: !!c.solucao, hasDepoimento: !!c.depoimentoCliente,
@@ -565,9 +555,9 @@ class Component extends DCLogic {
       tocarVideo: () => this.setState({ videoPlay: c.id }),
       posterRodapeAqui: [video && video.quem, video && video.duracao, 'clique para assistir'].filter(Boolean).join(' · '),
       posterRodapeFora: [video && video.quem, video && video.duracao, 'abre ' + (vInfo.fonte === 'Link externo' ? 'o link' : 'no ' + vInfo.fonte) + ' ↗'].filter(Boolean).join(' · '),
-      semVideo: !video, videoLocal: !!c.videoLocal, alteracaoLocal: !!(c.capaLocal || c.videoLocal),
-      avisoLocal: c.capaLocal && c.videoLocal ? 'A capa e o vídeo novos só existem neste navegador.' : c.videoLocal ? 'O vídeo novo só existe neste navegador.' : 'A capa nova só existe neste navegador.',
-      podeRemoverVideo: c.local ? !!video : !!c.videoLocal, videoMeta: video ? [video.quem, video.duracao].filter(Boolean).join(' · ') : '',
+      podeEditarVideo: !!c.local, semVideoEditavel: !video && !!c.local, alteracaoLocal: !!c.capaLocal,
+      avisoLocal: 'A capa nova só existe neste navegador.',
+      podeRemoverVideo: !!c.local && !!video, videoMeta: video ? [video.quem, video.duracao].filter(Boolean).join(' · ') : '',
       abrirVideoForm: () => this.abrirVideoForm(c), removerVideo: () => this.aplicarVideo(c.id, null),
       remover: (e) => this.pedirRemoverCase(c.id, e) };
   }
