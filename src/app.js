@@ -1323,7 +1323,7 @@ class Component extends DCLogic {
       return 'Rascunho · aguardando revisão';
     };
     const sel = selRaw ? { ...dec(selRaw), respInitials:this.initials(this.respNome(selRaw.responsavel)), anexos:(selRaw.anexos||[]).map(decAnexo), revisaoTexto:revisaoTexto(selRaw),
-      pendencias:selRaw.pendencias||[], hasPendencias:!!(selRaw.pendencias&&selRaw.pendencias.length),
+      pendencias:selRaw.pendencias||[], hasPendencias:!!(selRaw.pendencias&&selRaw.pendencias.length), pendenciasTitulo: selRaw.status==='Em construção' ? 'Em construção — o que falta' : 'Pontos para revisão',
       hasCanvas: this.state.modelos.some(m => m.toolId === selRaw.id && m.layout === 'canvas' && (m.blocos||[]).length > 0),
       abrirMaterial: () => this.abrirMaterial(selRaw), baixarMaterial: () => this.baixarMaterial(selRaw), cases: casesTodos.filter(c => (c.ferramentas||[]).includes(selRaw.id)).map(decCase), hasCases: casesTodos.some(c => (c.ferramentas||[]).includes(selRaw.id)) } : null;
     const blocks = selRaw ? this.buildBlocks(selRaw) : [];

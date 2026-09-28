@@ -582,7 +582,7 @@
 
         <sc-if value="{{ sel.hasPendencias }}" hint-placeholder-val="{{ false }}">
         <div style="background:#FFFBF2;border:1px solid #F1DFB0;border-radius:16px;padding:18px 22px;margin-bottom:14px">
-          <div style="font-size:12px;font-weight:700;color:#9A6B17;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px">Em construção — o que falta</div>
+          <div style="font-size:12px;font-weight:700;color:#9A6B17;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px">{{ sel.pendenciasTitulo }}</div>
           <ul style="margin:0;padding-left:18px;font-size:13.5px;color:#5E4A1E;line-height:1.6">
             <sc-for list="{{ sel.pendencias }}" as="pd" hint-placeholder-count="2"><li>{{ pd }}</li></sc-for>
           </ul>
