@@ -514,7 +514,7 @@ class Component extends DCLogic {
       const isPdf = /^data:/.test(d.url || ''); const isLink = /^https:\/\//.test(d.url || '');
       const nomeEhUrl = /^https?:\/\//.test(d.nome || '');
       return { ...d, nome: nomeEhUrl ? (d.tipo || 'Documento') : d.nome, ext: this.extOf(nomeEhUrl ? { tipo: d.tipo } : d),
-        isPdf, isLink, href: isLink ? d.url : '', btnLabel: isPdf ? 'Abrir PDF' : 'Abrir no Drive',
+        isPdf, isLink, href: isLink ? d.url : '', btnLabel: isPdf ? 'Abrir PDF' : /canva\.(link|com)\//.test(d.url || '') ? 'Abrir no Canva' : /drive\.google|docs\.google/.test(d.url || '') ? 'Abrir no Drive' : 'Abrir link',
         abrir: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.abrirDataUrl(d.url); } };
     });
     const video = c.video && c.video.url ? c.video : null;
