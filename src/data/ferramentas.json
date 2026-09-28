@@ -12,12 +12,23 @@
       "nome": "Gabriela Palma",
       "email": "gabrielapalma@produtivajunior.com.br"
     },
-    "atualizado": "2026-09-07",
+    "atualizado": "2026-09-28",
     "descricao": "O modelo das 5 Forças de Porter é uma estrutura de análise da competitividade setorial que examina cinco fatores chave do ambiente externo, determinando como o valor econômico é dividido entre os atores de uma empresa.",
     "objetivo": "Em suma, a ferramenta serve para dissecar o ambiente competitivo de empresas já atuantes no mercado, provendo insights sobre pressões externas que afetam a rentabilidade e embasando decisões estratégicas fundamentadas.",
-    "problema": null,
-    "quandoUsar": null,
-    "quandoNao": null,
+    "problema": "O cliente não sabe o quão atrativo e lucrativo é o mercado em que atua nem onde está o poder de barganha (fornecedores, clientes, concorrentes, entrantes, substitutos), e por isso toma decisões de preço, investimento e posicionamento no escuro.",
+    "quandoUsar": [
+      "No diagnóstico externo do Planejamento Estratégico, antes da SWOT, para alimentar oportunidades e ameaças",
+      "Quando o cliente sente pressão nas margens e não sabe de onde ela vem (preço de insumo, cliente que negocia muito, guerra de preços)",
+      "Ao avaliar a entrada em um novo mercado, região ou linha de produto",
+      "Para entender a dependência de poucos fornecedores ou de poucos grandes clientes",
+      "Quando surgem novos concorrentes ou soluções substitutas (apps, marketplaces, novas tecnologias)"
+    ],
+    "quandoNao": [
+      "Para diagnosticar problemas internos (processos, pessoas, finanças): use SWOT, PMMC ou DCO",
+      "Quando o setor não está definido com clareza; primeiro delimite o mercado com Estudo de Segmento ou TAM/SAM/SOM",
+      "Como fonte única de estratégia: a análise é uma foto do setor e precisa ser cruzada com PESTEL e SWOT",
+      "Em negócios ainda sem mercado estabelecido (ideia em validação), em que faltam dados de concorrentes e fornecedores"
+    ],
     "entradas": [
       "Dados do setor: concorrentes, fornecedores, clientes, substitutos",
       "Entrevista com o gestor sobre o mercado"
@@ -32,9 +43,26 @@
       "Cálculo das — Médias: depois de atribuir notas para cada questão determinante em cada uma das 5 forças, você deve calcular a média das notas de cada força para ver qual delas tem maior impacto na empresa.",
       "Resumo das análises: por fim, traga de forma visual em um quadro um resumo das análises fe — itas, este resumo visual ajuda a compartilhar os insights de maneira clara e objetiva, facilitando a tomada de decisões estratégicas."
     ],
-    "perguntas": null,
-    "cuidados": null,
-    "exemplos": null,
+    "perguntas": [
+      "Quanto capital, licença ou know-how alguém precisaria para abrir um negócio igual ao seu? Surgiram concorrentes novos nos últimos 2 anos?",
+      "Quantos fornecedores fornecem seus principais insumos? Seria fácil e barato trocar de fornecedor?",
+      "Quanto do faturamento vem dos 3 maiores clientes? Seus clientes comparam preço com facilidade e trocam de empresa sem custo?",
+      "Que outras soluções (não concorrentes diretos) atendem a mesma necessidade do seu cliente? Os clientes já estão migrando para elas?",
+      "Quantos concorrentes relevantes existem, quem lidera e com que frequência eles fazem promoções ou lançamentos?",
+      "O mercado está crescendo, estável ou encolhendo? O seu produto é diferenciado ou parecido com o dos concorrentes?"
+    ],
+    "cuidados": [
+      "Inverta a nota das questões favoráveis à empresa (ex.: alta capacidade de lançar produtos = nota 0 na ameaça de substitutos); esquecer a inversão distorce a média da força",
+      "Não pontue só com a opinião do gestor: cruze com compras, equipe comercial, clientes e dados de mercado, como indica o 'como coletar' de cada força",
+      "Separe concorrente direto de produto substituto; confundir os dois infla a rivalidade e esconde a ameaça real",
+      "Registre a justificativa de cada nota na planilha; sem ela o cliente não entende nem confia no resultado",
+      "Feche com implicações práticas (o que fazer diante das forças mais altas), não apenas com o gráfico de notas",
+      "Revise a análise quando o mercado mudar (novo entrante grande, mudança regulatória), pois ela envelhece rápido"
+    ],
+    "exemplos": [
+      "Restaurante de bairro: poder dos clientes alto (muitas opções e apps de entrega com comparação de preço), substitutos altos (marmitas e dark kitchens) e fornecedores baixos (vários distribuidores). Conclusão: foco em diferenciação e fidelização, não em preço.",
+      "Indústria de peças que depende de um único fornecedor de aço: poder dos fornecedores muito alto (média 4,3). Ação sugerida: homologar um segundo fornecedor e negociar contrato anual."
+    ],
     "anexos": [
       {
         "nome": "Metodologia - 5 Forças de Porter.pdf",
@@ -62,6 +90,15 @@
         "data": "2026-09-07",
         "driveId": "1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY",
         "url": "https://docs.google.com/spreadsheets/d/1qAOzFsggrbdFxKPkart9UxX7YacHL1AnvCSMKTJLwOY/edit"
+      },
+      {
+        "nome": "[PTPJ 26.1] Estratégia de negócios.pdf",
+        "tipo": "Material complementar",
+        "descricao": "Treinamento PTPJ 26.1 de Estratégia de Negócios: 5 Forças com as variáveis de cada força e o método de classificar, atribuir notas e calcular a média por força.",
+        "versao": "v1.0",
+        "data": "2026-09-28",
+        "driveId": "1y_gH_-FFu2QgSyZTvR6IMYgJDQ2OUge6",
+        "url": "https://drive.google.com/file/d/1y_gH_-FFu2QgSyZTvR6IMYgJDQ2OUge6/view"
       }
     ],
     "fontes": [
@@ -104,11 +141,15 @@
       "passos": "drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/analise-as-questoes-determinantes-cada-forca-tem-questoes-padroes-especificas-que-ajudam drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/atribuicao-de-notas-de-0-a-5 drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/calculo-das drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/resumo-das-analises-por-fim-traga-de-forma-visual-em-um-quadro-um-resumo-das-analises-fe",
       "entradas": "manual:gabrielapalma@produtivajunior.com.br",
       "saidas": "manual:gabrielapalma@produtivajunior.com.br",
-      "anexos": "manual:gabrielapalma@produtivajunior.com.br"
+      "anexos": "manual:gabrielapalma@produtivajunior.com.br",
+      "problema": "drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#introducao/definicao",
+      "quandoUsar": "manual:produtivajunior@gmail.com",
+      "quandoNao": "manual:produtivajunior@gmail.com",
+      "perguntas": "drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#estruturacao/as-forcas-como-coletar",
+      "cuidados": "drive:1_GkfmjPhdLa2lZl9lH3e5izPDvRJpe1h#como-construir-as-5-forcas-de-porter/atribuicao-de-notas-de-0-a-5",
+      "exemplos": "manual:produtivajunior@gmail.com"
     },
-    "pendencias": [
-      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): problema, quandoUsar, quandoNao, perguntas, cuidados, exemplos"
-    ]
+    "pendencias": []
   },
   {
     "id": "pestel",
@@ -560,12 +601,23 @@
       "nome": "Laura Rodrigues",
       "email": "laurarodrigues@produtivajunior.com.br"
     },
-    "atualizado": "2026-09-07",
+    "atualizado": "2026-09-28",
     "descricao": "Lançar um produto, serviço ou marca no mercado exige mais do que uma boa ideia — é necessário entender profundamente quem é o cliente, o que ele valoriza e quais problemas realmente precisam ser resolvidos.",
     "objetivo": "Nesse cenário, o Canvas de Proposta de Valor surge como uma ferramenta estratégica que permite alinhar o que sua solução oferece com as necessidades reais do público-alvo.",
-    "problema": null,
-    "quandoUsar": null,
-    "quandoNao": null,
+    "problema": "A empresa lança ou vende produtos sem entender o que o cliente realmente valoriza: comunica funcionalidades em vez de benefícios, resolve dores que o cliente não tem e deixa de lado as que ele pagaria para resolver.",
+    "quandoUsar": [
+      "No lançamento de um novo produto, serviço ou funcionalidade",
+      "Em ajustes de posicionamento de marca ou redefinição do discurso comercial",
+      "Na criação de campanhas de marketing, para definir a mensagem central",
+      "Na redefinição de estratégias de atendimento e experiência do cliente",
+      "Depois do BMC, para aprofundar os blocos Proposta de Valor e Segmento de Clientes"
+    ],
+    "quandoNao": [
+      "Quando o segmento de cliente ainda não foi definido: faça antes ICP ou Buyer Persona, pois um canvas vale para um segmento só",
+      "Para analisar o modelo de negócio inteiro (canais, custos, receitas): use o BMC",
+      "Quando não há como ouvir clientes reais; preenchido só com suposições internas, o canvas vira lista de hipóteses sem validação",
+      "Para comparar a empresa com concorrentes: use Matriz de Concorrentes ou benchmarking"
+    ],
     "entradas": [
       "Segmento de cliente definido (ICP ou persona)",
       "Entrevistas ou pesquisa com clientes"
@@ -573,9 +625,36 @@
     "saidas": [
       "Canvas com perfil do cliente e mapa de valor encaixados"
     ],
-    "passos": null,
-    "perguntas": null,
-    "cuidados": null,
+    "passos": [
+      "Defina o segmento — escolha um único segmento de cliente (use o ICP ou a persona). Se a empresa atende públicos diferentes, faça um canvas para cada um.",
+      "Levante os dados do cliente — faça de 5 a 10 entrevistas curtas com clientes do segmento e junte dados que a empresa já tem (reclamações, avaliações, conversas do comercial).",
+      "Perfil do cliente: Tarefas — liste o que o cliente está tentando resolver ou realizar: tarefas funcionais (ex.: receber o pedido no horário), sociais (ex.: parecer profissional) e emocionais (ex.: ficar tranquilo). Escreva do ponto de vista do cliente.",
+      "Perfil do cliente: Dores — liste emoções negativas, custos, riscos e situações indesejadas antes, durante e depois das tarefas (ex.: atraso, retrabalho, medo de errar). Seja específico: 'espera de mais de 40 min' em vez de 'demora'.",
+      "Perfil do cliente: Ganhos — liste os resultados que o cliente espera, deseja ou que o surpreenderiam. Foque em outcomes ('ter mais tempo livre', 'se sentir seguro'), não em funcionalidades.",
+      "Priorize o perfil — ordene tarefas, dores e ganhos por importância para o cliente (ex.: dores de extrema a moderada; ganhos de essencial a desejável) e destaque as que ele pagaria para resolver.",
+      "Mapa de valor: Produtos e serviços — liste os produtos, serviços e apoios (atendimento, garantia, app) que a empresa oferece para ajudar o cliente a cumprir as tarefas.",
+      "Mapa de valor: Aliviadores de dores — para cada dor prioritária, descreva como a oferta a elimina ou reduz (ex.: 'rastreio em tempo real' alivia 'não saber onde está o pedido').",
+      "Mapa de valor: Criadores de ganhos — para cada ganho prioritário, descreva como a oferta o produz ou supera a expectativa.",
+      "Verifique o encaixe — ligue cada aliviador a uma dor e cada criador a um ganho. Dores e ganhos importantes sem correspondência são lacunas; itens do mapa sem dor ou ganho associado são esforço que não gera valor.",
+      "Escreva a proposta de valor — condense em uma frase o valor entregue e o diferencial (ex.: 'Ajudamos [segmento] a [tarefa] com [aliviador/criador principal], diferente de [alternativa]'). Escolha poucas dores e ganhos e execute-os muito bem.",
+      "Valide com clientes — teste a frase e as hipóteses com clientes reais (entrevista, landing page, oferta piloto) e ajuste o canvas com o que aprender."
+    ],
+    "perguntas": [
+      "O que você está tentando resolver ou conseguir quando procura um produto como o nosso?",
+      "O que mais incomoda, custa caro ou dá medo nesse processo hoje? Pode contar a última vez que isso aconteceu?",
+      "Como você resolve isso hoje e o que não funciona bem na solução atual?",
+      "Se tudo desse certo, qual resultado você teria? O que te surpreenderia positivamente?",
+      "Qual desses problemas você pagaria para resolver? Quanto isso te custa hoje?",
+      "Por que você escolheu a nossa empresa (ou a concorrente) da última vez?"
+    ],
+    "cuidados": [
+      "Em ganhos, escreva o resultado desejado pelo cliente, não a funcionalidade do produto; o 'como' vem depois, no mapa de valor",
+      "Escolha poucas tarefas, dores e ganhos e execute-as perfeitamente, em vez de tentar atender tudo",
+      "Priorize dores ainda não resolvidas e aquelas pelas quais o cliente estaria disposto a pagar",
+      "Comece sempre pelo perfil do cliente, não pelo produto; começar pela oferta leva a justificar o que já existe",
+      "Não misture segmentos no mesmo canvas; cada público tem tarefas, dores e ganhos diferentes",
+      "Trate o canvas preenchido como hipótese até validá-lo com clientes reais"
+    ],
     "exemplos": [
       "PROJETO REFERÊNCIA: Bee Delivery"
     ],
@@ -633,11 +712,15 @@
       "exemplos": "drive:1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb#link-de-referencia/projeto-referencia-bee-delivery",
       "entradas": "manual:laurarodrigues@produtivajunior.com.br",
       "saidas": "manual:laurarodrigues@produtivajunior.com.br",
-      "anexos": "manual:laurarodrigues@produtivajunior.com.br"
+      "anexos": "manual:laurarodrigues@produtivajunior.com.br",
+      "problema": "drive:1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb#introducao/definicao",
+      "quandoUsar": "drive:1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb#introducao/definicao",
+      "quandoNao": "manual:produtivajunior@gmail.com",
+      "passos": "drive:1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb#definicao",
+      "perguntas": "manual:produtivajunior@gmail.com",
+      "cuidados": "drive:1-gwzQtODVAKuVg9NotuP6UMyYs7Mzexb#definicao"
     },
-    "pendencias": [
-      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): problema, quandoUsar, quandoNao, passos, perguntas, cuidados"
-    ]
+    "pendencias": []
   },
   {
     "id": "estudo-de-segmento",
@@ -652,7 +735,7 @@
       "nome": "Carlos Eduardo",
       "email": "carloseduardo@produtivajunior.com.br"
     },
-    "atualizado": "2026-09-07",
+    "atualizado": "2026-09-28",
     "descricao": "Checklist do que levantar sobre a empresa e o segmento antes de iniciar o projeto: informações básicas, contexto de mercado e materiais de coleta.",
     "objetivo": "Chegar à RAC e à RAP já conhecendo porte, produtos, clientes, concorrentes, tendências e regulamentação do segmento.",
     "problema": "Consultor entrava no cliente sem estudo prévio e gastava as primeiras reuniões descobrindo o básico.",
@@ -660,7 +743,12 @@
       "Sempre, antes da primeira reunião com o gestor",
       "Ao receber o repasse comercial de um cliente novo"
     ],
-    "quandoNao": null,
+    "quandoNao": [
+      "Como substituto da pesquisa de mercado primária: o estudo usa só fontes públicas e não responde o que o cliente final pensa",
+      "Para decisões que exigem números precisos de mercado (tamanho, demanda): use TAM/SAM/SOM ou Pesquisa Secundária aprofundada",
+      "Depois que o projeto já começou e o contexto já foi levantado na RAC; aí basta atualizar pontos específicos",
+      "Para substituir o diagnóstico com o gestor: o estudo prepara a conversa, não a dispensa"
+    ],
     "entradas": [
       "Nome e CNPJ da empresa",
       "Site, LinkedIn, Reclame Aqui, Instagram"
@@ -680,8 +768,18 @@
       "Há regulamentações ou normas que limitam o setor?",
       "Quais indicadores do Banco de Indicadores se aplicam ao segmento?"
     ],
-    "cuidados": null,
-    "exemplos": null,
+    "cuidados": [
+      "Limite o tempo (2 a 4 h); o objetivo é chegar preparado, não esgotar o assunto",
+      "Cite a fonte de cada dado e desconfie de respostas de Perplexity e ChatGPT: confirme em IBGE, SEBRAE, site oficial ou busca por CNPJ",
+      "Diferencie o que é fato (CNPJ, porte, localização) do que é hipótese (posicionamento, participação de mercado) e leve as hipóteses como perguntas para a reunião",
+      "Consulte o Reclame Aqui e as avaliações do Google para achar dores reais dos clientes do cliente",
+      "Não deixe campos do checklist vazios sem registro: anote 'não encontrado' para perguntar ao gestor",
+      "Separe no Banco de Indicadores só os indicadores que fazem sentido para o escopo vendido"
+    ],
+    "exemplos": [
+      "Antes da RAC de uma padaria de bairro, a dupla preenche o checklist em 3 h: porte micro, 12 colaboradores, concorrentes (duas redes e padarias próximas), tendência de delivery e congelados, normas da vigilância sanitária e indicadores como ticket médio e perdas. Chega à reunião com perguntas específicas em vez de perguntar o básico.",
+      "Para um cliente de Pesquisa de Mercado em construção civil, o estudo usa IBGE, SEBRAE, RAIS/CNAE e Google Trends para levantar tendências e barreiras de entrada do setor antes de desenhar o questionário."
+    ],
     "anexos": [
       {
         "nome": "[CIEP] Checklist do Estudo de Segmento.pdf",
@@ -700,6 +798,15 @@
         "data": "2026-09-07",
         "driveId": "1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A",
         "url": "https://docs.google.com/spreadsheets/d/1bvEJGCUH_P8-vDykANXbYY-MMpdFt7d8j6TBDM7Kb2A/edit"
+      },
+      {
+        "nome": "TREINAMENTO PESQUISA DE MERCADO.pdf.pdf",
+        "tipo": "Material complementar",
+        "descricao": "Treinamento de Pesquisa de Mercado, págs. 53–81 (pesquisa secundária): fontes úteis para o estudo de segmento, como IBGE, IPEA, SEBRAE, RAIS/CNAE, DataViva, Economapas, Google Trends e Think With Google.",
+        "versao": "v1.0",
+        "data": "2026-09-28",
+        "driveId": "1EIWj_CsxRH7XssWfVN4R5E-7YOwhY2r5",
+        "url": "https://drive.google.com/file/d/1EIWj_CsxRH7XssWfVN4R5E-7YOwhY2r5/view"
       }
     ],
     "fontes": [
@@ -739,11 +846,12 @@
       "entradas": "manual:carloseduardo@produtivajunior.com.br",
       "saidas": "manual:carloseduardo@produtivajunior.com.br",
       "perguntas": "manual:carloseduardo@produtivajunior.com.br",
-      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+      "anexos": "manual:carloseduardo@produtivajunior.com.br",
+      "quandoNao": "manual:produtivajunior@gmail.com",
+      "cuidados": "manual:produtivajunior@gmail.com",
+      "exemplos": "manual:produtivajunior@gmail.com"
     },
-    "pendencias": [
-      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): quandoNao, cuidados, exemplos"
-    ]
+    "pendencias": []
   },
   {
     "id": "icp",
@@ -920,7 +1028,7 @@
       "nome": "Carlos Eduardo",
       "email": "carloseduardo@produtivajunior.com.br"
     },
-    "atualizado": "2026-09-07",
+    "atualizado": "2026-09-28",
     "descricao": "O Mapa de Contexto é uma ferramenta utilizada para apresentar de forma esquemática e visual as funções presentes em uma organização, bem como a relação do cliente com o fornecedor existente entre essas funções.",
     "objetivo": "Essa ferramenta proporciona uma visão geral da empresa antes que se inicie a identificação dos processos para depois ocorrer o mapeamento dos mesmos.",
     "problema": "A utilização do mapa de contexto é essencial por diversos motivos: Compreensão global: Fornece uma visão geral do sistema e de seu contexto, ajudando a compreender as interações entre diferentes partes; Identificação de limites: Ajuda a definir claramente os limites do sistema em estudo, distinguindo o que está dentro e fora do escopo; Comunicação eficaz: Facilita a comunicação entre as partes interessadas, permitindo que todos tenham uma compreensão comum do sistema e de seu ambiente; Tomada de decisão: Facilita a identificação de oportunidades e desafios, auxiliando na tomada de decisões informadas.",
@@ -932,7 +1040,12 @@
       "Suporte à modelagens de processos: Funciona como uma primeira etapa antes de se iniciar os fluxogramas e outras ferramentas de mapeamento",
       "É importante pois evita perder tempo detalhando o que ainda não está bem compreendido"
     ],
-    "quandoNao": null,
+    "quandoNao": [
+      "Para detalhar a sequência de atividades de um processo: depois do mapa, use Fluxograma, BPMN ou SIPOC",
+      "Quando o escopo é uma tarefa pontual e muito pequena, em que as fronteiras já são óbvias",
+      "Para medir desempenho ou priorizar problemas: o mapa mostra relações, não números",
+      "Como organograma: o foco são os fluxos de informação e materiais, não a hierarquia"
+    ],
     "entradas": [
       "Lista de áreas e departamentos da empresa",
       "Partes interessadas internas e externas"
@@ -948,9 +1061,26 @@
       "Mapear Fluxos e Limites — Identifique as entradas (inputs) e saídas (outputs) de informações e materiais entre a empresa e os agentes externos; Delimite a fronteira do sistema, esclarecendo o que pertence ao processo interno e o que pertence ao ambiente externo; Estabeleça a direção dos fluxos para garantir que a troca de valor entre as partes esteja lógica antes da desenhar.",
       "Apresentar de forma visual — Utilize gráficos, setas e rótulos para tornar o mapa visualmente compreensível; Considere o uso de cores para diferenciar diferentes elementos ou destacar áreas críticas."
     ],
-    "perguntas": null,
-    "cuidados": null,
-    "exemplos": null,
+    "perguntas": [
+      "Quais são as principais áreas ou departamentos da empresa e o que cada uma faz?",
+      "Quem são os agentes externos que se relacionam com a empresa (clientes, fornecedores, órgãos públicos, parceiros, sistemas)?",
+      "O que cada agente envia para a empresa e o que recebe dela (pedidos, notas, materiais, pagamentos, informações)?",
+      "Quais áreas dependem de outras para trabalhar? Onde a informação costuma travar ou se perder?",
+      "O que está dentro do escopo do projeto e o que fica de fora?",
+      "Que fatores externos (regulamentação, concorrência, tendências) afetam a operação hoje?"
+    ],
+    "cuidados": [
+      "Defina a fronteira do sistema antes de desenhar; sem ela o mapa cresce sem controle e mistura escopo",
+      "Todo fluxo precisa de direção e rótulo (o que passa: pedido, nota fiscal, matéria-prima); setas sem rótulo não comunicam",
+      "Mantenha o nível macro: áreas e agentes, não atividades; o detalhamento fica para o fluxograma",
+      "Dê atenção às interfaces entre a empresa e o ambiente externo: é nelas que ocorrem a maioria das falhas de comunicação e gargalos",
+      "Use cores e legenda consistentes para diferenciar áreas internas, agentes externos e pontos críticos",
+      "Valide o mapa com o gestor e com alguém da operação antes de seguir para o mapeamento de processos"
+    ],
+    "exemplos": [
+      "Mapas de contexto de referência da PJ nos projetos Brita Potiguar e Acelerabit, com áreas internas, agentes externos e fluxos de informação e materiais.",
+      "Case Dark Kitchen do treinamento de Sincronismo Organizacional: o mapa de contexto é usado na análise do contexto (Fase 1) e no mapa de contexto do processo (Fase 2), antes do mapa interfuncional."
+    ],
     "anexos": [
       {
         "nome": "[CIEP] Metodologia de Mapa de Contexto.pdf",
@@ -969,6 +1099,15 @@
         "data": "2026-09-07",
         "driveId": "161BO5wQ10MHub_X-9ngOWOKkG1pd3ga1",
         "url": "https://drive.google.com/file/d/161BO5wQ10MHub_X-9ngOWOKkG1pd3ga1/view"
+      },
+      {
+        "nome": "[PTPJ 2026.1] Sincronismo Organizacional.pdf",
+        "tipo": "Material complementar",
+        "descricao": "Treinamento de Sincronismo Organizacional: uso do Mapa de Contexto na Fase 1 (análise do contexto) e na Fase 2 (mapa de contexto do processo), com prática no case Dark Kitchen.",
+        "versao": "v1.0",
+        "data": "2026-09-28",
+        "driveId": "1N3LHCRg0BRHo5uzdBOvYih3Hkuq5m6sx",
+        "url": "https://drive.google.com/file/d/1N3LHCRg0BRHo5uzdBOvYih3Hkuq5m6sx/view"
       }
     ],
     "fontes": [
@@ -1007,11 +1146,13 @@
       "passos": "drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#construcao/identificar-elementos-chave drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#construcao/definir-relacoes drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#construcao/adicionar-contexto-externo drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#construcao/mapear-fluxos-e-limites drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#construcao/apresentar-de-forma-visual",
       "entradas": "manual:carloseduardo@produtivajunior.com.br",
       "saidas": "manual:carloseduardo@produtivajunior.com.br",
-      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+      "anexos": "manual:carloseduardo@produtivajunior.com.br",
+      "quandoNao": "manual:produtivajunior@gmail.com",
+      "perguntas": "manual:produtivajunior@gmail.com",
+      "cuidados": "drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#construcao/mapear-fluxos-e-limites",
+      "exemplos": "drive:1I8J5SrhpVpjwO-jPKVqhQAx7KN6cI6gm#introducao"
     },
-    "pendencias": [
-      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): quandoNao, perguntas, cuidados, exemplos"
-    ]
+    "pendencias": []
   },
   {
     "id": "matriz-de-concorrentes",
@@ -1186,10 +1327,10 @@
       "nome": "Gabriela Palma",
       "email": "gabrielapalma@produtivajunior.com.br"
     },
-    "atualizado": "2026-09-07",
+    "atualizado": "2026-09-28",
     "descricao": "A Matriz SWOT é uma ferramenta de análise estratégica utilizada para compreender o ambiente interno e externo de uma organização, projeto ou até mesmo uma pessoa.",
     "objetivo": "Essa matriz permite uma visão clara da situação atual, facilitando o planejamento estratégico e a tomada de decisões, ao alinhar as forças e fraquezas internas com as oportunidades e ameaças externas.",
-    "problema": null,
+    "problema": "A empresa decide com base em percepções soltas e opiniões do dono, sem uma visão organizada dos seus pontos fortes e fracos e do que o ambiente externo oferece ou ameaça; com isso, não sabe o que priorizar no planejamento.",
     "quandoUsar": [
       "A construção da matriz SWOT traz uma visão clara da empresa, transformando percepções em dados para decisões mais assertivas",
       "Principais benefícios: Visão clara da empresa, com mapeamento dos fatores internos e externos",
@@ -1198,7 +1339,12 @@
       "Melhor tomada de decisão, baseada em dados e não apenas em opiniões",
       "Uso eficiente de recursos, focando no que realmente importa"
     ],
-    "quandoNao": null,
+    "quandoNao": [
+      "Para entender a fundo o ambiente externo: faça antes PESTEL e 5 Forças de Porter e use os resultados como oportunidades e ameaças",
+      "Quando só uma pessoa vai responder; sem visões complementares a matriz reflete uma opinião, não um diagnóstico",
+      "Como plano de ação: a SWOT aponta cenários e prioridades, mas as ações precisam ser desdobradas depois (OKR, 5W2H)",
+      "A versão quantitativa não compensa quando há pouco tempo ou poucos itens; nesses casos fique na qualitativa"
+    ],
     "entradas": [
       "Entrevistas com participantes de níveis e áreas diferentes",
       "Dados secundários sobre mercado e concorrência"
@@ -1229,7 +1375,14 @@
       "Quais competências, recursos ou processos são reconhecidos como pontos fortes?",
       "O que os clientes costumam elogiar?"
     ],
-    "cuidados": null,
+    "cuidados": [
+      "Forças e fraquezas são internas (a empresa controla); oportunidades e ameaças são externas. Confundir os quadrantes invalida o cruzamento",
+      "Inclua participantes de níveis e áreas diferentes e registre todas as contribuições sem filtrar ou julgar durante a coleta",
+      "Elimine duplicações, agrupe itens semelhantes e escreva itens específicos (ex.: 'entrega em 24 h' em vez de 'boa logística')",
+      "Valide a matriz qualitativa com a liderança antes de partir para a quantitativa",
+      "Use a escala 0, 1, 2 de forma consistente e lembre que nas ameaças a prioridade é para o menor valor de (Ameaças x Forças) - (Ameaças x Fraquezas)",
+      "Compare cenários pela porcentagem (Pontuação Total ÷ Pontuação Máxima × 100), não pela pontuação absoluta, pois os quadrantes têm quantidades diferentes de itens"
+    ],
     "exemplos": [
       "SWOT Quantitativa Referência: SWOT Qualitativa Referência"
     ],
@@ -1260,6 +1413,15 @@
         "data": "2026-09-07",
         "driveId": "1xSiqIc7gthAaUHSa3RBs1_BMoqQMZRAWU7zQg-xBWUw",
         "url": "https://docs.google.com/spreadsheets/d/1xSiqIc7gthAaUHSa3RBs1_BMoqQMZRAWU7zQg-xBWUw/edit"
+      },
+      {
+        "nome": "[PTPJ 26.1] Estratégia de negócios.pdf",
+        "tipo": "Material complementar",
+        "descricao": "Treinamento PTPJ 26.1 de Estratégia de Negócios: SWOT qualitativa e quantitativa, cenários Desenvolvimento, Crescimento, Manutenção e Sobrevivência e a ligação PESTAL -> SWOT.",
+        "versao": "v1.0",
+        "data": "2026-09-28",
+        "driveId": "1y_gH_-FFu2QgSyZTvR6IMYgJDQ2OUge6",
+        "url": "https://drive.google.com/file/d/1y_gH_-FFu2QgSyZTvR6IMYgJDQ2OUge6/view"
       }
     ],
     "fontes": [
@@ -1305,11 +1467,12 @@
       "exemplos": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#introducao/swot-quantitativa-referencia-swot-qualitativa-referencia",
       "entradas": "manual:gabrielapalma@produtivajunior.com.br",
       "saidas": "manual:gabrielapalma@produtivajunior.com.br",
-      "anexos": "manual:gabrielapalma@produtivajunior.com.br"
+      "anexos": "manual:gabrielapalma@produtivajunior.com.br",
+      "problema": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#o-que-e-a-matriz-swot/definicao",
+      "quandoNao": "manual:produtivajunior@gmail.com",
+      "cuidados": "drive:1S9KfYVHM3LDkz8DJLvsn1SJ76GwjX4R8#como-construir-a-matriz-swot/organizacao-dos-dados-e-validacao"
     },
-    "pendencias": [
-      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): problema, quandoNao, cuidados"
-    ]
+    "pendencias": []
   },
   {
     "id": "banco-de-indicadores",
@@ -3236,12 +3399,23 @@
       "nome": "Carlos Eduardo",
       "email": "carloseduardo@produtivajunior.com.br"
     },
-    "atualizado": "2026-09-07",
+    "atualizado": "2026-09-28",
     "descricao": "O Process Map Model Canvas (PMMC) é uma ferramenta visual projetada para simplificar a análise e o redesenho de processos.",
     "objetivo": "Funcionando como um guia prático, ele condensa em uma única página os 10 blocos essenciais que compõem o fluxo de valor, garantindo uma visão sistêmica e facilitando a validação do entendimento junto ao gestor.",
-    "problema": null,
-    "quandoUsar": null,
-    "quandoNao": null,
+    "problema": "O consultor começa a mapear processos sem uma visão do todo e a coleta de informações com o gestor fica desorganizada: faltam fornecedores, insumos, recursos ou indicadores, e o diagnóstico perde base.",
+    "quandoUsar": [
+      "No início de projetos de mapeamento e melhoria de processos, antes do fluxograma ou BPMN AS IS",
+      "Para validar com o gestor o entendimento do processo em uma única página",
+      "Para padronizar a coleta de informações em reunião de brainstorming com o gestor e a equipe",
+      "Quando é preciso entender a relação entre entradas, transformações e saídas de um processo crítico",
+      "Como base para o diagnóstico e o relatório de melhorias operacionais"
+    ],
+    "quandoNao": [
+      "Para detalhar a sequência de tarefas, decisões e responsáveis: use Fluxograma ou BPMN depois do PMMC",
+      "Para analisar a empresa inteira ou o modelo de negócio: use Mapa de Contexto ou BMC",
+      "Para processos muito simples, com uma pessoa e poucas atividades, em que um checklist já resolve",
+      "Para registrar exceções e casos raros: o canvas retrata o fluxo padrão (regra 80/20)"
+    ],
     "entradas": [
       "Reunião ou brainstorming com o gestor e a equipe do processo",
       "Documentos existentes: POPs, manuais, fluxogramas antigos"
@@ -3302,7 +3476,10 @@
       "Dinâmica da Dupla de Consultoria Para otimizar a reunião e não perder informações, divida os papéis — Consultor A: Fica responsável por apresentar a ferramenta (BMC), conduzir a dinâmica e fazer as perguntas assertivas.",
       "A Regra do 80/20 (Foco na Regra, não na Exceção) — Mapeie o fluxo padrão: O PMMC deve retratar o que acontece na maioria das vezes."
     ],
-    "exemplos": null,
+    "exemplos": [
+      "Processo de produção de pães de uma padaria: fornecedores (moinho, distribuidor de laticínios), insumos (farinha, fermento, pedido do balcão), atividades (pesagem, mistura, fermentação, forneamento), produtos (pães embalados), clientes (balcão e revenda), RH (2 padeiros e 1 auxiliar), tecnologia (masseira, forno), indicador (% de perdas diárias) e controle (planilha de produção e perdas).",
+      "Processo de faturamento de uma distribuidora: pedido aprovado pelo comercial vira nota fiscal no ERP e boleto para o cliente; indicadores de prazo de emissão e % de notas com erro, controlados por relatório semanal."
+    ],
     "anexos": [
       {
         "nome": "[CIEP] Metodologia - PMMC.pdf",
@@ -3374,11 +3551,13 @@
       "cuidados": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/preparacao-e-contextualizacao drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/validacao-da-realidade-real-vs-ideal drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/atencao-as-incongruencias-comuns drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/visao-sistemica-e-escrita drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/dinamica-da-dupla-de-consultoria-para-otimizar-a-reuniao-e-nao-perder-informacoes-divida-os-papeis drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#recomendacoes/a-regra-do-80-20-foco-na-regra-nao-na-excecao",
       "entradas": "manual:carloseduardo@produtivajunior.com.br",
       "saidas": "manual:carloseduardo@produtivajunior.com.br",
-      "anexos": "manual:carloseduardo@produtivajunior.com.br"
+      "anexos": "manual:carloseduardo@produtivajunior.com.br",
+      "problema": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#introducao",
+      "quandoUsar": "drive:16uPvXjSdmn7cvs0udVo13O4xq8cVgpQr#introducao",
+      "quandoNao": "manual:produtivajunior@gmail.com",
+      "exemplos": "manual:produtivajunior@gmail.com"
     },
-    "pendencias": [
-      "Não encontrado na fonte (preencher à mão com origem manual, ou aceitar vazio): problema, quandoUsar, quandoNao, exemplos"
-    ]
+    "pendencias": []
   },
   {
     "id": "sipoc",
