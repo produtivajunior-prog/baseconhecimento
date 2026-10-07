@@ -265,7 +265,7 @@ for (const c of cases) {
   const eq = c.equipe || {};
   const pessoa = (x, quem) => { if (!x || typeof x.nome !== 'string' || !x.nome) p(ctx, `${quem}: nome ausente`); if (x && x.email && !EMAIL.test(x.email)) p(ctx, `${quem}: e-mail precisa ser @produtivajunior.com.br`); if (x && x.whatsapp && !/^\d{10,13}$/.test(x.whatsapp)) p(ctx, `${quem}: whatsapp precisa ter só dígitos com DDD (10 a 13)`); };
   pessoa(eq.gerente, 'gerente');
-  if (!Array.isArray(eq.consultores) || eq.consultores.length !== 2) p(ctx, 'equipe.consultores precisa ter exatamente 2 consultores');
+  if (!Array.isArray(eq.consultores) || ![2, 3].includes(eq.consultores.length)) p(ctx, 'equipe.consultores precisa ter 2 consultores (ou 3, com o terceiro opcional)');
   else eq.consultores.forEach((x, i) => pessoa(x, `consultor ${i + 1}`));
   for (const k of ['resultados', 'aprendizados', 'tags', 'ferramentas']) if (c[k] !== undefined && !isStrArr(c[k])) p(ctx, `"${k}" precisa ser lista de strings`);
   for (const fid of c.ferramentas || []) if (!ids.has(fid)) p(ctx, `ferramenta "${fid}" não existe em ferramentas.json`);
