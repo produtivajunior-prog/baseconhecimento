@@ -20,7 +20,7 @@
  *
  * Precisa do pacote playwright (npx playwright@1 …) e de um Chromium; sem os dois, sai com aviso.
  */
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, basename, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -243,6 +243,14 @@ await preencher('Ex.: Natal/RN', 'Natal/RN');
 const escopoSel = page.locator('select').filter({ has: page.locator('option', { hasText: 'Escolha o escopo' }) }).first();
 const opcoes = await escopoSel.locator('option').allTextContents();
 if (opcoes.length > 2) await escopoSel.selectOption({ index: 1 }); else await preencher('Descreva o escopo', 'Plano de Marketing');
+{
+  const porteSel = page.locator('select').filter({ has: page.locator('option', { hasText: 'Porte…' }) }).first();
+  const nPorte = await porteSel.locator('option').count();
+  check(nPorte > 2 && opcoes.length > 3, `cadastro de case: dropdowns de Porte (${nPorte} opções) e Escopo (${opcoes.length} opções) preenchidos`);
+  // <select> com <sc-for> dentro some no parser de HTML do Safari/Firefox: a marcação usa <sc-raw-select>
+  const marcacao = readFileSync(new URL('../src/index.html', import.meta.url), 'utf8');
+  check(!/<select[\s>]/i.test(marcacao), 'src/index.html não usa <select> cru (usa <sc-raw-select>, que sobrevive ao parser do Safari/Firefox)');
+}
 const nomes = page.getByPlaceholder('Nome', { exact: true }); await nomes.nth(0).fill('Gerente Teste'); await nomes.nth(1).fill('Consultora Um'); await nomes.nth(2).fill('Consultor Dois');
 await page.getByPlaceholder('84 99999-0000').nth(0).fill('(84) 99999-0000');
 await preencher('O que o cliente precisava e o que a Produtiva entregou.', 'A padaria não sabia o custo de cada produto. Montamos o custeio e o markup por item.');

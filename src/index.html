@@ -979,15 +979,15 @@
         </div>
         <div>
           <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Tipo *</label>
-          <select value="{{ form.tipo }}" onchange="{{ formTipo }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
+          <sc-raw-select value="{{ form.tipo }}" onchange="{{ formTipo }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
             <sc-for list="{{ tipoOptions }}" as="o" hint-placeholder-count="4"><option value="{{ o.value }}">{{ o.value }}</option></sc-for>
-          </select>
+          </sc-raw-select>
         </div>
         <div>
           <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Categoria (grupo do Hangar) *</label>
-          <select value="{{ form.categoria }}" onchange="{{ formCategoria }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
+          <sc-raw-select value="{{ form.categoria }}" onchange="{{ formCategoria }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
             <sc-for list="{{ categoriaOptions }}" as="o" hint-placeholder-count="5"><option value="{{ o.value }}">{{ o.value }}</option></sc-for>
-          </select>
+          </sc-raw-select>
         </div>
         <div style="grid-column:span 2">
           <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Descrição curta *</label>
@@ -1657,9 +1657,9 @@
         <div class="hg-g2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Cliente *</label><input value="{{ formCase.cliente }}" oninput="{{ fc.cliente }}" placeholder="Ex.: Picuí Pizzas" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Segmento *</label><input value="{{ formCase.segmento }}" oninput="{{ fc.segmento }}" placeholder="Ex.: Alimentação, Contabilidade, Indústria" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
-          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Porte</label><select value="{{ formCase.porte }}" onchange="{{ fc.porte }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"><sc-for list="{{ porteOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Porte</label><sc-raw-select value="{{ formCase.porte }}" onchange="{{ fc.porte }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"><sc-for list="{{ porteOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Cidade / UF</label><input value="{{ formCase.cidade }}" oninput="{{ fc.cidade }}" placeholder="Ex.: Natal/RN" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
-          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Escopo *</label><select value="{{ formCase.escopoId }}" onchange="{{ fc.escopoId }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"><sc-for list="{{ escopoOptions }}" as="o" hint-placeholder-count="4"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Escopo *</label><sc-raw-select value="{{ formCase.escopoId }}" onchange="{{ fc.escopoId }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"><sc-for list="{{ escopoOptions }}" as="o" hint-placeholder-count="4"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Outro escopo (se não estiver na lista)</label><input value="{{ formCase.escopoNome }}" oninput="{{ fc.escopoNome }}" placeholder="Descreva o escopo" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Início</label><input type="month" value="{{ formCase.inicio }}" oninput="{{ fc.inicio }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Fim</label><input type="month" value="{{ formCase.fim }}" oninput="{{ fc.fim }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
@@ -1712,7 +1712,7 @@
           <sc-for list="{{ docsRows }}" as="d" hint-placeholder-count="2">
             <div class="hg-form" style="display:grid;grid-template-columns:1.2fr 1fr 2fr auto;gap:10px;align-items:center">
               <input value="{{ d.nome }}" oninput="{{ d.setNome }}" placeholder="Nome do arquivo" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
-              <select value="{{ d.tipo }}" onchange="{{ d.setTipo }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"><sc-for list="{{ d.tipoOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+              <sc-raw-select value="{{ d.tipo }}" onchange="{{ d.setTipo }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"><sc-for list="{{ d.tipoOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select>
               <div>
                 <input id="hangar-doc-pdf-{{ d.idx }}" type="file" accept="application/pdf" onchange="{{ d.onPdfArquivo }}" style="display:none">
                 <sc-if value="{{ d.semPdf }}" hint-placeholder-val="{{ true }}">
