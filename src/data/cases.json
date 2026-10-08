@@ -72,5 +72,86 @@
       "email": "pedrorocha@produtivajunior.com.br"
     },
     "atualizado": "2026-09-22"
+  },
+  {
+    "id": "casa-de-saude-sao-lucas-2025-custeio-e-precificacao",
+    "cliente": "Casa de Saúde São Lucas",
+    "segmento": "Saúde (hospital)",
+    "porte": "Grande",
+    "cidade": "Natal/RN",
+    "escopoId": "custeio-e-precificacao",
+    "periodo": {
+      "inicio": "2025-06",
+      "fim": "2025-12"
+    },
+    "equipe": {
+      "gerente": {
+        "nome": "Thiago Melo",
+        "email": "thiagomelo@produtivajunior.com.br",
+        "whatsapp": ""
+      },
+      "consultores": [
+        {
+          "nome": "Natalia Freire",
+          "email": "",
+          "whatsapp": ""
+        },
+        {
+          "nome": "Luis Aranha",
+          "email": "",
+          "whatsapp": ""
+        },
+        {
+          "nome": "Gabriel Jose",
+          "email": "",
+          "whatsapp": ""
+        }
+      ]
+    },
+    "resumo": "O hospital precisava saber quanto custam seus principais serviços para negociar contratos com os planos de saúde. A Produtiva custeou 6 setores e entregou planilhas com o custo total e o custo por diária ou por hora de cada um, que a direção usa até hoje nas negociações.",
+    "desafio": "Os contratos com planos de saúde e cooperativas davam prejuízo: o hospital recebia menos do que gastava para atender esses pacientes e só tinha lucro no atendimento particular, que é um volume baixo. Sem saber o custo real de cada serviço, não havia base para negociar valores melhores nem para saber onde cortar gastos. O escopo começou com 5 setores e cresceu para 6 durante o projeto.",
+    "solucao": "1) Levantamento, setor por setor, das categorias de gasto a incluir no custeio. 2) Coleta dos dados com o responsável de cada área (hotelaria, materiais, mão de obra com o RH). 3) Construção das planilhas de custeio de Nutrição, Pronto Socorro, UTI, Apartamentos e Enfermarias, Centro Cirúrgico e dos dados comuns do hospital, com custo total e custo por diária ou por hora, conforme o objeto de rateio. 4) Documentos explicando cada planilha e os números. Repasses semanais com o gestor durante todo o projeto.",
+    "resultados": [
+      "Custo total e custo unitário (por diária ou por hora) de 6 setores do hospital",
+      "Planilhas usadas pela direção para negociar os contratos com os planos de saúde",
+      "Com base nos números, o hospital enxugou mais de R$ 200 mil da folha salarial, mantendo a qualidade do atendimento"
+    ],
+    "aprendizados": [
+      "Use IA (Claude, Lovable) para acelerar coleta, cálculo e documentação: o projeto não usou e poderia ter sido mais rápido",
+      "Antecipe as travas de dados com o cliente: a demora nas respostas dos setores atrasou entregas",
+      "Conheça métodos de custeio além dos padrões da Produtiva: custo é mais abrangente do que o treinamento",
+      "Alinhe com o cliente as análises antes de apresentar: propostas novas sem alinhamento foram rejeitadas",
+      "Revise as contas antes de apresentar: um erro de cálculo no primeiro setor abalou a confiança do cliente, recuperada com correção na mesma semana e transparência",
+      "Repasses semanais e cobrar o retorno dos funcionários via gestor funcionaram e devem virar padrão",
+      "O cliente pediu mais análise além dos números: entregue também leitura e recomendações"
+    ],
+    "ferramentas": [
+      "metodos-de-custeio"
+    ],
+    "documentos": [
+      {
+        "nome": "Entregas do projeto (planilhas e documentos)",
+        "tipo": "Ferramenta entregue",
+        "url": "https://drive.google.com/drive/folders/1dOKOdfUPZKwe0dcMZhRDN0oROGgFNCdz"
+      }
+    ],
+    "video": {
+      "url": "https://drive.google.com/drive/folders/1Q3_8qGIEpGrh5egjf-8xwnAAP7PCSQZs",
+      "quem": "Equipe do projeto",
+      "duracao": ""
+    },
+    "tags": [
+      "hospital",
+      "saúde",
+      "custeio",
+      "planos de saúde",
+      "rateio",
+      "custo por diária"
+    ],
+    "cadastradoPor": {
+      "nome": "Pedro Rocha",
+      "email": "pedrorocha@produtivajunior.com.br"
+    },
+    "atualizado": "2026-10-08"
   }
 ]
