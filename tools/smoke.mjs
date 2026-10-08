@@ -20,7 +20,7 @@
  *
  * Precisa do pacote playwright (npx playwright@1 …) e de um Chromium; sem os dois, sai com aviso.
  */
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, basename, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -243,7 +243,15 @@ await preencher('Ex.: Natal/RN', 'Natal/RN');
 const escopoSel = page.locator('select').filter({ has: page.locator('option', { hasText: 'Escolha o escopo' }) }).first();
 const opcoes = await escopoSel.locator('option').allTextContents();
 if (opcoes.length > 2) await escopoSel.selectOption({ index: 1 }); else await preencher('Descreva o escopo', 'Plano de Marketing');
-const nomes = page.getByPlaceholder('Nome', { exact: true }); await nomes.nth(0).fill('Gerente Teste'); await nomes.nth(1).fill('Consultora Um'); await nomes.nth(2).fill('Consultor Dois');
+{
+  const porteSel = page.locator('select').filter({ has: page.locator('option', { hasText: 'Porte…' }) }).first();
+  const nPorte = await porteSel.locator('option').count();
+  check(nPorte > 2 && opcoes.length > 3, `cadastro de case: dropdowns de Porte (${nPorte} opções) e Escopo (${opcoes.length} opções) preenchidos`);
+  // <select> com <sc-for> dentro some no parser de HTML do Safari/Firefox: a marcação usa <sc-raw-select>
+  const marcacao = readFileSync(new URL('../src/index.html', import.meta.url), 'utf8');
+  check(!/<select[\s>]/i.test(marcacao), 'src/index.html não usa <select> cru (usa <sc-raw-select>, que sobrevive ao parser do Safari/Firefox)');
+}
+const nomes = page.getByPlaceholder('Nome', { exact: true }); await nomes.nth(0).fill('Gerente Teste'); await nomes.nth(1).fill('Consultora Um'); await nomes.nth(2).fill('Consultor Dois'); await nomes.nth(3).fill('Consultora Três');
 await page.getByPlaceholder('84 99999-0000').nth(0).fill('(84) 99999-0000');
 await preencher('O que o cliente precisava e o que a Produtiva entregou.', 'A padaria não sabia o custo de cada produto. Montamos o custeio e o markup por item.');
 await preencher(/Processo de pedidos reduzido/, 'Preço dos 12 produtos revisto com margem conhecida');
@@ -278,6 +286,7 @@ check((await page.locator('iframe[src*="youtube.com/embed/"]').count()) === 0 &&
 await page.getByRole('button', { name: 'Assistir ao vídeo' }).click(); await page.waitForTimeout(300);
 check((await page.locator('iframe[src*="youtube.com/embed/"][src*="autoplay=1"]').count()) === 1, 'clicar na capa abre o player embutido (YouTube com autoplay)');
 check(/Relatório final\.pdf/.test(t) && /Abrir no Drive/.test(t), 'ficha lista o documento com botão do Drive');
+check(/Consultora Um/.test(t) && /Consultor Dois/.test(t) && /Consultora Três/.test(t), 'ficha mostra a equipe com o 3º consultor (opcional)');
 {
   const link = page.getByRole('link', { name: 'Abrir no Drive' }).first();
   check((await link.getAttribute('href')) === 'https://drive.google.com/file/d/1abcDEF/view' && (await link.getAttribute('target')) === '_blank', 'documento do case é link real (<a href>) para o Drive, em nova aba');
@@ -301,7 +310,7 @@ await page.getByRole('button', { name: 'Baixar case (.json)' }).first().click();
 await page.waitForTimeout(200);
 const dl = await page.evaluate(() => window.__hangarUltimoDownload);
 let caseJson = null; try { caseJson = dl && JSON.parse(dl.json); } catch {}
-check(!!caseJson && caseJson.cliente === 'Padaria Smoke' && caseJson.equipe.consultores.length === 2 && /^case-.*\.json$/.test(dl.nome), `"Baixar case" gerou ${dl ? dl.nome : 'nada'} com JSON válido`);
+check(!!caseJson && caseJson.cliente === 'Padaria Smoke' && caseJson.equipe.consultores.length === 3 && caseJson.equipe.consultores[2].nome === 'Consultora Três' && /^case-.*\.json$/.test(dl.nome), `"Baixar case" gerou ${dl ? dl.nome : 'nada'} com JSON válido`);
 check(!!caseJson && caseJson.foto && /^data:image\/(webp|jpeg);base64,/.test(caseJson.foto.url) && caseJson.foto.legenda === 'Equipe na entrega', 'JSON do case leva a foto embutida e a legenda');
 check(!!caseJson && caseJson.equipe.gerente.whatsapp === '84999990000', 'JSON do case guarda o WhatsApp só com dígitos');
 // busca e persistência

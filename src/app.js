@@ -397,7 +397,7 @@ class Component extends DCLogic {
   formCaseVazio() {
     const eu = this.carregarLocal('hangar.eu', {});
     return { cliente:'', segmento:'', porte:'', cidade:'', escopoId:'', escopoNome:'', inicio:'', fim:'', duracaoDias:'',
-      gerenteNome:'', gerenteEmail:'', gerenteZap:'', c1Nome:'', c1Email:'', c1Zap:'', c2Nome:'', c2Email:'', c2Zap:'',
+      gerenteNome:'', gerenteEmail:'', gerenteZap:'', c1Nome:'', c1Email:'', c1Zap:'', c2Nome:'', c2Email:'', c2Zap:'', c3Nome:'', c3Email:'', c3Zap:'',
       resumo:'', desafio:'', solucao:'', resultados:'', aprendizados:'', depoimento:'', tags:'',
       ferramentas:[], documentos:[{ nome:'', tipo:(DADOS.taxonomia.documentosCase||[])[3] || 'Outro', url:'' }],
       fotoDados:'', fotoLink:'', fotoLegenda:'',
@@ -408,11 +408,12 @@ class Component extends DCLogic {
     if (!f.cliente.trim()) return 'Informe o nome do cliente.';
     if (!f.segmento.trim()) return 'Informe o segmento do cliente.';
     if (!f.escopoId && !f.escopoNome.trim()) return 'Escolha o escopo do projeto (ou descreva em "Outro").';
-    if (!f.gerenteNome.trim() || !f.c1Nome.trim() || !f.c2Nome.trim()) return 'A equipe precisa de 1 gerente e 2 consultores com nome.';
+    if (!f.gerenteNome.trim() || !f.c1Nome.trim() || !f.c2Nome.trim()) return 'A equipe precisa de 1 gerente e pelo menos 2 consultores com nome.';
+    if (!f.c3Nome.trim() && (f.c3Email.trim() || f.c3Zap.trim())) return 'Informe o nome do consultor 3 (ou apague o e-mail e o WhatsApp dele).';
     if (f.resumo.trim().length < 20) return 'Escreva um resumo do projeto com pelo menos duas frases.';
-    const emails = [f.gerenteEmail, f.c1Email, f.c2Email, f.meuEmail].filter(Boolean);
+    const emails = [f.gerenteEmail, f.c1Email, f.c2Email, f.c3Email, f.meuEmail].filter(Boolean);
     if (emails.some(e => !/^[^@\s]+@produtivajunior\.com\.br$/.test(e.trim()))) return 'Use e-mails @produtivajunior.com.br na equipe.';
-    for (const z of [f.gerenteZap, f.c1Zap, f.c2Zap]) { const d = this.soDigitos(z); if (z && (d.length < 10 || d.length > 13)) return 'WhatsApp com DDD, só números (ex.: 84 99999-0000).'; }
+    for (const z of [f.gerenteZap, f.c1Zap, f.c2Zap, f.c3Zap]) { const d = this.soDigitos(z); if (z && (d.length < 10 || d.length > 13)) return 'WhatsApp com DDD, só números (ex.: 84 99999-0000).'; }
     for (const d of f.documentos) { if ((d.nome || d.url) && !/^https:\/\//.test(d.url || '') && !/^data:application\/pdf/.test(d.url || '')) return 'Cada documento precisa de um link https (Drive) ou de um PDF anexado.'; }
     if (f.videoUrl && !/^https:\/\//.test(f.videoUrl.trim())) return 'O link do vídeo precisa começar com https://.';
     if (!f.fotoDados && f.fotoLink && !/^https:\/\//.test(f.fotoLink.trim())) return 'O link da foto precisa começar com https:// (Drive).';
@@ -428,7 +429,7 @@ class Component extends DCLogic {
       cliente: f.cliente.trim(), segmento: f.segmento.trim(), porte: f.porte || '', cidade: f.cidade.trim(),
       escopoId: escopo ? escopo.id : null, escopoNome: escopo ? escopo.nome : f.escopoNome.trim(),
       periodo: { inicio: f.inicio || '', fim: f.fim || '' }, duracaoDias: f.duracaoDias ? Number(f.duracaoDias) : null,
-      equipe: { gerente: pessoa(f.gerenteNome, f.gerenteEmail, f.gerenteZap), consultores: [pessoa(f.c1Nome, f.c1Email, f.c1Zap), pessoa(f.c2Nome, f.c2Email, f.c2Zap)] },
+      equipe: { gerente: pessoa(f.gerenteNome, f.gerenteEmail, f.gerenteZap), consultores: [pessoa(f.c1Nome, f.c1Email, f.c1Zap), pessoa(f.c2Nome, f.c2Email, f.c2Zap)].concat(f.c3Nome.trim() ? [pessoa(f.c3Nome, f.c3Email, f.c3Zap)] : []) },
       resumo: f.resumo.trim(), desafio: f.desafio.trim(), solucao: f.solucao.trim(),
       resultados: this.linhas(f.resultados), aprendizados: this.linhas(f.aprendizados),
       ferramentas: f.ferramentas.slice(),
@@ -1209,7 +1210,7 @@ class Component extends DCLogic {
     // formulário de case
     const fcase = s.formCase;
     const setFC = (k) => (e) => this.setState(st => ({ formCase: { ...st.formCase, [k]: e.target.value }, caseErro:'' }));
-    const fc = {}; for (const k of ['cliente','segmento','porte','cidade','escopoId','escopoNome','inicio','fim','duracaoDias','gerenteNome','gerenteEmail','gerenteZap','c1Nome','c1Email','c1Zap','c2Nome','c2Email','c2Zap','resumo','desafio','solucao','resultados','aprendizados','depoimento','tags','fotoLink','fotoLegenda','videoUrl','videoQuem','videoDuracao','meuNome','meuEmail']) fc[k] = setFC(k);
+    const fc = {}; for (const k of ['cliente','segmento','porte','cidade','escopoId','escopoNome','inicio','fim','duracaoDias','gerenteNome','gerenteEmail','gerenteZap','c1Nome','c1Email','c1Zap','c2Nome','c2Email','c2Zap','c3Nome','c3Email','c3Zap','resumo','desafio','solucao','resultados','aprendizados','depoimento','tags','fotoLink','fotoLegenda','videoUrl','videoQuem','videoDuracao','meuNome','meuEmail']) fc[k] = setFC(k);
     const escopoOptions = [{ value:'', label:'Escolha o escopo…' }].concat(this.ESCOPOS.map(e => ({ value:e.id, label:e.nome }))).concat([{ value:'', label:'Outro (descrever abaixo)' }]);
     const porteOptions = [{ value:'', label:'Porte…' }].concat(this.vivos(this.TAXONOMIA.portes || []).map(v => ({ value:v, label:v })));
     const docTipoOptions = this.vivos(this.TAXONOMIA.documentosCase || []).map(v => ({ value:v, label:v }));
