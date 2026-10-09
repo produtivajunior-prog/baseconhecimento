@@ -22,6 +22,7 @@ class Component extends DCLogic {
     saberFeitos: this.carregarLocal('hangar.saber', {}),
     escopoBusca: '',
     glossQuery: '',
+    buscaMais: {},
     eu: this.carregarLocal('hangar.eu', {}),
     open: {},
     rating: null,
@@ -562,8 +563,106 @@ class Component extends DCLogic {
       abrirVideoForm: () => this.abrirVideoForm(c), removerVideo: () => this.aplicarVideo(c.id, null),
       remover: (e) => this.pedirRemoverCase(c.id, e) };
   }
+  // Textos do case que a busca lê (o primeiro é o título; os seguintes servem para o trecho do resultado).
+  textosCase(c) {
+    const escopo = c.escopoId ? this.escopoPorId(c.escopoId) : null;
+    const eq = c.equipe || {};
+    return [c.cliente, c.resumo, c.desafio, c.solucao, ...(c.resultados||[]), ...(c.aprendizados||[]), c.depoimentoCliente,
+      c.segmento, c.porte, c.cidade, escopo ? escopo.nome : c.escopoNome, ...(c.tags||[]), (eq.gerente||{}).nome, ...((eq.consultores||[]).map(x=>x.nome)),
+      ...((c.ferramentas||[]).map(fid => (this.allData().find(d=>d.id===fid)||{}).nome)), ...((c.documentos||[]).map(d=>d.nome))];
+  }
+  // Texto completo do case (sem acento e sem caixa), usado na busca de Cases e na da Biblioteca.
+  caseBate(c, termos) { return this.bateTermos(this.normaliza(this.textosCase(c).join(' ')), termos); }
+
+  // ---- Busca geral
+  // Cada palavra digitada precisa aparecer, em qualquer ordem, sem acento e sem caixa ("custo setor" acha
+  // "custeio por setor"). Palavras vazias (de, da, para…) só contam quando a busca é só delas.
+  PALAVRAS_VAZIAS = new Set(['a','o','as','os','e','de','da','do','das','dos','em','no','na','nos','nas','um','uma','para','por','com','que']);
+  termosDe(q) {
+    const t = this.normaliza(q).split(/[\s,;:/]+/).filter(Boolean);
+    const uteis = t.filter(x => !this.PALAVRAS_VAZIAS.has(x));
+    return uteis.length ? uteis : t;
+  }
+  bateTermos(hay, termos) { return termos.every(t => hay.includes(t)); }
+  // Relevância: o termo no título vale mais que no corpo; título igual ou que começa com a busca, mais ainda.
+  pontuar(titulo, hay, termos, frase) {
+    const tit = this.normaliza(titulo);
+    let p = tit === frase ? 100 : tit.startsWith(frase) ? 50 : tit.includes(frase) ? 30 : 0;
+    for (const t of termos) if (tit.includes(t)) p += 10;
+    if (hay.includes(frase)) p += 3;
+    // quem cita o termo mais vezes vem antes (até 10 pontos)
+    let n = 0; for (const t of termos) { let i = hay.indexOf(t); while (i >= 0 && n < 10) { n++; i = hay.indexOf(t, i + t.length); } }
+    return p + n;
+  }
+  // Trecho em volta da primeira ocorrência, com o termo separado para aparecer destacado.
+  trechoDe(textos, termos) {
+    for (const bruto of textos) {
+      const txt = String(bruto || '').replace(/\s+/g, ' ').trim(); if (!txt) continue;
+      const n = this.normaliza(txt);
+      for (const t of termos) {
+        const i = n.indexOf(t); if (i < 0) continue;
+        // sem correspondência letra a letra (caractere que muda de tamanho ao normalizar): trecho sem destaque
+        if (n.length !== txt.length) return { antes: txt.length > 150 ? txt.slice(0, 150) + '…' : txt, achado: '', depois: '' };
+        const ini = Math.max(0, i - 40), fim = Math.min(txt.length, i + t.length + 110);
+        return { antes: (ini > 0 ? '…' : '') + txt.slice(ini, i), achado: txt.slice(i, i + t.length), depois: txt.slice(i + t.length, fim) + (fim < txt.length ? '…' : '') };
+      }
+    }
+    return null;
+  }
+  // Todas as strings de um objeto do JSON (para auxílios, áreas…), menos ids, links e metadados.
+  textosDe(x) {
+    if (x == null) return [];
+    if (typeof x === 'string') return [x];
+    if (Array.isArray(x)) return x.flatMap(v => this.textosDe(v));
+    if (typeof x === 'object') return Object.keys(x).filter(k => !/^(id|origem|url|tela|cor|bg|pendente|_comentario)$/.test(k)).flatMap(k => this.textosDe(x[k]));
+    return [];
+  }
+  // Vai para outra tela e rola até a seção (a tela precisa renderizar antes).
+  irParaTela(tela, ancora, extra) {
+    this.setState({ screen: tela, ...(extra || {}) });
+    if (typeof window !== 'undefined') { window.scrollTo(0, 0); if (ancora) setTimeout(() => this.irPara(ancora), 80); }
+  }
+  // Tudo do Hangar que bate com a busca, fora as ferramentas (que a Biblioteca já lista): escopos, glossário,
+  // trilha, Como funciona, Auxílios e problemas do Recomendar. Cada grupo vem ordenado por relevância.
+  buscaGeral(q) {
+    const termos = this.termosDe(q); const frase = termos.join(' ');
+    if (!frase || frase.length < 2) return [];
+    const P = this.PRODUTIVA; const gruposEsc = this.TAXONOMIA.gruposEscopo || {};
+    const fontes = [
+      { key:'escopos', label:'Escopos', itens: this.ESCOPOS.map(e => ({ titulo: e.nome, sub: 'Escopo · ' + ((gruposEsc[e.grupo] || {}).label || e.grupo),
+          textos: [e.nome, e.descricao, ...(e.etapas||[]).map(x=>x.nome), ...(e.entregaveis||[]).map(x=>x.nome), ...(e.estudar||[]).map(x=>x.nome), ...(e.saber||[]), ...(e.riscos||[]), ...(e.casesReferencia||[]).map(x=>x.nome)],
+          extra: [...(e.etapas||[]), ...(e.entregaveis||[]), ...(e.estudar||[])].flatMap(x => (x.ferramentas||[]).map(fid => (this.allData().find(d=>d.id===fid)||{}).nome)),
+          open: () => this.openEscopo(e.id) })) },
+      { key:'glossario', label:'Glossário', itens: (this.TRILHA.glossario || []).map(g => ({ titulo: g.sigla + (g.nome ? ' — ' + g.nome : ''), sub: 'Glossário',
+          textos: [g.sigla, g.nome, g.definicao], open: () => this.irParaTela('comece', 'glossario', { glossQuery: g.sigla }) })) },
+      { key:'trilha', label:'Comece aqui', itens: (this.TRILHA.passos || []).map((p, i) => ({ titulo: p.titulo, sub: 'Comece aqui · passo ' + (i + 1),
+          textos: [p.titulo, p.texto], open: () => this.irParaTela('comece', 'trilha-' + p.id) })) },
+      { key:'produtiva', label:'Como funciona a Produtiva', itens: [
+          ...(P.oQueE && P.oQueE.titulo ? [{ titulo: P.oQueE.titulo, sub: 'Como funciona', textos: [P.oQueE.titulo, P.oQueE.texto, ...this.textosDe(P.oQueE.atuacao)], open: () => this.irParaTela('produtiva', 'prod-oquee') }] : []),
+          ...(P.areas || []).map(a => ({ titulo: a.nome, sub: 'Como funciona · área', textos: [a.nome, ...this.textosDe({ ...a, nome: undefined })], open: () => this.irParaTela('produtiva', 'area-' + a.id) })),
+          ...((P.fluxo || {}).passos || []).map(f => ({ titulo: f.titulo, sub: 'Como funciona · fluxo do projeto · ' + f.quem, textos: [f.titulo, f.texto, f.quem], open: () => this.irParaTela('produtiva', 'prod-fluxo') })),
+          ...((P.membro || {}).itens || []).map(m => ({ titulo: m.titulo, sub: 'Como funciona · ' + (m.area || 'acompanhamento'), textos: [m.titulo, m.texto, m.area], open: () => this.irParaTela('produtiva', 'prod-membro') })),
+        ] },
+      { key:'auxilios', label:'Auxílios', itens: ((P.auxilios || {}).itens || []).map(x => ({ titulo: x.titulo, sub: 'Auxílios',
+          textos: [x.titulo, ...this.textosDe({ ...x, titulo: undefined })], open: () => this.irParaTela('auxilios', 'aux-' + x.id) })) },
+      { key:'recomendar', label:'Qual ferramenta usar?', itens: this.PROBLEMAS.map(p => ({ titulo: p.label, sub: 'Recomendar · ' + (p.ids||[]).length + ' ferramentas sugeridas',
+          textos: [p.label], extra: (p.ids||[]).map(id => (this.allData().find(d=>d.id===id)||{}).nome), open: () => this.setState({ screen:'recomendar', recoKey:p.key }) })) },
+    ];
+    return fontes.map(f => {
+      const achados = f.itens.map(it => {
+        const hay = this.normaliza(it.textos.concat(it.extra || []).join(' '));
+        if (!this.bateTermos(hay, termos)) return null;
+        // o trecho só aparece quando o termo não está no título (aí mostra onde ele foi achado)
+        const noTitulo = termos.every(t => this.normaliza(it.titulo).includes(t));
+        const tr = noTitulo ? null : this.trechoDe(it.textos.slice(1).concat(it.extra || []), termos);
+        return { titulo: it.titulo, sub: it.sub, open: it.open, pontos: this.pontuar(it.titulo, hay, termos, frase),
+          hasTrecho: !!tr, antes: tr ? tr.antes : '', achado: tr ? tr.achado : '', depois: tr ? tr.depois : '' };
+      }).filter(Boolean).sort((a, b) => b.pontos - a.pontos);
+      return { key: f.key, label: f.label, todos: achados };
+    }).filter(g => g.todos.length);
+  }
   computeCases() {
-    const f = this.state.caseFilters; const q = this.normaliza(this.state.caseQuery.trim());
+    const f = this.state.caseFilters; const q = this.termosDe(this.state.caseQuery);
     return this.allCases().filter(c => {
       const escopoKey = c.escopoId || ('outro:' + (c.escopoNome || ''));
       const ano = ((c.periodo||{}).fim || (c.periodo||{}).inicio || c.atualizado || '').slice(0, 4);
@@ -571,14 +670,7 @@ class Component extends DCLogic {
       if (f.segmento.length && !f.segmento.includes(c.segmento)) return false;
       if (f.ano.length && !f.ano.includes(ano)) return false;
       if (f.ferramenta.length && !(c.ferramentas||[]).some(x => f.ferramenta.includes(x))) return false;
-      if (q) {
-        const escopo = c.escopoId ? this.escopoPorId(c.escopoId) : null;
-        const eq = c.equipe || {};
-        const hay = this.normaliza([c.cliente, c.segmento, c.porte, c.cidade, escopo ? escopo.nome : c.escopoNome, c.resumo, c.desafio, c.solucao, c.depoimentoCliente,
-          ...(c.resultados||[]), ...(c.aprendizados||[]), ...(c.tags||[]), (eq.gerente||{}).nome, ...((eq.consultores||[]).map(x=>x.nome)),
-          ...((c.ferramentas||[]).map(fid => (this.allData().find(d=>d.id===fid)||{}).nome)), ...((c.documentos||[]).map(d=>d.nome))].join(' '));
-        if (!hay.includes(q)) return false;
-      }
+      if (q.length && !this.caseBate(c, q)) return false;
       return true;
     });
   }
@@ -751,8 +843,8 @@ class Component extends DCLogic {
     // ferramentas essenciais: as mapeadas em mais etapas dos escopos; sem escopos, as de uso frequente
     const porUso = data.map(d => ({ d, n: this.usoDe(d.id).length })).filter(x => x.n > 0).sort((a, b) => b.n - a.n).slice(0, 5).map(x => x.d);
     const essenciais = (porUso.length ? porUso : data.filter(d => d.freq === 'Alta').slice(0, 5)).map(dec);
-    const q = this.normaliza(s.glossQuery || '');
-    const glossario = (this.TRILHA.glossario || []).filter(g => !q || this.normaliza(g.sigla + ' ' + (g.nome || '') + ' ' + g.definicao).includes(q))
+    const q = this.termosDe(s.glossQuery || '');
+    const glossario = (this.TRILHA.glossario || []).filter(g => !q.length || this.bateTermos(this.normaliza(g.sigla + ' ' + (g.nome || '') + ' ' + g.definicao), q))
       .map(g => ({ ...g, hasNome: !!g.nome, nome: g.nome || '' }));
     return { trilhaPassos: passos, trilhaFeitos: passos.filter(p => p.feito).length, trilhaTotal: passos.length, trilhaPct: passos.length ? Math.round(100 * passos.filter(p => p.feito).length / passos.length) : 0,
       trilhaCompleta: passos.length > 0 && passos.every(p => p.feito), essenciais, hasEssenciais: essenciais.length > 0,
@@ -876,8 +968,12 @@ class Component extends DCLogic {
 
   computeFiltered() {
     const f = this.state.filters;
-    const q = this.normaliza(this.state.query.trim());
-    return this.allData().filter(it => {
+    const termos = this.termosDe(this.state.query); const frase = termos.join(' ');
+    // clientes dos cases que usaram cada ferramenta: buscar "Aqua Coco" traz as ferramentas daquele projeto
+    const clientesPor = {};
+    if (termos.length) for (const c of this.allCases()) for (const fid of (c.ferramentas||[])) (clientesPor[fid] = clientesPor[fid] || []).push(c.cliente);
+    const pontos = {};
+    const lista = this.allData().filter(it => {
       const uso = this.usoDe(it.id);
       if (f.tipo.length && !f.tipo.includes(it.tipo)) return false;
       if (f.area.length && !f.area.includes(it.categoria)) return false;
@@ -886,18 +982,21 @@ class Component extends DCLogic {
       if (f.status.length && !f.status.includes(it.status)) return false;
       if (f.freq.length && !f.freq.includes(it.freq)) return false;
       if (f.responsavel.length && !f.responsavel.includes(this.respNome(it.responsavel))) return false;
-      if (q) {
+      if (termos.length) {
         // Busca no conteúdo inteiro da ficha, não só no cabeçalho — sem acento e sem caixa.
         const hay = this.normaliza([
           it.nome, it.descricao, it.problema, it.categoria, it.tipo, this.respNome(it.responsavel), it.objetivo,
           ...(it.quandoUsar||[]), ...(it.quandoNao||[]), ...(it.entradas||[]), ...(it.saidas||[]),
           ...(it.passos||[]), ...(it.perguntas||[]), ...(it.cuidados||[]), ...(it.exemplos||[]),
-          ...(it.anexos||[]).map(a=>a.nome), ...uso.map(u=>u.escopoNome+' '+u.etapaNome),
+          ...(it.anexos||[]).map(a=>a.nome), ...uso.map(u=>u.escopoNome+' '+u.etapaNome), ...(clientesPor[it.id]||[]),
         ].join(' '));
-        if (!hay.includes(q)) return false;
+        if (!this.bateTermos(hay, termos)) return false;
+        pontos[it.id] = this.pontuar(it.nome, hay, termos, frase) + (this.normaliza(it.descricao).includes(frase) ? 5 : 0);
       }
       return true;
     });
+    // com busca, o mais relevante primeiro (nome antes de conteúdo); sem busca, a ordem do acervo
+    return termos.length ? lista.map((it, i) => ({ it, i })).sort((a, b) => (pontos[b.it.id] - pontos[a.it.id]) || (a.i - b.i)).map(x => x.it) : lista;
   }
 
   buildFilterGroups() {
@@ -1241,7 +1340,8 @@ class Component extends DCLogic {
     const hayEscopo = (e) => this.normaliza([e.nome, e.descricao, ...(e.etapas||[]).map(x=>x.nome), ...(e.entregaveis||[]).map(x=>x.nome), ...(e.estudar||[]).map(x=>x.nome),
       ...(e.saber||[]), ...(e.riscos||[]), ...(e.casesReferencia||[]).map(x=>x.nome),
       ...[...(e.etapas||[]), ...(e.entregaveis||[]), ...(e.estudar||[])].flatMap(x => (x.ferramentas||[]).map(nomeFerr))].join(' '));
-    const escoposVisiveis = this.ESCOPOS.filter(e => !buscaEsc || buscaEsc.split(/\s+/).every(t => hayEscopo(e).includes(t)));
+    const termosEsc = this.termosDe(s.escopoBusca);
+    const escoposVisiveis = this.ESCOPOS.filter(e => !buscaEsc || this.bateTermos(hayEscopo(e), termosEsc));
     const escoposPorGrupo = Object.keys(gruposEscopo).map(g => ({
       grupo:g, ancora:'grupo-' + this.slugDe(g), label:gruposEscopo[g].label||g, cor:gruposEscopo[g].cor, bg:gruposEscopo[g].bg,
       escopos:escoposVisiveis.filter(e=>e.grupo===g).map(decEscopo),
@@ -1296,6 +1396,34 @@ class Component extends DCLogic {
 
     // biblioteca
     const filtered = this.computeFiltered().map(dec);
+    // A busca da Biblioteca é a busca geral do Hangar: além das ferramentas, traz os cases (os que citam o
+    // termo primeiro, depois os que usaram uma ferramenta cujo nome bate — o conteúdo das fichas é amplo
+    // demais para isso) e o que bater em escopos, glossário, trilha, Como funciona, Auxílios e Recomendar.
+    const termosBib = this.termosDe(s.query); const fraseBib = termosBib.join(' ');
+    const temBusca = fraseBib.length >= 2;
+    const casesBusca = !temBusca ? [] : (() => {
+      const idsAchados = new Set(this.allData().filter(d => this.bateTermos(this.normaliza(d.nome), termosBib)).map(d => d.id));
+      return this.allCases().map(c => {
+        const texto = this.caseBate(c, termosBib);
+        const usa = (c.ferramentas || []).filter(id => idsAchados.has(id)).map(id => (data.find(d => d.id === id) || {}).nome);
+        const tr = texto ? this.trechoDe(this.textosCase(c).slice(1), termosBib) : null;
+        return { c, texto, usa, tr, pontos: texto ? this.pontuar(c.cliente, this.normaliza(this.textosCase(c).join(' ')), termosBib, fraseBib) : 0 };
+      })
+        .filter(x => x.texto || x.usa.length)
+        .sort((a, b) => (b.texto - a.texto) || (b.pontos - a.pontos) || String(b.c.atualizado || '').localeCompare(String(a.c.atualizado || '')))
+        .map(x => ({ ...decCase(x.c), hasTrecho: !!x.tr, antes: x.tr ? x.tr.antes : '', achado: x.tr ? x.tr.achado : '', depois: x.tr ? x.tr.depois : '',
+          hasUsa: !x.tr && x.usa.length > 0, usaTexto: x.usa.length ? 'Usou ' + x.usa.join(', ') : '' }));
+    })();
+    const LIMITE_GRUPO = 4;
+    const buscaGrupos = !temBusca ? [] : this.buscaGeral(s.query).map(g => {
+      const aberto = !!(s.buscaMais || {})[g.key];
+      const resto = g.todos.length - LIMITE_GRUPO;
+      return { key: g.key, label: g.label, count: g.todos.length, itens: aberto ? g.todos : g.todos.slice(0, LIMITE_GRUPO),
+        temMais: resto > 0, verMaisLabel: aberto ? 'Mostrar menos' : 'Ver mais ' + resto,
+        verMais: () => this.setState(st => ({ buscaMais: { ...(st.buscaMais || {}), [g.key]: !aberto } })) };
+    });
+    const nOutros = buscaGrupos.reduce((n, g) => n + g.count, 0);
+    const nTotalBusca = filtered.length + casesBusca.length + nOutros;
     const filterGroups = this.buildFilterGroups();
     const cardStyles = ['detalhado','compacto','visual'].map(k => ({
       label: k==='detalhado'?'Detalhado':k==='compacto'?'Lista':'Visual',
@@ -1441,7 +1569,9 @@ class Component extends DCLogic {
       navItems,
       // search
       query: s.query,
-      onSearchInput:(e)=>this.setState({query:e.target.value}),
+      onSearchInput:(e)=>this.setState({ query:e.target.value, buscaMais:{} }),
+      onBibSearchKey:(e)=>{ if(e.key==='Escape') this.setState({ query:'', buscaMais:{} }); },
+      abrirBusca:()=>{ this.nav('biblioteca'); setTimeout(() => { const el = typeof document!=='undefined' && document.getElementById('hg-busca'); if (el) el.focus(); }, 60); },
       onSearchKey:(e)=>{ if(e.key==='Enter') this.nav('biblioteca'); },
       runSearch:()=>this.nav('biblioteca'),
       quickChips,
@@ -1454,7 +1584,12 @@ class Component extends DCLogic {
       ],
       // biblioteca
       filtered, filterGroups, cardStyles,
-      resultCount: filtered.length, noResults: filtered.length===0,
+      resultCount: filtered.length, noResults: nTotalBusca===0,
+      resultLabel: temBusca ? (filtered.length===1 ? 'ferramenta' : 'ferramentas') : 'conteúdos',
+      hasResumoBusca: temBusca && (casesBusca.length + nOutros) > 0, resumoBusca: temBusca ? nTotalBusca + ' resultado' + (nTotalBusca===1 ? '' : 's') + ' no Hangar para “' + s.query.trim() + '”' : '',
+      buscaGrupos, hasBuscaGrupos: buscaGrupos.length>0,
+      hasQuery: !!s.query.trim(), limparBusca: () => this.setState({ query:'', buscaMais:{} }),
+      casesBusca, hasCasesBusca: casesBusca.length>0, casesBuscaCount: casesBusca.length, casesBuscaLabel: casesBusca.length===1 ? 'case relacionado' : 'cases relacionados',
       isDetalhado: s.cardStyle==='detalhado', isCompacto: s.cardStyle==='compacto', isVisual: s.cardStyle==='visual',
       hasActiveFilters: activeChips.length>0, activeChips, clearFilters:()=>this.setState({filters:{tipo:[],area:[],escopo:[],complexidade:[],status:[],freq:[],responsavel:[]}}),
       // conteudo

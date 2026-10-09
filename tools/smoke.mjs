@@ -187,7 +187,7 @@ if (!(await page.getByRole('link', { name: 'Abrir no Drive' }).count())) {
     return m ? m[2] : null;
   });
   if (nome) {
-    await page.getByPlaceholder(/Buscar por nome/).fill(nome.slice(0, 12));
+    await page.getByPlaceholder(/Buscar ferramentas, cases/).fill(nome.slice(0, 12));
     await page.waitForTimeout(300);
     await page.getByRole('button', { name: 'Abrir', exact: true }).first().click();
     await page.waitForTimeout(300);
@@ -213,10 +213,10 @@ const passoTermo = await page.evaluate(() => {
   return palavras[palavras.length - 1] || null;
 });
 if (passoTermo) {
-  const input = page.getByPlaceholder(/Buscar por nome/);
+  const input = page.getByPlaceholder(/Buscar ferramentas, cases/);
   await input.fill(passoTermo);
   await page.waitForTimeout(300);
-  check(!/Nenhum conteúdo encontrado/.test(await texto()), `busca por "${passoTermo}" (palavra de um passo) encontrou resultado`);
+  check(!/Nada encontrado no Hangar/.test(await texto()), `busca por "${passoTermo}" (palavra de um passo) encontrou resultado`);
 } else check(true, 'sem passos no bundle para testar a busca');
 
 // ---- comece aqui: trilha marcável (localStorage) + glossário com busca
@@ -366,7 +366,40 @@ check(/Banco de cases/i.test(await texto()) && !/Equipe do projeto/i.test(await 
   await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); await page.waitForTimeout(300);
 }
 await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(400);
-check(/^Biblioteca/m.test(await texto()) || (await page.getByPlaceholder(/Buscar por nome/).count()) > 0, 'mudar o hash na URL troca de tela (#/biblioteca)');
+check(/^Biblioteca/m.test(await texto()) || (await page.getByPlaceholder(/Buscar ferramentas, cases/).count()) > 0, 'mudar o hash na URL troca de tela (#/biblioteca)');
+// busca da Biblioteca também mostra os cases relacionados ao termo (só se houver case publicado que bata)
+{
+  const casosPub = JSON.parse(readFileSync(new URL('../src/data/cases.json', import.meta.url), 'utf8'));
+  const casoPub = casosPub.length ? casosPub[0].cliente : null;
+  if (casoPub) {
+    await page.getByPlaceholder(/Buscar ferramentas, cases/).fill(casoPub); await page.waitForTimeout(400);
+    const t = await texto();
+    check(/BANCO DE CASES|Banco de cases/.test(t) && t.includes(casoPub), `busca "${casoPub}" na Biblioteca lista o case relacionado`);
+    await page.locator('[role="link"]', { hasText: casoPub }).first().click(); await page.waitForTimeout(600);
+    check(/#\/case\//.test(await page.evaluate(() => location.hash)), 'clicar no case relacionado abre a ficha do case');
+    await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(300);
+    await page.getByPlaceholder(/Buscar ferramentas, cases/).fill(''); await page.waitForTimeout(200);
+  }
+}
+// busca geral: a Biblioteca também acha escopos, glossário, Como funciona e Auxílios; palavras em qualquer ordem
+{
+  const busca = page.getByPlaceholder(/Buscar ferramentas, cases/);
+  await busca.fill('gasolina reembolso'); await page.waitForTimeout(400);
+  let t = await texto();
+  check(/AUXÍLIOS|Auxílios/.test(t) && t.includes('Reembolso de gasolina'), 'busca geral acha o auxílio, com as palavras em outra ordem');
+  await busca.fill('mapeamento processos'); await page.waitForTimeout(400);
+  t = await texto();
+  check(/ESCOPOS|Escopos/.test(t) && t.includes('Processos (Mapeamento e Modelagem)'), 'busca geral lista os escopos relacionados');
+  await busca.fill('feedback 360'); await page.waitForTimeout(400);
+  t = await texto();
+  check(/GLOSSÁRIO|Glossário/.test(t) && /COMO FUNCIONA A PRODUTIVA|Como funciona a Produtiva/.test(t), 'busca geral acha glossário e Como funciona');
+  await page.locator('.hg-busca-item', { hasText: 'Feedback 360' }).first().click(); await page.waitForTimeout(500);
+  check(/^#\/(comece|produtiva)$/.test(await page.evaluate(() => location.hash)), 'clicar num resultado da busca geral abre a tela certa');
+  await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(300);
+  await busca.fill('xyzinexistente123'); await page.waitForTimeout(300);
+  check(/Nada encontrado no Hangar/.test(await texto()), 'busca geral sem resultado mostra a mensagem certa');
+  await busca.fill(''); await page.waitForTimeout(200);
+}
 await page.keyboard.press('/'); await page.waitForTimeout(100);
 check(await page.evaluate(() => document.activeElement && document.activeElement.tagName === 'INPUT'), 'tecla "/" foca a busca');
 await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); await page.waitForTimeout(300);
