@@ -153,5 +153,85 @@
       "email": "pedrorocha@produtivajunior.com.br"
     },
     "atualizado": "2026-10-08"
+  },
+  {
+    "id": "aqua-coco-2026-processos-mapeamento-e-modelagem",
+    "cliente": "Aqua Coco",
+    "segmento": "Indústria de bebidas (água de coco e sucos)",
+    "porte": "",
+    "cidade": "",
+    "escopoId": "map-e-model",
+    "periodo": {
+      "inicio": "2025-08-15",
+      "fim": "2026-10"
+    },
+    "equipe": {
+      "gerente": {
+        "nome": "Matheus Lima",
+        "email": "",
+        "whatsapp": ""
+      },
+      "consultores": [
+        {
+          "nome": "Diana Gaspar",
+          "email": "",
+          "whatsapp": ""
+        },
+        {
+          "nome": "João Artur",
+          "email": "",
+          "whatsapp": ""
+        },
+        {
+          "nome": "Lucas Germano",
+          "email": "",
+          "whatsapp": ""
+        }
+      ]
+    },
+    "resumo": "A fábrica da Aqua Coco tinha manutenção só corretiva, produção sem controle e qualidade em papel. A Produtiva estruturou a manutenção, criou os sistemas de PCP e Qualidade no Lovable e documentou os processos da fábrica e do escritório.",
+    "desafio": "A dor real era a falta de tecnologia e de dados: manutenção só corretiva (último registro em papel de dez/2024), sem controle do que era produzido nem do estoque, e qualidade em planilhas impressas. O diagnóstico apontou 10 gargalos na linha, como 1 coco caindo por minuto no elevador e 60 s de pausa a cada 2 min no início da linha. O escopo vendido (Mapeamento e Modelagem, Capacidade Produtiva e Manutenção) mudou no caminho: Capacidade Produtiva deu lugar a PCP com sistema.",
+    "solucao": "1) Imersão e diagnóstico, com Ishikawa e GUT para priorizar os gargalos; o primeiro resolvido foi a queda de cocos no elevador. 2) Escolha de um sistema e de uma planilha para a manutenção. 3) Sistema de PCP no Lovable, com pedidos, estoque e produção em tempo real. 4) Sistema de Qualidade, desenvolvido em paralelo. 5) Mapeamento BPMN e POPs da fábrica e do escritório (financeiro, logística e faturamento), com automação do faturamento.",
+    "resultados": [
+      "Economia estimada de mais de R$ 400 mil por ano",
+      "100% da produção registrada e acompanhada no sistema",
+      "Mais de 95% dos processos da Qualidade digitalizados",
+      "Sistemas usados diariamente pela fábrica"
+    ],
+    "aprendizados": [
+      "A imersão define o projeto: entenda o que o gestor quer de fato",
+      "Feche o escopo do sistema antes de começar a desenvolver",
+      "Treine a equipe do cliente e cobre o uso, com o gestor por perto"
+    ],
+    "ferramentas": [
+      "ishikawa",
+      "matriz-gut",
+      "bpmn",
+      "pop",
+      "pcp",
+      "prototipacao-lovable"
+    ],
+    "documentos": [
+      {
+        "nome": "Site do projeto (entregas)",
+        "tipo": "Outro",
+        "url": "https://sites.google.com/produtivajunior.com.br/produtivaaquacoco"
+      }
+    ],
+    "tags": [
+      "água de coco",
+      "fábrica",
+      "manutenção",
+      "PCP",
+      "qualidade",
+      "sistema",
+      "Lovable",
+      "POP"
+    ],
+    "cadastradoPor": {
+      "nome": "Heitor Borges",
+      "email": ""
+    },
+    "atualizado": "2026-10-09"
   }
 ]

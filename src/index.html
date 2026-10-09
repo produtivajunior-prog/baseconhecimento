@@ -1436,10 +1436,10 @@
           <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">{{ caseSel.cliente }}</h1>
           <p style="font-size:16.5px;color:#5E747B;margin:12px 0 0;line-height:1.55;max-width:720px">{{ caseSel.resumo }}</p>
           <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:20px;padding-top:18px;border-top:1px solid #F0F4F5">
-            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Período</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.periodoFmt }}</div></div>
-            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Duração</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.duracaoFmt }}</div></div>
-            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Porte</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.porte }}</div></div>
-            <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Cidade</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.cidade }}</div></div>
+            <sc-if value="{{ caseSel.periodoFmt }}" hint-placeholder-val="{{ true }}"><div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Período</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.periodoFmt }}</div></div></sc-if>
+            <sc-if value="{{ caseSel.duracaoFmt }}" hint-placeholder-val="{{ true }}"><div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Duração</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.duracaoFmt }}</div></div></sc-if>
+            <sc-if value="{{ caseSel.porte }}" hint-placeholder-val="{{ true }}"><div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Porte</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.porte }}</div></div></sc-if>
+            <sc-if value="{{ caseSel.cidade }}" hint-placeholder-val="{{ true }}"><div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Cidade</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ caseSel.cidade }}</div></div></sc-if>
           </div>
         </div>
 
