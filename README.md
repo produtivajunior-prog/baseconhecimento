@@ -144,6 +144,15 @@ como `index.html` (gzip, HTML sem cache, `/healthz` para health check).
 Para atualizar o site: edite `src/`, rode `node tools/pack.mjs && node tools/verify.mjs`, faça commit
 do `dist/Hangar.html` e dê push. Testar localmente: `docker build -t hangar . && docker run -p 8080:80 hangar`.
 
+### Endereço alternativo (Vercel)
+
+Redes com firewall que bloqueia "Dynamic DNS" (ex.: Wi-Fi da UFRN, FortiGuard) barram o endereço
+`*.sslip.io` do Coolify. Por isso o Hangar também é publicado na Vercel (`*.vercel.app`), configurado
+em `vercel.json`: sem build de framework, copia `dist/Hangar.html` para `public/index.html`, com os
+mesmos cabeçalhos do nginx. O projeto Vercel fica ligado a este repositório e publica sozinho a cada
+push na `main` (não precisa de Redeploy manual). Com um domínio próprio (ex.: `hangar.produtivajunior.com.br`)
+o sslip deixa de ser necessário.
+
 ## Limitações conhecidas
 
 | | |
