@@ -481,7 +481,7 @@
             <article style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:13px" style-hover="border-color:#C6E4EC">
               <div style="display:flex;align-items:center;justify-content:space-between">
                 <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:7px;background:{{ item.tipoBg }};color:{{ item.tipoColor }}">{{ item.tipo }}</span>
-                <span style="display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:{{ item.statusColor }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ item.statusColor }}"></span>{{ item.status }}</span>
+                <span style="display:flex;align-items:center;gap:8px"><sc-if value="{{ item.local }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:4px 8px;border-radius:6px;white-space:nowrap" title="Só neste navegador · envie ao CIEP">Só aqui</span></sc-if><span style="display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:{{ item.statusColor }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ item.statusColor }}"></span>{{ item.status }}</span></span>
               </div>
               <div>
                 <h3 onclick="{{ item.open }}" style="font-size:18px;font-weight:600;color:#163B45;letter-spacing:-0.01em;line-height:1.25;cursor:pointer">{{ item.nome }}</h3>
@@ -515,7 +515,7 @@
               <div style="flex:none;width:40px;height:40px;border-radius:10px;background:{{ item.tipoBg }};display:flex;align-items:center;justify-content:center;color:{{ item.tipoColor }};font-family:'Schibsted Grotesk';font-weight:700;font-size:16px">{{ item.initial }}</div>
               <div style="flex:1;min-width:0">
                 <div style="display:flex;align-items:center;gap:9px;min-width:0">
-                  <h3 style="font-size:15px;font-weight:600;color:#163B45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">{{ item.nome }}</h3>
+                  <h3 style="font-size:15px;font-weight:600;color:#163B45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">{{ item.nome }}</h3><sc-if value="{{ item.local }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:4px 8px;border-radius:6px;white-space:nowrap" title="Só neste navegador · envie ao CIEP">Só aqui</span></sc-if>
                   <span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;background:{{ item.tipoBg }};color:{{ item.tipoColor }}">{{ item.tipo }}</span>
                 </div>
                 <p style="font-size:13px;color:#7C9097;margin:2px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.descricao }}</p>
@@ -537,6 +537,7 @@
               <div style="height:96px;background:{{ item.visualBg }};display:flex;align-items:center;justify-content:center;position:relative">
                 <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:34px;color:{{ item.tipoColor }};opacity:0.92">{{ item.initial }}</span>
                 <span style="position:absolute;top:11px;left:11px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:7px;background:rgba(255,255,255,0.78);color:{{ item.tipoColor }}">{{ item.tipo }}</span>
+                <sc-if value="{{ item.local }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:11px;right:11px;font-size:11px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:3px 8px;border-radius:6px" title="Só neste navegador · envie ao CIEP">Só aqui</span></sc-if>
               </div>
               <div style="padding:16px;display:flex;flex-direction:column;gap:9px;flex:1">
                 <h3 style="font-size:16px;font-weight:600;color:#163B45;line-height:1.25">{{ item.nome }}</h3>
@@ -575,6 +576,7 @@
             <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:7px;background:{{ sel.tipoBg }};color:{{ sel.tipoColor }}">{{ sel.tipo }}</span>
             <span style="font-size:12.5px;color:#5E747B;background:#EFF4F5;padding:5px 11px;border-radius:7px">{{ sel.categoria }}</span>
             <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:{{ sel.statusColor }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ sel.statusColor }}"></span>{{ sel.status }}</span>
+            <sc-if value="{{ sel.local }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:4px 9px;border-radius:6px" title="Só neste navegador · envie ao CIEP">Só aqui · envie ao CIEP para publicar</span></sc-if>
           </div>
           <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">{{ sel.nome }}</h1>
           <p style="font-size:16.5px;color:#5E747B;margin:12px 0 0;line-height:1.55;max-width:680px">{{ sel.descricao }}</p>
@@ -746,7 +748,7 @@
 
         <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px">
           <div style="font-size:14px;font-weight:600;color:#163B45;margin-bottom:4px">Esse conteúdo foi útil?</div>
-          <p style="font-size:12.5px;color:#8AA0A7;margin:0 0 13px">Sua avaliação ajuda o CIEP a manter a biblioteca relevante.</p>
+          <p style="font-size:12.5px;color:#8AA0A7;margin:0 0 13px">Vai por e-mail para quem cuida desta ferramenta ({{ feedbackPara }}).</p>
           <sc-if value="{{ notRated }}" hint-placeholder-val="{{ true }}">
             <div style="display:flex;gap:8px">
               <button onclick="{{ rateUp }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid #DCE7EB;background:#fff;color:#2E7D52;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer" style-hover="border-color:#9CD3B4;background:#F2FAF5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M7 11v9H4a1 1 0 01-1-1v-7a1 1 0 011-1h3zm0 0l4.5-7a2 2 0 013.7 1.3L14.5 9H20a2 2 0 012 2.4l-1.4 7A2 2 0 0118.6 20H7" stroke="#2E7D52" stroke-width="1.6" stroke-linejoin="round"></path></svg>Útil</button>
@@ -754,9 +756,21 @@
             </div>
           </sc-if>
           <sc-if value="{{ rated }}" hint-placeholder-val="{{ false }}">
-            <div style="background:#F2FAF5;border:1px solid #CFEBD9;border-radius:10px;padding:11px 13px;font-size:13.5px;color:#2E7D52;font-weight:600;display:flex;align-items:center;gap:8px">✓ Obrigado pelo feedback!</div>
+            <div style="display:flex;gap:8px">
+              <button onclick="{{ rateUp }}" aria-pressed="{{ ratedUp }}" style="flex:1;border:1px solid {{ rateUpBorder }};background:{{ rateUpBg }};color:#2E7D52;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer">Útil</button>
+              <button onclick="{{ rateDown }}" aria-pressed="{{ ratedDown }}" style="flex:1;border:1px solid {{ rateDownBorder }};background:{{ rateDownBg }};color:#B23B47;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer">Nem tanto</button>
+            </div>
           </sc-if>
-          <textarea value="{{ feedback }}" oninput="{{ onFeedbackInput }}" placeholder="Sugestão de melhoria (opcional)…" style="width:100%;margin-top:11px;border:1px solid #DCE7EB;border-radius:10px;padding:11px 13px;font-size:13.5px;color:#172A30;resize:none;height:72px;outline:none" style-focus="border-color:#9FD7E2"></textarea>
+          <textarea value="{{ feedback }}" oninput="{{ onFeedbackInput }}" aria-label="Sugestão de melhoria" placeholder="Sugestão de melhoria (opcional)…" style="width:100%;margin-top:11px;border:1px solid #DCE7EB;border-radius:10px;padding:11px 13px;font-size:13.5px;color:#172A30;resize:none;height:72px;outline:none" style-focus="border-color:#9FD7E2"></textarea>
+          <sc-if value="{{ feedbackNaoEnviado }}" hint-placeholder-val="{{ true }}">
+            <sc-if value="{{ podeEnviarFeedback }}" hint-placeholder-val="{{ false }}">
+              <button onclick="{{ enviarFeedback }}" style="width:100%;margin-top:10px;border:none;background:#1E7C92;color:#fff;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer" style-hover="background:#176478">Enviar ao responsável</button>
+              <p style="font-size:12px;color:#8AA0A7;margin:7px 0 0;text-align:center">Abre seu e-mail com a mensagem pronta.</p>
+            </sc-if>
+          </sc-if>
+          <sc-if value="{{ feedbackEnviado }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:10px;background:#F2FAF5;border:1px solid #CFEBD9;border-radius:10px;padding:11px 13px;font-size:13.5px;color:#2E7D52;font-weight:600">✓ Obrigado! A mensagem foi aberta no seu e-mail.</div>
+          </sc-if>
         </div>
 
         <!-- Criar com IA: preencher a ferramenta -->
@@ -930,7 +944,7 @@
               <span style="flex:none;width:42px;height:42px;border-radius:10px;background:#EAF6F9;color:#1E7C92;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 3v5h5M7 3h7l5 5v11a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="#1E7C92" stroke-width="1.6" stroke-linejoin="round"></path></svg></span>
               <div style="flex:1;min-width:0">
                 <div style="font-size:14px;font-weight:600;color:#163B45;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ modeloFileName }}</div>
-                <div style="font-size:12.5px;color:#1E7C92;margin-top:2px">Pronto para a IA ler</div>
+                <div style="font-size:12.5px;color:#5E747B;margin-top:2px;line-height:1.4">A IA monta os blocos a partir do nome do arquivo e da ferramenta. Confira a lista depois.</div>
               </div>
               <button onclick="{{ clearModeloFile }}" style="flex:none;border:none;background:#E7F1F4;width:32px;height:32px;border-radius:8px;cursor:pointer;color:#7C9097;font-size:16px">×</button>
             </div>
@@ -1016,30 +1030,20 @@
 
     <!-- Cadastro manual -->
     <sc-if value="{{ isCadManual }}" hint-placeholder-val="{{ false }}">
-    <div style="display:flex;align-items:center;gap:8px;margin:26px 0 24px">
-      <sc-for list="{{ formSteps }}" as="fs" hint-placeholder-count="3">
-        <div style="display:flex;align-items:center;gap:8px;flex:1">
-          <span style="width:26px;height:26px;border-radius:50%;background:{{ fs.bg }};color:{{ fs.color }};font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none">{{ fs.n }}</span>
-          <span style="font-size:13.5px;font-weight:600;color:{{ fs.labelColor }}">{{ fs.label }}</span>
-          <span style="flex:1;height:1.5px;background:#E7EEF1"></span>
-        </div>
-      </sc-for>
-    </div>
-
-    <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:22px">
+    <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;margin-top:26px;display:flex;flex-direction:column;gap:22px">
       <div class="hg-g2" style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
         <div style="grid-column:span 2">
           <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Nome do conteúdo *</label>
           <input value="{{ form.nome }}" oninput="{{ formNome }}" placeholder="Ex.: Matriz de Priorização GUT" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none" style-focus="border-color:#9FD7E2">
         </div>
         <div>
-          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Tipo *</label>
+          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Tipo</label>
           <sc-raw-select value="{{ form.tipo }}" onchange="{{ formTipo }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
             <sc-for list="{{ tipoOptions }}" as="o" hint-placeholder-count="4"><option value="{{ o.value }}">{{ o.value }}</option></sc-for>
           </sc-raw-select>
         </div>
         <div>
-          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Categoria (grupo do Hangar) *</label>
+          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Categoria (grupo do Hangar)</label>
           <sc-raw-select value="{{ form.categoria }}" onchange="{{ formCategoria }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2">
             <sc-for list="{{ categoriaOptions }}" as="o" hint-placeholder-count="5"><option value="{{ o.value }}">{{ o.value }}</option></sc-for>
           </sc-raw-select>
@@ -1049,15 +1053,15 @@
           <input value="{{ form.descricao }}" oninput="{{ formDescricao }}" placeholder="Uma frase que resume o que é e para que serve" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none" style-focus="border-color:#9FD7E2">
         </div>
         <div style="grid-column:span 2">
-          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Objetivo *</label>
+          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Objetivo</label>
           <textarea value="{{ form.objetivo }}" oninput="{{ formObjetivo }}" placeholder="O que essa ferramenta entrega ao final da aplicação?" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;resize:none;height:74px" style-focus="border-color:#9FD7E2"></textarea>
         </div>
         <div style="grid-column:span 2">
-          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Problema que resolve *</label>
+          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Problema que resolve</label>
           <textarea value="{{ form.problema }}" oninput="{{ formProblema }}" placeholder="Qual dor do projeto essa ferramenta endereça?" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;resize:none;height:74px" style-focus="border-color:#9FD7E2"></textarea>
         </div>
         <div>
-          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Nível de complexidade *</label>
+          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Nível de complexidade</label>
           <div style="display:flex;gap:8px">
             <sc-for list="{{ complexOptions }}" as="co" hint-placeholder-count="3">
               <button onclick="{{ co.set }}" style="flex:1;border:1.5px solid {{ co.border }};background:{{ co.bg }};color:{{ co.color }};font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer">{{ co.label }}</button>
@@ -1065,27 +1069,19 @@
           </div>
         </div>
         <div>
-          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Tempo estimado *</label>
+          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Tempo estimado</label>
           <input value="{{ form.tempo }}" oninput="{{ formTempo }}" placeholder="Ex.: 1–2h" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none" style-focus="border-color:#9FD7E2">
         </div>
         <div>
-          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Responsável *</label>
+          <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Responsável</label>
           <input value="{{ form.responsavel }}" oninput="{{ formResp }}" placeholder="Ex.: Núcleo CIEP" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none" style-focus="border-color:#9FD7E2">
         </div>
       </div>
 
-      <!-- Anexos uploader -->
-      <div>
-        <label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Anexos e templates</label>
-        <div style="border:1.5px dashed #C9DBE0;border-radius:13px;padding:26px;text-align:center;background:#FAFCFC">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="margin:0 auto"><path d="M12 16V4m0 0l-4 4m4-4l4 4M5 20h14" stroke="#7FBFD0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          <div style="font-size:14px;font-weight:600;color:#3C545B;margin-top:10px">Arraste arquivos ou clique para enviar</div>
-          <div style="font-size:12.5px;color:#9DAEB4;margin-top:3px">Templates, PDFs, planilhas, apresentações, exemplos preenchidos</div>
-        </div>
-      </div>
+      <div style="background:#FBFDFD;border:1px solid #E7EEF1;border-radius:11px;padding:12px 14px;font-size:13px;color:#5E747B;line-height:1.5"><b style="color:#3C545B">Anexos e templates</b> entram pelo CIEP: mande os links do Drive junto com o conteúdo. Só nome e descrição são obrigatórios aqui; o resto o CIEP completa na revisão.</div>
 
       <div style="display:flex;align-items:center;gap:12px;padding-top:6px;border-top:1px solid #F0F4F5">
-        <div style="flex:1;font-size:13px;color:#8AA0A7;display:flex;align-items:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#B6C4C9" stroke-width="1.7"></circle><path d="M12 8.5v4M12 15.6h.01" stroke="#B6C4C9" stroke-width="1.8" stroke-linecap="round"></path></svg>A página completa, o card e a ficha são gerados automaticamente.</div>
+        <div style="flex:1;font-size:13px;color:#8AA0A7;display:flex;align-items:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#B6C4C9" stroke-width="1.7"></circle><path d="M12 8.5v4M12 15.6h.01" stroke="#B6C4C9" stroke-width="1.8" stroke-linecap="round"></path></svg>Fica salvo neste navegador até o CIEP publicar.</div>
         <button onclick="{{ salvarRascunhoForm }}" style="border:1px solid #DCE7EB;background:#fff;color:#5E747B;font-size:14px;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer">Salvar rascunho</button>
         <button onclick="{{ publish }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:11px 22px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">Publicar conteúdo</button>
       </div>
@@ -2356,15 +2352,15 @@ Pergunta 2" style="width:100%;border:1px solid #DCE7EB;border-radius:9px;padding
   </div>
   </sc-if>
 
-  <!-- ============ MODAL CONFIRMAR REMOÇÃO DO CASE ============ -->
-  <sc-if value="{{ confirmRemoverAberto }}" hint-placeholder-val="{{ false }}">
+  <!-- ============ MODAL DE CONFIRMAÇÃO (remover case, capa, vídeo, modelo, bloco; limpar form e checklist) ============ -->
+  <sc-if value="{{ confirmAberto }}" hint-placeholder-val="{{ false }}">
   <div onclick="{{ cancelarRemover }}" style="position:fixed;inset:0;z-index:60;background:rgba(13,38,45,0.45);display:flex;align-items:center;justify-content:center;padding:24px;animation:ciepFade .15s ease">
-    <div onclick="{{ stop }}" style="background:#fff;border-radius:18px;width:420px;max-width:100%;padding:24px;animation:ciepPop .2s ease;box-shadow:0 30px 80px -30px rgba(13,38,45,0.5)">
-      <h3 style="font-size:18px;font-weight:700;color:#163B45;margin:0">Remover case?</h3>
-      <p style="font-size:14px;color:#5E747B;margin:10px 0 0;line-height:1.55">O case de <strong>{{ confirmRemoverNome }}</strong> vai ser apagado deste navegador. Se ele ainda não foi enviado ao CIEP, essa cópia se perde.</p>
+    <div onclick="{{ stop }}" role="dialog" aria-modal="true" aria-labelledby="hg-confirm-titulo" style="background:#fff;border-radius:18px;width:420px;max-width:100%;padding:24px;animation:ciepPop .2s ease;box-shadow:0 30px 80px -30px rgba(13,38,45,0.5)">
+      <h3 id="hg-confirm-titulo" style="font-size:18px;font-weight:700;color:#163B45;margin:0">{{ confirmTitulo }}</h3>
+      <p style="font-size:14px;color:#5E747B;margin:10px 0 0;line-height:1.55">{{ confirmTexto }}<strong>{{ confirmDestaque }}</strong>{{ confirmTextoFim }}</p>
       <div style="display:flex;gap:10px;margin-top:20px">
         <button onclick="{{ cancelarRemover }}" style="flex:1;border:1px solid #DCE7EB;background:#fff;color:#5E747B;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer">Cancelar</button>
-        <button onclick="{{ confirmRemover }}" style="flex:1;border:none;background:#B23B47;color:#fff;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer" style-hover="background:#9A303B">Remover</button>
+        <button onclick="{{ confirmRemover }}" style="flex:1;border:none;background:#B23B47;color:#fff;font-size:13.5px;font-weight:600;padding:10px;border-radius:10px;cursor:pointer" style-hover="background:#9A303B">{{ confirmLabel }}</button>
       </div>
     </div>
   </div>
@@ -2372,9 +2368,10 @@ Pergunta 2" style="width:100%;border:1px solid #DCE7EB;border-radius:9px;padding
 
   <!-- ============ TOAST ============ -->
   <sc-if value="{{ toastOpen }}" hint-placeholder-val="{{ false }}">
-  <div style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:80;background:#163B45;color:#fff;padding:14px 20px;border-radius:13px;display:flex;align-items:center;gap:11px;box-shadow:0 20px 50px -20px rgba(13,38,45,0.6);animation:ciepToast .25s ease">
-    <span style="width:24px;height:24px;border-radius:50%;background:#3DAFC7;display:flex;align-items:center;justify-content:center;flex:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
-    <span style="font-size:14.5px;font-weight:600">{{ toastMsg }}</span>
+  <div role="status" aria-live="polite" style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:80;max-width:min(560px,calc(100vw - 32px));background:#163B45;color:#fff;padding:14px 20px;border-radius:13px;display:flex;align-items:center;gap:11px;box-shadow:0 20px 50px -20px rgba(13,38,45,0.6);animation:ciepToast .25s ease">
+    <sc-if value="{{ toastOk }}" hint-placeholder-val="{{ true }}"><span style="width:24px;height:24px;border-radius:50%;background:#3DAFC7;display:flex;align-items:center;justify-content:center;flex:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></sc-if>
+    <sc-if value="{{ toastErro }}" hint-placeholder-val="{{ false }}"><span data-toast="erro" style="width:24px;height:24px;border-radius:50%;background:#B23B47;display:flex;align-items:center;justify-content:center;flex:none;font-weight:800;font-size:15px;line-height:1">!</span></sc-if>
+    <span style="font-size:14.5px;font-weight:600;line-height:1.4">{{ toastMsg }}</span>
   </div>
   </sc-if>
 

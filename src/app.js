@@ -28,9 +28,10 @@ class Component extends DCLogic {
     rating: null,
     feedback: '',
     anexosId: null,
-    confirmRemoverId: null,
+    confirm: null,
+    feedbackEnviado: false,
     recoKey: null,
-    toast: '',
+    toast: null,
     form: this.carregarLocal('hangar.formRascunho', null) || this.formVazio(),
     extra: this.carregarLocal('hangar.extra', []),
     doc: null,
@@ -184,7 +185,7 @@ class Component extends DCLogic {
       const ok = this.salvarLocal('hangar.casesLocais', casesLocais);
       this.setState({ casesLocais });
       this.showToast(!ok ? 'A capa aparece agora, mas não coube na memória deste navegador: baixe o case para não perder.'
-        : url ? 'Capa atualizada. Baixe o case de novo e envie ao CIEP para publicar a foto para todos.' : 'Capa removida.');
+        : url ? 'Capa atualizada. Baixe o case de novo e envie ao CIEP para publicar a foto para todos.' : 'Capa removida.', ok ? 'ok' : 'erro');
       return;
     }
     const capas = { ...(this.state.capas || {}) };
@@ -192,9 +193,9 @@ class Component extends DCLogic {
     const ok = this.salvarLocal('hangar.capas', capas);
     this.setState({ capas });
     this.showToast(!ok ? 'A capa aparece agora, mas não coube na memória deste navegador: baixe o case para não perder.'
-      : url ? 'Capa salva neste navegador. Baixe o case (.json) e envie ao CIEP para publicar a foto para todos.' : 'Capa removida.');
+      : url ? 'Capa salva neste navegador. Baixe o case (.json) e envie ao CIEP para publicar a foto para todos.' : 'Capa removida.', ok ? 'ok' : 'erro');
   }
-  removerCapa(id, e) { if (e && e.stopPropagation) e.stopPropagation(); this.aplicarCapa(id, ''); }
+  removerCapa(id, e) { this.pedirConfirmacao({ titulo:'Remover a capa?', texto:'A foto de capa deste case vai ser removida.', ok:() => this.aplicarCapa(id, '') }, e); }
   // ---- Vídeo da equipe num case que ainda só existe neste navegador: o vídeo sobe no Drive/YouTube e aqui entra só o link.
   // Case publicado não tem essa opção: ninguém troca o vídeo de todos pelo site.
   abrirVideoForm(c) {
@@ -223,7 +224,7 @@ class Component extends DCLogic {
     const ok = this.salvarLocal('hangar.casesLocais', casesLocais);
     this.setState({ casesLocais, videoForm: null });
     this.showToast(!ok ? 'O vídeo aparece agora, mas não coube na memória deste navegador: baixe o case para não perder.'
-      : video ? 'Vídeo salvo. Baixe o case (.json) e envie ao CIEP para publicar para todos.' : 'Vídeo removido.');
+      : video ? 'Vídeo salvo. Baixe o case (.json) e envie ao CIEP para publicar para todos.' : 'Vídeo removido.', ok ? 'ok' : 'erro');
   }
   abrirSeletorFoto() { if (typeof document === 'undefined') return; const el = document.getElementById('hangar-foto-input'); if (el) el.click(); }
   removerFoto() { this.setState(st => ({ formCase: { ...st.formCase, fotoDados: '', fotoLink: '', fotoLegenda: '' } })); }
@@ -268,6 +269,8 @@ class Component extends DCLogic {
   }
   baixarArquivo(nome, conteudo, mime) {
     if (typeof document === 'undefined') return false;
+    // o smoke (tools/smoke.mjs) lê o último download daqui; não existe outro jeito de capturá-lo em file://
+    if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json: String(conteudo) };
     try {
       const a = document.createElement('a');
       a.href = URL.createObjectURL(new Blob([conteudo], { type: mime }));
@@ -318,12 +321,13 @@ class Component extends DCLogic {
     const html = this.materialReuniao(it);
     if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome: this.slugDe(it.nome) + '-reuniao.html', html };
     try { this.abrirLink(URL.createObjectURL(new Blob([html], { type: 'text/html' }))); this.showToast('Material aberto em outra aba. Use Ctrl+P para imprimir.'); }
-    catch (e) { this.showToast('Não consegui abrir aqui. Use "Baixar (.html)".'); }
+    catch (e) { this.showToast('Não consegui abrir aqui. Use "Baixar (.html)".', 'erro'); }
   }
   baixarMaterial(it) {
     const html = this.materialReuniao(it); const nome = this.slugDe(it.nome) + '-reuniao.html';
     if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
-    this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' gerado. Abra e imprima.' : 'Não consegui gerar o arquivo aqui.');
+    const ok = this.baixarArquivo(nome, html, 'text/html');
+    this.showToast(ok ? 'Arquivo ' + nome + ' gerado. Abra e imprima.' : 'Não consegui gerar o arquivo aqui.', ok ? 'ok' : 'erro');
   }
   // ---- Roteiro do Diagnóstico Inicial de um escopo (PPGP 2026): o que saber, riscos, entregáveis e etapas.
   roteiroEscopo(esc) {
@@ -359,12 +363,13 @@ class Component extends DCLogic {
     const html = this.roteiroEscopo(esc); const nome = this.slugDe(esc.nome) + '-diagnostico-inicial.html';
     if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
     try { this.abrirLink(URL.createObjectURL(new Blob([html], { type: 'text/html' }))); this.showToast('Roteiro aberto em outra aba. Use Ctrl+P para imprimir.'); }
-    catch (e) { this.showToast('Não consegui abrir aqui. Use "Baixar (.html)".'); }
+    catch (e) { this.showToast('Não consegui abrir aqui. Use "Baixar (.html)".', 'erro'); }
   }
   baixarRoteiro(esc) {
     const html = this.roteiroEscopo(esc); const nome = this.slugDe(esc.nome) + '-diagnostico-inicial.html';
     if (typeof window !== 'undefined') window.__hangarUltimoMaterial = { nome, html };
-    this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' gerado. Abra e imprima.' : 'Não consegui gerar o arquivo aqui.');
+    const ok = this.baixarArquivo(nome, html, 'text/html');
+    this.showToast(ok ? 'Arquivo ' + nome + ' gerado. Abra e imprima.' : 'Não consegui gerar o arquivo aqui.', ok ? 'ok' : 'erro');
   }
   // Checklist "O que saber" marcado durante a reunião: fica no navegador, por escopo.
   toggleSaber(escopoId, i) {
@@ -376,7 +381,8 @@ class Component extends DCLogic {
       return { saberFeitos };
     });
   }
-  limparSaber(escopoId) { this.setState(st => { const saberFeitos = { ...(st.saberFeitos || {}), [escopoId]: [] }; this.salvarLocal('hangar.saber', saberFeitos); return { saberFeitos }; }); }
+  limparSaber(escopoId) { this.pedirConfirmacao({ titulo:'Desmarcar o checklist?', texto:'Todos os itens de "O que saber" deste escopo voltam a ficar pendentes.', label:'Desmarcar', ok:() => this.limparSaberAgora(escopoId) }); }
+  limparSaberAgora(escopoId) { this.setState(st => { const saberFeitos = { ...(st.saberFeitos || {}), [escopoId]: [] }; this.salvarLocal('hangar.saber', saberFeitos); return { saberFeitos }; }); }
   irPara(id) { if (typeof document === 'undefined') return; const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); }
   // Índice cliente → escopos em que ele aparece como case de referência no PPGP 2026.
   clientesPPGP() {
@@ -452,7 +458,7 @@ class Component extends DCLogic {
     this.salvarLocal('hangar.eu', eu);
     this.setState({ casesLocais, eu, caseErro: '', formCase: this.formCaseVazio() });
     // Sem espaço no navegador (fotos grandes) o case fica só nesta sessão: avisa para baixar já.
-    this.showToast(guardou ? 'Case salvo neste navegador. Baixe o arquivo e envie ao CIEP para publicar para todos.' : 'O navegador não guardou o case (sem espaço). Baixe o arquivo agora para não perder.');
+    this.showToast(guardou ? 'Case salvo neste navegador. Baixe o arquivo e envie ao CIEP para publicar para todos.' : 'O navegador não guardou o case (sem espaço). Baixe o arquivo agora para não perder.', guardou ? 'ok' : 'erro');
     this.openCase(c.id);
   }
   // Gera o arquivo do case para enviar ao CIEP. Guarda o último em window para o smoke conferir.
@@ -460,18 +466,19 @@ class Component extends DCLogic {
     const { local, capaLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const nome = 'case-' + limpo.id + '.json';
-    if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json };
     if (typeof document === 'undefined') return;
-    this.showToast(this.baixarArquivo(nome, json, 'application/json') ? 'Arquivo ' + nome + ' gerado. Envie ao CIEP.' : 'Não consegui gerar o arquivo aqui. Use "Copiar JSON".');
+    const ok = this.baixarArquivo(nome, json, 'application/json');
+    this.showToast(ok ? 'Arquivo ' + nome + ' gerado. Envie ao CIEP.' : 'Não consegui gerar o arquivo aqui. Use "Copiar JSON".', ok ? 'ok' : 'erro');
   }
   copiarJson(c) {
     const { local, capaLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const ok = () => this.showToast('JSON do case copiado. Cole numa mensagem para o CIEP.');
+    const falhou = () => this.showToast('Não consegui copiar automaticamente. Use "Baixar case (.json)".', 'erro');
     try {
-      if (typeof navigator !== 'undefined' && navigator.clipboard) navigator.clipboard.writeText(json).then(ok, () => this.showToast('Não consegui copiar automaticamente.'));
-      else ok();
-    } catch (e) { this.showToast('Não consegui copiar automaticamente.'); }
+      if (typeof navigator !== 'undefined' && navigator.clipboard) navigator.clipboard.writeText(json).then(ok, falhou);
+      else falhou();
+    } catch (e) { falhou(); }
   }
   openCase(id) { this.setState({ screen:'case', caseId:id, videoForm:null, videoPlay:null }); if(typeof window!=='undefined') window.scrollTo(0,0); }
   openNovoCase(prefill) {
@@ -484,13 +491,19 @@ class Component extends DCLogic {
     if (outro) this.showToast('Você já tem um case em andamento (' + f.cliente + '). Ele foi mantido; use "Limpar" para começar o de ' + pre.cliente + '.');
     if(typeof window!=='undefined') window.scrollTo(0,0);
   }
-  pedirRemoverCase(id, e) { if(e&&e.stopPropagation)e.stopPropagation(); this.setState({ confirmRemoverId:id }); }
-  cancelarRemoverCase() { this.setState({ confirmRemoverId:null }); }
+  // Ações que apagam algo passam por aqui: { titulo, texto, destaque?, textoFim?, label, ok }. Esc ou "Cancelar" fecham.
+  pedirConfirmacao(cfg, e) { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ confirm: { label:'Remover', ...cfg } }); }
+  cancelarConfirmacao() { this.setState({ confirm:null }); }
+  confirmar() { const c = this.state.confirm; this.setState({ confirm:null }); if (c && typeof c.ok === 'function') c.ok(); }
+  pedirRemoverCase(id, e) {
+    const c = this.allCases().find(x => x.id === id) || {};
+    this.pedirConfirmacao({ titulo:'Remover case?', texto:'O case de ', destaque:c.cliente || '', textoFim:' vai ser apagado deste navegador. Se ele ainda não foi enviado ao CIEP, essa cópia se perde.', ok:() => this.removerCase(id) }, e);
+  }
   // Só remove do navegador de quem cadastrou: sem backend, não existe "publicado para todos" a desfazer daqui.
   removerCase(id) {
     const casesLocais = this.state.casesLocais.filter(c => c.id !== id);
     this.salvarLocal('hangar.casesLocais', casesLocais);
-    this.setState({ casesLocais, confirmRemoverId:null, screen:'cases', caseId:null });
+    this.setState({ casesLocais, confirm:null, screen:'cases', caseId:null });
     if (typeof window !== 'undefined') window.scrollTo(0,0);
     this.showToast('Case removido deste navegador.');
   }
@@ -560,7 +573,7 @@ class Component extends DCLogic {
       podeEditarVideo: !!c.local, semVideoEditavel: !video && !!c.local, alteracaoLocal: !!c.capaLocal,
       avisoLocal: 'A capa nova só existe neste navegador.',
       podeRemoverVideo: !!c.local && !!video, videoMeta: video ? [video.quem, video.duracao].filter(Boolean).join(' · ') : '',
-      abrirVideoForm: () => this.abrirVideoForm(c), removerVideo: () => this.aplicarVideo(c.id, null),
+      abrirVideoForm: () => this.abrirVideoForm(c), removerVideo: () => this.pedirConfirmacao({ titulo:'Remover o vídeo?', texto:'O vídeo deste case vai ser removido.', ok:() => this.aplicarVideo(c.id, null) }),
       remover: (e) => this.pedirRemoverCase(c.id, e) };
   }
   // Textos do case que a busca lê (o primeiro é o título; os seguintes servem para o trecho do resultado).
@@ -773,6 +786,8 @@ class Component extends DCLogic {
       anexosCount: (it.anexos||[]).length, hasAnexos: (it.anexos||[]).length > 0,
       respNome: this.respNome(it.responsavel), respEmail: this.respEmail(it.responsavel),
       atualizadoFmt: this.fmtData(it.atualizado),
+      // criada neste navegador (Cadastrar, IA ou Documentação): ainda não foi publicada pelo CIEP
+      local: /^novo-/.test(String(it.id || '')),
       usoEmEscopos: vinc, usoCount: uso.length, hasUso: vinc.length>0, semUso: vinc.length===0,
       usoResumo: vinc.length ? (vinc.length===1 ? vinc[0].escopoNome : vinc.length+' escopos') : 'Sem escopo vinculado',
       open: () => this.openContent(it.id),
@@ -781,7 +796,7 @@ class Component extends DCLogic {
   }
 
   openContent(id) {
-    this.setState({ screen:'conteudo', selId:id, open:{quando:true,problema:true,passos:true,io:false,perguntas:false,cuidados:false,exemplos:false}, rating:null, feedback:'', applyInput:'', applyResult:null, applyError:'', applyLoading:false, applyOpen:false });
+    this.setState({ screen:'conteudo', selId:id, open:{quando:true,problema:true,passos:true,io:false,perguntas:false,cuidados:false,exemplos:false}, rating:null, feedback:'', feedbackEnviado:false, applyInput:'', applyResult:null, applyError:'', applyLoading:false, applyOpen:false });
     if (typeof window!=='undefined') window.scrollTo(0,0);
   }
 
@@ -789,6 +804,7 @@ class Component extends DCLogic {
     const sel = this.allData().find(d=>d.id===this.state.selId); if (!sel) return;
     const inp = (this.state.applyInput||'').trim();
     if (inp.length < 8) { this.setState({ applyError:'Cole os insumos do projeto para preencher a ferramenta.' }); return; }
+    if (!this.iaDisponivel()) { this.setState({ applyError:this.IA_INDISPONIVEL }); return; }
     this.setState({ applyLoading:true, applyError:'' });
     // Existe um modelo-padrão registrado para esta ferramenta? Então a IA segue exatamente esse formato.
     const modelo = this.state.modelos.find(m => m.toolId === sel.id);
@@ -819,6 +835,39 @@ class Component extends DCLogic {
     } catch(e) {
       this.setState({ applyLoading:false, applyError:'Não consegui preencher agora. Tente refinar os insumos e gerar de novo.' });
     }
+  }
+  // "Baixar" do resultado da IA: a ferramenta preenchida vira um HTML imprimível, como o material para a reunião.
+  aplicacaoHtml(it, ar) {
+    const e = (t) => this.esc(t);
+    const blocos = (ar.blocos || []);
+    const corpo = ar.layout === 'canvas'
+      ? '<div class="canvas">' + blocos.map((b) => '<div class="bloco" style="grid-column:' + e(b.gc || 'auto') + ';grid-row:' + e(b.gr || 'auto') + '"><b>' + e(b.titulo) + '</b><ul>' + (b.itens || []).map((x) => '<li>' + e(x) + '</li>').join('') + '</ul></div>').join('') + '</div>'
+      : blocos.map((b) => '<section><h2>' + e(b.titulo) + '</h2><ul>' + (b.itens || []).map((x) => '<li>' + e(x) + '</li>').join('') + '</ul></section>').join('');
+    return '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>' + e(ar.titulo || it.nome) + ' — preenchida</title><style>' +
+      '@page{size:A4;margin:16mm}body{font:12.5pt/1.45 -apple-system,"Segoe UI",Roboto,sans-serif;color:#172A30;margin:0;padding:24px;max-width:190mm}' +
+      'h1{font-size:22pt;margin:0 0 4px}h2{font-size:13pt;margin:22px 0 8px;color:#1E7C92;text-transform:uppercase;letter-spacing:.04em}.aviso{font-size:10.5pt;color:#5E747B;margin:0 0 18px}' +
+      'ul{margin:0;padding-left:18px}li{margin:0 0 6px;page-break-inside:avoid}' +
+      '.canvas{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-top:14px}.bloco{border:1px solid #9DAEB4;border-radius:6px;padding:8px 10px;min-height:120px;page-break-inside:avoid}.bloco b{display:block;font-size:10pt;color:#1E7C92;text-transform:uppercase;margin-bottom:6px}.bloco ul{padding-left:14px;font-size:10.5pt}' +
+      '@media print{body{padding:0}}</style></head><body><h1>' + e(ar.titulo || it.nome) + '</h1>' +
+      '<p class="aviso">Ferramenta: ' + e(it.nome) + (ar.modeloNome ? ' · formato do modelo-padrão ' + e(ar.modeloNome) : '') + ' · gerada por IA a partir dos seus insumos em ' + e(this.fmtData(this.hoje())) + '. Revise antes de usar no projeto.</p>' +
+      corpo + '</body></html>';
+  }
+  baixarAplicacao() {
+    const sel = this.allData().find(d => d.id === this.state.selId); const ar = this.state.applyResult;
+    if (!sel || !ar) { this.showToast('Gere a ferramenta preenchida antes de baixar.', 'erro'); return; }
+    const nome = this.slugDe(sel.nome) + '-preenchida.html';
+    const ok = this.baixarArquivo(nome, this.aplicacaoHtml(sel, ar), 'text/html');
+    this.showToast(ok ? 'Arquivo ' + nome + ' gerado. Abra e imprima ou salve em PDF.' : 'Não consegui gerar o arquivo aqui.', ok ? 'ok' : 'erro');
+  }
+  // "Esse conteúdo foi útil?": abre o e-mail para quem cuida da ferramenta, com a avaliação e a sugestão prontas.
+  enviarFeedback() {
+    const sel = this.allData().find(d => d.id === this.state.selId); if (!sel) return;
+    const para = this.respEmail(sel.responsavel) || 'produtivajunior@gmail.com';
+    const nota = this.state.rating === 'up' ? 'Útil' : this.state.rating === 'down' ? 'Nem tanto' : 'Sem avaliação';
+    const link = typeof location !== 'undefined' ? location.href : '';
+    const corpo = 'Ferramenta: ' + sel.nome + '\nAvaliação: ' + nota + '\n\n' + (this.state.feedback || '').trim() + '\n\n' + link;
+    this.abrirLink('mailto:' + para + '?subject=' + encodeURIComponent('Hangar · feedback sobre ' + sel.nome) + '&body=' + encodeURIComponent(corpo));
+    this.setState({ feedbackEnviado:true });
   }
   // Ritual trimestral: quem revisa o quê e até quando. Fonte: revisao.proximaRevisao (promover.mjs preenche).
   revisoesVals() {
@@ -941,7 +990,8 @@ class Component extends DCLogic {
     this._onKey = (e) => {
       const alvo = e.target || {}; const digitando = /^(INPUT|TEXTAREA|SELECT)$/.test(alvo.tagName || '') || alvo.isContentEditable;
       if (e.key === 'Escape' && this.state.anexosId) this.setState({ anexosId: null });
-      if (e.key === 'Escape' && this.state.confirmRemoverId) this.setState({ confirmRemoverId: null });
+      if (e.key === 'Escape' && this.state.confirm) this.setState({ confirm: null });
+      if (e.key === 'Escape' && this.state.applyOpen) this.setState({ applyOpen: false });
       if (e.key === '/' && !digitando) { const el = document.querySelector('main input[placeholder]'); if (el) { e.preventDefault(); el.focus(); } }
     };
     window.addEventListener('keydown', this._onKey);
@@ -1047,7 +1097,7 @@ class Component extends DCLogic {
 
   publish() {
     const f = this.state.form;
-    if (!f.nome.trim() || !f.descricao.trim()) { this.setState({ toast:'Preencha ao menos nome e descrição.' }); setTimeout(()=>this.setState({toast:''}),2600); return; }
+    if (!f.nome.trim() || !f.descricao.trim()) { this.showToast('Preencha ao menos nome e descrição.', 'erro'); return; }
     const id = 'novo-'+Date.now();
     const item = {
       id, nome:f.nome, tipo:f.tipo, categoria:f.categoria, complexidade:f.complexidade,
@@ -1059,8 +1109,9 @@ class Component extends DCLogic {
       perguntas:['—'], cuidados:['—'], exemplos:['—'], anexos:[]
     };
     this.salvarLocal('hangar.formRascunho', null);
-    this.setState(s => { const extra = [item, ...s.extra]; this.salvarLocal('hangar.extra', extra); return { extra, toast:'Conteúdo publicado! Página gerada automaticamente.', form:this.formVazio() }; });
-    setTimeout(()=>{ this.openContent(id); this.setState({toast:''}); }, 1100);
+    this.setState(s => { const extra = [item, ...s.extra]; this.salvarLocal('hangar.extra', extra); return { extra, form:this.formVazio() }; });
+    this.showToast('Conteúdo salvo neste navegador. Para publicar para todos, envie ao CIEP.');
+    setTimeout(()=>this.openContent(id), 1100);
   }
 
   // window.claude.complete só existe quando o Hangar roda dentro do Claude (claude.ai). No Coolify ou no
@@ -1070,7 +1121,8 @@ class Component extends DCLogic {
   salvarRascunhoForm() {
     const f = this.state.form;
     if (!f.nome.trim() && !f.descricao.trim()) { this.showToast('Nada para salvar ainda: preencha pelo menos o nome.'); return; }
-    this.showToast(this.salvarLocal('hangar.formRascunho', f) ? 'Rascunho salvo neste navegador. Ele volta preenchido quando você abrir o Cadastrar.' : 'Não consegui salvar o rascunho neste navegador.');
+    const ok = this.salvarLocal('hangar.formRascunho', f);
+    this.showToast(ok ? 'Rascunho salvo neste navegador. Ele volta preenchido quando você abrir o Cadastrar.' : 'Não consegui salvar o rascunho neste navegador.', ok ? 'ok' : 'erro');
   }
   goDocs() { this.setState(st=>({ screen:'docs', doc: st.doc || this.defaultDoc() })); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
@@ -1154,7 +1206,7 @@ class Component extends DCLogic {
         anexos: [], geradoIA: true
       };
       this.setState(st=>{ const extra = [item, ...st.extra]; this.salvarLocal('hangar.extra', extra); return { extra, aiToolLoading:false, aiToolInput:'', aiToolNome:'' }; });
-      this.showToast('Ferramenta gerada por IA e adicionada à biblioteca (em revisão).');
+      this.showToast('Ferramenta gerada por IA e salva neste navegador (em revisão). Envie ao CIEP para publicar.');
       setTimeout(()=>this.openContent(id), 900);
     } catch(e) {
       this.setState({ aiToolLoading:false, aiToolError:'Não consegui gerar agora. Tente refinar o conteúdo e gerar de novo.' });
@@ -1184,14 +1236,18 @@ class Component extends DCLogic {
       if (!blocos.length) throw new Error('sem blocos');
       const id = 'mod-'+Date.now();
       const toolMatch = this.allData().find(d => (d.nome||'').toLowerCase() === (j.nome||nomeHint||'').toLowerCase());
-      const modelo = { id, toolId: toolMatch?toolMatch.id:null, nome: j.nome||nomeHint||'Modelo de ferramenta', sigla: j.sigla||'', fonte: f.name, layout: j.layout==='canvas'?'canvas':'grid', registrado:'Lido do anexo', blocos };
+      const modelo = { id, toolId: toolMatch?toolMatch.id:null, nome: j.nome||nomeHint||'Modelo de ferramenta', sigla: j.sigla||'', fonte: f.name, layout: j.layout==='canvas'?'canvas':'grid', registrado:'Montado pelo nome do arquivo', blocos };
       this.setState(st=>{ const modelos = [modelo, ...st.modelos]; this.salvarModelosLocais(modelos); return { modelos, modeloLoading:false, modeloFile:null, modeloNome:'' }; });
-      this.showToast('Modelo-padrão lido e registrado. A IA passará a seguir esse formato.');
+      this.showToast('Modelo-padrão registrado a partir do nome do arquivo. Confira os blocos na lista abaixo.');
     } catch(e) {
       this.setState({ modeloLoading:false, modeloError:'Não consegui ler o modelo agora. Tente outro arquivo ou ajuste o nome.' });
     }
   }
-  removeModelo(id) { this.setState(st=>{ const modelos = st.modelos.filter(m=>m.id!==id); this.salvarModelosLocais(modelos); return { modelos }; }); }
+  removeModelo(id) {
+    const m = this.state.modelos.find(x => x.id === id) || {};
+    this.pedirConfirmacao({ titulo:'Remover o modelo-padrão?', texto:'A IA volta ao formato genérico para ', destaque:m.nome || 'esta ferramenta', textoFim:'.', ok:() => this.removeModeloAgora(id) });
+  }
+  removeModeloAgora(id) { this.setState(st=>{ const modelos = st.modelos.filter(m=>m.id!==id); this.salvarModelosLocais(modelos); return { modelos }; }); }
   // só os modelos que o membro registrou vão para o navegador; os do acervo vêm sempre de modelos.json
   salvarModelosLocais(modelos) { const doAcervo = new Set((DADOS.modelos||[]).map(m=>m.id)); this.salvarLocal('hangar.modelos', modelos.filter(m=>!doAcervo.has(m.id))); }
 
@@ -1199,11 +1255,24 @@ class Component extends DCLogic {
   setDocType(t) { this.updateDoc({ type:t }); }
   updateSecao(i, patch) { this.setState(st=>{ const secoes=st.doc.secoes.map((x,idx)=>idx===i?{...x,...patch}:x); return { doc:{...st.doc, secoes} }; }); }
   addSecao() { this.setState(st=>({ doc:{...st.doc, secoes:[...st.doc.secoes, { grupo:'Geral', titulo:'Novo bloco', descricao:'Descreva o que este bloco representa na ferramenta.', perguntas:['Pergunta-chave para o preenchimento?'] }]} })); }
-  removeSecao(i) { this.setState(st=>({ doc:{...st.doc, secoes: st.doc.secoes.filter((_,idx)=>idx!==i)} })); }
+  removeSecao(i) {
+    const sec = (this.state.doc && this.state.doc.secoes[i]) || {};
+    this.pedirConfirmacao({ titulo:'Remover o bloco?', texto:'O bloco ', destaque:sec.titulo || '', textoFim:' vai sair da documentação.', ok:() => this.removeSecaoAgora(i) });
+  }
+  removeSecaoAgora(i) { this.setState(st=>({ doc:{...st.doc, secoes: st.doc.secoes.filter((_,idx)=>idx!==i)} })); }
   updateBloco(i, patch) { this.setState(st=>{ const blocos=st.doc.blocos.map((x,idx)=>idx===i?{...x,...patch}:x); return { doc:{...st.doc, blocos} }; }); }
   addBloco() { this.setState(st=>({ doc:{...st.doc, blocos:[...st.doc.blocos, { titulo:'Novo bloco', itens:['Campo de exemplo'], w:'normal' }]} })); }
-  removeBloco(i) { this.setState(st=>({ doc:{...st.doc, blocos: st.doc.blocos.filter((_,idx)=>idx!==i)} })); }
-  showToast(msg) { this.setState({toast:msg}); setTimeout(()=>this.setState({toast:''}), 2600); }
+  removeBloco(i) {
+    const b = (this.state.doc && this.state.doc.blocos[i]) || {};
+    this.pedirConfirmacao({ titulo:'Remover o bloco?', texto:'O bloco ', destaque:b.titulo || '', textoFim:' vai sair do modelo.', ok:() => this.removeBlocoAgora(i) });
+  }
+  removeBlocoAgora(i) { this.setState(st=>({ doc:{...st.doc, blocos: st.doc.blocos.filter((_,idx)=>idx!==i)} })); }
+  // tipo 'ok' (padrão) ou 'erro'. Um toast novo cancela o timer do anterior; texto longo fica mais tempo na tela.
+  showToast(msg, tipo) {
+    if (this._toastTimer) clearTimeout(this._toastTimer);
+    this.setState({ toast: { msg, tipo: tipo === 'erro' ? 'erro' : 'ok' } });
+    this._toastTimer = setTimeout(() => { this._toastTimer = null; this.setState({ toast: null }); }, Math.min(7000, Math.max(2600, String(msg).length * 45)));
+  }
   documentoHtml(d) {
     const e = (t) => this.esc(t);
     const isModelo = d.type === 'modelo';
@@ -1236,8 +1305,8 @@ class Component extends DCLogic {
     const d = this.state.doc; if (!d) return;
     const nome = this.slugDe(d.nome || 'documento') + '-' + (d.type === 'modelo' ? 'modelo' : d.type === 'manual' ? 'manual' : 'metodologia') + '.html';
     const html = this.documentoHtml(d);
-    if (typeof window !== 'undefined') window.__hangarUltimoDownload = { nome, json: html };
-    this.showToast(this.baixarArquivo(nome, html, 'text/html') ? 'Arquivo ' + nome + ' baixado. Abra e use "Imprimir / salvar PDF".' : 'Não consegui gerar o arquivo aqui.');
+    const ok = this.baixarArquivo(nome, html, 'text/html');
+    this.showToast(ok ? 'Arquivo ' + nome + ' baixado. Abra e use "Imprimir / salvar PDF".' : 'Não consegui gerar o arquivo aqui.', ok ? 'ok' : 'erro');
   }
   saveDocLibrary() {
     const d = this.state.doc; const isModelo = d.type==='modelo';
@@ -1305,7 +1374,6 @@ class Component extends DCLogic {
     caseFilterGroups.forEach(g => g.options.filter(o=>o.active).forEach(o => caseActiveChips.push({ label:o.label, remove:o.toggle })));
     const caseRaw = s.caseId ? casesTodos.find(c => c.id === s.caseId) : null;
     const caseSel = caseRaw ? decCase(caseRaw) : null;
-    const confirmRemoverCase = s.confirmRemoverId ? casesTodos.find(c => c.id === s.confirmRemoverId) : null;
     // formulário de case
     const fcase = s.formCase;
     const setFC = (k) => (e) => this.setState(st => ({ formCase: { ...st.formCase, [k]: e.target.value }, caseErro:'' }));
@@ -1469,11 +1537,6 @@ class Component extends DCLogic {
       const active = s.form.complexidade===c; const cs=this.COMPLEX_STYLE[c];
       return { label:c, set:()=>this.setState(st=>({form:{...st.form,complexidade:c}})), border: active?cs.color:'#DCE7EB', bg: active?cs.bg:'#fff', color: active?cs.color:'#7C9097' };
     });
-    const formSteps = [
-      {n:'1',label:'Informações básicas',done:true},
-      {n:'2',label:'Detalhamento',done:false},
-      {n:'3',label:'Anexos',done:false},
-    ].map((fs,i)=>({ ...fs, bg:i===0?'#3DAFC7':'#EEF3F5', color:i===0?'#fff':'#9DAEB4', labelColor:i===0?'#163B45':'#9DAEB4' }));
 
     // recomendar
     const problemas = this.PROBLEMAS.map(p=>{
@@ -1550,8 +1613,9 @@ class Component extends DCLogic {
       caseFilterGroups, caseActiveChips, hasCaseFilters: caseActiveChips.length>0, clearCaseFilters:()=>this.setState({ caseFilters:{ escopo:[], segmento:[], ano:[], ferramenta:[] } }),
       caseQuery: s.caseQuery, onCaseQuery:(e)=>this.setState({ caseQuery:e.target.value }),
       caseSel, hasCaseSel: !!caseSel, ...this.videoFormVals(s, caseSel), casesRecentes, hasCasesRecentes: casesRecentes.length>0,
-      confirmRemoverAberto: !!confirmRemoverCase, confirmRemoverNome: confirmRemoverCase ? confirmRemoverCase.cliente : '',
-      confirmRemover:()=>this.removerCase(s.confirmRemoverId), cancelarRemover:()=>this.cancelarRemoverCase(),
+      confirmAberto: !!s.confirm, confirmTitulo: s.confirm ? s.confirm.titulo : '', confirmTexto: s.confirm ? s.confirm.texto : '',
+      confirmDestaque: s.confirm ? (s.confirm.destaque || '') : '', confirmTextoFim: s.confirm ? (s.confirm.textoFim || '') : '', confirmLabel: s.confirm ? s.confirm.label : 'Remover',
+      confirmRemover:()=>this.confirmar(), cancelarRemover:()=>this.cancelarConfirmacao(),
       // formulário de case
       formCase: fcase, fc, escopoOptions, porteOptions, docTipoOptions, ferrChips, caseFiltroFerr: s.caseFiltroFerr, onCaseFiltroFerr:(e)=>this.setState({ caseFiltroFerr:e.target.value }),
       nFerrEscolhidas: fcase.ferramentas.length, docsRows, addDoc:()=>this.setState(st=>({ formCase:{ ...st.formCase, documentos: st.formCase.documentos.concat([{ nome:'', tipo:docTipoOptions[0]?docTipoOptions[0].value:'Outro', url:'' }]) } })),
@@ -1559,7 +1623,12 @@ class Component extends DCLogic {
       fotoPreview, hasFotoPreview: !!fotoPreview, semFotoPreview: !fotoPreview, fotoFonte,
       onCapaArquivo:(e)=>this.onCapaArquivo(e), onFotoArquivo:(e)=>this.onFotoArquivo(e), onFotoDrop:(e)=>this.onFotoDrop(e), onFotoDragOver:(e)=>this.onFotoDragOver(e), abrirSeletorFoto:()=>this.abrirSeletorFoto(), removerFoto:()=>this.removerFoto(),
       publishCase:()=>this.publishCase(), baixarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.baixarJson(this.montarCase(fcase)); }, copiarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.copiarJson(this.montarCase(fcase)); },
-      casePronto: !!casePreview, limparCase:()=>this.setState({ formCase:this.formCaseVazio(), caseErro:'' }),
+      limparCase:()=>{
+        const vazio = this.formCaseVazio(); const f = s.formCase;
+        const temAlgo = Object.keys(f).some(k => !/^(meuNome|meuEmail)$/.test(k) && JSON.stringify(f[k]) !== JSON.stringify(vazio[k]));
+        if (!temAlgo) { this.setState({ formCase:vazio, caseErro:'' }); return; }
+        this.pedirConfirmacao({ titulo:'Limpar o formulário?', texto:'Tudo o que você preencheu neste case vai ser perdido.', label:'Limpar', ok:() => this.setState({ formCase:this.formCaseVazio(), caseErro:'' }) });
+      },
       goHome:()=>this.nav('home'), goBiblioteca:()=>this.nav('biblioteca'), goRecomendar:()=>this.nav('recomendar'), goEscopos:()=>this.nav('escopos'),
       // escopos
       escoposPorGrupo, hasEscopoSel: !!escopoSel, noEscopoSel: !escopoSel, escopoSel, escopoEtapas,
@@ -1597,6 +1666,9 @@ class Component extends DCLogic {
       openSelAnexos:()=>this.setState({anexosId:s.selId}),
       notRated: s.rating===null, rated: s.rating!==null,
       rateUp:()=>this.setState({rating:'up'}), rateDown:()=>this.setState({rating:'down'}),
+      ratedUp: s.rating==='up', ratedDown: s.rating==='down',
+      rateUpBorder: s.rating==='up' ? '#9CD3B4' : '#DCE7EB', rateUpBg: s.rating==='up' ? '#F2FAF5' : '#fff',
+      rateDownBorder: s.rating==='down' ? '#E6AFB5' : '#DCE7EB', rateDownBg: s.rating==='down' ? '#FCF3F4' : '#fff',
       feedback: s.feedback, onFeedbackInput:(e)=>this.setState({feedback:e.target.value}),
       // aplicar com IA (preencher ferramenta)
       applyToolName: sel ? sel.nome : '',
@@ -1610,12 +1682,15 @@ class Component extends DCLogic {
       applyResultBlocos: s.applyResult ? s.applyResult.blocos : [],
       applyIsCanvas, applyIsList: !applyIsCanvas, applyCanvasCells,
       applyModeloNome: ar ? (ar.modeloNome||'') : '', applyModeloFonte: ar ? (ar.modeloFonte||'') : '', hasApplyModelo: !!(ar && ar.modeloNome),
-      exportApply:()=>this.showToast('Ferramenta preenchida exportada. Pronta para o projeto.'),
+      exportApply:()=>this.baixarAplicacao(),
+      podeEnviarFeedback: s.rating!==null || !!s.feedback.trim(), feedbackEnviado: !!s.feedbackEnviado, feedbackNaoEnviado: !s.feedbackEnviado,
+      feedbackPara: sel ? (sel.respEmail ? sel.respNome : 'o CIEP') : '',
+      enviarFeedback:()=>this.enviarFeedback(),
       // anexos
       anexosOpen: !!anexFor, anexosTitle: anexFor?anexFor.nome:'', anexosList,
       closeAnexos:()=>this.setState({anexosId:null}), stop:(e)=>e.stopPropagation(),
       // cadastro
-      form: s.form, complexOptions, tipoOptions, categoriaOptions, formSteps,
+      form: s.form, complexOptions, tipoOptions, categoriaOptions,
       formNome:setF('nome'), formTipo:setF('tipo'), formCategoria:setF('categoria'), formDescricao:setF('descricao'),
       formObjetivo:setF('objetivo'), formProblema:setF('problema'), formTempo:setF('tempo'), formResp:setF('responsavel'),
       publish:()=>this.publish(),
@@ -1652,7 +1727,7 @@ class Component extends DCLogic {
       docCount: doc.secoes.length,
       exportPdf:()=>this.exportDoc(), saveDoc:()=>this.saveDocLibrary(), salvarRascunhoForm:()=>this.salvarRascunhoForm(),
       // toast
-      toastOpen: !!s.toast, toastMsg: s.toast,
+      toastOpen: !!s.toast, toastMsg: s.toast ? s.toast.msg : '', toastOk: !!s.toast && s.toast.tipo !== 'erro', toastErro: !!s.toast && s.toast.tipo === 'erro',
     };
   }
 }
