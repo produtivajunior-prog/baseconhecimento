@@ -562,6 +562,15 @@ class Component extends DCLogic {
       abrirVideoForm: () => this.abrirVideoForm(c), removerVideo: () => this.aplicarVideo(c.id, null),
       remover: (e) => this.pedirRemoverCase(c.id, e) };
   }
+  // Texto completo do case (sem acento e sem caixa), usado na busca de Cases e na da Biblioteca.
+  caseBate(c, q) {
+    const escopo = c.escopoId ? this.escopoPorId(c.escopoId) : null;
+    const eq = c.equipe || {};
+    const hay = this.normaliza([c.cliente, c.segmento, c.porte, c.cidade, escopo ? escopo.nome : c.escopoNome, c.resumo, c.desafio, c.solucao, c.depoimentoCliente,
+      ...(c.resultados||[]), ...(c.aprendizados||[]), ...(c.tags||[]), (eq.gerente||{}).nome, ...((eq.consultores||[]).map(x=>x.nome)),
+      ...((c.ferramentas||[]).map(fid => (this.allData().find(d=>d.id===fid)||{}).nome)), ...((c.documentos||[]).map(d=>d.nome))].join(' '));
+    return hay.includes(q);
+  }
   computeCases() {
     const f = this.state.caseFilters; const q = this.normaliza(this.state.caseQuery.trim());
     return this.allCases().filter(c => {
@@ -571,14 +580,7 @@ class Component extends DCLogic {
       if (f.segmento.length && !f.segmento.includes(c.segmento)) return false;
       if (f.ano.length && !f.ano.includes(ano)) return false;
       if (f.ferramenta.length && !(c.ferramentas||[]).some(x => f.ferramenta.includes(x))) return false;
-      if (q) {
-        const escopo = c.escopoId ? this.escopoPorId(c.escopoId) : null;
-        const eq = c.equipe || {};
-        const hay = this.normaliza([c.cliente, c.segmento, c.porte, c.cidade, escopo ? escopo.nome : c.escopoNome, c.resumo, c.desafio, c.solucao, c.depoimentoCliente,
-          ...(c.resultados||[]), ...(c.aprendizados||[]), ...(c.tags||[]), (eq.gerente||{}).nome, ...((eq.consultores||[]).map(x=>x.nome)),
-          ...((c.ferramentas||[]).map(fid => (this.allData().find(d=>d.id===fid)||{}).nome)), ...((c.documentos||[]).map(d=>d.nome))].join(' '));
-        if (!hay.includes(q)) return false;
-      }
+      if (q && !this.caseBate(c, q)) return false;
       return true;
     });
   }
@@ -1296,6 +1298,16 @@ class Component extends DCLogic {
 
     // biblioteca
     const filtered = this.computeFiltered().map(dec);
+    // Busca da Biblioteca também traz os cases: os que citam o termo primeiro, depois os que usaram
+    // uma ferramenta cujo nome bate com o termo (o conteúdo das fichas é amplo demais para isso).
+    const qBib = this.normaliza(s.query.trim());
+    const casesBusca = qBib.length < 2 ? [] : (() => {
+      const idsAchados = new Set(this.allData().filter(d => this.normaliza(d.nome).includes(qBib)).map(d => d.id));
+      return this.allCases().map(c => ({ c, texto: this.caseBate(c, qBib), usa: (c.ferramentas || []).some(id => idsAchados.has(id)) }))
+        .filter(x => x.texto || x.usa)
+        .sort((a, b) => (b.texto - a.texto) || String(b.c.atualizado || '').localeCompare(String(a.c.atualizado || '')))
+        .map(x => decCase(x.c));
+    })();
     const filterGroups = this.buildFilterGroups();
     const cardStyles = ['detalhado','compacto','visual'].map(k => ({
       label: k==='detalhado'?'Detalhado':k==='compacto'?'Lista':'Visual',
@@ -1454,7 +1466,8 @@ class Component extends DCLogic {
       ],
       // biblioteca
       filtered, filterGroups, cardStyles,
-      resultCount: filtered.length, noResults: filtered.length===0,
+      resultCount: filtered.length, noResults: filtered.length===0 && casesBusca.length===0,
+      casesBusca, hasCasesBusca: casesBusca.length>0, casesBuscaCount: casesBusca.length, casesBuscaLabel: casesBusca.length===1 ? 'case relacionado' : 'cases relacionados',
       isDetalhado: s.cardStyle==='detalhado', isCompacto: s.cardStyle==='compacto', isVisual: s.cardStyle==='visual',
       hasActiveFilters: activeChips.length>0, activeChips, clearFilters:()=>this.setState({filters:{tipo:[],area:[],escopo:[],complexidade:[],status:[],freq:[],responsavel:[]}}),
       // conteudo

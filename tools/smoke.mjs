@@ -367,6 +367,20 @@ check(/Banco de cases/i.test(await texto()) && !/Equipe do projeto/i.test(await 
 }
 await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(400);
 check(/^Biblioteca/m.test(await texto()) || (await page.getByPlaceholder(/Buscar por nome/).count()) > 0, 'mudar o hash na URL troca de tela (#/biblioteca)');
+// busca da Biblioteca também mostra os cases relacionados ao termo (só se houver case publicado que bata)
+{
+  const casosPub = JSON.parse(readFileSync(new URL('../src/data/cases.json', import.meta.url), 'utf8'));
+  const casoPub = casosPub.length ? casosPub[0].cliente : null;
+  if (casoPub) {
+    await page.getByPlaceholder(/Buscar por nome/).fill(casoPub); await page.waitForTimeout(400);
+    const t = await texto();
+    check(/BANCO DE CASES|Banco de cases/.test(t) && t.includes(casoPub), `busca "${casoPub}" na Biblioteca lista o case relacionado`);
+    await page.locator('[role="link"]', { hasText: casoPub }).first().click(); await page.waitForTimeout(600);
+    check(/#\/case\//.test(await page.evaluate(() => location.hash)), 'clicar no case relacionado abre a ficha do case');
+    await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(300);
+    await page.getByPlaceholder(/Buscar por nome/).fill(''); await page.waitForTimeout(200);
+  }
+}
 await page.keyboard.press('/'); await page.waitForTimeout(100);
 check(await page.evaluate(() => document.activeElement && document.activeElement.tagName === 'INPUT'), 'tecla "/" foca a busca');
 await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); await page.waitForTimeout(300);
