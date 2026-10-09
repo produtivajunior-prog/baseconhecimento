@@ -87,6 +87,10 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
 - **URL acompanha a tela**: `#/biblioteca`, `#/ferramenta/<id>`, `#/escopos`, `#/escopo/<id>`, `#/cases`,
   `#/case/<id>`, `#/cases/novo`, `#/cadastrar`, `#/docs`, `#/recomendar`. Dá para compartilhar o link de
   uma ferramenta ou case, usar o botão "voltar" do navegador e recarregar sem perder a tela. Funciona em `file://`.
+- **Busca geral** (campo da Biblioteca, lupa do topo ou Enter na busca do Início): procura em todo o Hangar,
+  sem acento e sem caixa, com as palavras em qualquer ordem. Lista as ferramentas (as que têm o termo no nome
+  primeiro) e, acima delas, os cases, escopos, termos do glossário, passos do Comece aqui, partes do Como funciona,
+  auxílios e problemas do Recomendar que citam o termo, com o trecho onde ele aparece. Cada resultado abre a tela certa.
 - **Teclado**: `/` foca a busca da tela; `Esc` fecha a janela de anexos; foco visível em todos os controles.
 - **Comece aqui** (`#/comece`): trilha do primeiro projeto em seis passos marcáveis (ficam no navegador), as
   ferramentas mapeadas em mais etapas e o glossário. Os termos vêm de `src/data/trilha.json`,

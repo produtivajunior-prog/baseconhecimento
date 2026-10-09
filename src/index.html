@@ -148,6 +148,7 @@
     h1,h2,h3,h4{font-family:'Schibsted Grotesk',sans-serif;margin:0}
     input,textarea,select,button{font-family:'Figtree',sans-serif}
     ::placeholder{color:#9DAEB4}
+    .hg-trecho{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
     .ciep-scroll::-webkit-scrollbar{width:10px;height:10px}
     .ciep-scroll::-webkit-scrollbar-thumb{background:#D4E2E7;border-radius:8px;border:3px solid #fff}
     @keyframes ciepFade{from{opacity:0}to{opacity:1}}
@@ -217,6 +218,9 @@
         </sc-for>
       </nav>
       <div style="flex:1"></div>
+      <button onclick="{{ abrirBusca }}" title="Buscar em todo o Hangar (atalho: /)" aria-label="Buscar em todo o Hangar" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid #DCE7EB;background:#fff;color:#3C545B;border-radius:9px;cursor:pointer;flex:none;padding:0" style-hover="border-color:#9FD7E2;color:#1E7C92">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.9"></circle><path d="M20 20l-3.2-3.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"></path></svg>
+      </button>
       <button onclick="{{ goRecomendar }}" style="display:flex;align-items:center;gap:7px;border:1px solid #CDE6EC;background:#EAF6F9;color:#1E7C92;font-size:14px;font-weight:600;padding:8px 14px;border-radius:9px;cursor:pointer" style-hover="background:#DCF0F4">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.9 4.6L18.5 9l-3.4 3 1 4.7L12 14.4 7.9 16.7l1-4.7L5.5 9l4.6-1.4L12 3z" stroke="#1E7C92" stroke-width="1.7" stroke-linejoin="round"></path></svg>
         <span class="hg-hide-m">Recomendar</span>
@@ -399,7 +403,8 @@
         <div class="hg-wrap" style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
           <div style="display:flex;align-items:center;gap:9px;flex:1;min-width:200px;background:#fff;border:1px solid #DCE7EB;border-radius:11px;padding:9px 14px">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" style="flex:none"><circle cx="11" cy="11" r="7" stroke="#9DAEB4" stroke-width="1.8"></circle><path d="M20 20l-3.2-3.2" stroke="#9DAEB4" stroke-width="1.8" stroke-linecap="round"></path></svg>
-            <input value="{{ query }}" oninput="{{ onSearchInput }}" placeholder="Buscar por nome, problema, responsável…" style="flex:1;border:none;outline:none;font-size:14.5px;background:transparent">
+            <input id="hg-busca" value="{{ query }}" oninput="{{ onSearchInput }}" onkeydown="{{ onBibSearchKey }}" placeholder="Buscar ferramentas, cases, escopos, glossário…" aria-label="Buscar em todo o Hangar" style="flex:1;border:none;outline:none;font-size:14.5px;background:transparent;min-width:0">
+            <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}"><button onclick="{{ limparBusca }}" title="Limpar a busca" aria-label="Limpar a busca" style="border:none;background:#EEF3F5;color:#5E747B;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;flex:none;display:flex;align-items:center;justify-content:center">×</button></sc-if>
           </div>
           <div style="display:flex;background:#EEF3F5;border-radius:10px;padding:3px;gap:2px">
             <sc-for list="{{ cardStyles }}" as="cs" hint-placeholder-count="3">
@@ -409,7 +414,7 @@
         </div>
 
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-          <span style="font-size:13.5px;color:#7C9097"><b style="color:#163B45">{{ resultCount }}</b> conteúdos</span>
+          <span style="font-size:13.5px;color:#7C9097"><b style="color:#163B45">{{ resultCount }}</b> {{ resultLabel }}<sc-if value="{{ hasResumoBusca }}" hint-placeholder-val="{{ false }}"> · {{ resumoBusca }}</sc-if></span>
           <sc-if value="{{ hasActiveFilters }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;flex-wrap:wrap;gap:6px">
               <sc-for list="{{ activeChips }}" as="ch" hint-placeholder-count="2">
@@ -436,10 +441,36 @@
                 <div style="min-width:0;flex:1">
                   <div style="font-size:14px;font-weight:600;color:#163B45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.cliente }}</div>
                   <div style="font-size:12px;color:#7C9097;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.escopoNome }} · {{ c.periodoFmt }}</div>
+                  <sc-if value="{{ c.hasTrecho }}" hint-placeholder-val="{{ false }}"><div class="hg-trecho" style="font-size:12px;color:#5E747B;line-height:1.45;margin-top:3px">{{ c.antes }}<mark style="background:#FFF1C7;color:#163B45;border-radius:3px;padding:0 1px">{{ c.achado }}</mark>{{ c.depois }}</div></sc-if>
+                  <sc-if value="{{ c.hasUsa }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#5E747B;margin-top:3px">{{ c.usaTexto }}</div></sc-if>
                 </div>
               </div>
             </sc-for>
           </div>
+        </div>
+        </sc-if>
+
+        <!-- Busca geral: escopos, glossário, trilha, Como funciona, Auxílios e Recomendar -->
+        <sc-if value="{{ hasBuscaGrupos }}" hint-placeholder-val="{{ false }}">
+        <div class="hg-busca-geral" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:16px 18px;margin-bottom:16px;display:flex;flex-direction:column;gap:16px">
+          <sc-for list="{{ buscaGrupos }}" as="g" hint-placeholder-count="2">
+            <div>
+              <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:10px">
+                <span style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:0.04em;text-transform:uppercase">{{ g.label }}</span>
+                <span style="font-size:13px;color:#7C9097"><b style="color:#163B45">{{ g.count }}</b></span>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px">
+                <sc-for list="{{ g.itens }}" as="r" hint-placeholder-count="2">
+                  <button onclick="{{ r.open }}" class="hg-busca-item" style="display:block;width:100%;text-align:left;font:inherit;padding:10px 12px;border:1px solid #E7EEF1;border-radius:12px;cursor:pointer;background:#FAFCFC" style-hover="border-color:#9FD7E2;background:#fff">
+                    <div style="font-size:14px;font-weight:600;color:#163B45;line-height:1.35">{{ r.titulo }}</div>
+                    <div style="font-size:12px;color:#7C9097;margin-top:2px">{{ r.sub }}</div>
+                    <sc-if value="{{ r.hasTrecho }}" hint-placeholder-val="{{ false }}"><div class="hg-trecho" style="font-size:12px;color:#5E747B;line-height:1.45;margin-top:5px">{{ r.antes }}<mark style="background:#FFF1C7;color:#163B45;border-radius:3px;padding:0 1px">{{ r.achado }}</mark>{{ r.depois }}</div></sc-if>
+                  </button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ g.temMais }}" hint-placeholder-val="{{ false }}"><button onclick="{{ g.verMais }}" style="margin-top:8px;border:none;background:transparent;color:#1E7C92;font-size:13px;font-weight:600;cursor:pointer;padding:4px 0">{{ g.verMaisLabel }}</button></sc-if>
+            </div>
+          </sc-for>
         </div>
         </sc-if>
 
@@ -522,8 +553,8 @@
 
         <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
           <div style="text-align:center;padding:70px 20px;color:#8AA0A7">
-            <div style="font-size:17px;font-weight:600;color:#5E747B">Nenhum conteúdo encontrado</div>
-            <p style="font-size:14px;margin:8px 0 0">Tente remover alguns filtros ou ajustar a busca.</p>
+            <div style="font-size:17px;font-weight:600;color:#5E747B">Nada encontrado no Hangar</div>
+            <p style="font-size:14px;margin:8px 0 0">Tente outra palavra, menos palavras ou remover os filtros.</p>
           </div>
         </sc-if>
       </div>
@@ -2046,7 +2077,7 @@
 
     <div style="display:flex;flex-direction:column;gap:14px">
       <sc-for list="{{ trilhaPassos }}" as="p" hint-placeholder-count="6">
-        <article style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+        <article id="trilha-{{ p.id }}" style="scroll-margin-top:90px;background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
           <button onclick="{{ p.toggle }}" title="Marcar como feito" style="flex:none;width:34px;height:34px;border-radius:10px;border:1.6px solid #D4E0E4;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;color:#1E7C92" style-hover="border-color:#3DAFC7">
             <sc-if value="{{ p.feito }}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 7" stroke="#2E7D52" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
             <sc-if value="{{ p.pendente }}" hint-placeholder-val="{{ true }}">{{ p.n }}</sc-if>
@@ -2071,7 +2102,7 @@
       </sc-for>
     </div>
 
-    <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin:44px 0 6px">Glossário</h2>
+    <h2 id="glossario" style="scroll-margin-top:90px;font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin:44px 0 6px">Glossário</h2>
     <p style="font-size:14.5px;color:#7C9097;margin:0 0 14px">Siglas e nomes que aparecem nos cronogramas, nos escopos e nas conversas. Termos marcados "a confirmar" ainda não têm definição oficial do CIEP.</p>
     <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #DCE7EB;border-radius:11px;padding:9px 14px;margin-bottom:14px;max-width:420px">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" style="flex:none"><circle cx="11" cy="11" r="7" stroke="#9DAEB4" stroke-width="1.8"></circle><path d="M20 20l-3.2-3.2" stroke="#9DAEB4" stroke-width="1.8" stroke-linecap="round"></path></svg>
