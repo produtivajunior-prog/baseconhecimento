@@ -91,7 +91,13 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   sem acento e sem caixa, com as palavras em qualquer ordem. Lista as ferramentas (as que têm o termo no nome
   primeiro) e, acima delas, os cases, escopos, termos do glossário, passos do Comece aqui, partes do Como funciona,
   auxílios e problemas do Recomendar que citam o termo, com o trecho onde ele aparece. Cada resultado abre a tela certa.
-- **Teclado**: `/` foca a busca da tela; `Esc` fecha a janela de anexos; foco visível em todos os controles.
+- **Teclado**: `/` foca a busca da tela; `Esc` fecha a janela de anexos, o resultado da IA e a confirmação; foco visível em todos os controles.
+- **Nada some sem perguntar**: remover case, capa, vídeo, modelo-padrão ou bloco da documentação, limpar o
+  formulário de case ou o checklist "O que saber" passam por um modal de confirmação (`pedirConfirmacao` em `src/app.js`).
+- **Mensagens honestas**: o toast mostra `✓` ou `!` conforme o resultado, dura mais quando o texto é longo e
+  diz "salvo neste navegador" sempre que algo ainda não foi publicado; ferramentas criadas no navegador levam o
+  selo "Só aqui" na Biblioteca e na ficha. "Esse conteúdo foi útil?" abre um e-mail para o responsável da
+  ferramenta com a avaliação e a sugestão; "Baixar" no resultado da IA gera o HTML imprimível da ferramenta preenchida.
 - **Comece aqui** (`#/comece`): trilha do primeiro projeto em seis passos marcáveis (ficam no navegador), as
   ferramentas mapeadas em mais etapas e o glossário. Os termos vêm de `src/data/trilha.json`,
   cada um com `origem`; os marcados `pendente: true` aparecem como "a confirmar" até o CIEP validar.
@@ -162,7 +168,7 @@ o sslip deixa de ser necessário.
 | | |
 |---|---|
 | ✅ **React via unpkg.com** | **Resolvido.** O `dc-runtime` baixava React de CDN em runtime; sem internet a página renderizava o template cru, com `{{ item.nome }}` visível na tela. React 18.3.1 agora vai embutido no bundle, carregado antes do runtime. Verificado em Chromium com o unpkg inacessível. |
-| 🔴 **`window.claude.complete`** | Só existe quando o Hangar roda dentro do Claude (claude.ai). No Coolify e no HTML baixado, **as funcionalidades de IA (Criar com IA, Modelo-padrão, Gerar documentação e Aplicar ferramenta) não funcionam**; desde 2026-09-24 o app avisa isso com clareza em vez de pedir para "tentar de novo". Exige backend. O "Modelo-padrão" também só envia o nome do arquivo à IA, não o conteúdo do anexo. |
+| 🔴 **`window.claude.complete`** | Só existe quando o Hangar roda dentro do Claude (claude.ai). No Coolify e no HTML baixado, **as funcionalidades de IA (Criar com IA, Modelo-padrão, Gerar documentação e Aplicar ferramenta) não funcionam**; o app avisa isso com clareza nos quatro pontos (inclusive "Gerar preenchida", corrigido em 2026-10-09) em vez de pedir para "tentar de novo". Exige backend. O "Modelo-padrão" só envia o nome do arquivo à IA, não o conteúdo do anexo, e a tela diz isso. |
 
 Além disso: o que cada membro cadastra (ferramentas, documentação, modelos-padrão, cases, rascunhos) fica só no navegador dele até o CIEP publicar; não há login; e os anexos das ferramentas são links do Drive.
 

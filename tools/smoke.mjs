@@ -134,6 +134,9 @@ if (temEscopos) {
   await page.reload(); await page.waitForTimeout(1200);
   check(/1 de \d+ levantados/.test(await texto()), 'checklist continua marcado depois de recarregar (localStorage)');
   await page.getByRole('button', { name: 'Limpar', exact: true }).first().click(); await page.waitForTimeout(200);
+  check(/Desmarcar o checklist\?/.test(await texto()), '"Limpar" do checklist pede confirmação');
+  await page.getByRole('button', { name: 'Desmarcar', exact: true }).click(); await page.waitForTimeout(200);
+  check(!/1 de \d+ levantados/.test(await texto()), 'confirmar desmarca o checklist');
 
   // roteiro do Diagnóstico Inicial
   await page.getByRole('button', { name: /Roteiro do Diagnóstico Inicial/ }).click(); await page.waitForTimeout(300);
@@ -160,6 +163,12 @@ if (temEscopos) {
   const cli = await page.locator('main input').first().inputValue();
   check(/cases\/novo/.test(await page.evaluate(() => location.hash)) && cli === 'Spicy', `"+ ficha" abre o cadastro de case com o cliente preenchido (${cli})`);
   await page.getByRole('button', { name: 'Limpar', exact: true }).last().click(); await page.waitForTimeout(200);
+  check(/Limpar o formulário\?/.test(await texto()), '"Limpar" do form de case com campo preenchido pede confirmação');
+  await page.getByRole('button', { name: 'Cancelar', exact: true }).click(); await page.waitForTimeout(200);
+  check((await page.locator('main input').first().inputValue()) === 'Spicy', 'cancelar mantém o que estava preenchido');
+  await page.getByRole('button', { name: 'Limpar', exact: true }).last().click(); await page.waitForTimeout(200);
+  await page.getByRole('button', { name: 'Limpar', exact: true }).last().click(); await page.waitForTimeout(200);
+  check((await page.locator('main input').first().inputValue()) === '', 'confirmar limpa o formulário');
 }
 
 // material para a reunião: ficha da primeira ferramenta → abre uma aba (blob:) com o HTML imprimível
@@ -331,7 +340,9 @@ check(/Banco de cases/i.test(await texto()) && !/Equipe do projeto/i.test(await 
   const card = page.locator('main article', { hasText: 'Padaria Smoke' }).first();
   check((await card.getByRole('button', { name: /Trocar capa/ }).count()) === 1, 'card da galeria com foto oferece "Trocar capa"');
   await page.locator('article img[alt="Padaria Smoke"]').first().click(); await page.waitForTimeout(300);
-  await page.getByRole('button', { name: 'Remover capa' }).click(); await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Remover capa' }).click(); await page.waitForTimeout(200);
+  check(/Remover a capa\?/.test(await texto()), '"Remover capa" pede confirmação');
+  await page.getByRole('button', { name: 'Remover', exact: true }).click(); await page.waitForTimeout(300);
   check((await page.locator('main img[alt="Padaria Smoke"]').count()) === 0 && /Adicionar foto de capa/.test(await texto()), 'ficha: "Remover capa" tira a foto e oferece "Adicionar foto de capa"');
   await page.getByRole('button', { name: 'Cases', exact: true }).first().click(); await page.waitForTimeout(300);
   await page.getByPlaceholder(/Cliente, segmento, escopo/).fill('smoke'); await page.waitForTimeout(300);
@@ -344,7 +355,9 @@ check(/Banco de cases/i.test(await texto()) && !/Equipe do projeto/i.test(await 
   check((await page.locator('article img[alt="Padaria Smoke"][src^="data:image/"]').count()) > 0, 'capa nova continua depois de recarregar (localStorage)');
   // Vídeo num case já cadastrado: remover, adicionar pelo link do Drive (com prévia), sobreviver ao F5 e ir no JSON
   await page.locator('article img[alt="Padaria Smoke"]').first().click(); await page.waitForTimeout(300);
-  await page.getByRole('button', { name: 'Remover vídeo', exact: true }).click(); await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Remover vídeo', exact: true }).click(); await page.waitForTimeout(200);
+  check(/Remover o vídeo\?/.test(await texto()), '"Remover vídeo" pede confirmação');
+  await page.getByRole('button', { name: 'Remover', exact: true }).click(); await page.waitForTimeout(300);
   check((await page.locator('main iframe').count()) === 0 && (await page.getByRole('button', { name: 'Adicionar vídeo' }).count()) === 1, 'ficha: remover o vídeo oferece "Adicionar vídeo"');
   await page.getByRole('button', { name: 'Adicionar vídeo' }).click(); await page.waitForTimeout(200);
   await page.getByPlaceholder(/drive\.google\.com\/file\/d\/… ou/).fill('drive.google.com/file/d/abc'); await page.getByRole('button', { name: 'Salvar vídeo' }).click(); await page.waitForTimeout(200);
@@ -440,6 +453,63 @@ await page.evaluate(() => { try { localStorage.removeItem('hangar.casesLocais');
   check(/19 mar 2026 – 17 ago 2026/.test(await texto()) && /85 dias úteis/.test(await texto()), 'ficha mostra período com dia e duração em dias úteis');
   check((await page.locator('a[href="https://canva.link/dww8i6wd1qg37rk"][target="_blank"]').count()) === 1 && (await page.locator('a[href="https://canva.link/4tdhdvptj310ieg"][target="_blank"]').count()) === 1
     && (await page.getByRole('link', { name: 'Abrir no Canva' }).count()) === 2 && (await page.getByRole('link', { name: 'Abrir no Drive' }).count()) >= 1, 'case Atlantis lista proposta e apresentação final (Canva) e a pasta de entregas (Drive)');
+}
+
+// ---- correções de confiança: cada botão faz o que diz e cada mensagem é verdadeira
+{
+  // Cadastrar manual: sem dropzone falsa nem barra de passos; publicar sem nome dá toast de erro
+  await page.getByRole('button', { name: 'Cadastrar', exact: true }).first().click(); await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Preencher manualmente' }).click(); await page.waitForTimeout(200);
+  let t = await texto();
+  check(!/Arraste arquivos/.test(t) && !/Informações básicas/.test(t), 'Cadastrar manual: sem dropzone falsa nem barra de passos fixa');
+  check(/Só nome e descrição são obrigatórios/.test(t) && !/Objetivo \*/.test(t), 'Cadastrar manual: só nome e descrição levam asterisco');
+  await page.getByPlaceholder('Ex.: Matriz de Priorização GUT').last().fill('');
+  await page.getByRole('button', { name: 'Publicar conteúdo' }).click(); await page.waitForTimeout(300);
+  check((await page.locator('[data-toast="erro"]').count()) === 1 && /Preencha ao menos nome e descrição/.test(await texto()), 'publicar sem nome mostra toast de erro (ícone "!")');
+  // ferramenta criada no navegador leva o selo "Só aqui" na Biblioteca e na ficha; o toast diz que ficou só aqui
+  await page.getByPlaceholder('Ex.: Matriz de Priorização GUT').last().fill('Ferramenta Local Smoke');
+  await page.getByPlaceholder('Uma frase que resume o que é e para que serve').fill('Criada pelo smoke para testar o selo.');
+  await page.getByRole('button', { name: 'Publicar conteúdo' }).click(); await page.waitForTimeout(300);
+  check(/salvo neste navegador/.test(await texto()), 'publicar conteúdo avisa que ficou só neste navegador');
+  await page.waitForTimeout(1200);
+  check(/Só aqui · envie ao CIEP/.test(await texto()), 'ficha da ferramenta local mostra "Só aqui · envie ao CIEP"');
+  await page.getByRole('button', { name: 'Biblioteca', exact: true }).first().click(); await page.waitForTimeout(200);
+  await page.getByPlaceholder(/Buscar ferramentas, cases/).fill('Ferramenta Local Smoke'); await page.waitForTimeout(400);
+  check(/Só aqui/.test(await texto()), 'ferramenta criada no navegador mostra "Só aqui" no card');
+  await page.locator('main h3', { hasText: 'Ferramenta Local Smoke' }).first().click(); await page.waitForTimeout(300);
+  // "Gerar preenchida" fora do Claude explica que a IA não está disponível (antes dizia "tente de novo")
+  await page.getByPlaceholder(/cliente é uma padaria/).fill('Padaria de bairro, 12 funcionários, sem presença digital.');
+  await page.getByRole('button', { name: /Gerar preenchida/ }).click(); await page.waitForTimeout(400);
+  check(/só funciona quando o Hangar é aberto dentro do Claude/.test(await texto()), 'ficha: "Gerar preenchida" fora do Claude explica que a IA não está disponível');
+  // avaliação: só agradece depois de abrir o e-mail
+  await page.getByRole('button', { name: 'Útil', exact: true }).click(); await page.waitForTimeout(200);
+  t = await texto();
+  check(!/Obrigado/.test(t) && /Enviar ao responsável/.test(t), 'avaliar não agradece antes da hora; oferece "Enviar ao responsável"');
+  await page.evaluate(() => { window.__abertoNoDrive = null; });
+  await page.getByRole('button', { name: 'Enviar ao responsável' }).click(); await page.waitForTimeout(200);
+  const mail = await page.evaluate(() => window.__abertoNoDrive || '');
+  check(/^mailto:.+subject=.*Hangar/.test(mail) && /Obrigado/.test(await texto()), `"Enviar ao responsável" abre o e-mail com a avaliação (${mail.slice(0, 40)}…)`);
+  // com IA (stub): o resultado abre no modal e "Baixar" gera o HTML de verdade
+  const pIA = await ctx.newPage();
+  await pIA.addInitScript(() => {
+    window.open = () => null;
+    window.claude = { complete: async () => JSON.stringify({ titulo: 'SWOT Smoke', blocos: [{ titulo: 'Forças', itens: ['Equipe boa', 'Marca forte'] }, { titulo: 'Fraquezas', itens: ['Sem site'] }] }) };
+  });
+  const errosIA = []; pIA.on('pageerror', (e) => errosIA.push(String(e)));
+  await pIA.goto(pathToFileURL(alvo).href + '#/biblioteca'); await pIA.waitForTimeout(1200);
+  await pIA.locator('main h3').first().click(); await pIA.waitForTimeout(300);
+  await pIA.getByPlaceholder(/cliente é uma padaria/).fill('Padaria de bairro, 12 funcionários, sem presença digital.');
+  await pIA.getByRole('button', { name: /Gerar preenchida/ }).click(); await pIA.waitForTimeout(600);
+  const tIA = await pIA.evaluate(() => document.body.innerText);
+  check(/SWOT Smoke/.test(tIA) && /FORÇAS|Forças/.test(tIA), 'com IA disponível, "Gerar preenchida" abre o resultado no modal');
+  await pIA.getByRole('button', { name: 'Baixar', exact: true }).click(); await pIA.waitForTimeout(300);
+  const dlIA = await pIA.evaluate(() => window.__hangarUltimoDownload);
+  check(!!dlIA && /-preenchida\.html$/.test(dlIA.nome) && /SWOT Smoke/.test(dlIA.json) && /Marca forte/.test(dlIA.json), `"Baixar" do resultado da IA gera o HTML (${dlIA ? dlIA.nome : 'nada'})`);
+  await pIA.keyboard.press('Escape'); await pIA.waitForTimeout(200);
+  check(!/SWOT Smoke/.test(await pIA.evaluate(() => document.body.innerText)), 'Esc fecha o modal do resultado da IA');
+  check(errosIA.length === 0, errosIA.length ? `erros na página com IA: ${errosIA[0]}` : 'página com IA sem erros de JavaScript');
+  await pIA.close();
+  await page.evaluate(() => { localStorage.removeItem('hangar.extra'); });
 }
 
 check(erros.length === 0, erros.length ? `erros de página: ${erros.slice(0, 3).join(' | ')}` : 'nenhum erro de JavaScript');
