@@ -357,7 +357,7 @@ class Component extends DCLogic {
       (entreg ? '<h2>O que vamos entregar</h2><ul class="cols">' + entreg + '</ul>' : '') +
       (etapas ? '<h2>Como o projeto acontece</h2><ul class="cols">' + etapas + '</ul>' : '') +
       (estudar ? '<h2>Para a equipe estudar antes</h2><ul>' + estudar + '</ul>' : '') +
-      '<div class="nota">Fonte: ' + e(pdf ? pdf.nome + ', slide ' + pdf.pagina : 'Hangar') + '.</div></body></html>';
+      '<div class="nota">Fonte: ' + e(pdf ? 'Revisão dos Escopos (PPGP 2026)': 'Hangar') + '.</div></body></html>';
   }
   abrirRoteiro(esc) {
     const html = this.roteiroEscopo(esc); const nome = this.slugDe(esc.nome) + '-diagnostico-inicial.html';
@@ -1350,11 +1350,9 @@ class Component extends DCLogic {
       const ferrIds = new Set(); for (const et of (e.etapas||[])) for (const f of (et.ferramentas||[])) ferrIds.add(f);
       for (const x of (e.entregaveis||[]).concat(e.estudar||[])) for (const f of (x.ferramentas||[])) ferrIds.add(f);
       const nCases = (e.casesReferencia||[]).filter(c => c.tipo !== 'cronograma').length;
-      const pdf = (e.fontes||[]).find(f => f.tipo === 'pdf');
       return { ...e, grupoLabel:g.label, grupoCor:g.cor, grupoBg:g.bg, ativo:e.status==='ativo', despriorizado:e.status!=='ativo',
         statusLabel: e.status==='ativo' ? 'Ativo' : 'Despriorizado',
         nEtapas:(e.etapas||[]).length, nFerr:ferrIds.size, nEntregaveis:(e.entregaveis||[]).length, nCases, respNome:this.respNome(e.responsavel),
-        fonteLabel: pdf ? 'PPGP 2026 · slide ' + pdf.pagina : '', hasFonte: !!pdf,
         resumo:(e.etapas||[]).length+' etapas · '+(e.entregaveis||[]).length+' entregáveis · '+nCases+' cases', pick:()=>this.openEscopo(e.id) };
     };
     const porEscopo = this.ESCOPOS.filter(e=>e.status==='ativo').slice(0,3).map(decEscopo);
@@ -1423,7 +1421,6 @@ class Component extends DCLogic {
       const feitos = new Set((s.saberFeitos||{})[e.id] || []);
       const idx = this.clientesPPGP();
       const cron = (e.fontes||[]).find(f => f.tipo === 'drive-sheet' && /^https:\/\//.test(f.url || ''));
-      const pdf = (e.fontes||[]).find(f => f.tipo === 'pdf');
       const comFerr = (x) => { const ferramentas = (x.ferramentas||[]).map(chipFerr).filter(Boolean); return { ...x, ferramentas, hasFerramentas: ferramentas.length>0, marcado: !!x.marcado }; };
       const casesRef = (e.casesReferencia||[]).filter(c => c.tipo !== 'cronograma').map(c => {
         const ficha = fichaDe(c.nome);
@@ -1447,7 +1444,6 @@ class Component extends DCLogic {
         cronogramasRef, hasCronogramasRef: cronogramasRef.length>0, cronogramasRefTexto: cronogramasRef.join(', '),
         hasCronograma: !!cron, cronogramaUrl: cron ? cron.url : '', cronogramaNome: cron ? cron.nome : '',
         hasMarcados: [...(e.etapas||[]), ...(e.entregaveis||[]), ...(e.estudar||[])].some(x => x.marcado),
-        fonteTexto: pdf ? pdf.nome + ', slide ' + pdf.pagina : '',
         abrirRoteiro: () => this.abrirRoteiro(e), baixarRoteiro: () => this.baixarRoteiro(e),
         cadastrarCase: () => this.openNovoCase({ cliente:'', escopoId:e.id }),
         irEstudar:()=>this.irPara('esc-estudar'), irReuniao:()=>this.irPara('esc-reuniao'), irEtapas:()=>this.irPara('esc-etapas'), irEntregaveis:()=>this.irPara('esc-entregaveis'), irCases:()=>this.irPara('esc-cases'),

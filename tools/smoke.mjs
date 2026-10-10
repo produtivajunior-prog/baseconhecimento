@@ -116,6 +116,7 @@ if (temEscopos) {
   const nCards = await page.locator('main article').count();
   check(/Revisão dos Escopos \(PPGP 2026\)/.test(await texto()) && nCards >= 15, `tela Escopos cita o PPGP 2026 e lista ${nCards} escopos`);
   check(!/Estudo de Viabilidade|\bEVE\b/.test(await texto()), 'EVE (descontinuado) não aparece na tela Escopos');
+  check(!/slide \d+/i.test(await texto()), 'cards de Escopos não mostram o número do slide');
   const busca = page.getByPlaceholder(/Entregável, ferramenta, cliente/);
   await busca.fill('curva abc'); await page.waitForTimeout(300);
   const achados = await page.locator('main article').count();
@@ -126,6 +127,7 @@ if (temEscopos) {
   await page.waitForTimeout(400);
   const t = await texto();
   check(['O que estudar', 'Diagnóstico Inicial', 'O que saber', 'Pontos de risco', 'Etapas do escopo', 'Entregáveis', 'Cases e cronogramas'].every((x) => t.includes(x)), 'escopo abriu com os 5 blocos (estudar, Diagnóstico Inicial, etapas, entregáveis, cases)');
+  check(!/slide \d+/i.test(t) && /Fonte: Revisão dos Escopos \(PPGP 2026\)/.test(t), 'escopo aberto cita a fonte sem número de slide');
   check(/Culpar a PJ por não vender/.test(t) && /Trópicos Motel/.test(t) && /Matriz de objeções/.test(t), 'risco, case e entregável do slide 2 do PPGP aparecem na tela');
 
   // checklist "O que saber": marca, conta e sobrevive ao F5
@@ -143,6 +145,7 @@ if (temEscopos) {
   {
     const mat = await page.evaluate(() => window.__hangarUltimoMaterial);
     check(!!mat && /roteiro do Diagnóstico Inicial/i.test(mat.html) && mat.html.includes('Culpar a PJ por não vender') && mat.html.includes('Quantas pessoas da equipe comercial'), `roteiro imprimível traz o que saber e os riscos (${mat ? mat.nome : 'nada'})`);
+    check(!!mat && !/slide \d+/i.test(mat.html), 'roteiro imprimível não cita número de slide');
     await page.evaluate(() => { window.__abertoNoDrive = null; });
   }
 
