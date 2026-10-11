@@ -1156,7 +1156,6 @@
           <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Etapas</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.nEtapas }}</div></div>
           <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Entregáveis</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.nEntregaveis }}</div></div>
           <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Ferramentas</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.nFerr }}</div></div>
-          <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Projetos já feitos</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.nCases }}</div></div>
           <div><div style="font-size:11px;font-weight:700;color:#9DAEB4;letter-spacing:0.04em;text-transform:uppercase">Responsável</div><div style="font-size:14.5px;font-weight:600;color:#163B45;margin-top:3px">{{ escopoSel.respNome }}</div></div>
         </div>
         <div class="hg-wrap" style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
@@ -1332,7 +1331,7 @@
         </sc-if>
 
         <sc-if value="{{ escopoSel.hasCasesRef }}" hint-placeholder-val="{{ true }}">
-          <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:10px">Projetos já realizados ({{ escopoSel.nCases }})</div>
+          <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:10px">Projetos já realizados</div>
           <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
             <sc-for list="{{ escopoSel.casesRef }}" as="c" hint-placeholder-count="6">
               <div style="background:#fff;border:1px solid #E7EEF1;border-radius:13px;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
