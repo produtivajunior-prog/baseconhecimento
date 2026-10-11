@@ -54,6 +54,8 @@ const texto = async () => page.evaluate(() => document.body.innerText);
 check(!/\{\{/.test(await texto()), 'nenhum "{{" cru na tela (runtime subiu sem unpkg)');
 check((await page.locator('#__bundler_err').count()) === 0, 'sem painel vermelho de erro do bundle na tela');
 check(/Por escopo|Escopos/.test(await texto()), 'home renderizou a seção "Por escopo"');
+check(/por Produtiva Júnior/.test(await page.locator('header').innerText()) && (await page.locator('header svg path[d^="M3.5 20.5V11.5"]').count()) === 1, 'topo mostra a marca do Hangar (selo do hangar + "por Produtiva Júnior")');
+check(await page.evaluate(() => !!document.querySelector('link[rel="icon"][href^="data:image/svg+xml"]')), 'favicon do Hangar aplicado no <head>');
 
 // Como funciona a Produtiva: menu → página com as 5 áreas, subnúcleos, fluxo comercial → área de atuação abre Escopos
 await page.getByRole('button', { name: 'Como funciona', exact: true }).first().click();
@@ -117,6 +119,7 @@ if (temEscopos) {
   check(/Revisão dos Escopos \(PPGP 2026\)/.test(await texto()) && nCards >= 15, `tela Escopos cita o PPGP 2026 e lista ${nCards} escopos`);
   check(!/Estudo de Viabilidade|\bEVE\b/.test(await texto()), 'EVE (descontinuado) não aparece na tela Escopos');
   check(!/slide \d+/i.test(await texto()), 'cards de Escopos não mostram o número do slide');
+  check(!/\d+ cases\b/.test(await page.locator('main').innerText()), 'cards de Escopos não mostram o número de cases');
   const busca = page.getByPlaceholder(/Entregável, ferramenta, cliente/);
   await busca.fill('curva abc'); await page.waitForTimeout(300);
   const achados = await page.locator('main article').count();
@@ -128,6 +131,7 @@ if (temEscopos) {
   const t = await texto();
   check(['O que estudar', 'Diagnóstico Inicial', 'O que saber', 'Pontos de risco', 'Etapas do escopo', 'Entregáveis', 'Cases e cronogramas'].every((x) => t.includes(x)), 'escopo abriu com os 5 blocos (estudar, Diagnóstico Inicial, etapas, entregáveis, cases)');
   check(!/slide \d+/i.test(t) && /Fonte: Revisão dos Escopos \(PPGP 2026\)/.test(t), 'escopo aberto cita a fonte sem número de slide');
+  check(!/Projetos já feitos/i.test(t) && !/Projetos já realizados \(\d+\)/i.test(t), 'escopo aberto não mostra o número de cases');
   check(/Culpar a PJ por não vender/.test(t) && /Trópicos Motel/.test(t) && /Matriz de objeções/.test(t), 'risco, case e entregável do slide 2 do PPGP aparecem na tela');
 
   // checklist "O que saber": marca, conta e sobrevive ao F5

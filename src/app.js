@@ -1353,7 +1353,7 @@ class Component extends DCLogic {
       return { ...e, grupoLabel:g.label, grupoCor:g.cor, grupoBg:g.bg, ativo:e.status==='ativo', despriorizado:e.status!=='ativo',
         statusLabel: e.status==='ativo' ? 'Ativo' : 'Despriorizado',
         nEtapas:(e.etapas||[]).length, nFerr:ferrIds.size, nEntregaveis:(e.entregaveis||[]).length, nCases, respNome:this.respNome(e.responsavel),
-        resumo:(e.etapas||[]).length+' etapas · '+(e.entregaveis||[]).length+' entregáveis · '+nCases+' cases', pick:()=>this.openEscopo(e.id) };
+        resumo:(e.etapas||[]).length+' etapas · '+(e.entregaveis||[]).length+' entregáveis', pick:()=>this.openEscopo(e.id) };
     };
     const porEscopo = this.ESCOPOS.filter(e=>e.status==='ativo').slice(0,3).map(decEscopo);
     const recomendados = data.filter(d=>d.freq==='Alta' && d.status==='Ativo').slice(0,3).map(dec);
