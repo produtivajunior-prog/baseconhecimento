@@ -54,7 +54,7 @@ const texto = async () => page.evaluate(() => document.body.innerText);
 check(!/\{\{/.test(await texto()), 'nenhum "{{" cru na tela (runtime subiu sem unpkg)');
 check((await page.locator('#__bundler_err').count()) === 0, 'sem painel vermelho de erro do bundle na tela');
 check(/Por escopo|Escopos/.test(await texto()), 'home renderizou a seção "Por escopo"');
-check(/por Produtiva Júnior/.test(await page.locator('header').innerText()) && (await page.locator('header svg ellipse').count()) === 1 && (await page.locator('header svg path[d^="M7.5 34V19.2"]').count()) === 1, 'topo mostra a marca do Hangar (hangar com avião + "por Produtiva Júnior")');
+check(/por Produtiva Júnior/.test(await page.locator('header').innerText()) && (await page.locator('header svg ellipse').count()) === 1 && (await page.locator('header svg path[d^="M14.5 31V15.2"]').count()) === 1, 'topo mostra a marca do Hangar (hangar com avião + "por Produtiva Júnior")');
 check(await page.evaluate(() => !!document.querySelector('link[rel="icon"][href^="data:image/svg+xml"]')), 'favicon do Hangar aplicado no <head>');
 
 // Como funciona a Produtiva: menu → página com as 5 áreas, subnúcleos, fluxo comercial → área de atuação abre Escopos
