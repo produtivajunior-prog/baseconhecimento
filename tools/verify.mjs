@@ -353,6 +353,8 @@ const TELAS = ['home', 'biblioteca', 'escopos', 'cases', 'novo-case', 'cadastro'
       for (const k of ['quando', 'passos', 'regras']) if (!isStrArr(x[k] || [])) p(xctx, `${k}[] precisa ser lista de textos`);
       for (const [j, v] of (x.valores || []).entries()) if (!texto(v.rotulo) || !texto(v.valor)) p(`${xctx}.valores[${j}]`, 'rotulo e valor obrigatórios');
       if (x.modelo && (!texto(x.modelo.titulo) || !texto(x.modelo.texto))) p(xctx, 'modelo precisa de titulo e texto');
+      for (const k of ['rotuloQuando', 'rotuloPassos', 'rotuloRegras']) if (x[k] !== undefined && !texto(x[k])) p(xctx, `${k} precisa ser texto`);
+      if (x.link !== undefined && x.link !== null && (!texto(x.link.rotulo) || !/^https:\/\//.test(x.link.url || ''))) p(xctx, 'link precisa de rotulo e url https');
     }
   }
   check(!problemas_.some((x) => x.startsWith('produtiva')), `produtiva.json  ${aids.size} áreas, ${((produtiva.fluxo || {}).passos || []).length} passos do fluxo comercial, ${((produtiva.auxilios || {}).itens || []).length} auxílios`, 'produtiva.json com erros');

@@ -106,9 +106,12 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   os subnúcleos de Projetos (CIEP, CIT, CS), o caminho do primeiro contato ao projeto (SDR → closer → gerente
   → proposta → execução → CSAT → case) e como o membro é acompanhado. O conteúdo fica em
   `src/data/produtiva.json` e é validado pelo `verify`.
-- **Auxílios e reembolsos** (`#/auxilios`, item "Auxílios" do menu): página própria com PIPJ, reembolso de
-  gasolina, Uber for Business, auxílio alimentação e computadores (valores, quando vale, como pedir e
-  regras). Os dados ficam em `auxilios` dentro de `src/data/produtiva.json`.
+- **Auxílios e reembolsos** (`#/auxilios`, item "Auxílios" do menu): página própria com o PIPJ (valores por
+  cargo, o que entra no cálculo, a fórmula com teto de R$ 300, ajustes e casos especiais, e as regras de uso),
+  auxílio-alimentação, reembolso de gasolina (com link da planilha), Uber Business e computadores. Fontes: Guia
+  de Benefícios dos Membros e Cálculo do PIPJ (2026); regras de uso do PIPJ e computadores vêm do manual de 2025.
+  Os dados ficam em `auxilios` dentro de `src/data/produtiva.json`; cada item pode trocar os títulos das seções
+  (`rotuloQuando`, `rotuloPassos`, `rotuloRegras`) e ter um `link`.
 - **Escopos** (`#/escopos`): os 15 escopos da Revisão dos Escopos (PPGP 2026) que a Produtiva executa (o EVE foi descontinuado), com busca por entregável, ferramenta,
   cliente ou etapa. Cada escopo tem cinco blocos: o que estudar, o Diagnóstico Inicial, as etapas, os entregáveis e os cases.
   - **Diagnóstico Inicial:** checklist "O que saber" (as marcações ficam no navegador) e os pontos de risco.
