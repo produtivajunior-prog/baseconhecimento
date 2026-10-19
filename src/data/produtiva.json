@@ -1,7 +1,7 @@
 {
   "_comentario": "Conteúdo da página 'Como funciona a Produtiva' (#/produtiva). Texto ditado pela conta institucional em 2026-09-24. As áreas de atuação ligam aos grupos de escopo de taxonomia.gruposEscopo; a lista de escopos de cada uma é calculada no app a partir de escopos.json.",
   "origem": "manual:produtivajunior@gmail.com",
-  "atualizado": "2026-09-24",
+  "atualizado": "2026-10-19",
   "oQueE": {
     "titulo": "O que é a Produtiva",
     "texto": "A Produtiva é uma empresa de gestão empresarial com mais de 17 anos de mercado. Ajudamos empresas a crescer atuando nas grandes áreas da gestão, e cada uma delas vira escopos de projeto que você encontra no Hangar.",
@@ -205,37 +205,72 @@
   },
   "auxilios": {
     "titulo": "Auxílios e reembolsos",
-    "texto": "A Produtiva apoia os membros no desenvolvimento e nos custos de estar a serviço da PJ. Quem cuida de tudo isso é a Vice-presidência.",
+    "texto": "A Produtiva apoia os membros no desenvolvimento e nos custos de estar a serviço da PJ. Quem cuida de tudo isso é a Vice-presidência: antes de pedir, confira os critérios e os dados informados.",
     "area": "Vice-presidência",
-    "fonte": "Manual financeiro da Produtiva (PIPJ, auxílios, Uber Business, reembolso gasolina e computadores), 2025, com o cartão corporativo atualizado para o Caju.",
+    "fonte": "Guia de Benefícios dos Membros (auxílio-alimentação, reembolso de gasolina e Uber Business) e Cálculo do PIPJ (Gestão de PIPJ), 2026. Regras de uso do PIPJ e computadores: Manual financeiro da Produtiva, 2025.",
     "cartao": "Caju",
     "itens": [
       {
         "id": "pipj",
         "titulo": "PIPJ — Programa de Incentivo Produtiva Júnior",
-        "resumo": "Valor mensal para investir no seu desenvolvimento: cursos, eventos, livros, materiais de estudo e de trabalho. O valor depende do cargo e muda com reconhecimentos, avaliações e pontos no plano de punição.",
+        "resumo": "Valor mensal de cada membro, calculado automaticamente em Gestão de PIPJ a cada lançamento. Todo mundo passa pela mesma fórmula; só mudam os valores por cargo, núcleo e o histórico do mês.",
         "valores": [
           {
-            "rotulo": "Cargos operacionais",
-            "valor": "R$ 200/mês",
-            "obs": "+ R$ 50 se Piloto de Elite · + R$ 75 se Líder de Voo"
+            "rotulo": "Operacional",
+            "valor": "R$ 100",
+            "obs": "+ R$ 15 por projeto ativo · nível: Júnior + R$ 0, Pleno + R$ 15, Sênior + R$ 30"
           },
           {
-            "rotulo": "Cargos táticos",
-            "valor": "R$ 200/mês",
-            "obs": "+ R$ 75 se Líder de Voo · + R$ 100 com média mensal de avaliação ≥ 4"
+            "rotulo": "Tático · núcleo Projetos",
+            "valor": "R$ 150",
+            "obs": "+ R$ 5 por projeto ativo"
           },
           {
-            "rotulo": "Cargos estratégicos",
-            "valor": "R$ 275/mês",
-            "obs": null
+            "rotulo": "Tático · demais núcleos (inclui Marketing)",
+            "valor": "R$ 150",
+            "obs": "+ R$ 15 por projeto ativo"
           },
           {
-            "rotulo": "Descontos (todos)",
-            "valor": "− R$ 15 por ponto",
-            "obs": "no saldo final do plano de punição · − R$ 50 com média de Piloto de Elite ≤ 3"
+            "rotulo": "Estratégico",
+            "valor": "R$ 250",
+            "obs": "sem bônus por projeto"
           }
         ],
+        "rotuloQuando": "O que entra no cálculo",
+        "quando": [
+          "Cargo + núcleo: definem a base e o bônus por projeto (tabela acima).",
+          "Nível do consultor (Júnior, Pleno ou Sênior): só gera bônus em R$ para o cargo Operacional.",
+          "Projetos ativos no mês, pela regra da quinzena: projeto iniciado a partir do dia 16 só conta no mês seguinte; finalizado até o dia 15 já não conta no mês do encerramento.",
+          "Pontos negativos: saldo no fim do mês de referência (ocorrências lançadas menos remoções aprovadas).",
+          "Ausências aprovadas: dias úteis de ausência com solicitação aprovada no mês.",
+          "NPS do mês: média entre a nota da aba Performance e a do NPS Interno, quando as duas existem no mesmo mês (senão, vale a que existir)."
+        ],
+        "rotuloPassos": "A fórmula, passo a passo",
+        "passos": [
+          "Base do cargo: valor fixo mensal pela combinação de cargo + núcleo.",
+          "+ Bônus por projeto ativo no mês, conforme o cargo (não vale para o Estratégico).",
+          "+ Bônus de nível, só para o Operacional: Júnior R$ 0, Pleno R$ 15, Sênior R$ 30.",
+          "− R$ 10 por ponto negativo em aberto no fim do mês, em qualquer cargo.",
+          "− Ausência aprovada, proporcional: (dias úteis ausente ÷ dias úteis do mês) × o subtotal até aqui.",
+          "+ 10% sobre o subtotal se a nota de NPS do mês for maior que 4.",
+          "Teto: nenhum valor calculado automaticamente passa de R$ 300 por pessoa no mês."
+        ],
+        "rotuloRegras": "Ajustes e casos especiais",
+        "regras": [
+          "Quem lança (Gestão de Pessoas ou Vice-presidência) pode ajustar o valor antes de confirmar, sempre com motivo registrado: dedução livre (qualquer valor em R$ subtraído do total) ou substituição total (define o valor final, ignorando o cálculo).",
+          "NPS 10 / CSAT 5: + 10% sobre a mesma base do bônus de NPS, marcado manualmente. Soma com o bônus automático se as duas condições baterem.",
+          "Reconhecimento: R$ 50 fixos, somados por fora. É o único valor que pode passar do teto de R$ 300.",
+          "Plano de punição ativo: zera o PIPJ do mês inteiro. Nenhum ajuste manual ou bônus reverte isso.",
+          "Mês sem lucro (ativado por quem lança): a base do Operacional cai para R$ 70, a do Tático para R$ 115 e a do Estratégico para R$ 215; o bônus por projeto do Operacional e do Tático (demais núcleos) cai de R$ 15 para R$ 10, e o do Tático (Projetos) segue R$ 5.",
+          "Contas de administrador e colaboradores desligados não entram no lançamento."
+        ],
+        "modelo": null
+      },
+      {
+        "id": "pipj-uso",
+        "titulo": "PIPJ — como usar",
+        "resumo": "O PIPJ é para reinvestir em você: cursos, eventos, livros, materiais de estudo e de trabalho.",
+        "valores": [],
         "quando": [],
         "passos": [],
         "regras": [
@@ -244,82 +279,84 @@
           "Dá para pagar uma compra parcelada com o PIPJ.",
           "Ordem de prioridade: 1º tecnologia (conserto ou compra de equipamentos para o trabalho), 2º capacitações (cursos, livros, materiais), 3º eventos do MEJ e de representação (não vale para festas e integração), 4º papelaria para a universidade.",
           "Se a saída deixar o caixa do PIPJ negativo, ela passa para o mês seguinte ou é vetada.",
-          "Os pontos do plano de punição podem ser retirados ao longo do mês; o desconto usa o saldo do último dia.",
           "Não recebe nem retira PIPJ: quem está em plano de acompanhamento (no mês), em processo de desligamento, com reunião de desligamento agendada ou há mais de 1 mês sem projeto interno ou externo.",
           "Mesmo dentro das regras, a Vice-presidência pode vetar a retirada conforme a situação financeira da Produtiva."
         ],
         "modelo": null
       },
       {
+        "id": "alimentacao",
+        "titulo": "Auxílio-alimentação",
+        "resumo": "R$ 30 por pessoa para ajudar na alimentação de quem participa de compromissos presenciais da Produtiva Júnior nos turnos da manhã e da tarde. O valor é liberado no Caju, o cartão corporativo.",
+        "valores": [
+          {
+            "rotulo": "Por dia com os dois turnos",
+            "valor": "R$ 30",
+            "obs": "liberado no Caju depois da aprovação"
+          }
+        ],
+        "rotuloQuando": "Quando tenho direito",
+        "quando": [
+          "Ter compromisso da PJ pela manhã e outro à tarde, com intervalo de no máximo 2 horas entre o fim do primeiro e o início do segundo.",
+          "As duas atividades precisam ser presenciais. Valem reuniões internas ou de projeto, construção e prospecção; a prospecção só conta quando feita no container da PJ.",
+          "Não ter compromissos fora da PJ entre as atividades e não voltar para casa no intervalo. Se isso acontecer, perde-se o direito ao auxílio."
+        ],
+        "rotuloPassos": "Como solicitar",
+        "passos": [
+          "Mantenha seu Google Agenda atualizado com os dois compromissos.",
+          "Até as 12h do próprio dia, publique sua rotina no canal #Rotina-pj com o modelo abaixo.",
+          "O assessor da Vice-presidência avalia a solicitação e, se aprovada, libera R$ 30 no Caju.",
+          "Esqueceu de pedir o saldo? Se você cumpria os requisitos, pague com seu próprio dinheiro e depois solicite o reembolso."
+        ],
+        "regras": [
+          "Uso indevido: quem tentar burlar o sistema deve devolver o valor gasto. Se não reembolsar a empresa, será descontado do PIPJ o dobro do valor devido."
+        ],
+        "modelo": {
+          "titulo": "Modelo para o canal #Rotina-pj",
+          "texto": "[Nome] DIA/MÊS\nPrimeiro turno: ATRIBUIÇÃO X (Horário de início - Horário de finalização)\nSegundo turno: ATRIBUIÇÃO Y (Horário de início - Horário de finalização)"
+        }
+      },
+      {
         "id": "gasolina",
         "titulo": "Reembolso de gasolina",
-        "resumo": "Para viagens a serviço da Produtiva feitas no seu próprio veículo.",
+        "resumo": "Compensa o combustível usado em deslocamentos feitos com veículo particular para atividades da Produtiva Júnior.",
         "valores": [],
         "quando": [
-          "Viagem vinculada à empresa (projeto, atividade interna ou situação extraordinária) com o seu próprio meio de transporte."
+          "Deslocamento com o seu próprio veículo para uma atividade da PJ."
         ],
+        "rotuloPassos": "Como solicitar",
         "passos": [
-          "Abra a planilha REEMBOLSO GASOLINA, crie uma cópia da aba \"Exemplo Base\" e renomeie com o seu nome.",
-          "Preencha o modelo do carro, a autonomia e troque \"Projeto 1, 2, 3\" pelo nome dos seus projetos.",
-          "Para cada viagem, preencha saída, chegada, motivo, carro, distância e data. O total em litros é calculado sozinho.",
-          "No Pipefy, abra o formulário \"Processos de Pagamento\" e escolha \"Reembolso\". Informe a sua chave Pix (não a do PIPJ) e o seu nome, com a descrição \"Reembolso gasolina [NOME DO PROJETO]\".",
-          "Informe o valor que aparece na célula vinho embaixo do nome do projeto, na sua planilha.",
-          "Selecione \"Consultorias/Assessorias\" e o nome do projeto, e anexe como comprovante um print da sua planilha."
+          "Registre seus deslocamentos na planilha de gasolina: saída, destino, motivo, veículo, distância percorrida e data. O cálculo considera a autonomia cadastrada do veículo.",
+          "Aguarde a Vice-presidência cadastrar o preço de referência do combustível do mês, usado para calcular o valor a reembolsar.",
+          "Preencha o Formulário de Processos de Pagamento, selecionando a categoria correspondente ao gasto.",
+          "Anexe como comprovante um print da tela completa da sua planilha de gasolina."
         ],
-        "regras": [],
+        "regras": [
+          "Envie um formulário por categoria. Exemplo: um deslocamento para prospecção e outro para reunião de projeto exigem duas solicitações, cada uma na categoria correta."
+        ],
+        "link": {
+          "rotulo": "Abrir a planilha de reembolso de gasolina",
+          "url": "https://docs.google.com/spreadsheets/d/1p4BvRj0iicLKCzgE_6DwcCi_uUeUBp1Pp8eBe5JWJlc/edit"
+        },
         "modelo": null
       },
       {
         "id": "uber",
-        "titulo": "Uber for Business",
-        "resumo": "Se você não tem veículo ou não pode usá-lo, vá de Uber pela conta corporativa da Produtiva.",
+        "titulo": "Uber Business",
+        "resumo": "Corridas para atividades da Produtiva Júnior pelo benefício corporativo, sem pagar do próprio bolso nem pedir reembolso.",
         "valores": [],
-        "quando": [
-          "Atividade vinculada à empresa sem meio de transporte próprio."
-        ],
+        "quando": [],
+        "rotuloPassos": "Como funciona",
         "passos": [
-          "Confira se está na conta corporativa da Produtiva Júnior e escolha o UberX.",
-          "Confirme o local de partida.",
-          "Escolha o código de despesa: o projeto da visita, ou \"Prospecção\" quando for diagnóstico ou proposta.",
-          "Escolheu o código errado? Dá para alterar depois na própria viagem."
-        ],
-        "regras": [],
-        "modelo": null
-      },
-      {
-        "id": "alimentacao",
-        "titulo": "Auxílio alimentação",
-        "resumo": "Para membros efetivos que estão a serviço da Produtiva de manhã e de tarde. O saldo cai toda semana no cartão corporativo Caju.",
-        "valores": [
-          {
-            "rotulo": "Por refeição (almoço)",
-            "valor": "R$ 30",
-            "obs": null
-          },
-          {
-            "rotulo": "Por semana, no cartão Caju",
-            "valor": "R$ 60",
-            "obs": "equivale a dois auxílios, se a situação financeira da empresa permitir"
-          }
-        ],
-        "quando": [
-          "Dois turnos em eventos do MEJ ou em eventos de representação.",
-          "Eventos internos (RG, Workday, RN e outras reuniões), quando avisado antes e se a situação financeira permitir.",
-          "É necessário justificar o uso no canal \"Rotina-PJ\" do Slack e registrar as atividades no Google Agenda."
-        ],
-        "passos": [
-          "Use o saldo do cartão Caju na refeição.",
-          "Quando não houver duas reuniões em turnos diferentes, justifique no canal \"Rotina-PJ\" do Slack, no modelo abaixo, e registre as atividades no Google Agenda.",
-          "Em construções, detalhe o projeto e os pontos feitos. Marketing usando o contêiner em horário comercial: informe leads abertos, fluxos enviados e ligações feitas."
+          "Você recebe da PJ o acesso ao benefício corporativo ou um código.",
+          "Pede a corrida no aplicativo Uber, usando o benefício autorizado.",
+          "O deslocamento fica associado à atividade ou ao projeto correspondente.",
+          "A Vice-presidência acompanha as corridas e os gastos por membro, projeto e período."
         ],
         "regras": [
-          "No máximo DUAS saídas de até R$ 30 por semana. Não vale, por exemplo, R$ 20 + R$ 40 ou três de R$ 20.",
-          "Sem justificativa, com participação muito curta ou produtividade incompatível: o membro estorna o valor para a Produtiva e pode ter penalidades e o saldo suspenso."
+          "Uso indevido: o benefício só pode ser usado em deslocamentos relacionados à PJ. Se for identificado uso indevido, o membro deve devolver o valor das corridas. Se não pagar, será descontado do PIPJ o dobro do valor devido."
         ],
-        "modelo": {
-          "titulo": "Modelo para o canal Rotina-PJ",
-          "texto": "[NOME] data\nAtividade turno 1:\nNome da(s) atividade(s) realizada(s) - horário\nAtividade turno 2:\nNome da(s) atividade(s) realizada(s) - horário\n\nExemplo:\n[MARIA BEATRIZ] 15/08\nAtividade turno 1:\nRAC Unimed - 9h às 14h\nAtividade turno 2:\nPlanilha de tempos Nordestão - 15h às 16h\nAlterações planilha Iskisita - 16h às 18h"
-        }
+        "modelo": null
       },
       {
         "id": "computadores",

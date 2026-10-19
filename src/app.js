@@ -929,6 +929,9 @@ class Component extends DCLogic {
         regras: x.regras || [], hasRegras: !!(x.regras && x.regras.length),
         colunas: (x.passos || []).length && (x.regras || []).length ? '1fr 1fr' : '1fr',
         hasModelo: !!x.modelo, modeloTitulo: x.modelo ? x.modelo.titulo : '', modeloTexto: x.modelo ? x.modelo.texto : '',
+        // títulos das seções: cada auxílio pode trocar o padrão (ex.: o PIPJ mostra "A fórmula, passo a passo")
+        rotuloQuando: x.rotuloQuando || 'Quando vale', rotuloPassos: x.rotuloPassos || 'Como pedir', rotuloRegras: x.rotuloRegras || 'Regras importantes',
+        hasLink: !!(x.link && x.link.url), linkUrl: x.link ? x.link.url : '', linkRotulo: x.link ? x.link.rotulo : '',
         ir: () => this.irPara('aux-' + x.id) })),
       prodIrOQueE: () => this.irPara('prod-oquee'), prodIrAreas: () => this.irPara('prod-areas'), prodIrFluxo: () => this.irPara('prod-fluxo'), prodIrMembro: () => this.irPara('prod-membro'),
       goProdutiva: () => this.nav('produtiva'), goAuxilios: () => this.nav('auxilios') };
