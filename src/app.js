@@ -999,11 +999,33 @@ class Component extends DCLogic {
     };
     window.addEventListener('keydown', this._onKey);
     if (location.hash && location.hash !== '#/') this.aplicarHash();
+    this.iniciarContagem();
   }
   componentDidUpdate() {
     if (typeof location === 'undefined') return;
     const h = this.hashDe(this.state);
     if (location.hash !== h && !(h === '#/' && !location.hash)) { this._hashPropria = true; location.hash = h; }
+    this.contarVisita();
+  }
+  // Contagem de acessos (Vercel Web Analytics): só no domínio da Vercel, onde existe /_vercel/insights.
+  // No Coolify e no arquivo local nada é carregado. Sem cookies; cada tela conta como uma página.
+  iniciarContagem() {
+    if (!/\.vercel\.app$/.test(location.hostname) || window.va) return;
+    window.va = function () { (window.vaq = window.vaq || []).push(arguments); };
+    const s = document.createElement('script');
+    s.defer = true; s.src = '/_vercel/insights/script.js'; s.dataset.disableAutoTrack = '1';
+    document.head.appendChild(s);
+    // Espera a tela do link (#/escopo/…) se aplicar para não contar a Home antes dela.
+    setTimeout(() => { this._contando = true; this.contarVisita(); }, 0);
+  }
+  contarVisita() {
+    if (!this._contando) return;
+    const h = this.hashDe(this.state);
+    if (h === this._ultimaContada) return;
+    this._ultimaContada = h;
+    const path = '/' + h.replace(/^#\/?/, '');
+    const route = path.replace(/^\/(ferramenta|escopo|case)\/.+/, '/$1/[id]');
+    window.va('pageview', { route, path });
   }
   componentWillUnmount() {
     if (typeof window === 'undefined') return;
