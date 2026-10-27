@@ -520,6 +520,29 @@ await page.evaluate(() => { try { localStorage.removeItem('hangar.casesLocais');
   await page.evaluate(() => { localStorage.removeItem('hangar.extra'); });
 }
 
+// Contagem de acessos (Vercel Web Analytics): nada carrega fora da Vercel; lá, cada tela vira uma página contada
+check(await page.evaluate(() => !window.va && !document.querySelector('script[src*="_vercel/insights"]')), 'fora da Vercel (arquivo local/Coolify) a contagem de acessos não é carregada');
+{
+  const pVa = await ctx.newPage();
+  const errosVa = []; pVa.on('pageerror', (e) => errosVa.push(String(e)));
+  await pVa.route('https://hangar-produtiva.vercel.app/**', (r) => {
+    if (r.request().url().includes('/_vercel/insights/script.js')) {
+      // dublê do script da Vercel: registra o que a página pediu para contar
+      return r.fulfill({ contentType: 'text/javascript', body: `window.__vaAuto = document.currentScript.dataset.disableAutoTrack !== '1'; window.__vaViews = []; window.va = function (t, d) { if (t === 'pageview') window.__vaViews.push(d); }; (window.vaq || []).forEach(function (a) { window.va.apply(null, a); });` });
+    }
+    return r.fulfill({ contentType: 'text/html', body: readFileSync(alvo, 'utf8') });
+  });
+  await pVa.goto('https://hangar-produtiva.vercel.app/#/escopo/estruturacao-comercial'); await pVa.waitForTimeout(1500);
+  const v1 = await pVa.evaluate(() => ({ auto: window.__vaAuto, views: window.__vaViews }));
+  check(v1.auto === false && JSON.stringify(v1.views) === JSON.stringify([{ route: '/escopo/[id]', path: '/escopo/estruturacao-comercial' }]), `na Vercel, o link direto conta só a tela aberta, sem contagem automática duplicada (${JSON.stringify(v1)})`);
+  await pVa.getByRole('button', { name: 'Biblioteca', exact: true }).first().click(); await pVa.waitForTimeout(300);
+  await pVa.getByRole('button', { name: 'Biblioteca', exact: true }).first().click(); await pVa.waitForTimeout(300);
+  const v2 = await pVa.evaluate(() => window.__vaViews.map((x) => x.path));
+  check(JSON.stringify(v2) === JSON.stringify(['/escopo/estruturacao-comercial', '/biblioteca']), `trocar de tela conta uma visita por tela, sem repetir (${v2.join(' → ')})`);
+  check(errosVa.length === 0, errosVa.length ? `erros na página da Vercel: ${errosVa[0]}` : 'página na Vercel sem erros de JavaScript');
+  await pVa.close();
+}
+
 check(erros.length === 0, erros.length ? `erros de página: ${erros.slice(0, 3).join(' | ')}` : 'nenhum erro de JavaScript');
 
 const shot = join(dirname(alvo), basename(alvo, '.html') + '-smoke.png');

@@ -166,6 +166,18 @@ mesmos cabeçalhos do nginx. O projeto Vercel fica ligado a este repositório e 
 push na `main` (não precisa de Redeploy manual). Com um domínio próprio (ex.: `hangar.produtivajunior.com.br`)
 o sslip deixa de ser necessário.
 
+### Contagem de acessos (Vercel Web Analytics)
+
+No endereço da Vercel o app carrega o script do Vercel Web Analytics (`/_vercel/insights/script.js`,
+sem cookies) e conta cada tela como uma página: `/biblioteca`, `/escopos`, `/auxilios`, `/escopo/<id>`
+(agrupado como `/escopo/[id]`) etc. A contagem automática fica desligada para o link direto não contar
+a Home antes da tela aberta. Os números ficam no painel da Vercel → projeto `hangar-produtiva` → **Analytics**
+(visitantes, visualizações, páginas mais vistas, origem, país e dispositivo). É preciso ligar uma vez em
+**Analytics → Enable**; até isso, o script responde 404 e nada é contado.
+
+Só os acessos pelo `*.vercel.app` entram. No Coolify e no arquivo local nada é carregado (lá não existe
+`/_vercel/insights`). Com domínio próprio na Vercel, ajuste o teste de hostname em `iniciarContagem` (`src/app.js`).
+
 ## Limitações conhecidas
 
 | | |
