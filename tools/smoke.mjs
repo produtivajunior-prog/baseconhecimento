@@ -70,7 +70,7 @@ await page.waitForTimeout(300);
   await page.getByRole('button', { name: 'Auxílios e reembolsos ›' }).first().click(); await page.waitForTimeout(300);
   const ta = await texto();
   check(/#\/auxilios$/.test(await page.evaluate(() => location.hash)) && /Auxílios e reembolsos/.test(ta), 'atalho da Como funciona abre a página "Auxílios e reembolsos" (#/auxilios)');
-  check(['PIPJ', 'Reembolso de gasolina', 'Uber Business', 'Auxílio-alimentação', 'Computadores da Produtiva', 'Rotina-pj', 'Caju', 'regra da quinzena', 'R$ 300'].every((x) => ta.includes(x)) && !/Flash/i.test(ta) && !/As \d+ áreas/.test(ta), 'página de auxílios traz PIPJ, gasolina, Uber, alimentação (cartão Caju, sem Flash) e computadores, sem o resto da Como funciona');
+  check(['PIPJ', 'Reembolso de gasolina', 'Uber Business', 'Auxílio-alimentação', 'Computadores da Produtiva', 'Rotina-pj', 'Caju', 'regra da quinzena', 'R$ 300', 'Máximo de R$ 300 por saída'].every((x) => ta.includes(x)) && !/R\$ 400/.test(ta) && !/Flash/i.test(ta) && !/As \d+ áreas/.test(ta), 'página de auxílios traz PIPJ, gasolina, Uber, alimentação (cartão Caju, sem Flash) e computadores, sem o resto da Como funciona');
   await page.reload(); await page.waitForTimeout(500);
   check(/A FÓRMULA, PASSO A PASSO|A fórmula, passo a passo/.test(ta) && /PIPJ — como usar/.test(ta) && (await page.locator('a[href*="1p4BvRj0iicLKCzgE_6DwcCi_uUeUBp1Pp8eBe5JWJlc"][target="_blank"]').count()) === 1, 'Auxílios: PIPJ com a fórmula e as regras de uso, e link da planilha de gasolina');
   check(/#\/auxilios$/.test(await page.evaluate(() => location.hash)) && /Reembolso de gasolina/.test(await texto()), 'F5 em #/auxilios volta para a página de auxílios');
