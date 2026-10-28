@@ -1,7 +1,7 @@
 {
   "_comentario": "Conteúdo da página 'Como funciona a Produtiva' (#/produtiva). Texto ditado pela conta institucional em 2026-09-24. As áreas de atuação ligam aos grupos de escopo de taxonomia.gruposEscopo; a lista de escopos de cada uma é calculada no app a partir de escopos.json.",
   "origem": "manual:produtivajunior@gmail.com",
-  "atualizado": "2026-10-19",
+  "atualizado": "2026-10-27",
   "oQueE": {
     "titulo": "O que é a Produtiva",
     "texto": "A Produtiva é uma empresa de gestão empresarial com mais de 17 anos de mercado. Ajudamos empresas a crescer atuando nas grandes áreas da gestão, e cada uma delas vira escopos de projeto que você encontra no Hangar.",
@@ -275,7 +275,7 @@
         "passos": [],
         "regras": [
           "Use para reinvestir em você: cursos, eventos, materiais de estudo e de trabalho. Outro tipo de uso precisa ser pedido ao diretor da Vice-presidência.",
-          "Máximo de R$ 400 por saída. Casos extraordinários: converse antes com o diretor da Vice-presidência.",
+          "Máximo de R$ 300 por saída. Casos extraordinários: converse antes com o diretor da Vice-presidência.",
           "Dá para pagar uma compra parcelada com o PIPJ.",
           "Ordem de prioridade: 1º tecnologia (conserto ou compra de equipamentos para o trabalho), 2º capacitações (cursos, livros, materiais), 3º eventos do MEJ e de representação (não vale para festas e integração), 4º papelaria para a universidade.",
           "Se a saída deixar o caixa do PIPJ negativo, ela passa para o mês seguinte ou é vetada.",
