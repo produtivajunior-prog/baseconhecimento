@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR" translate="no">
 <head>
   <meta charset="utf-8">
+  <meta name="google" content="notranslate">
   <title>Hangar</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,7 +33,7 @@
     <circle cx="744" cy="289" r="18" fill="#ffffff" opacity="0.85"></circle>
   </svg>
 </div>
-  <div id="__bundler_loading">Unpacking...</div>
+  <div id="__bundler_loading">Carregando…</div>
 
   <script>
     
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let template = JSON.parse(templateEl.textContent);
 
     const uuids = Object.keys(manifest);
-    setStatus('Unpacking ' + uuids.length + ' assets...');
+    setStatus('Carregando…');
 
     const blobUrls = {};
     await Promise.all(uuids.map(async (uuid) => {

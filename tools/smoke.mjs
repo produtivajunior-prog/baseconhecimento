@@ -53,6 +53,7 @@ const texto = async () => page.evaluate(() => document.body.innerText);
 
 check(!/\{\{/.test(await texto()), 'nenhum "{{" cru na tela (runtime subiu sem unpkg)');
 check((await page.locator('#__bundler_err').count()) === 0, 'sem painel vermelho de erro do bundle na tela');
+check(await page.evaluate(() => document.documentElement.lang === 'pt-BR' && document.documentElement.getAttribute('translate') === 'no' && !!document.querySelector('meta[name="google"][content="notranslate"]')), 'página declara pt-BR e desliga o tradutor (o Chrome não oferece mais traduzir do galego)');
 check(/Por escopo|Escopos/.test(await texto()), 'home renderizou a seção "Por escopo"');
 check(/por Produtiva Júnior/.test(await page.locator('header').innerText()) && (await page.locator('header svg ellipse').count()) === 1 && (await page.locator('header svg path[d^="M14.5 31V15.2"]').count()) === 1, 'topo mostra a marca do Hangar (hangar com avião + "por Produtiva Júnior")');
 check(await page.evaluate(() => { const l = document.querySelector('link[rel="icon"][href^="data:image/svg+xml"]'); return !!l && /width='64'.*height='64'/.test(decodeURIComponent(l.getAttribute('href'))); }), 'favicon do Hangar aplicado no <head>, com tamanho fixo (não corta na aba)');
