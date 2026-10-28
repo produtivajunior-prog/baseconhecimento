@@ -543,6 +543,67 @@ check(await page.evaluate(() => !window.va && !document.querySelector('script[sr
   await pVa.close();
 }
 
+// Tempo em cada tela (visita técnica /_tempo/<tela>) e a tela de monitoramento dos administradores
+{
+  const pM = await ctx.newPage();
+  const errosM = []; pM.on('pageerror', (e) => errosM.push(String(e)));
+  const pedidosApi = [];
+  const fixture = {
+    periodo: { dias: 7, desde: '2026-10-21T12:00:00.000Z', ate: '2026-10-28T12:00:00.000Z' },
+    total: { visitas: 1234, visitantes: 87 }, anterior: { visitas: 1000, visitantes: 90 },
+    serie: Array.from({ length: 8 }, (_, i) => ({ t: `2026-10-${21 + i}T00:00:00.000Z`, visitas: i * 20, visitantes: i * 3 })),
+    porHora: Array.from({ length: 24 }, (_, h) => (h === 15 ? 90 : h % 5)),
+    paginas: [{ nome: '/biblioteca', visitas: 300, visitantes: 60 }, { nome: '/escopo/estruturacao-comercial', visitas: 120, visitantes: 40 }, { nome: '/ferramenta/porter', visitas: 80, visitantes: 30 }, { nome: '', outros: true, visitas: 5, visitantes: 2 }],
+    telas: [{ nome: '/biblioteca', visitas: 300, visitantes: 60 }, { nome: '/escopo/[id]', visitas: 120, visitantes: 40 }, { nome: '/', visitas: 90, visitantes: 70 }, { nome: '', outros: true, visitas: 5, visitantes: 2 }],
+    aparelhos: [{ nome: 'desktop', visitas: 900, visitantes: 60 }, { nome: 'mobile', visitas: 334, visitantes: 30 }], navegadores: [{ nome: 'Chrome', visitas: 1000, visitantes: 70 }],
+    sistemas: [{ nome: 'Windows', visitas: 700, visitantes: 50 }], paises: [{ nome: 'BR', visitas: 1200, visitantes: 85 }], origens: [{ nome: '', visitas: 800, visitantes: 60 }, { nome: 'chat.whatsapp.com', visitas: 200, visitantes: 20 }],
+    tempo: { n: 50, mediaSeg: 95, telas: [{ tela: 'biblioteca', n: 30, mediaSeg: 130 }, { tela: 'escopo', n: 20, mediaSeg: 42 }], faixas: [{ faixa: '3-10s', n: 5 }, { faixa: '10-30s', n: 10 }, { faixa: '30s-1min', n: 15 }, { faixa: '1-3min', n: 12 }, { faixa: '3-10min', n: 6 }, { faixa: '10-30min', n: 2 }, { faixa: '30min+', n: 0 }] },
+    usoMes: { eventos: 42000, limite: 50000, desde: '2026-10-01T00:00:00.000Z' },
+  };
+  await pM.route('https://hangar-produtiva.vercel.app/**', (r) => {
+    const url = r.request().url();
+    if (url.includes('/_vercel/insights/script.js')) return r.fulfill({ contentType: 'text/javascript', body: `window.__vaViews = []; window.va = function (t, d) { if (t === 'pageview') window.__vaViews.push(d); }; (window.vaq || []).forEach(function (a) { window.va.apply(null, a); });` });
+    if (url.includes('/api/monitoramento')) {
+      const senha = r.request().headers()['x-hangar-senha']; pedidosApi.push({ url, senha });
+      if (senha !== 'senha-do-smoke') return r.fulfill({ status: 401, contentType: 'application/json', body: JSON.stringify({ erro: 'Senha incorreta.' }) });
+      const dias = Number(new URL(url).searchParams.get('dias'));
+      return r.fulfill({ contentType: 'application/json', body: JSON.stringify({ ...fixture, periodo: { ...fixture.periodo, dias } }) });
+    }
+    return r.fulfill({ contentType: 'text/html', body: readFileSync(alvo, 'utf8') });
+  });
+  await pM.clock.install();
+  await pM.goto('https://hangar-produtiva.vercel.app/#/biblioteca'); await pM.waitForTimeout(1500);
+  await pM.clock.fastForward('00:45');
+  await pM.getByRole('button', { name: 'Escopos', exact: true }).first().click(); await pM.waitForTimeout(300);
+  await pM.clock.fastForward(1500);
+  await pM.getByRole('button', { name: 'Auxílios', exact: true }).first().click(); await pM.waitForTimeout(300);
+  await pM.clock.fastForward('00:05');
+  await pM.evaluate(() => { location.hash = '#/monitoramento'; }); await pM.waitForTimeout(500);
+  const vistas = await pM.evaluate(() => window.__vaViews.map((v) => v.path + ' ' + v.route));
+  check(JSON.stringify(vistas) === JSON.stringify(['/biblioteca /biblioteca', '/_tempo/biblioteca /_tempo/30s-1min', '/escopos /escopos', '/auxilios /auxilios', '/_tempo/auxilios /_tempo/3-10s']),
+    `tempo em cada tela vai como visita técnica; menos de 3 s não conta; a tela de monitoramento não entra (${vistas.join(' | ')})`);
+
+  const tM = async () => pM.evaluate(() => document.querySelector('main').innerText);
+  check(/Monitoramento do Hangar/.test(await tM()) && (await pM.locator('#mon-senha').count()) === 1 && pedidosApi.length === 0, '#/monitoramento pede a senha antes de buscar qualquer número');
+  await pM.locator('#mon-senha').fill('errada'); await pM.getByRole('button', { name: 'Entrar' }).click(); await pM.waitForTimeout(400);
+  check(/Senha incorreta/.test(await tM()) && !/1\.234/.test(await tM()), 'senha errada: mostra "Senha incorreta" e nenhum número');
+  await pM.locator('#mon-senha').fill('senha-do-smoke'); await pM.locator('#mon-senha').press('Enter'); await pM.waitForTimeout(500);
+  const t1 = await tM();
+  check(['1.234', '87', '+23% vs período anterior', 'Telas por visitante', '14,2', '1 min 35 s', 'Pico às 15h'].every((x) => t1.includes(x)), 'senha certa: visitas, visitantes, variação, telas por visitante, tempo médio e horário de pico');
+  const faltam = ['Estruturação Comercial', 'Porter', 'Escopo aberto', 'Outros', 'Computador', 'Celular', 'Direto (link, favorito)', 'Brasil', '2 min 10 s', '42.000 de 50.000 eventos', 'Perto do limite'].filter((x) => !t1.includes(x));
+  check(!faltam.length && !/\/escopo\/|\{\{/.test(t1), `mostra nomes (não ids), telas, tempo por tela, público e o alerta de limite do plano${faltam.length ? ' — faltou: ' + faltam.join(', ') : ''}`);
+  await pM.getByRole('button', { name: '30 dias' }).click(); await pM.waitForTimeout(400);
+  check(pedidosApi.at(-1).url.endsWith('dias=30') && pedidosApi.at(-1).senha === 'senha-do-smoke', 'trocar o período busca de novo com a senha guardada na aba');
+  await pM.reload(); await pM.waitForTimeout(1500);
+  check(/1\.234/.test(await tM()), 'F5 na mesma aba não pede a senha de novo');
+  await pM.getByRole('button', { name: 'Sair' }).click(); await pM.waitForTimeout(300);
+  check((await pM.locator('#mon-senha').count()) === 1 && !/1\.234/.test(await tM()) && await pM.evaluate(() => !sessionStorage.getItem('hangar.adminSenha')), 'Sair esquece a senha e esconde os números');
+  check(errosM.length === 0, errosM.length ? `erros no monitoramento: ${errosM[0]}` : 'monitoramento sem erros de JavaScript');
+  await pM.close();
+}
+await page.evaluate(() => { location.hash = '#/monitoramento'; }); await page.waitForTimeout(400);
+check(/só funciona no endereço da Vercel/.test(await texto()) && (await page.locator('#mon-senha').count()) === 0, 'fora da Vercel o monitoramento avisa e não pede senha');
+
 check(erros.length === 0, erros.length ? `erros de página: ${erros.slice(0, 3).join(' | ')}` : 'nenhum erro de JavaScript');
 
 const shot = join(dirname(alvo), basename(alvo, '.html') + '-smoke.png');

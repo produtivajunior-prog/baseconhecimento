@@ -5,7 +5,7 @@
   "buildCommand": "mkdir -p public && cp dist/Hangar.html public/index.html",
   "outputDirectory": "public",
   "cleanUrls": true,
-  "rewrites": [{ "source": "/((?!index\\.html$).*)", "destination": "/index.html" }],
+  "rewrites": [{ "source": "/((?!index\\.html$|api/).*)", "destination": "/index.html" }],
   "headers": [
     {
       "source": "/(.*)",

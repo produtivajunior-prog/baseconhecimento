@@ -2058,6 +2058,147 @@
   </main>
   </sc-if>
 
+  <!-- ============ MONITORAMENTO (só administradores; dados do Vercel Web Analytics via /api/monitoramento) ============ -->
+  <sc-if value="{{ isMonitoramento }}" hint-placeholder-val="{{ false }}">
+  <main class="hg-main" id="monitoramento" style="max-width:1100px;margin:0 auto;padding:34px 28px 80px">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:#F1EEF8;color:#5B4A8B;font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:100px;margin-bottom:14px">Só administradores</div>
+    <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">Monitoramento do Hangar</h1>
+    <p style="font-size:15.5px;color:#5E747B;margin:10px 0 22px;line-height:1.55;max-width:720px">Quantas pessoas usam o Hangar, o que mais abrem e quanto tempo ficam em cada tela. Conta só os acessos pelo endereço da Vercel; sem cookies e sem identificar quem é quem.</p>
+
+    <sc-if value="{{ monIndisponivel }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#FFF8EC;border:1px solid #F1DDB2;border-radius:14px;padding:16px 18px;font-size:14.5px;color:#7A5A16;line-height:1.55">O monitoramento só funciona no endereço da Vercel. Abra <a href="https://hangar-produtiva.vercel.app/#/monitoramento" style="color:#7A5A16;font-weight:700">hangar-produtiva.vercel.app/#/monitoramento</a>.</div>
+    </sc-if>
+
+    <sc-if value="{{ monPedeSenha }}" hint-placeholder-val="{{ true }}">
+      <div style="max-width:420px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px">
+        <label for="mon-senha" style="display:block;font-size:14px;font-weight:600;color:#163B45;margin-bottom:8px">Senha de administrador</label>
+        <div style="display:flex;gap:8px">
+          <input id="mon-senha" type="password" autocomplete="current-password" value="{{ monSenha }}" oninput="{{ onMonSenha }}" onkeydown="{{ onMonSenhaKey }}" style="flex:1;min-width:0;border:1.5px solid #DCE7EB;border-radius:11px;padding:10px 13px;font-size:14.5px;outline:none" style-focus="border-color:#9FD7E2">
+          <button onclick="{{ monEntrar }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:10px 18px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">{{ monBotaoEntrar }}</button>
+        </div>
+        <p style="font-size:12.5px;color:#9DAEB4;margin:10px 0 0;line-height:1.5">A senha fica guardada só nesta aba até você fechar ou clicar em Sair.</p>
+      </div>
+    </sc-if>
+    <sc-if value="{{ hasMonErro }}" hint-placeholder-val="{{ false }}">
+      <div role="alert" style="margin-top:14px;max-width:720px;background:#FBEEEF;border:1px solid #F0C9CD;border-radius:12px;padding:12px 15px;font-size:14px;color:#8E2C36">{{ monErro }}</div>
+    </sc-if>
+
+    <sc-if value="{{ monTemDados }}" hint-placeholder-val="{{ false }}">
+      <div class="hg-wrap" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ monPeriodos }}" as="p" hint-placeholder-count="3"><button onclick="{{ p.ir }}" aria-pressed="{{ p.ativo }}" style="border:1px solid #DCE7EB;background:{{ p.bg }};color:{{ p.cor }};font-size:13px;font-weight:600;padding:7px 13px;border-radius:9px;cursor:pointer">{{ p.label }}</button></sc-for>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:#7C9097">
+          <span>{{ monAtualizado }}</span>
+          <button onclick="{{ monAtualizar }}" style="border:1px solid #DCE7EB;background:#fff;color:#163B45;font-size:13px;font-weight:600;padding:7px 12px;border-radius:9px;cursor:pointer" style-hover="border-color:#9FD7E2">Atualizar</button>
+          <button onclick="{{ monSair }}" style="border:none;background:transparent;color:#7C9097;font-size:13px;font-weight:600;cursor:pointer;padding:7px 4px">Sair</button>
+        </div>
+      </div>
+
+      <div class="hg-g4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+        <sc-for list="{{ monKpis }}" as="k" hint-placeholder-count="4">
+          <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:16px 18px">
+            <div style="font-size:12.5px;color:#7C9097;font-weight:600">{{ k.rotulo }}</div>
+            <div style="font-family:'Schibsted Grotesk';font-size:28px;font-weight:800;color:#163B45;margin-top:4px;letter-spacing:-0.02em">{{ k.valor }}</div>
+            <div style="font-size:12.5px;color:#5E747B;margin-top:4px">{{ k.detalhe }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div class="hg-g2" style="display:grid;grid-template-columns:3fr 2fr;gap:12px;margin-top:12px">
+        <section style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px 20px">
+          <h2 style="font-size:16px;font-weight:700;color:#163B45">{{ monSerieTitulo }}</h2>
+          <div style="display:flex;align-items:flex-end;gap:2px;height:150px;margin-top:14px;border-bottom:1px solid #E7EEF1">
+            <sc-for list="{{ monSerie }}" as="b" hint-placeholder-count="7"><div title="{{ b.titulo }}" style="flex:1;height:100%;display:flex;align-items:flex-end;cursor:default" style-hover="background:#F6F9FA"><div style="width:100%;height:{{ b.alt }}%;background:#3DAFC7;border-radius:4px 4px 0 0"></div></div></sc-for>
+          </div>
+          <div style="display:flex;gap:2px;margin-top:6px"><sc-for list="{{ monSerie }}" as="b" hint-placeholder-count="7"><span style="flex:1;font-size:11px;color:#9DAEB4;white-space:nowrap;overflow:visible">{{ b.rotulo }}</span></sc-for></div>
+        </section>
+        <section style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px 20px">
+          <h2 style="font-size:16px;font-weight:700;color:#163B45">Horário de uso</h2>
+          <p style="font-size:12.5px;color:#7C9097;margin:2px 0 0">{{ monHoraPico }}</p>
+          <div style="display:flex;align-items:flex-end;gap:2px;height:130px;margin-top:12px;border-bottom:1px solid #E7EEF1">
+            <sc-for list="{{ monHoras }}" as="b" hint-placeholder-count="24"><div title="{{ b.titulo }}" style="flex:1;height:100%;display:flex;align-items:flex-end;cursor:default" style-hover="background:#F6F9FA"><div style="width:100%;height:{{ b.alt }}%;background:#1E7C92;border-radius:4px 4px 0 0"></div></div></sc-for>
+          </div>
+          <div style="display:flex;gap:2px;margin-top:6px"><sc-for list="{{ monHoras }}" as="b" hint-placeholder-count="24"><span style="flex:1;font-size:11px;color:#9DAEB4;white-space:nowrap;overflow:visible">{{ b.rotulo }}</span></sc-for></div>
+        </section>
+      </div>
+
+      <div class="hg-g2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px">
+        <section style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px 20px">
+          <h2 style="font-size:16px;font-weight:700;color:#163B45">Telas mais vistas</h2>
+          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:8px 12px;align-items:center;margin-top:12px;font-size:13.5px">
+            <span style="font-size:11.5px;color:#9DAEB4;font-weight:700;text-transform:uppercase;letter-spacing:0.05em">Tela</span><span></span><span style="font-size:11.5px;color:#9DAEB4;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;text-align:right">Visitas · pessoas</span>
+            <sc-for list="{{ monTelas }}" as="t" hint-placeholder-count="6">
+              <span style="color:#163B45;white-space:nowrap">{{ t.nome }}</span>
+              <span style="height:8px;background:#EEF3F5;border-radius:100px;overflow:hidden"><span style="display:block;height:100%;width:{{ t.pct }}%;background:#3DAFC7;border-radius:100px"></span></span>
+              <span style="color:#3C545B;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums">{{ t.visitas }} · {{ t.visitantes }}</span>
+            </sc-for>
+          </div>
+        </section>
+        <section style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px 20px">
+          <h2 style="font-size:16px;font-weight:700;color:#163B45">Tempo médio em cada tela</h2>
+          <sc-if value="{{ hasMonTempo }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:auto 1fr auto;gap:8px 12px;align-items:center;margin-top:12px;font-size:13.5px">
+            <span style="font-size:11.5px;color:#9DAEB4;font-weight:700;text-transform:uppercase;letter-spacing:0.05em">Tela</span><span></span><span style="font-size:11.5px;color:#9DAEB4;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;text-align:right">Média · medições</span>
+            <sc-for list="{{ monTempo }}" as="t" hint-placeholder-count="6">
+              <span style="color:#163B45;white-space:nowrap">{{ t.nome }}</span>
+              <span style="height:8px;background:#EEF3F5;border-radius:100px;overflow:hidden"><span style="display:block;height:100%;width:{{ t.pct }}%;background:#1E7C92;border-radius:100px"></span></span>
+              <span style="color:#3C545B;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums">{{ t.media }} · {{ t.n }}</span>
+            </sc-for>
+          </div>
+          <div style="font-size:11.5px;color:#9DAEB4;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin:16px 0 8px">Quanto duram as visitas a uma tela</div>
+          <div style="display:flex;gap:6px;align-items:flex-end;height:70px">
+            <sc-for list="{{ monFaixas }}" as="f" hint-placeholder-count="7"><div title="{{ f.faixa }}: {{ f.n }}" style="flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px"><span style="font-size:11px;color:#5E747B">{{ f.n }}</span><div style="width:100%;height:{{ f.pct }}%;background:#9FD7E2;border-radius:4px 4px 0 0"></div></div></sc-for>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:5px"><sc-for list="{{ monFaixas }}" as="f" hint-placeholder-count="7"><span style="flex:1;text-align:center;font-size:10.5px;color:#9DAEB4;line-height:1.2">{{ f.faixa }}</span></sc-for></div>
+          </sc-if>
+          <sc-if value="{{ semMonTempo }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:#7C9097;margin:12px 0 0;line-height:1.5">Ainda sem medições de tempo neste período. Elas chegam quando alguém sai de uma tela depois de pelo menos 3 segundos.</p></sc-if>
+        </section>
+      </div>
+
+      <section style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px 20px;margin-top:12px">
+        <h2 style="font-size:16px;font-weight:700;color:#163B45">Conteúdos mais abertos</h2>
+        <p style="font-size:12.5px;color:#7C9097;margin:2px 0 0">Fichas de ferramentas, escopos e cases que mais receberam visitas.</p>
+        <sc-if value="{{ hasMonConteudos }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:auto auto 1fr auto;gap:8px 12px;align-items:center;margin-top:12px;font-size:13.5px">
+          <sc-for list="{{ monConteudos }}" as="c" hint-placeholder-count="5">
+            <span style="font-size:11.5px;font-weight:600;color:#1E7C92;background:#EAF6F9;padding:2px 8px;border-radius:100px;white-space:nowrap">{{ c.tipo }}</span>
+            <span style="color:#163B45;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:420px">{{ c.nome }}</span>
+            <span style="height:8px;background:#EEF3F5;border-radius:100px;overflow:hidden;min-width:40px"><span style="display:block;height:100%;width:{{ c.pct }}%;background:#3DAFC7;border-radius:100px"></span></span>
+            <span style="color:#3C545B;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums">{{ c.visitas }} · {{ c.visitantes }}</span>
+          </sc-for>
+        </div>
+        </sc-if>
+        <sc-if value="{{ semMonConteudos }}" hint-placeholder-val="{{ false }}"><p style="font-size:13.5px;color:#7C9097;margin:12px 0 0">Nenhuma ficha aberta neste período.</p></sc-if>
+      </section>
+
+      <div class="hg-g3" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:12px">
+        <sc-for list="{{ monPublico }}" as="g" hint-placeholder-count="5">
+          <section style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:16px 18px">
+            <h2 style="font-size:14.5px;font-weight:700;color:#163B45">{{ g.titulo }}</h2>
+            <sc-for list="{{ g.itens }}" as="i" hint-placeholder-count="3">
+              <div style="margin-top:9px">
+                <div style="display:flex;justify-content:space-between;gap:8px;font-size:13px"><span style="color:#163B45;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ i.nome }}</span><span style="color:#5E747B;font-variant-numeric:tabular-nums">{{ i.parte }}</span></div>
+                <div style="height:6px;background:#EEF3F5;border-radius:100px;overflow:hidden;margin-top:4px"><div style="height:100%;width:{{ i.pct }}%;background:#3DAFC7;border-radius:100px"></div></div>
+              </div>
+            </sc-for>
+          </section>
+        </sc-for>
+      </div>
+
+      <section style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px 20px;margin-top:12px">
+        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline">
+          <h2 style="font-size:16px;font-weight:700;color:#163B45">Limite do plano grátis da Vercel</h2>
+          <span style="font-size:13.5px;color:#3C545B;font-weight:600;font-variant-numeric:tabular-nums">{{ monUso }}</span>
+        </div>
+        <div style="height:10px;background:#EEF3F5;border-radius:100px;overflow:hidden;margin-top:10px"><div style="height:100%;width:{{ monUsoPct }}%;background:{{ monUsoCor }};border-radius:100px"></div></div>
+        <p style="font-size:12.5px;color:#7C9097;margin:8px 0 0;line-height:1.5">{{ monUsoTexto }}</p>
+        <sc-if value="{{ monUsoAlerta }}" hint-placeholder-val="{{ false }}"><p style="font-size:13px;color:#7A5A16;font-weight:600;margin:6px 0 0">⚠ Perto do limite: se passar, a contagem para até o mês virar.</p></sc-if>
+      </section>
+    </sc-if>
+  </main>
+  </sc-if>
+
   <!-- ============ COMECE AQUI (trilha do primeiro projeto + glossário) ============ -->
   <sc-if value="{{ isComece }}" hint-placeholder-val="{{ false }}">
   <main class="hg-main" style="max-width:1000px;margin:0 auto;padding:34px 28px 80px">
