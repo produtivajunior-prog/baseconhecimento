@@ -32,6 +32,7 @@ class Component extends DCLogic {
     feedbackEnviado: false,
     recoKey: null,
     toast: null,
+    mon: { senha: '', dias: 7, dados: null, carregando: false, erro: '' },
     form: this.carregarLocal('hangar.formRascunho', null) || this.formVazio(),
     extra: this.carregarLocal('hangar.extra', []),
     doc: null,
@@ -954,6 +955,7 @@ class Component extends DCLogic {
       case 'comece': return '#/comece';
       case 'produtiva': return '#/produtiva';
       case 'auxilios': return '#/auxilios';
+      case 'monitoramento': return '#/monitoramento';
       default: return '#/';
     }
   }
@@ -975,6 +977,7 @@ class Component extends DCLogic {
     else if (tela === 'comece') this.nav('comece');
     else if (tela === 'produtiva') this.nav('produtiva');
     else if (tela === 'auxilios') this.nav('auxilios');
+    else if (tela === 'monitoramento') this.abrirMonitoramento();
     else if (this.state.screen !== 'home') this.nav('home');
   }
   componentDidMount() {
@@ -1017,15 +1020,128 @@ class Component extends DCLogic {
     document.head.appendChild(s);
     // Espera a tela do link (#/escopo/…) se aplicar para não contar a Home antes dela.
     setTimeout(() => { this._contando = true; this.contarVisita(); }, 0);
+    // Tempo só conta com a aba visível; ao fechar a aba, registra o da última tela.
+    document.addEventListener('visibilitychange', () => { const t = this._telaAtual; if (!t) return; if (document.hidden) { t.ms += Date.now() - t.desde; t.desde = 0; } else if (!t.desde) t.desde = Date.now(); });
+    window.addEventListener('pagehide', () => this.contarTempo());
   }
   contarVisita() {
     if (!this._contando) return;
     const h = this.hashDe(this.state);
     if (h === this._ultimaContada) return;
     this._ultimaContada = h;
+    this.contarTempo();
+    if (h === '#/monitoramento') return; // a tela dos administradores não entra na conta
     const path = '/' + h.replace(/^#\/?/, '');
     const route = path.replace(/^\/(ferramenta|escopo|case)\/.+/, '/$1/[id]');
     window.va('pageview', { route, path });
+    this._telaAtual = { tela: path.split('/')[1] || 'inicio', desde: Date.now(), ms: 0 };
+  }
+  // Plano grátis da Vercel não tem eventos: o tempo vai como visita técnica /_tempo/<tela> com rota /_tempo/<faixa>,
+  // que a tela de monitoramento separa das visitas reais. Menos de 3 s (só passou pela tela) não é enviado.
+  contarTempo() {
+    const t = this._telaAtual; this._telaAtual = null;
+    if (!t) return;
+    const seg = (t.ms + (t.desde ? Date.now() - t.desde : 0)) / 1000;
+    if (seg < 3) return;
+    const faixa = seg < 10 ? '3-10s' : seg < 30 ? '10-30s' : seg < 60 ? '30s-1min' : seg < 180 ? '1-3min' : seg < 600 ? '3-10min' : seg < 1800 ? '10-30min' : '30min+';
+    window.va('pageview', { route: '/_tempo/' + faixa, path: '/_tempo/' + t.tela });
+  }
+  // ===== Monitoramento (só administradores): lê /api/monitoramento, que existe só no endereço da Vercel =====
+  monDisponivel() { return typeof location !== 'undefined' && /\.vercel\.app$/.test(location.hostname); }
+  monSenhaGuardada() { try { return sessionStorage.getItem('hangar.adminSenha') || ''; } catch (e) { return ''; } }
+  abrirMonitoramento() {
+    this.nav('monitoramento');
+    const senha = this.monSenhaGuardada();
+    if (senha && !this.state.mon.dados && !this.state.mon.carregando) this.carregarMonitoramento(senha, this.state.mon.dias);
+  }
+  async carregarMonitoramento(senha, dias) {
+    if (!this.monDisponivel() || !senha) return;
+    this.setState(st => ({ mon: { ...st.mon, carregando: true, erro: '', dias } }));
+    let erro = '', dados = null;
+    try {
+      const r = await fetch('/api/monitoramento?dias=' + dias, { headers: { 'x-hangar-senha': senha }, cache: 'no-store' });
+      const corpo = await r.json().catch(() => ({}));
+      if (r.ok && corpo.total) dados = corpo; else erro = corpo.erro || 'Não foi possível carregar os números agora.';
+      if (r.status === 401) { try { sessionStorage.removeItem('hangar.adminSenha'); } catch (e) {} }
+      else if (dados) { try { sessionStorage.setItem('hangar.adminSenha', senha); } catch (e) {} }
+    } catch (e) { erro = 'Sem conexão com o servidor do Hangar. Tente de novo.'; }
+    this.setState(st => ({ mon: { ...st.mon, carregando: false, erro, dados: dados || (erro && st.mon.dados && !/Senha/.test(erro) ? st.mon.dados : null), senha: dados ? '' : st.mon.senha, atualizado: dados ? new Date() : st.mon.atualizado } }));
+  }
+  sairMonitoramento() {
+    try { sessionStorage.removeItem('hangar.adminSenha'); } catch (e) {}
+    this.setState({ mon: { senha: '', dias: 7, dados: null, carregando: false, erro: '' } });
+  }
+  monRotuloTela(tela) {
+    return ({ inicio: 'Início', biblioteca: 'Biblioteca', ferramenta: 'Ficha de ferramenta', escopos: 'Escopos', escopo: 'Escopo aberto',
+      cases: 'Banco de cases', case: 'Ficha de case', cadastrar: 'Cadastrar', docs: 'Documentação', recomendar: 'Recomendar',
+      comece: 'Comece aqui', produtiva: 'Como funciona', auxilios: 'Auxílios' })[tela] || tela;
+  }
+  // "/escopo/estruturacao-comercial" → { tipo: 'Escopo', nome: 'Estruturação Comercial' }
+  monRotuloPagina(path) {
+    const [, tela = '', id = ''] = String(path || '/').split('/');
+    if (tela === 'ferramenta') { const d = this.allData().find(x => x.id === id); return { tipo: 'Ferramenta', nome: d ? d.nome : id }; }
+    if (tela === 'escopo') { const e = this.escopoPorId(id); return { tipo: 'Escopo', nome: e ? e.nome : id }; }
+    if (tela === 'case') { const c = this.allCases().find(x => x.id === id); return { tipo: 'Case', nome: c ? c.cliente : id }; }
+    if (tela === 'cases' && id === 'novo') return { tipo: 'Tela', nome: 'Novo case' };
+    return { tipo: 'Tela', nome: this.monRotuloTela(tela || 'inicio') };
+  }
+  monDuracao(seg) {
+    if (!seg) return '—';
+    if (seg < 60) return Math.round(seg) + ' s';
+    const m = Math.floor(seg / 60), r = Math.round(seg % 60);
+    return m < 60 ? m + ' min' + (r ? ' ' + r + ' s' : '') : Math.floor(m / 60) + ' h ' + (m % 60) + ' min';
+  }
+  monitoramentoVals(s) {
+    const m = s.mon, d = m.dados;
+    const num = (n) => Number(n || 0).toLocaleString('pt-BR');
+    const pctDe = (v, max) => max ? Math.max(2, Math.round(v / max * 100)) : 0;
+    const linhas = (lista, rot, n) => { const l = (lista || []).slice(0, n || 6); const max = Math.max(1, ...l.map(x => x.visitas)); const tot = l.reduce((a, x) => a + x.visitas, 0) || 1;
+      return l.map(x => ({ nome: x.outros ? 'Outros' : rot ? rot(x.nome) : (x.nome || 'Desconhecido'), visitas: num(x.visitas), visitantes: num(x.visitantes), pct: pctDe(x.visitas, max), parte: Math.round(x.visitas / tot * 100) + '%' })); };
+    const variacao = (agora, antes) => { if (!antes) return agora ? 'novo no período' : 'sem visitas antes'; const v = Math.round((agora - antes) / antes * 100); return (v > 0 ? '▲ +' : v < 0 ? '▼ ' : '= ') + v + '% vs período anterior'; };
+    const periodos = [{ d: 1, l: 'Últimas 24 h' }, { d: 7, l: '7 dias' }, { d: 30, l: '30 dias' }].map(p => ({ label: p.l, ativo: m.dias === p.d,
+      bg: m.dias === p.d ? '#163B45' : '#fff', cor: m.dias === p.d ? '#fff' : '#3C545B', ir: () => this.carregarMonitoramento(this.monSenhaGuardada(), p.d) }));
+    const base = { monDisponivel: this.monDisponivel(), monIndisponivel: !this.monDisponivel(), monCarregando: m.carregando, monErro: m.erro, hasMonErro: !!m.erro,
+      monPedeSenha: this.monDisponivel() && !d, monTemDados: !!d, monSenha: m.senha, monPeriodos: periodos,
+      onMonSenha: (e) => { const v = e.target.value; this.setState(st => ({ mon: { ...st.mon, senha: v } })); },
+      onMonSenhaKey: (e) => { if (e.key === 'Enter') this.carregarMonitoramento(this.state.mon.senha, this.state.mon.dias); },
+      monEntrar: () => this.carregarMonitoramento(this.state.mon.senha, this.state.mon.dias),
+      monAtualizar: () => this.carregarMonitoramento(this.monSenhaGuardada(), m.dias), monSair: () => this.sairMonitoramento(),
+      monBotaoEntrar: m.carregando ? 'Entrando…' : 'Entrar' };
+    if (!d) return base;
+    const telasConteudo = (d.paginas || []).filter(p => /^\/(ferramenta|escopo|case)\//.test(p.nome));
+    const serieMax = Math.max(1, ...d.serie.map(p => p.visitas));
+    const fmtT = (iso) => { const t = new Date(iso); return d.periodo.dias === 1 ? String((t.getUTCHours() + 21) % 24).padStart(2, '0') + 'h' : String(t.getUTCDate()).padStart(2, '0') + '/' + String(t.getUTCMonth() + 1).padStart(2, '0'); };
+    const horaMax = Math.max(1, ...d.porHora);
+    const horaPico = d.porHora.indexOf(Math.max(...d.porHora));
+    const tempoMax = Math.max(1, ...d.tempo.telas.map(t => t.mediaSeg));
+    const faixaMax = Math.max(1, ...d.tempo.faixas.map(f => f.n));
+    const usoPct = Math.min(100, Math.round(d.usoMes.eventos / d.usoMes.limite * 100));
+    return { ...base,
+      monKpis: [
+        { rotulo: 'Visitas', valor: num(d.total.visitas), detalhe: variacao(d.total.visitas, d.anterior.visitas) },
+        { rotulo: 'Visitantes', valor: num(d.total.visitantes), detalhe: variacao(d.total.visitantes, d.anterior.visitantes) },
+        { rotulo: 'Telas por visitante', valor: d.total.visitantes ? (d.total.visitas / d.total.visitantes).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) : '—', detalhe: 'quanto cada pessoa navega' },
+        { rotulo: 'Tempo médio por tela', valor: this.monDuracao(d.tempo.mediaSeg), detalhe: d.tempo.n ? 'aprox., em ' + num(d.tempo.n) + ' telas medidas' : 'ainda sem medições' } ],
+      monSerieTitulo: d.periodo.dias === 1 ? 'Visitas por hora' : 'Visitas por dia',
+      monSerie: d.serie.map((p, i) => ({ rotulo: i % Math.ceil(d.serie.length / 12) === 0 ? fmtT(p.t) : '', alt: p.visitas ? pctDe(p.visitas, serieMax) : 0,
+        titulo: fmtT(p.t) + ': ' + num(p.visitas) + ' visitas, ' + num(p.visitantes) + ' visitantes' })),
+      monHoras: d.porHora.map((v, h) => ({ rotulo: h % 3 === 0 ? String(h).padStart(2, '0') + 'h' : '', alt: v ? pctDe(v, horaMax) : 0, titulo: String(h).padStart(2, '0') + 'h: ' + num(v) + ' visitas' })),
+      monHoraPico: d.total.visitas ? 'Pico às ' + String(horaPico).padStart(2, '0') + 'h (horário de Brasília)' : 'Sem visitas no período',
+      monTelas: linhas(d.telas.filter(t => !/^\/_tempo/.test(t.nome)), (r) => this.monRotuloTela(String(r || '/').split('/')[1] || 'inicio'), 13),
+      monConteudos: (() => { const l = telasConteudo.slice(0, 12); const max = Math.max(1, ...l.map(x => x.visitas));
+        return l.map(x => { const r = this.monRotuloPagina(x.nome); return { ...r, visitas: num(x.visitas), visitantes: num(x.visitantes), pct: pctDe(x.visitas, max) }; }); })(),
+      hasMonConteudos: telasConteudo.length > 0, semMonConteudos: telasConteudo.length === 0,
+      monTempo: d.tempo.telas.slice(0, 13).map(t => ({ nome: this.monRotuloTela(t.tela), media: this.monDuracao(t.mediaSeg), n: num(t.n), pct: pctDe(t.mediaSeg, tempoMax) })),
+      hasMonTempo: d.tempo.n > 0, semMonTempo: !d.tempo.n,
+      monFaixas: d.tempo.faixas.map(f => ({ faixa: f.faixa.replace('min', ' min').replace('-', '–'), n: num(f.n), pct: f.n ? pctDe(f.n, faixaMax) : 0 })),
+      monPublico: [
+        { titulo: 'Aparelho', itens: linhas(d.aparelhos, (n) => ({ desktop: 'Computador', mobile: 'Celular', tablet: 'Tablet' })[n] || n || 'Desconhecido') },
+        { titulo: 'Origem', itens: linhas(d.origens, (n) => n || 'Direto (link, favorito)') },
+        { titulo: 'Navegador', itens: linhas(d.navegadores) }, { titulo: 'Sistema', itens: linhas(d.sistemas) },
+        { titulo: 'País', itens: linhas(d.paises, (n) => ({ BR: 'Brasil', US: 'Estados Unidos', PT: 'Portugal' })[n] || n || 'Desconhecido') } ],
+      monUso: num(d.usoMes.eventos) + ' de ' + num(d.usoMes.limite) + ' eventos', monUsoPct: usoPct, monUsoCor: usoPct >= 80 ? '#C9942A' : '#3DAFC7',
+      monUsoAlerta: usoPct >= 80, monUsoTexto: 'Desde o dia 1 deste mês. Cada visita e cada medição de tempo contam um evento; no plano grátis a Vercel pausa a contagem ao chegar no limite e guarda só 1 mês de histórico.',
+      monAtualizado: m.atualizado ? 'Atualizado às ' + m.atualizado.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '' };
   }
   componentWillUnmount() {
     if (typeof window === 'undefined') return;
@@ -1626,6 +1742,7 @@ class Component extends DCLogic {
       // trilha do primeiro projeto + glossário
       isComece: s.screen==='comece', goComece:()=>this.nav('comece'), ...this.trilhaVals(s, data, dec),
       isProdutiva: s.screen==='produtiva', isAuxilios: s.screen==='auxilios', ...this.produtivaVals(),
+      isMonitoramento: s.screen==='monitoramento', ...this.monitoramentoVals(s),
       // filtros no celular (biblioteca e cases) e iniciais de quem usa
       filtrosClass: s.filtrosAbertos ? 'hg-open' : '', filtrosLabel: s.filtrosAbertos ? 'Ocultar filtros' : 'Filtros', toggleFiltros:()=>this.setState(st=>({ filtrosAbertos: !st.filtrosAbertos })),
       hasEu: !!(s.eu && s.eu.nome), euNome: (s.eu && s.eu.nome) || '', euIniciais: s.eu && s.eu.nome ? this.initials(s.eu.nome) : '',

@@ -178,6 +178,33 @@ a Home antes da tela aberta. Os números ficam no painel da Vercel → projeto `
 Só os acessos pelo `*.vercel.app` entram. No Coolify e no arquivo local nada é carregado (lá não existe
 `/_vercel/insights`). Com domínio próprio na Vercel, ajuste o teste de hostname em `iniciarContagem` (`src/app.js`).
 
+Além das visitas, o app mede o **tempo em cada tela** (só com a aba visível). Como o plano grátis da Vercel
+não tem eventos personalizados, o tempo vai como uma visita técnica: caminho `/_tempo/<tela>` e rota
+`/_tempo/<faixa>` (3–10 s, 10–30 s, 30 s–1 min, 1–3 min, 3–10 min, 10–30 min, 30 min+). Menos de 3 s não é
+enviado. No painel da própria Vercel essas linhas aparecem misturadas; a tela de monitoramento as separa.
+Cada visita e cada medição contam um evento no limite de **50 mil eventos/mês** do plano Hobby (ao passar,
+a Vercel pausa a contagem até o mês virar) e o histórico guardado é de **1 mês**.
+
+### Tela de monitoramento (só administradores)
+
+`https://hangar-produtiva.vercel.app/#/monitoramento` (sem link no menu). Pede a senha de administrador e mostra:
+visitas, visitantes, telas por visitante e tempo médio, com comparação ao período anterior; visitas por dia
+(ou por hora) e horário de uso (Brasília); telas mais vistas; tempo médio em cada tela e a distribuição das
+durações; fichas de ferramentas, escopos e cases mais abertas (com o nome, não o id); aparelho, origem,
+navegador, sistema e país; e quanto do limite de eventos do mês já foi usado. Períodos: 24 h, 7 e 30 dias.
+Só conta produção (as prévias de branch ficam fora) e a própria tela de monitoramento não entra na conta.
+
+Os números vêm da função `api/monitoramento.mjs` (Vercel Function), que consulta a API do Web Analytics.
+Para ligar, em Vercel → projeto `hangar-produtiva` → **Settings → Environment Variables**, crie (Production):
+
+- `HANGAR_ADMIN_SENHA`: a senha que a diretoria vai usar.
+- `HANGAR_ANALYTICS_TOKEN`: um token criado em vercel.com/account/settings/tokens com escopo no time `pj`.
+  Quando o token vencer, a tela avisa que ele foi recusado; é só criar outro e trocar o valor.
+
+Depois de criar ou trocar as variáveis, faça um **Redeploy** do último deploy de produção. A senha fica só na
+aba aberta (sessionStorage) e é conferida no servidor; senha errada espera ~1 s antes de responder.
+`node tools/api-test.mjs` testa a função sem rede.
+
 ## Limitações conhecidas
 
 | | |
