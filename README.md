@@ -126,7 +126,13 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
 - **Vídeo dos cases**: a ficha tem "Adicionar vídeo" / "Trocar vídeo" / "Remover vídeo". O arquivo nunca entra no
   Hangar (vídeos passam fácil de 100 MB): sobe no Google Drive ou no YouTube (não listado) e o case guarda só o link,
   embutido na ficha. Só vale para case que ainda está no navegador de quem cadastrou: em case já publicado, o vídeo
-  não pode ser trocado nem removido pelo site (só o CIEP altera, no `cases.json`).
+  não pode ser trocado nem removido pelo site (só o CIEP altera, no `cases.json`), a não ser pelo "Editar case".
+- **Editar case**: a ficha tem "Editar case" (e "Completar case" quando falta algo: documentos, vídeo, foto ou
+  resultados). O formulário reabre preenchido (`#/case/<id>/editar`) e "Salvar alterações" atualiza o mesmo case, com o
+  mesmo id, mantendo quem cadastrou e registrando quem editou. Dá para cadastrar sem documentos e completar depois.
+  Em case já publicado pelo CIEP, a edição fica neste navegador (`edicaoLocal`) no lugar do publicado, com aviso para
+  baixar o JSON e enviar ao CIEP, e o botão "Desfazer alterações"; quando o CIEP publica uma versão igual ou mais nova,
+  ela volta a valer.
 - **Material para a reunião**: na ficha da ferramenta, "Abrir material para imprimir" gera uma página com
   perguntas-chave, o que pedir ao cliente, passo a passo e, quando há modelo em canvas, o canvas em branco.
 - **Pergunte a quem fez**: na ficha do case, botões de e-mail e WhatsApp para a equipe, com a mensagem já

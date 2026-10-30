@@ -464,6 +464,66 @@ await page.evaluate(() => { try { localStorage.removeItem('hangar.casesLocais');
     && (await page.getByRole('link', { name: 'Abrir no Canva' }).count()) === 2 && (await page.getByRole('link', { name: 'Abrir no Drive' }).count()) >= 1, 'case Atlantis lista proposta e apresentação final (Canva) e a pasta de entregas (Drive)');
 }
 
+// Editar case: cadastrar agora sem documentos e completar depois, sem criar outro nem apagar o que já estava
+{
+  await page.evaluate(() => {
+    const c = { id: 'loja-edicao-2026-pcp', cliente: 'Loja Edição', segmento: 'Varejo', porte: '', cidade: 'Natal/RN', escopoId: null, escopoNome: 'PCP',
+      periodo: { inicio: '2026-02', fim: '2026-05' }, duracaoDias: 40, equipe: { gerente: { nome: 'Gê Rente', email: '', whatsapp: '' }, consultores: [{ nome: 'Con Um', email: '', whatsapp: '' }, { nome: 'Con Dois', email: '', whatsapp: '' }] },
+      resumo: 'A loja não sabia o que produzir a cada semana. Montamos o PCP.', desafio: '', solucao: '', resultados: [], aprendizados: [], ferramentas: [], documentos: [], foto: null, video: null,
+      depoimentoCliente: '', tags: [], cadastradoPor: { nome: 'Quem Cadastrou', email: '' }, atualizado: '2026-06-01' };
+    localStorage.setItem('hangar.casesLocais', JSON.stringify([c]));
+    location.hash = '#/case/loja-edicao-2026-pcp';
+  });
+  await page.reload(); await page.waitForTimeout(1200);
+  let tc = await texto();
+  check(/Ainda falta: documentos, vídeo da equipe, foto de capa e resultados\./.test(tc) && (await page.getByRole('button', { name: 'Completar case' }).count()) === 1, 'ficha mostra o que ainda falta no case e o botão "Completar case"');
+  await page.getByRole('button', { name: 'Editar case' }).click(); await page.waitForTimeout(400);
+  check(/#\/case\/loja-edicao-2026-pcp\/editar$/.test(await page.evaluate(() => location.hash)) && /Editar case: Loja Edição/.test(await texto()) && (await page.getByRole('button', { name: 'Salvar alterações' }).count()) === 1,
+    '"Editar case" abre o formulário em modo edição (#/case/<id>/editar, botão "Salvar alterações")');
+  check((await page.getByPlaceholder('Ex.: Picuí Pizzas').inputValue()) === 'Loja Edição' && (await page.getByPlaceholder('Ex.: Natal/RN').inputValue()) === 'Natal/RN' && (await page.getByPlaceholder('Nome', { exact: true }).nth(1).inputValue()) === 'Con Um',
+    'formulário vem preenchido com o que já estava no case');
+  await page.reload(); await page.waitForTimeout(1200);
+  check(/Editar case: Loja Edição/.test(await texto()), 'F5 no modo edição reabre o formulário do mesmo case');
+  await page.getByPlaceholder('Nome do arquivo').first().fill('Relatório final da loja');
+  await page.getByPlaceholder('https://drive.google.com/…').first().fill('https://drive.google.com/file/d/LOJA123/view');
+  await page.getByRole('button', { name: 'Salvar alterações' }).click(); await page.waitForTimeout(500);
+  tc = await texto();
+  const locais = await page.evaluate(() => JSON.parse(localStorage.getItem('hangar.casesLocais') || '[]'));
+  check(locais.length === 1 && locais[0].id === 'loja-edicao-2026-pcp' && locais[0].documentos.length === 1 && locais[0].resumo.startsWith('A loja não sabia') && locais[0].cadastradoPor.nome === 'Quem Cadastrou',
+    `salvar atualiza o mesmo case (mesmo id, sem duplicar), mantém o resto e quem cadastrou (${locais.map((c) => c.id).join(', ')})`);
+  check(/Relatório final da loja/.test(tc) && /Ainda falta: vídeo da equipe, foto de capa e resultados\./.test(tc) && /editado por Pessoa do Smoke/.test(tc) && /Alterações salvas/.test(tc),
+    'ficha mostra o documento novo, tira "documentos" do que falta e diz quem editou');
+  await page.getByRole('button', { name: 'Editar case' }).click(); await page.waitForTimeout(300);
+  await page.getByPlaceholder('Ex.: Natal/RN').fill('Mossoró/RN');
+  await page.getByRole('button', { name: 'Cancelar edição' }).click(); await page.waitForTimeout(300);
+  check(/#\/case\/loja-edicao-2026-pcp$/.test(await page.evaluate(() => location.hash)) && !/Mossoró/.test(await texto()), '"Cancelar edição" volta para a ficha sem salvar');
+  await page.evaluate(() => { localStorage.removeItem('hangar.casesLocais'); });
+
+  // Case já publicado pelo CIEP: a edição vale neste navegador até o CIEP publicar o arquivo novo, e dá para desfazer
+  await page.evaluate(() => { location.hash = '#/case/atlantis-divers-2026-automacao'; }); await page.reload(); await page.waitForTimeout(1200);
+  const resumoOrig = await page.evaluate(() => document.querySelector('main h1 + p').innerText);
+  await page.getByRole('button', { name: 'Editar case' }).click(); await page.waitForTimeout(400);
+  await page.getByPlaceholder('O que o cliente precisava e o que a Produtiva entregou.').fill('Resumo revisto no smoke: automação de agenda e atendimento da escola de mergulho.');
+  await page.getByRole('button', { name: 'Salvar alterações' }).click(); await page.waitForTimeout(500);
+  tc = await texto();
+  check(/Resumo revisto no smoke/.test(tc) && /Suas alterações neste case só existem neste navegador/.test(tc) && /19 mar 2026 – 17 ago 2026/.test(tc) && /85 dias úteis/.test(tc),
+    'editar case publicado mostra a versão nova, avisa que é só neste navegador e preserva as datas com dia');
+  check((await page.locator('a[href="https://canva.link/dww8i6wd1qg37rk"]').count()) === 1 && (await page.locator('main img[src^="data:image/"]').count()) > 0, 'edição preserva documentos e foto que já estavam no case');
+  await page.evaluate(() => { location.hash = '#/cases'; }); await page.waitForTimeout(400);
+  check((await page.locator('main article', { hasText: 'Atlantis' }).count()) === 1, 'case editado não aparece duplicado no banco de cases');
+  await page.evaluate(() => { location.hash = '#/case/atlantis-divers-2026-automacao'; }); await page.waitForTimeout(400);
+  await page.locator('main').getByRole('button', { name: 'Baixar case (.json)' }).first().click(); await page.waitForTimeout(200);
+  const dlEd = await page.evaluate(() => window.__hangarUltimoDownload);
+  let jEd = null; try { jEd = JSON.parse(dlEd.json); } catch {}
+  check(!!jEd && jEd.id === 'atlantis-divers-2026-automacao' && /Resumo revisto/.test(jEd.resumo) && !('edicaoLocal' in jEd) && !('local' in jEd) && jEd.documentos.length === 3,
+    'arquivo do case editado sai com o mesmo id, o resumo novo e sem marcas internas');
+  await page.getByRole('button', { name: 'Desfazer alterações' }).click(); await page.waitForTimeout(200);
+  await page.getByRole('dialog').getByRole('button', { name: 'Desfazer' }).click(); await page.waitForTimeout(400);
+  tc = await texto();
+  check(!/Resumo revisto/.test(tc) && tc.includes(resumoOrig.slice(0, 40)) && /#\/case\/atlantis-divers-2026-automacao$/.test(await page.evaluate(() => location.hash)), '"Desfazer alterações" volta o case ao que o CIEP publicou');
+  await page.evaluate(() => { localStorage.removeItem('hangar.casesLocais'); });
+}
+
 // ---- correções de confiança: cada botão faz o que diz e cada mensagem é verdadeira
 {
   // Cadastrar manual: sem dropzone falsa nem barra de passos; publicar sem nome dá toast de erro

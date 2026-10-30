@@ -1478,12 +1478,14 @@
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#FFFBF2;border:1px solid #F1DFB0;border-radius:11px;padding:9px 12px;margin:-8px 0 18px">
               <span style="font-size:12.5px;color:#7A6330;flex:1;min-width:200px">{{ caseSel.avisoLocal }} Baixe o case e envie ao CIEP para publicar.</span>
               <button onclick="{{ caseSel.baixar }}" style="border:none;background:#3DAFC7;color:#fff;font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:8px;cursor:pointer">Baixar case (.json)</button>
+              <sc-if value="{{ caseSel.edicaoLocal }}" hint-placeholder-val="{{ false }}"><button onclick="{{ caseSel.desfazerEdicao }}" style="border:1px solid #F1DFB0;background:#fff;color:#B23B47;font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:8px;cursor:pointer">Desfazer alterações</button></sc-if>
             </div>
           </sc-if>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
             <button onclick="{{ caseSel.abrirEscopo }}" style="border:none;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:7px;background:{{ caseSel.escopoBg }};color:{{ caseSel.escopoCor }};cursor:pointer">{{ caseSel.escopoNome }}</button>
             <span style="font-size:12.5px;color:#5E747B;background:#EFF4F5;padding:5px 11px;border-radius:7px">{{ caseSel.segmento }}</span>
             <sc-if value="{{ caseSel.local }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:600;color:#9A6B17;background:#FBF1E0;padding:5px 11px;border-radius:7px">Só neste navegador</span></sc-if>
+            <button onclick="{{ caseSel.editar }}" style="margin-left:auto;display:flex;align-items:center;gap:6px;border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:7px 12px;border-radius:9px;cursor:pointer" style-hover="border-color:#9FD7E2;background:#F4FAFC"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 20h4L19 9l-4-4L4 16v4z" stroke="#1E7C92" stroke-width="1.8" stroke-linejoin="round"></path><path d="M13.5 6.5l4 4" stroke="#1E7C92" stroke-width="1.8"></path></svg>Editar case</button>
           </div>
           <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">{{ caseSel.cliente }}</h1>
           <p style="font-size:16.5px;color:#5E747B;margin:12px 0 0;line-height:1.55;max-width:720px">{{ caseSel.resumo }}</p>
@@ -1645,6 +1647,13 @@
       </div>
 
       <aside class="hg-aside" style="position:sticky;top:88px;display:flex;flex-direction:column;gap:14px">
+        <sc-if value="{{ caseSel.hasPendencias }}" hint-placeholder-val="{{ false }}">
+        <div id="case-pendencias" style="background:#F4FAFC;border:1px solid #CDE9F0;border-radius:16px;padding:16px 18px">
+          <div style="font-size:13.5px;font-weight:600;color:#163B45">{{ caseSel.pendenciasTexto }}</div>
+          <p style="font-size:12.5px;color:#5E747B;margin:4px 0 10px;line-height:1.5">Dá para completar depois, sem cadastrar de novo.</p>
+          <button onclick="{{ caseSel.editar }}" style="width:100%;border:1px solid #9FD7E2;background:#fff;color:#1E7C92;font-size:13px;font-weight:600;padding:9px;border-radius:10px;cursor:pointer" style-hover="background:#EAF6F9">Completar case</button>
+        </div>
+        </sc-if>
         <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px">
           <div style="font-size:12px;font-weight:700;color:#9DAEB4;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:14px">Equipe do projeto</div>
           <div style="display:flex;flex-direction:column;gap:12px">
@@ -1700,7 +1709,8 @@
   <sc-if value="{{ isNovoCase }}" hint-placeholder-val="{{ false }}">
   <main class="hg-main" style="max-width:900px;margin:0 auto;padding:22px 28px 80px">
     <button onclick="{{ goCases }}" style="display:flex;align-items:center;gap:7px;border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer;padding:8px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#1E7C92" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Banco de cases</button>
-    <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em;margin-top:12px">Cadastrar case de projeto</h1>
+    <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em;margin-top:12px">{{ formCaseTitulo }}</h1>
+    <sc-if value="{{ editandoCase }}" hint-placeholder-val="{{ false }}"><div style="margin-top:10px;background:#F4FAFC;border:1px solid #CDE9F0;border-radius:12px;padding:10px 14px;font-size:13.5px;color:#1E5B6A;line-height:1.5">Você está editando um case já cadastrado. Ao salvar, ele é atualizado no mesmo lugar, sem criar outro.</div></sc-if>
     <p style="font-size:15px;color:#7C9097;margin:6px 0 24px;line-height:1.5;max-width:700px">Conte o projeto como você contaria para um consultor que vai fazer um parecido. Não inclua números sensíveis do cliente (faturamento, margem, salários): o case é visto por toda a Produtiva.</p>
 
     <div style="display:flex;flex-direction:column;gap:18px">
@@ -1713,8 +1723,8 @@
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Cidade / UF</label><input value="{{ formCase.cidade }}" oninput="{{ fc.cidade }}" placeholder="Ex.: Natal/RN" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Escopo *</label><sc-raw-select value="{{ formCase.escopoId }}" onchange="{{ fc.escopoId }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"><sc-for list="{{ escopoOptions }}" as="o" hint-placeholder-count="4"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Outro escopo (se não estiver na lista)</label><input value="{{ formCase.escopoNome }}" oninput="{{ fc.escopoNome }}" placeholder="Descreva o escopo" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
-          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Início</label><input type="month" value="{{ formCase.inicio }}" oninput="{{ fc.inicio }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
-          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Fim</label><input type="month" value="{{ formCase.fim }}" oninput="{{ fc.fim }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Início</label><input type="month" value="{{ formInicioMes }}" oninput="{{ fc.inicio }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
+          <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Fim</label><input type="month" value="{{ formFimMes }}" oninput="{{ fc.fim }}" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
           <div><label style="display:block;font-size:13px;font-weight:600;color:#3C545B;margin-bottom:7px">Duração (dias úteis)</label><input type="number" value="{{ formCase.duracaoDias }}" oninput="{{ fc.duracaoDias }}" placeholder="Ex.: 55" style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:11px 14px;font-size:14.5px;outline:none;background:#fff;color:#172A30" style-focus="border-color:#9FD7E2"></div>
         </div>
       </div>
@@ -1840,10 +1850,11 @@
         <div style="background:#FCF3F4;border:1px solid #E6AFB5;border-radius:12px;padding:12px 16px;font-size:13.5px;color:#B23B47;font-weight:600">{{ caseErro }}</div>
       </sc-if>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <button onclick="{{ publishCase }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:12px 22px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">Publicar no meu Hangar</button>
+        <button onclick="{{ publishCase }}" style="border:none;background:#3DAFC7;color:#fff;font-size:14px;font-weight:600;padding:12px 22px;border-radius:11px;cursor:pointer" style-hover="background:#2E9DB5">{{ publishCaseLabel }}</button>
         <button onclick="{{ baixarCaseForm }}" style="border:1px solid #DCE7EB;background:#fff;color:#1E7C92;font-size:14px;font-weight:600;padding:12px 18px;border-radius:11px;cursor:pointer" style-hover="border-color:#9FD7E2">Baixar case (.json)</button>
         <button onclick="{{ copiarCaseForm }}" style="border:1px solid #DCE7EB;background:#fff;color:#5E747B;font-size:14px;font-weight:600;padding:12px 18px;border-radius:11px;cursor:pointer">Copiar JSON</button>
-        <button onclick="{{ limparCase }}" style="border:none;background:transparent;color:#9DAEB4;font-size:13.5px;font-weight:600;padding:12px 8px;cursor:pointer">Limpar</button>
+        <sc-if value="{{ naoEditandoCase }}" hint-placeholder-val="{{ true }}"><button onclick="{{ limparCase }}" style="border:none;background:transparent;color:#9DAEB4;font-size:13.5px;font-weight:600;padding:12px 8px;cursor:pointer">Limpar</button></sc-if>
+        <sc-if value="{{ editandoCase }}" hint-placeholder-val="{{ false }}"><button onclick="{{ cancelarEdicaoCase }}" style="border:none;background:transparent;color:#9DAEB4;font-size:13.5px;font-weight:600;padding:12px 8px;cursor:pointer">Cancelar edição</button></sc-if>
         <span style="font-size:12.5px;color:#8AA0A7;flex:1;min-width:220px">Publicar salva neste navegador. Para o case aparecer para toda a Produtiva, baixe o arquivo e envie ao CIEP.</span>
       </div>
     </div>

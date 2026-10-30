@@ -15,6 +15,7 @@ class Component extends DCLogic {
     videoPlay: null,
     embedBloqueado: false,
     formCase: this.formCaseVazio(),
+    caseEditandoId: null,
     caseErro: '',
     caseFiltroFerr: '',
     filtrosAbertos: false,
@@ -89,9 +90,15 @@ class Component extends DCLogic {
   allCases() {
     const capas = this.state.capas || {};
     // Case que o CIEP já publicou deixa de aparecer como cópia local (senão ficaria duplicado).
-    const publicados = new Set(this.CASES.map(c => c.id));
-    return this.state.casesLocais.filter(c => !publicados.has(c.id)).map(c => ({ ...c, local: true }))
-      .concat(this.CASES.map(c => capas[c.id] ? { ...c, foto: capas[c.id], capaLocal: true } : c));
+    // Exceção: edição feita aqui (edicaoLocal) substitui o publicado até o CIEP publicar uma versão igual ou mais nova.
+    const publicados = new Map(this.CASES.map(c => [c.id, c])); const edicoes = {};
+    const locais = this.state.casesLocais.filter(c => {
+      const pub = publicados.get(c.id); if (!pub) return true;
+      if (c.edicaoLocal && (c.atualizado || '') >= (pub.atualizado || '')) edicoes[c.id] = c;
+      return false;
+    });
+    return locais.map(c => ({ ...c, local: true }))
+      .concat(this.CASES.map(c => edicoes[c.id] ? { ...edicoes[c.id], edicaoLocal: true } : capas[c.id] ? { ...c, foto: capas[c.id], capaLocal: true } : c));
   }
 
   // Link de vídeo → URL embutível. YouTube e Drive; qualquer outro fica só como link.
@@ -436,7 +443,7 @@ class Component extends DCLogic {
       id: [this.slugDe(f.cliente), ano, this.slugDe(escopo ? escopo.nome : f.escopoNome)].filter(Boolean).join('-'),
       cliente: f.cliente.trim(), segmento: f.segmento.trim(), porte: f.porte || '', cidade: f.cidade.trim(),
       escopoId: escopo ? escopo.id : null, escopoNome: escopo ? escopo.nome : f.escopoNome.trim(),
-      periodo: { inicio: f.inicio || '', fim: f.fim || '' }, duracaoDias: f.duracaoDias ? Number(f.duracaoDias) : null,
+      periodo: { inicio: f.inicio || '', fim: f.fim || '' }, duracaoDias: f.duracaoDias ? Number(f.duracaoDias) : null, duracaoUteis: !!f.duracaoDias,
       equipe: { gerente: pessoa(f.gerenteNome, f.gerenteEmail, f.gerenteZap), consultores: [pessoa(f.c1Nome, f.c1Email, f.c1Zap), pessoa(f.c2Nome, f.c2Email, f.c2Zap)].concat(f.c3Nome.trim() ? [pessoa(f.c3Nome, f.c3Email, f.c3Zap)] : []) },
       resumo: f.resumo.trim(), desafio: f.desafio.trim(), solucao: f.solucao.trim(),
       resultados: this.linhas(f.resultados), aprendizados: this.linhas(f.aprendizados),
@@ -448,23 +455,77 @@ class Component extends DCLogic {
       cadastradoPor: pessoa(f.meuNome, f.meuEmail), atualizado: this.hoje(),
     };
   }
+  // Case editado mantém o id (o arquivo substitui o anterior no CIEP), quem cadastrou e os campos que o formulário não tem.
+  montarCaseFinal(f) {
+    const c = this.montarCase(f); const id = this.state.caseEditandoId;
+    if (!id) return c;
+    const { local, capaLocal, edicaoLocal, editadoPor, ...orig } = this.allCases().find(x => x.id === id) || {};
+    const cadastrou = orig.cadastradoPor && orig.cadastradoPor.nome ? orig.cadastradoPor : c.cadastradoPor;
+    const final = { ...orig, ...c, id, cadastradoPor: cadastrou };
+    if (this.normaliza(c.cadastradoPor.nome) !== this.normaliza(cadastrou.nome)) final.editadoPor = c.cadastradoPor;
+    return final;
+  }
   publishCase() {
     const f = this.state.formCase;
     const erro = this.validarCase(f);
     if (erro) { this.setState({ caseErro: erro }); return; }
-    const c = this.montarCase(f);
+    const editando = this.state.caseEditandoId;
+    const c = this.montarCaseFinal(f);
+    if (editando && this.CASES.some(x => x.id === editando)) c.edicaoLocal = true;
     const casesLocais = [c].concat(this.state.casesLocais.filter(x => x.id !== c.id));
     const guardou = this.salvarLocal('hangar.casesLocais', casesLocais);
     const eu = { nome: f.meuNome.trim(), email: f.meuEmail.trim() };
     this.salvarLocal('hangar.eu', eu);
-    this.setState({ casesLocais, eu, caseErro: '', formCase: this.formCaseVazio() });
+    this.setState({ casesLocais, eu, caseErro: '', formCase: this.formCaseVazio(), caseEditandoId: null });
     // Sem espaço no navegador (fotos grandes) o case fica só nesta sessão: avisa para baixar já.
-    this.showToast(guardou ? 'Case salvo neste navegador. Baixe o arquivo e envie ao CIEP para publicar para todos.' : 'O navegador não guardou o case (sem espaço). Baixe o arquivo agora para não perder.', guardou ? 'ok' : 'erro');
+    this.showToast(!guardou ? 'O navegador não guardou o case (sem espaço). Baixe o arquivo agora para não perder.'
+      : editando ? 'Alterações salvas neste navegador. Baixe o case de novo e envie ao CIEP para atualizar para todos.'
+      : 'Case salvo neste navegador. Baixe o arquivo e envie ao CIEP para publicar para todos.', guardou ? 'ok' : 'erro');
     this.openCase(c.id);
+  }
+  // Caminho inverso de montarCase: o case salvo volta para o formulário para completar depois (documentos, vídeo, foto…).
+  caseParaForm(c) {
+    const vazio = this.formCaseVazio(); const eq = c.equipe || {}; const cons = eq.consultores || [];
+    const p = (x) => ({ nome: (x && x.nome) || '', email: (x && x.email) || '', zap: (x && x.whatsapp) || '' });
+    const g = p(eq.gerente), c1 = p(cons[0]), c2 = p(cons[1]), c3 = p(cons[2]);
+    const foto = c.foto && c.foto.url ? c.foto : null;
+    const docs = (c.documentos || []).map(d => ({ nome: d.nome || '', tipo: d.tipo || 'Outro', url: d.url || '' }));
+    return { ...vazio,
+      cliente: c.cliente || '', segmento: c.segmento || '', porte: c.porte || '', cidade: c.cidade || '',
+      escopoId: c.escopoId && this.escopoPorId(c.escopoId) ? this.escopoPorId(c.escopoId).id : '', escopoNome: c.escopoId && this.escopoPorId(c.escopoId) ? '' : (c.escopoNome || ''),
+      inicio: (c.periodo || {}).inicio || '', fim: (c.periodo || {}).fim || '', duracaoDias: c.duracaoDias ? String(c.duracaoDias) : '',
+      gerenteNome: g.nome, gerenteEmail: g.email, gerenteZap: g.zap, c1Nome: c1.nome, c1Email: c1.email, c1Zap: c1.zap,
+      c2Nome: c2.nome, c2Email: c2.email, c2Zap: c2.zap, c3Nome: c3.nome, c3Email: c3.email, c3Zap: c3.zap,
+      resumo: c.resumo || '', desafio: c.desafio || '', solucao: c.solucao || '',
+      resultados: (c.resultados || []).join('\n'), aprendizados: (c.aprendizados || []).join('\n'),
+      depoimento: c.depoimentoCliente || '', tags: (c.tags || []).join(', '), ferramentas: (c.ferramentas || []).slice(),
+      documentos: docs.length ? docs : vazio.documentos,
+      fotoDados: foto && /^data:/.test(foto.url) ? foto.url : '', fotoLink: foto && !/^data:/.test(foto.url) ? foto.url : '', fotoLegenda: (foto && foto.legenda) || '',
+      videoUrl: (c.video && c.video.url) || '', videoQuem: (c.video && c.video.quem) || vazio.videoQuem, videoDuracao: (c.video && c.video.duracao) || '',
+      meuNome: vazio.meuNome || ((c.cadastradoPor || {}).nome || ''), meuEmail: vazio.meuNome ? vazio.meuEmail : ((c.cadastradoPor || {}).email || '') };
+  }
+  formCaseTemAlgo(f) {
+    const vazio = this.formCaseVazio();
+    return Object.keys(f).some(k => !/^(meuNome|meuEmail)$/.test(k) && JSON.stringify(f[k]) !== JSON.stringify(vazio[k]));
+  }
+  editarCase(id) {
+    const c = this.allCases().find(x => x.id === id); if (!c) return;
+    const ir = () => { if (typeof window !== 'undefined') window.scrollTo(0, 0); };
+    if (this.state.caseEditandoId === id) { this.setState({ screen: 'novo-case', caseErro: '' }); ir(); return; }
+    const abrir = () => { this.setState({ formCase: this.caseParaForm(c), caseEditandoId: id, caseErro: '', screen: 'novo-case' }); ir(); };
+    const f = this.state.formCase;
+    if (!this.formCaseTemAlgo(f)) { abrir(); return; }
+    this.pedirConfirmacao({ titulo: 'Trocar o que está no formulário?', texto: 'O formulário de case tem um cadastro em andamento (', destaque: f.cliente.trim() || 'sem nome',
+      textoFim: '). Editar este case substitui o que está lá.', label: 'Editar mesmo assim', ok: abrir });
+  }
+  cancelarEdicaoCase() {
+    const id = this.state.caseEditandoId;
+    this.setState({ formCase: this.formCaseVazio(), caseEditandoId: null, caseErro: '' });
+    if (id && this.allCases().some(x => x.id === id)) this.openCase(id); else this.nav('cases');
   }
   // Gera o arquivo do case para enviar ao CIEP. Guarda o último em window para o smoke conferir.
   baixarJson(c) {
-    const { local, capaLocal, ...limpo } = c;
+    const { local, capaLocal, edicaoLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const nome = 'case-' + limpo.id + '.json';
     if (typeof document === 'undefined') return;
@@ -472,7 +533,7 @@ class Component extends DCLogic {
     this.showToast(ok ? 'Arquivo ' + nome + ' gerado. Envie ao CIEP.' : 'Não consegui gerar o arquivo aqui. Use "Copiar JSON".', ok ? 'ok' : 'erro');
   }
   copiarJson(c) {
-    const { local, capaLocal, ...limpo } = c;
+    const { local, capaLocal, edicaoLocal, ...limpo } = c;
     const json = JSON.stringify(limpo, null, 2);
     const ok = () => this.showToast('JSON do case copiado. Cole numa mensagem para o CIEP.');
     const falhou = () => this.showToast('Não consegui copiar automaticamente. Use "Baixar case (.json)".', 'erro');
@@ -484,7 +545,8 @@ class Component extends DCLogic {
   openCase(id) { this.setState({ screen:'case', caseId:id, videoForm:null, videoPlay:null }); if(typeof window!=='undefined') window.scrollTo(0,0); }
   openNovoCase(prefill) {
     const pre = prefill && typeof prefill === 'object' && !prefill.target ? prefill : null;
-    const f = this.state.formCase;
+    if (this.state.caseEditandoId) this.setState({ caseEditandoId: null, formCase: this.formCaseVazio() });
+    const f = this.state.caseEditandoId ? this.formCaseVazio() : this.state.formCase;
     // Só preenche o que está vazio: um rascunho em andamento de outro cliente não é apagado.
     const outro = pre && pre.cliente && f.cliente.trim() && this.normaliza(f.cliente.trim()) !== this.normaliza(pre.cliente);
     const formCase = pre && !outro ? { ...f, cliente: f.cliente || pre.cliente || '', escopoId: f.escopoId || pre.escopoId || '' } : f;
@@ -498,15 +560,17 @@ class Component extends DCLogic {
   confirmar() { const c = this.state.confirm; this.setState({ confirm:null }); if (c && typeof c.ok === 'function') c.ok(); }
   pedirRemoverCase(id, e) {
     const c = this.allCases().find(x => x.id === id) || {};
+    if (c.edicaoLocal) { this.pedirConfirmacao({ titulo:'Desfazer suas alterações?', texto:'O case de ', destaque:c.cliente || '', textoFim:' volta a ficar como foi publicado pelo CIEP. O que você editou neste navegador se perde.', label:'Desfazer', ok:() => this.removerCase(id) }, e); return; }
     this.pedirConfirmacao({ titulo:'Remover case?', texto:'O case de ', destaque:c.cliente || '', textoFim:' vai ser apagado deste navegador. Se ele ainda não foi enviado ao CIEP, essa cópia se perde.', ok:() => this.removerCase(id) }, e);
   }
   // Só remove do navegador de quem cadastrou: sem backend, não existe "publicado para todos" a desfazer daqui.
   removerCase(id) {
     const casesLocais = this.state.casesLocais.filter(c => c.id !== id);
     this.salvarLocal('hangar.casesLocais', casesLocais);
-    this.setState({ casesLocais, confirm:null, screen:'cases', caseId:null });
+    const publicado = this.CASES.some(c => c.id === id);
+    this.setState({ casesLocais, confirm:null, screen: publicado ? 'case' : 'cases', caseId: publicado ? id : null, caseEditandoId: this.state.caseEditandoId === id ? null : this.state.caseEditandoId });
     if (typeof window !== 'undefined') window.scrollTo(0,0);
-    this.showToast('Case removido deste navegador.');
+    this.showToast(publicado ? 'Alterações desfeitas: o case voltou a ficar como o CIEP publicou.' : 'Case removido deste navegador.');
   }
 
   decorateCase(c) {
@@ -554,7 +618,11 @@ class Component extends DCLogic {
       aprendizados: c.aprendizados || [], hasAprendizados: !!(c.aprendizados && c.aprendizados.length),
       hasDesafio: !!c.desafio, hasSolucao: !!c.solucao, hasDepoimento: !!c.depoimentoCliente,
       tags: c.tags || [], hasTags: !!(c.tags && c.tags.length), local: !!c.local,
-      cadastradoTexto: 'Cadastrado por ' + ((c.cadastradoPor||{}).nome || '—') + ' · ' + this.fmtData(c.atualizado),
+      cadastradoTexto: 'Cadastrado por ' + ((c.cadastradoPor||{}).nome || '—') + (c.editadoPor && c.editadoPor.nome ? ' · editado por ' + c.editadoPor.nome : '') + ' · ' + this.fmtData(c.atualizado),
+      editar: () => this.editarCase(c.id), edicaoLocal: !!c.edicaoLocal,
+      // O que ainda falta no case (para completar depois pelo "Editar case")
+      ...(() => { const f = [!docs.length && 'documentos', !video && 'vídeo da equipe', !fotoSrc && 'foto de capa', !(c.resultados && c.resultados.length) && 'resultados'].filter(Boolean);
+        return { hasPendencias: f.length > 0, pendenciasTexto: f.length ? 'Ainda falta: ' + f.join(', ').replace(/, ([^,]*)$/, ' e $1') + '.' : '' }; })(),
       open: () => this.openCase(c.id), baixar: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.baixarJson(c); }, copiar: () => this.copiarJson(c),
       escolherCapa: (e) => this.escolherCapa(c.id, e), removerCapa: (e) => this.removerCapa(c.id, e),
       capaLabel: fotoSrc ? 'Trocar capa' : 'Adicionar capa', capaLabelFicha: fotoSrc ? 'Trocar foto de capa' : 'Adicionar foto de capa',
@@ -571,9 +639,10 @@ class Component extends DCLogic {
       tocarVideo: () => this.setState({ videoPlay: c.id }),
       posterRodapeAqui: [video && video.quem, video && video.duracao, 'clique para assistir'].filter(Boolean).join(' · '),
       posterRodapeFora: [video && video.quem, video && video.duracao, 'abre ' + (vInfo.fonte === 'Link externo' ? 'o link' : 'no ' + vInfo.fonte) + ' ↗'].filter(Boolean).join(' · '),
-      podeEditarVideo: !!c.local, semVideoEditavel: !video && !!c.local, alteracaoLocal: !!c.capaLocal,
-      avisoLocal: 'A capa nova só existe neste navegador.',
-      podeRemoverVideo: !!c.local && !!video, videoMeta: video ? [video.quem, video.duracao].filter(Boolean).join(' · ') : '',
+      podeEditarVideo: !!c.local || !!c.edicaoLocal, semVideoEditavel: !video && (!!c.local || !!c.edicaoLocal), alteracaoLocal: !!c.capaLocal || !!c.edicaoLocal,
+      avisoLocal: c.edicaoLocal ? 'Suas alterações neste case só existem neste navegador.' : 'A capa nova só existe neste navegador.',
+      desfazerEdicao: (e) => this.pedirRemoverCase(c.id, e),
+      podeRemoverVideo: (!!c.local || !!c.edicaoLocal) && !!video, videoMeta: video ? [video.quem, video.duracao].filter(Boolean).join(' · ') : '',
       abrirVideoForm: () => this.abrirVideoForm(c), removerVideo: () => this.pedirConfirmacao({ titulo:'Remover o vídeo?', texto:'O vídeo deste case vai ser removido.', ok:() => this.aplicarVideo(c.id, null) }),
       remover: (e) => this.pedirRemoverCase(c.id, e) };
   }
@@ -948,7 +1017,7 @@ class Component extends DCLogic {
       case 'escopos': return s.escopoId ? '#/escopo/' + s.escopoId : '#/escopos';
       case 'cases': return '#/cases';
       case 'case': return s.caseId ? '#/case/' + s.caseId : '#/cases';
-      case 'novo-case': return '#/cases/novo';
+      case 'novo-case': return s.caseEditandoId ? '#/case/' + s.caseEditandoId + '/editar' : '#/cases/novo';
       case 'cadastro': return '#/cadastrar';
       case 'docs': return '#/docs';
       case 'recomendar': return '#/recomendar';
@@ -962,7 +1031,7 @@ class Component extends DCLogic {
   aplicarHash() {
     if (typeof location === 'undefined') return;
     const h = decodeURIComponent(location.hash || '').replace(/^#\/?/, '');
-    const [tela, id] = h.split('/');
+    const [tela, id, acao] = h.split('/');
     const idOk = (lista, x) => x && lista.some(i => i.id === x);
     if (tela === 'biblioteca') this.nav('biblioteca');
     else if (tela === 'ferramenta' && idOk(this.allData(), id)) this.openContent(id);
@@ -970,6 +1039,7 @@ class Component extends DCLogic {
     else if (tela === 'escopo' && this.escopoPorId(id)) this.openEscopo(this.escopoPorId(id).id);
     else if (tela === 'cases' && id === 'novo') this.openNovoCase();
     else if (tela === 'cases') this.nav('cases');
+    else if (tela === 'case' && idOk(this.allCases(), id) && acao === 'editar') this.editarCase(id);
     else if (tela === 'case' && idOk(this.allCases(), id)) this.openCase(id);
     else if (tela === 'cadastrar') this.nav('cadastro');
     else if (tela === 'docs') this.goDocs();
@@ -1537,7 +1607,7 @@ class Component extends DCLogic {
     const videoPreview = this.embedDe(fcase.videoUrl);
     const fotoPreview = this.fotoSrc(fcase.fotoDados || fcase.fotoLink);
     const fotoFonte = fcase.fotoDados ? 'Foto enviada do seu computador · vai dentro do arquivo do case (' + Math.round(fcase.fotoDados.length * 0.75 / 1024) + ' KB)' : (fcase.fotoLink ? 'Foto pelo link do Drive · quem abrir precisa ter acesso ao arquivo' : '');
-    const casePreview = (() => { try { return this.validarCase(fcase) ? null : this.montarCase(fcase); } catch (e) { return null; } })();
+    const casePreview = (() => { try { return this.validarCase(fcase) ? null : this.montarCaseFinal(fcase); } catch (e) { return null; } })();
 
     // escopos
     const gruposEscopo = this.TAXONOMIA.gruposEscopo;
@@ -1760,10 +1830,15 @@ class Component extends DCLogic {
       videoPreview, hasVideoPreview: !!videoPreview && !s.embedBloqueado, caseErro: s.caseErro, hasCaseErro: !!s.caseErro,
       fotoPreview, hasFotoPreview: !!fotoPreview, semFotoPreview: !fotoPreview, fotoFonte,
       onCapaArquivo:(e)=>this.onCapaArquivo(e), onFotoArquivo:(e)=>this.onFotoArquivo(e), onFotoDrop:(e)=>this.onFotoDrop(e), onFotoDragOver:(e)=>this.onFotoDragOver(e), abrirSeletorFoto:()=>this.abrirSeletorFoto(), removerFoto:()=>this.removerFoto(),
-      publishCase:()=>this.publishCase(), baixarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.baixarJson(this.montarCase(fcase)); }, copiarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.copiarJson(this.montarCase(fcase)); },
+      publishCase:()=>this.publishCase(), baixarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.baixarJson(this.montarCaseFinal(fcase)); }, copiarCaseForm:()=>{ const erro=this.validarCase(fcase); if (erro) { this.setState({caseErro:erro}); return; } this.copiarJson(this.montarCaseFinal(fcase)); },
+      editandoCase: !!s.caseEditandoId, naoEditandoCase: !s.caseEditandoId, cancelarEdicaoCase: () => this.cancelarEdicaoCase(),
+      formCaseTitulo: s.caseEditandoId ? 'Editar case' + (fcase.cliente.trim() ? ': ' + fcase.cliente.trim() : '') : 'Cadastrar case de projeto',
+      publishCaseLabel: s.caseEditandoId ? 'Salvar alterações' : 'Publicar no meu Hangar',
+      // <input type="month"> não mostra "2026-03-19": exibe o mês, e o dia original fica guardado se o campo não for mexido
+      formInicioMes: (fcase.inicio || '').slice(0, 7), formFimMes: (fcase.fim || '').slice(0, 7),
       limparCase:()=>{
         const vazio = this.formCaseVazio(); const f = s.formCase;
-        const temAlgo = Object.keys(f).some(k => !/^(meuNome|meuEmail)$/.test(k) && JSON.stringify(f[k]) !== JSON.stringify(vazio[k]));
+        const temAlgo = this.formCaseTemAlgo(f);
         if (!temAlgo) { this.setState({ formCase:vazio, caseErro:'' }); return; }
         this.pedirConfirmacao({ titulo:'Limpar o formulário?', texto:'Tudo o que você preencheu neste case vai ser perdido.', label:'Limpar', ok:() => this.setState({ formCase:this.formCaseVazio(), caseErro:'' }) });
       },
