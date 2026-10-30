@@ -44,8 +44,9 @@ const page = await ctx.newPage();
 await page.addInitScript(() => { window.__abertoNoDrive = null; window.open = (u) => { window.__abertoNoDrive = String(u); return null; }; });
 const erros = [];
 page.on('pageerror', (e) => erros.push(String(e)));
-// em file:// o Chromium avisa sobre permissions policy do iframe do vídeo; é ruído, não erro do app
-page.on('console', (m) => { if (m.type() === 'error' && !/fetch|CORS|Failed to load resource|permissions policy/i.test(m.text())) erros.push(m.text()); });
+// em file:// o Chromium avisa sobre permissions policy do iframe do vídeo; é ruído, não erro do app.
+// "[Report Only] Refused to frame 'https://drive.google.com/'" é o Drive recusando o player embutido quando há rede: aviso do site externo, não erro do app
+page.on('console', (m) => { if (m.type() === 'error' && !/fetch|CORS|Failed to load resource|permissions policy|\[Report Only\] Refused to frame/i.test(m.text())) erros.push(m.text()); });
 
 await page.goto(pathToFileURL(alvo).href);
 await page.waitForFunction(() => document.body && /Hangar/.test(document.body.innerText) && !document.getElementById('__bundler_loading'), null, { timeout: 15000 }).catch(() => {});
