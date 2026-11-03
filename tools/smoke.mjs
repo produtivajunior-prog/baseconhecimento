@@ -640,7 +640,7 @@ check(await page.evaluate(() => !window.va && !document.querySelector('script[sr
   await pM.clock.fastForward(1500);
   await pM.getByRole('button', { name: 'Auxílios', exact: true }).first().click(); await pM.waitForTimeout(300);
   await pM.clock.fastForward('00:05');
-  await pM.evaluate(() => { location.hash = '#/monitoramento'; }); await pM.waitForTimeout(500);
+  await pM.getByRole('button', { name: 'Monitoramento do Hangar (só administradores)' }).click(); await pM.waitForTimeout(500);
   const vistas = await pM.evaluate(() => window.__vaViews.map((v) => v.path + ' ' + v.route));
   check(JSON.stringify(vistas) === JSON.stringify(['/biblioteca /biblioteca', '/_tempo/biblioteca /_tempo/30s-1min', '/escopos /escopos', '/auxilios /auxilios', '/_tempo/auxilios /_tempo/3-10s']),
     `tempo em cada tela vai como visita técnica; menos de 3 s não conta; a tela de monitoramento não entra (${vistas.join(' | ')})`);
@@ -663,7 +663,8 @@ check(await page.evaluate(() => !window.va && !document.querySelector('script[sr
   check(errosM.length === 0, errosM.length ? `erros no monitoramento: ${errosM[0]}` : 'monitoramento sem erros de JavaScript');
   await pM.close();
 }
-await page.evaluate(() => { location.hash = '#/monitoramento'; }); await page.waitForTimeout(400);
+await page.getByRole('button', { name: 'Monitoramento do Hangar (só administradores)' }).click(); await page.waitForTimeout(400);
+check(/#\/monitoramento$/.test(await page.evaluate(() => location.hash)), 'botão de monitoramento no topo do Hangar abre #/monitoramento');
 check(/só funciona no endereço da Vercel/.test(await texto()) && (await page.locator('#mon-senha').count()) === 0, 'fora da Vercel o monitoramento avisa e não pede senha');
 
 check(erros.length === 0, erros.length ? `erros de página: ${erros.slice(0, 3).join(' | ')}` : 'nenhum erro de JavaScript');

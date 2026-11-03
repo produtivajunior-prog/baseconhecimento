@@ -193,7 +193,7 @@ a Vercel pausa a contagem até o mês virar) e o histórico guardado é de **1 m
 
 ### Tela de monitoramento (só administradores)
 
-`https://hangar-produtiva.vercel.app/#/monitoramento` (sem link no menu). Pede a senha de administrador e mostra:
+`https://hangar-produtiva.vercel.app/#/monitoramento`, pelo botão de gráfico no topo (ao lado da busca). Pede a senha de administrador e mostra:
 visitas, visitantes, telas por visitante e tempo médio, com comparação ao período anterior; visitas por dia
 (ou por hora) e horário de uso (Brasília); telas mais vistas; tempo médio em cada tela e a distribuição das
 durações; fichas de ferramentas, escopos e cases mais abertas (com o nome, não o id); aparelho, origem,
