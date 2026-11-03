@@ -27,9 +27,21 @@ globalThis.fetch = async (url, opts) => {
   if (u.pathname === '/v2/teams') return resp(200, { teams: auth === 'Bearer tok_outro_time' ? [{ id: TIME }, { id: 'team_novo' }] : [] });
   if (auth === 'Bearer tok_400') return resp(400, { error: { code: 'bad_request', message: 'Invalid request: by' } });
   const by = u.searchParams.getAll('by'); const filtro = u.searchParams.get('filter') || '';
+  // como a API real: hora a hora só até 168 h, com o início arredondado para baixo e o fim para cima
+  if (by[0] === 'hour') {
+    const h = (iso, f) => Math[f](new Date(iso).getTime() / 36e5);
+    const horas = h(u.searchParams.get('until'), 'ceil') - h(u.searchParams.get('since'), 'floor') + (new Date(u.searchParams.get('until')).getTime() % 36e5 === 0 ? 1 : 0);
+    if (horas > 168) return resp(400, { error: { code: 'bad_request', message: 'Can only query up to 168 hours of data. Use a larger granularity or a smaller date range.' } });
+  }
   let data;
   if (by[0] === 'environment') data = filtro ? [{ environment: 'production', pageviews: 120, visitors: 9 }] : [{ environment: 'production', pageviews: 200, visitors: 9 }, { environment: 'preview', pageviews: 10, visitors: 1 }];
-  else if (by[0] === 'day' || by[0] === 'hour') data = [{ timestamp: '2026-10-27T13:00:00.000Z', pageviews: 30, visitors: 4 }, { timestamp: '2026-10-28T14:00:00.000Z', pageviews: 0, visitors: 0 }];
+  else if (by[0] === 'day' || by[0] === 'hour') {
+    // só as linhas dentro do período pedido (blocos de horas não podem contar a mesma hora duas vezes)
+    const de = Math.floor(new Date(u.searchParams.get('since')).getTime() / 36e5) * 36e5, ate = new Date(u.searchParams.get('until')).getTime();
+    const t1 = new Date(Date.now() - 3 * 864e5); t1.setUTCHours(13, 0, 0, 0); const t2 = new Date(Date.now() - 2 * 864e5); t2.setUTCHours(14, 0, 0, 0);
+    data = [{ timestamp: t1.toISOString(), pageviews: 30, visitors: 4 }, { timestamp: t2.toISOString(), pageviews: 0, visitors: 0 }]
+      .filter((x) => by[0] === 'day' || (new Date(x.timestamp).getTime() >= de && new Date(x.timestamp).getTime() <= ate));
+  }
   else if (by.join() === 'requestPath,route') data = [
     { requestPath: '/_tempo/biblioteca', route: '/_tempo/1-3min', pageviews: 4, visitors: 3 },
     { requestPath: '/_tempo/biblioteca', route: '/_tempo/10-30s', pageviews: 2, visitors: 2 },
@@ -66,14 +78,22 @@ r = await pedir('senha-certa', 30); b = await r.json();
 check(r.status === 200 && r.headers.get('cache-control') === 'no-store', 'senha certa: 200, sem cache');
 check(b.periodo.dias === 30 && b.total.visitas === 120 && b.total.visitantes === 9, `totais só com visitas reais (${JSON.stringify(b.total)})`);
 const analytics = (lista) => lista.filter((p) => p.u.pathname.includes('/web-analytics/'));
-check(pedidos.every((p) => p.auth === 'Bearer tok_teste') && analytics(pedidos).length === 13 && analytics(pedidos).every((p) => p.u.searchParams.get('projectId') === 'prj_O5YcMH5GRrFODV8WhyfDK5wKyDdm' && p.u.searchParams.get('teamId') === 'team_aLy3WIsPxT6oN5hiZy8L1qAu'), 'consultas usam o token e o projeto do Hangar');
+const blocosHora = (lista) => analytics(lista).filter((p) => p.u.searchParams.getAll('by').join() === 'hour');
+check(pedidos.every((p) => p.auth === 'Bearer tok_teste') && analytics(pedidos).length === 12 + blocosHora(pedidos).length && analytics(pedidos).every((p) => p.u.searchParams.get('projectId') === 'prj_O5YcMH5GRrFODV8WhyfDK5wKyDdm' && p.u.searchParams.get('teamId') === 'team_aLy3WIsPxT6oN5hiZy8L1qAu'), 'consultas usam o token e o projeto do Hangar');
 const reais = pedidos.filter((p) => p.u.searchParams.get('filter') === "environment eq 'production' and not startswith(requestPath, '/_tempo')");
-check(reais.length === 11, `visitas reais (só produção) filtram as técnicas de tempo (${reais.length} consultas)`);
-check(pedidos.filter((p) => p.u.pathname.endsWith('/projects/prj_O5YcMH5GRrFODV8WhyfDK5wKyDdm')).length === 1, 'projeto e time descobertos uma vez só para as 13 consultas');
+check(reais.length === 10 + blocosHora(pedidos).length, `visitas reais (só produção) filtram as técnicas de tempo (${reais.length} consultas)`);
+check(pedidos.filter((p) => p.u.pathname.endsWith('/projects/prj_O5YcMH5GRrFODV8WhyfDK5wKyDdm')).length === 1, 'projeto e time descobertos uma vez só para todas as consultas');
 check(analytics(pedidos).every((p) => p.u.pathname.endsWith('/aggregate')), 'nada usa /count (que arredonda para dias inteiros)');
 check(pedidos.some((p) => p.u.searchParams.getAll('by').join() === 'requestPath,route' && p.u.searchParams.get('filter') === "environment eq 'production' and startswith(requestPath, '/_tempo')"), 'tempo consultado por tela × faixa');
 check(b.usoMes.eventos === 210 && b.usoMes.limite === 50000, 'uso do mês conta todos os eventos (visitas + tempo, produção e prévias)');
 check(b.porHora.length === 24 && b.porHora[10] === 30, 'horário convertido para Brasília (13h UTC → 10h)');
+{
+  const blocos = analytics(pedidos).filter((p) => p.u.searchParams.getAll('by').join() === 'hour').map((p) => [new Date(p.u.searchParams.get('since')).getTime(), new Date(p.u.searchParams.get('until')).getTime()]).sort((x, y) => x[0] - y[0]);
+  const inicio = Math.floor((Date.now() - 30 * 864e5) / 36e5) * 36e5;
+  const ok = blocos.length >= 5 && blocos[0][0] === inicio && blocos.at(-1)[1] >= Date.now() - 60e3
+    && blocos.every(([a, z], i) => z - a < 144 * 36e5 && (i === 0 || a === blocos[i - 1][1] + 1));
+  check(ok, `30 dias de horário de uso em ${blocos.length} blocos de até 6 dias, do início ao agora, encostados e sem sobreposição`);
+}
 check(b.aparelhos.length === 2 && b.aparelhos[0].nome === 'x' && b.aparelhos[1].outros === true && b.aparelhos[1].nome === '', 'listas sem linhas zeradas e com "Others" marcado como outros');
 const bib = b.tempo.telas.find((t) => t.tela === 'biblioteca');
 check(b.tempo.n === 7 && bib && bib.n === 6 && bib.mediaSeg === Math.round((4 * 120 + 2 * 20) / 6), `tempo médio por faixa, ignorando faixa desconhecida (${JSON.stringify(b.tempo.telas)})`);
