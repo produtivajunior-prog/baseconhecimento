@@ -119,13 +119,22 @@ async function responder(request) {
   const inicioMes = new Date(Date.UTC(agora.getUTCFullYear(), agora.getUTCMonth(), 1)).toISOString();
   const periodo = { since: desde, until: ate };
   const por = (dim, limit, filter = REAIS) => consulta(token, 'aggregate', { ...periodo, by: [].concat(dim), limit, filter });
+  // A Vercel aceita no máximo 168 h por consulta hora a hora (e arredonda o fim para a hora seguinte):
+  // o horário de uso vem em blocos de 6 dias, presos na hora cheia e sem sobreposição, somados depois.
+  const porHoraEmBlocos = async () => {
+    const BLOCO = 144 * 36e5; const fim = agora.getTime();
+    let ini = Math.floor(new Date(desde).getTime() / 36e5) * 36e5; const blocos = [];
+    while (ini < fim) { const ate = Math.min(ini + BLOCO, fim); blocos.push({ since: new Date(ini).toISOString(), until: new Date(ate - 1).toISOString() }); ini += BLOCO; }
+    const partes = await Promise.all(blocos.map((b) => consulta(token, 'aggregate', { ...b, by: ['hour'], filter: REAIS })));
+    return partes.flat();
+  };
 
   try {
     const [total, anterior, serie, horas, paginas, telas, aparelhos, navegadores, sistemas, paises, origens, tempo, mes] = await Promise.all([
       totais(token, { ...periodo, filter: REAIS }),
       totais(token, { since: antes, until: desde, filter: REAIS }),
       por(dias === 1 ? 'hour' : 'day'),
-      por('hour'),
+      porHoraEmBlocos(),
       por('requestPath', 100),
       por('route', 30),
       por('deviceType', 5),
