@@ -31,13 +31,51 @@ const resumo = (s) => createHash('sha256').update(String(s)).digest();
 const senhaOk = (dada, certa) => timingSafeEqual(resumo(dada), resumo(certa));
 const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// Erro da API com o status e a mensagem que a Vercel devolveu (vai para a tela, que só abre com a senha certa).
+async function falha(r) {
+  let detalhe = ''; try { const b = await r.json(); detalhe = (b && b.error && (b.error.message || b.error.code)) || (b && b.message) || ''; } catch { /* corpo sem JSON */ }
+  const e = new Error(`Vercel ${r.status}${detalhe ? ': ' + detalhe : ''}`); e.status = r.status; e.detalhe = String(detalhe).slice(0, 200); return e;
+}
+// Em qual time está o projeto: o configurado; senão, os times que o token enxerga; senão, a conta pessoal.
+// Fica guardado enquanto a função estiver quente. Cobre token criado com outro escopo e time renomeado.
+// As 13 consultas rodam juntas: todas esperam a mesma descoberta (promessa guardada por token).
+let escopo = null;
+function descobrirEscopo(token) {
+  if (escopo && escopo.token === token) return escopo.promessa;
+  const promessa = acharEscopo(token).catch((e) => { escopo = null; throw e; });
+  escopo = { token, promessa };
+  return promessa;
+}
+async function acharEscopo(token) {
+  const auth = { headers: { Authorization: `Bearer ${token}` } };
+  const tenta = async (teamId) => {
+    for (const projeto of [PROJETO, 'hangar-produtiva']) {
+      const r = await fetch(`https://api.vercel.com/v9/projects/${encodeURIComponent(projeto)}${teamId ? '?teamId=' + encodeURIComponent(teamId) : ''}`, auth);
+      if (r.ok) { const p = await r.json(); return { projectId: p.id || projeto, teamId: teamId || null }; }
+      if (r.status === 401) throw await falha(r);
+    }
+    return null;
+  };
+  let achado = await tenta(TIME);
+  if (!achado) {
+    const r = await fetch('https://api.vercel.com/v2/teams?limit=50', auth);
+    if (r.status === 401 || r.status === 403) throw await falha(r); // token inválido ou vencido
+    const times = r.ok ? ((await r.json()).teams || []) : [];
+    for (const t of times) { if (t.id !== TIME && (achado = await tenta(t.id))) break; }
+  }
+  if (!achado) achado = await tenta(null);
+  if (!achado) { const e = new Error('projeto não encontrado'); e.status = 404; e.semProjeto = true; throw e; }
+  return achado;
+}
+
 async function consulta(token, tipo, params) {
+  const { projectId, teamId } = await descobrirEscopo(token);
   const url = new URL(`${API}/${tipo}`);
-  for (const [k, v] of Object.entries({ projectId: PROJETO, teamId: TIME, ...params })) {
+  for (const [k, v] of Object.entries({ projectId, teamId, ...params })) {
     if (Array.isArray(v)) v.forEach((x) => url.searchParams.append(k, x)); else if (v != null) url.searchParams.set(k, String(v));
   }
   const r = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-  if (!r.ok) { const e = new Error(`Vercel ${r.status}`); e.status = r.status; throw e; }
+  if (!r.ok) throw await falha(r);
   return (await r.json()).data;
 }
 // O endpoint /count arredonda o período para dias inteiros (deixaria o dia de hoje de fora);
@@ -115,8 +153,13 @@ async function responder(request) {
       usoMes: { eventos: mes.pageviews || 0, limite: LIMITE_MES, desde: inicioMes },
     });
   } catch (e) {
-    const msg = e.status === 401 || e.status === 403 ? 'O token HangarMonitoramento foi recusado pela Vercel (vencido ou sem acesso ao time pj).'
-      : e.status === 402 ? 'A Vercel pediu um plano pago para esta consulta.' : 'A Vercel não respondeu agora. Tente de novo em instantes.';
+    console.error('monitoramento:', e && e.message);
+    const detalhe = e && e.detalhe ? ` (${e.status}: ${e.detalhe})` : e && e.status ? ` (${e.status})` : '';
+    const msg = e.semProjeto ? 'O token HangarMonitoramento não enxerga o projeto hangar-produtiva. Crie o token com Scope no time onde o projeto está (pj) e troque o valor da variável.'
+      : e.status === 401 || e.status === 403 ? `O token HangarMonitoramento foi recusado pela Vercel (vencido ou sem acesso ao time pj)${detalhe}.`
+      : e.status === 402 ? `A Vercel pediu um plano pago para esta consulta${detalhe}.`
+      : e.status ? `A Vercel recusou a consulta${detalhe}. Mande esta mensagem para quem mantém o Hangar.`
+      : `Erro ao montar os números (${String((e && e.message) || e).slice(0, 160)}). Mande esta mensagem para quem mantém o Hangar.`;
     return json(502, { erro: msg });
   }
 }
