@@ -2,12 +2,17 @@
 // com um token guardado no projeto e devolve um resumo para a tela #/monitoramento.
 //
 // Variáveis do projeto na Vercel (Settings → Environment Variables):
-//   HANGAR_ADMIN_SENHA       senha que a tela pede (enviada no cabeçalho x-hangar-senha)
-//   HANGAR_ANALYTICS_TOKEN   token da Vercel com acesso ao time "pj" (vercel.com/account/settings/tokens)
+//   HangarAdmin           senha que a tela pede (enviada no cabeçalho x-hangar-senha)
+//   HangarMonitoramento   token da Vercel com acesso ao time "pj" (vercel.com/account/settings/tokens)
+// Os nomes antigos (HANGAR_ADMIN_SENHA, HANGAR_ANALYTICS_TOKEN) e variações em maiúsculas também valem.
 //
 // O tempo em cada tela chega como visita técnica: caminho /_tempo/<tela>, rota /_tempo/<faixa> (ver contarTempo em src/app.js).
 import { createHash, timingSafeEqual } from 'node:crypto';
 
+// Primeiro nome preenchido vence; os nomes são os que a diretoria cadastrou na Vercel.
+const NOMES_SENHA = ['HangarAdmin', 'HANGAR_ADMIN', 'HANGAR_ADMIN_SENHA', 'HangarAdminSenha'];
+const NOMES_TOKEN = ['HangarMonitoramento', 'HANGAR_MONITORAMENTO', 'hangar_monitoramento', 'HANGAR_ANALYTICS_TOKEN', 'HangarToken', 'HANGAR_TOKEN'];
+const variavel = (nomes) => { for (const n of nomes) { const v = (process.env[n] || '').trim(); if (v) return v; } return ''; };
 const PROJETO = process.env.HANGAR_PROJECT_ID || 'prj_O5YcMH5GRrFODV8WhyfDK5wKyDdm';
 const TIME = process.env.HANGAR_TEAM_ID || 'team_aLy3WIsPxT6oN5hiZy8L1qAu';
 const API = 'https://api.vercel.com/v1/query/web-analytics/visits';
@@ -63,9 +68,9 @@ export function montarTempo(linhas) {
 }
 
 async function responder(request) {
-  const certa = process.env.HANGAR_ADMIN_SENHA; const token = process.env.HANGAR_ANALYTICS_TOKEN;
+  const certa = variavel(NOMES_SENHA); const token = variavel(NOMES_TOKEN);
   if (!certa || !token) {
-    const faltam = [!certa && 'HANGAR_ADMIN_SENHA', !token && 'HANGAR_ANALYTICS_TOKEN'].filter(Boolean).join(' e ');
+    const faltam = [!certa && 'a senha (HangarAdmin)', !token && 'o token (HangarMonitoramento)'].filter(Boolean).join(' e ');
     return json(503, { erro: `Monitoramento ainda não configurado: falta ${faltam} nas variáveis do projeto na Vercel.` });
   }
   if (!senhaOk(request.headers.get('x-hangar-senha') || '', certa)) { await esperar(800); return json(401, { erro: 'Senha incorreta.' }); }
@@ -110,7 +115,7 @@ async function responder(request) {
       usoMes: { eventos: mes.pageviews || 0, limite: LIMITE_MES, desde: inicioMes },
     });
   } catch (e) {
-    const msg = e.status === 401 || e.status === 403 ? 'O token HANGAR_ANALYTICS_TOKEN foi recusado pela Vercel (vencido ou sem acesso ao time).'
+    const msg = e.status === 401 || e.status === 403 ? 'O token HangarMonitoramento foi recusado pela Vercel (vencido ou sem acesso ao time pj).'
       : e.status === 402 ? 'A Vercel pediu um plano pago para esta consulta.' : 'A Vercel não respondeu agora. Tente de novo em instantes.';
     return json(502, { erro: msg });
   }
