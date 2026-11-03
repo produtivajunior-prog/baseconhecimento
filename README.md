@@ -203,9 +203,12 @@ Só conta produção (as prévias de branch ficam fora) e a própria tela de mon
 Os números vêm da função `api/monitoramento.mjs` (Vercel Function), que consulta a API do Web Analytics.
 Para ligar, em Vercel → projeto `hangar-produtiva` → **Settings → Environment Variables**, crie (Production):
 
-- `HANGAR_ADMIN_SENHA`: a senha que a diretoria vai usar.
-- `HANGAR_ANALYTICS_TOKEN`: um token criado em vercel.com/account/settings/tokens com escopo no time `pj`.
-  Quando o token vencer, a tela avisa que ele foi recusado; é só criar outro e trocar o valor.
+- `HangarAdmin`: a senha que a diretoria vai usar.
+- `HangarMonitoramento`: o código de um token criado em vercel.com/account/settings/tokens com escopo no time `pj`.
+
+Os nomes antigos (`HANGAR_ADMIN_SENHA`, `HANGAR_ANALYTICS_TOKEN`) e as versões em maiúsculas (`HANGAR_ADMIN`,
+`HANGAR_MONITORAMENTO`) também funcionam. Quando o token vencer, a tela avisa que ele foi recusado; é só criar
+outro e trocar o valor.
 
 Depois de criar ou trocar as variáveis, faça um **Redeploy** do último deploy de produção. A senha fica só na
 aba aberta (sessionStorage) e é conferida no servidor; senha errada espera ~1 s antes de responder.

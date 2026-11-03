@@ -32,11 +32,20 @@ globalThis.fetch = async (url, opts) => {
 const { default: funcao } = await import('../api/monitoramento.mjs');
 const pedir = (senha, dias = 7) => funcao.fetch(new Request(`https://hangar-produtiva.vercel.app/api/monitoramento?dias=${dias}`, { headers: senha == null ? {} : { 'x-hangar-senha': senha } }));
 
-delete process.env.HANGAR_ADMIN_SENHA; delete process.env.HANGAR_ANALYTICS_TOKEN;
+const NOMES = ['HangarAdmin', 'HANGAR_ADMIN', 'HANGAR_ADMIN_SENHA', 'HangarAdminSenha', 'HangarMonitoramento', 'HANGAR_MONITORAMENTO', 'hangar_monitoramento', 'HANGAR_ANALYTICS_TOKEN', 'HangarToken', 'HANGAR_TOKEN'];
+NOMES.forEach((n) => delete process.env[n]);
 let r = await pedir('x'); let b = await r.json();
-check(r.status === 503 && /HANGAR_ADMIN_SENHA e HANGAR_ANALYTICS_TOKEN/.test(b.erro) && pedidos.length === 0, `sem variáveis: 503 dizendo o que falta (${b.erro})`);
+check(r.status === 503 && /a senha \(HangarAdmin\) e o token \(HangarMonitoramento\)/.test(b.erro) && pedidos.length === 0, `sem variáveis: 503 dizendo o que falta (${b.erro})`);
+process.env.HangarAdmin = 'senha-certa';
+r = await pedir('senha-certa'); b = await r.json();
+check(r.status === 503 && /falta o token \(HangarMonitoramento\)/.test(b.erro) && !/senha/.test(b.erro), `só a senha cadastrada (HangarAdmin): diz que falta só o token (${b.erro})`);
+// nomes antigos continuam valendo
+delete process.env.HangarAdmin; process.env.HANGAR_ADMIN_SENHA = 'senha-certa'; process.env.HANGAR_ANALYTICS_TOKEN = 'tok_velho';
+r = await pedir('senha-certa'); b = await r.json();
+check(r.status === 200 && pedidos.every((p) => p.auth === 'Bearer tok_velho'), 'nomes antigos (HANGAR_ADMIN_SENHA, HANGAR_ANALYTICS_TOKEN) continuam valendo');
+pedidos.length = 0; delete process.env.HANGAR_ADMIN_SENHA; delete process.env.HANGAR_ANALYTICS_TOKEN;
 
-process.env.HANGAR_ADMIN_SENHA = 'senha-certa'; process.env.HANGAR_ANALYTICS_TOKEN = 'tok_teste';
+process.env.HangarAdmin = 'senha-certa'; process.env.HangarMonitoramento = ' tok_teste ';
 r = await pedir('senha-errada'); b = await r.json();
 check(r.status === 401 && b.erro === 'Senha incorreta.' && pedidos.length === 0, 'senha errada: 401 e nenhuma consulta à Vercel');
 r = await pedir(null);
@@ -61,7 +70,7 @@ pedidos.length = 0; r = await pedir('senha-certa', 999); b = await r.json();
 check(b.periodo.dias === 7, 'período inválido cai para 7 dias');
 
 statusVercel = 403; r = await pedir('senha-certa'); b = await r.json();
-check(r.status === 502 && /token HANGAR_ANALYTICS_TOKEN foi recusado/.test(b.erro), 'token recusado: 502 com mensagem clara');
+check(r.status === 502 && /token HangarMonitoramento foi recusado/.test(b.erro), 'token recusado: 502 com mensagem clara');
 
 if (falhas.length) { console.error(`\n${falhas.length} falha(s).`); process.exit(1); }
 console.log('\napi ok.');
