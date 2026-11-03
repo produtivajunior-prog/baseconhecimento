@@ -1813,6 +1813,7 @@ class Component extends DCLogic {
       isComece: s.screen==='comece', goComece:()=>this.nav('comece'), ...this.trilhaVals(s, data, dec),
       isProdutiva: s.screen==='produtiva', isAuxilios: s.screen==='auxilios', ...this.produtivaVals(),
       isMonitoramento: s.screen==='monitoramento', ...this.monitoramentoVals(s),
+      goMonitoramento: () => this.abrirMonitoramento(), monBotaoFundo: s.screen==='monitoramento' ? '#EAF6F9' : '#fff', monBotaoBorda: s.screen==='monitoramento' ? '#9FD7E2' : '#DCE7EB',
       // filtros no celular (biblioteca e cases) e iniciais de quem usa
       filtrosClass: s.filtrosAbertos ? 'hg-open' : '', filtrosLabel: s.filtrosAbertos ? 'Ocultar filtros' : 'Filtros', toggleFiltros:()=>this.setState(st=>({ filtrosAbertos: !st.filtrosAbertos })),
       hasEu: !!(s.eu && s.eu.nome), euNome: (s.eu && s.eu.nome) || '', euIniciais: s.eu && s.eu.nome ? this.initials(s.eu.nome) : '',
