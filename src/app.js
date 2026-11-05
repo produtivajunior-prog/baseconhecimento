@@ -259,6 +259,13 @@ class Component extends DCLogic {
   abrirSeletorDocPdf(idx) { if (typeof document === 'undefined') return; const el = document.getElementById('hangar-doc-pdf-' + idx); if (el) el.click(); }
   removerDocPdf(idx) { this.setState(st => ({ formCase: { ...st.formCase, documentos: st.formCase.documentos.map((x, j) => j === idx ? { ...x, url: '' } : x) } })); }
 
+  // Onde não há seletor de mês (Safari), a data é digitada: "02/2026" e "19/03/2026" viram "2026-02" e "2026-03-19".
+  dataCase(s) {
+    const t = String(s || '').trim(); let m;
+    if ((m = /^(\d{1,2})[\/.\-](\d{4})$/.exec(t))) return m[2] + '-' + m[1].padStart(2, '0');
+    if ((m = /^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})$/.exec(t))) return m[3] + '-' + m[2].padStart(2, '0') + '-' + m[1].padStart(2, '0');
+    return t;
+  }
   slugDe(t) { return this.normaliza(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   soDigitos(t) { return String(t || '').replace(/\D/g, ''); }
   abrirLink(url) { if (url && typeof window !== 'undefined') window.open(url, '_blank', 'noopener'); }
@@ -426,6 +433,7 @@ class Component extends DCLogic {
     if (!f.gerenteNome.trim() || !f.c1Nome.trim() || !f.c2Nome.trim()) return 'A equipe precisa de 1 gerente e pelo menos 2 consultores com nome.';
     if (!f.c3Nome.trim() && (f.c3Email.trim() || f.c3Zap.trim())) return 'Informe o nome do consultor 3 (ou apague o e-mail e o WhatsApp dele).';
     if (f.resumo.trim().length < 20) return 'Escreva um resumo do projeto com pelo menos duas frases.';
+    for (const d of [f.inicio, f.fim]) if (d && !/^\d{4}-(0[1-9]|1[0-2])(-\d{2})?$/.test(this.dataCase(d))) return 'Datas do projeto no formato mês/ano, ex.: 03/2026.';
     const emails = [f.gerenteEmail, f.c1Email, f.c2Email, f.c3Email, f.meuEmail].filter(Boolean);
     if (emails.some(e => !/^[^@\s]+@produtivajunior\.com\.br$/.test(e.trim()))) return 'Use e-mails @produtivajunior.com.br na equipe.';
     for (const z of [f.gerenteZap, f.c1Zap, f.c2Zap, f.c3Zap]) { const d = this.soDigitos(z); if (z && (d.length < 10 || d.length > 13)) return 'WhatsApp com DDD, só números (ex.: 84 99999-0000).'; }
@@ -436,14 +444,15 @@ class Component extends DCLogic {
     return '';
   }
   montarCase(f) {
-    const ano = (f.fim || f.inicio || this.hoje()).slice(0, 4);
+    const inicio = this.dataCase(f.inicio), fim = this.dataCase(f.fim);
+    const ano = (fim || inicio || this.hoje()).slice(0, 4);
     const escopo = this.ESCOPOS.find(e => e.id === f.escopoId);
     const pessoa = (n, e, z) => ({ nome: n.trim(), email: (e || '').trim(), whatsapp: this.soDigitos(z) });
     return {
       id: [this.slugDe(f.cliente), ano, this.slugDe(escopo ? escopo.nome : f.escopoNome)].filter(Boolean).join('-'),
       cliente: f.cliente.trim(), segmento: f.segmento.trim(), porte: f.porte || '', cidade: f.cidade.trim(),
       escopoId: escopo ? escopo.id : null, escopoNome: escopo ? escopo.nome : f.escopoNome.trim(),
-      periodo: { inicio: f.inicio || '', fim: f.fim || '' }, duracaoDias: f.duracaoDias ? Number(f.duracaoDias) : null, duracaoUteis: !!f.duracaoDias,
+      periodo: { inicio, fim }, duracaoDias: f.duracaoDias ? Number(f.duracaoDias) : null, duracaoUteis: !!f.duracaoDias,
       equipe: { gerente: pessoa(f.gerenteNome, f.gerenteEmail, f.gerenteZap), consultores: [pessoa(f.c1Nome, f.c1Email, f.c1Zap), pessoa(f.c2Nome, f.c2Email, f.c2Zap)].concat(f.c3Nome.trim() ? [pessoa(f.c3Nome, f.c3Email, f.c3Zap)] : []) },
       resumo: f.resumo.trim(), desafio: f.desafio.trim(), solucao: f.solucao.trim(),
       resultados: this.linhas(f.resultados), aprendizados: this.linhas(f.aprendizados),

@@ -284,6 +284,7 @@ for (const c of cases) {
     if (c.foto.legenda !== undefined && typeof c.foto.legenda !== 'string') p(ctx, 'foto.legenda precisa ser texto');
   }
   if (!ISO.test(c.atualizado || '')) p(ctx, 'atualizado precisa ser YYYY-MM-DD');
+  for (const k of ['inicio', 'fim']) { const d = (c.periodo || {})[k]; if (d && !/^\d{4}-(0[1-9]|1[0-2])(-\d{2})?$/.test(d)) p(ctx, `periodo.${k} "${d}" precisa ser AAAA-MM ou AAAA-MM-DD`); }
   if (!c.cadastradoPor || typeof c.cadastradoPor.nome !== 'string') p(ctx, 'cadastradoPor {nome, email} ausente');
 }
 check(!problemas_.some((x) => x.startsWith('cases')), `cases.json  ${cases.length} case(s), referências resolvem`, 'cases.json com erros');
