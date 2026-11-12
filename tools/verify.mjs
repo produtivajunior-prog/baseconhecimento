@@ -49,6 +49,7 @@ const documentoPadrao = json('documento-padrao');
 const cases = json('cases');
 const trilha = json('trilha');
 const produtiva = json('produtiva');
+const treinamentos = json('treinamentos');
 
 const enumDe = (obj) => Array.isArray(obj) ? obj : Object.keys(obj);
 const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -361,6 +362,50 @@ const TELAS = ['home', 'biblioteca', 'escopos', 'cases', 'novo-case', 'cadastro'
   check(!problemas_.some((x) => x.startsWith('produtiva')), `produtiva.json  ${aids.size} áreas, ${((produtiva.fluxo || {}).passos || []).length} passos do fluxo comercial, ${((produtiva.auxilios || {}).itens || []).length} auxílios`, 'produtiva.json com erros');
 }
 
+// ---------------------------------------------------------------- treinamentos
+{
+  const tipos = new Set(['texto', 'lista', 'formula', 'destaque']);
+  const exercicios = new Set(['abc', 'es-pp']);
+  const caseIdsT = new Set(cases.map((c) => c.id));
+  const tIds = new Set();
+  if (!Array.isArray(treinamentos)) p('treinamentos', 'precisa ser uma lista');
+  for (const t of Array.isArray(treinamentos) ? treinamentos : []) {
+    const ctx = `treinamentos/${t.id}`;
+    if (!KEBAB.test(t.id || '')) p(ctx, 'id precisa ser kebab-case');
+    if (tIds.has(t.id)) p(ctx, 'id repetido'); tIds.add(t.id);
+    for (const k of ['titulo', 'subtitulo', 'publico', 'duracao']) if (typeof t[k] !== 'string' || !t[k].trim()) p(ctx, `${k} obrigatório`);
+    if (t.escopoId && !escopoIds.has(t.escopoId)) p(ctx, `escopoId "${t.escopoId}" não existe em escopos.json`);
+    if (t.responsavel && !EMAIL.test(t.responsavel.email || '')) p(ctx, 'responsavel.email precisa ser @produtivajunior.com.br');
+    if (!ISO.test(t.atualizado || '')) p(ctx, 'atualizado precisa ser AAAA-MM-DD');
+    for (const f of t.fontes || []) if (!f.nome || (f.url && !/^https:\/\//.test(f.url))) p(ctx, `fonte inválida: ${JSON.stringify(f)}`);
+    if (!Array.isArray(t.modulos) || !t.modulos.length) p(ctx, 'modulos precisa ser lista não vazia');
+    const mIds = new Set();
+    for (const m of t.modulos || []) {
+      const c = `${ctx}/${m.id}`;
+      if (!KEBAB.test(m.id || '') || mIds.has(m.id)) p(c, 'id do módulo inválido ou repetido'); mIds.add(m.id);
+      if (!m.titulo || !m.resumo) p(c, 'titulo e resumo obrigatórios');
+      for (const [i, b] of (m.blocos || []).entries()) {
+        if (!tipos.has(b.tipo)) p(c, `bloco ${i + 1}: tipo "${b.tipo}" desconhecido`);
+        if (b.tipo === 'lista' && !isStrArr(b.itens, 1)) p(c, `bloco ${i + 1}: lista sem itens`);
+        if (b.tipo === 'formula' && !b.formula) p(c, `bloco ${i + 1}: fórmula vazia`);
+        if ((b.tipo === 'texto' || b.tipo === 'destaque') && !b.texto) p(c, `bloco ${i + 1}: texto vazio`);
+      }
+      for (const fid of m.ferramentas || []) if (!ids.has(fid)) p(c, `ferramenta "${fid}" não existe em ferramentas.json`);
+      if (m.case && !caseIdsT.has(m.case)) p(c, `case "${m.case}" não existe em cases.json`);
+      if (m.exercicio && !exercicios.has(m.exercicio)) p(c, `exercicio "${m.exercicio}" desconhecido`);
+      if (m.exercicio === 'abc' && !(t.exercicioAbc && Array.isArray(t.exercicioAbc.itens) && t.exercicioAbc.itens.length)) p(c, 'exercicio abc sem exercicioAbc.itens');
+      if (!Array.isArray(m.quiz) || !m.quiz.length) p(c, 'quiz precisa ter ao menos uma pergunta');
+      for (const [i, q] of (m.quiz || []).entries()) {
+        if (!q.pergunta || !isStrArr(q.opcoes, 2) || !Number.isInteger(q.correta) || q.correta < 0 || q.correta >= q.opcoes.length || !q.explicacao) p(c, `pergunta ${i + 1}: precisa de pergunta, 2+ opções, correta válida e explicação`);
+      }
+    }
+    if (t.exercicioAbc) for (const x of t.exercicioAbc.itens || []) if (!x.nome || !(x.qtd > 0) || !(x.custo > 0)) p(ctx, `exercicioAbc: item inválido ${JSON.stringify(x)}`);
+  }
+  const nMods = (Array.isArray(treinamentos) ? treinamentos : []).reduce((n, t) => n + (t.modulos || []).length, 0);
+  const nQ = (Array.isArray(treinamentos) ? treinamentos : []).reduce((n, t) => n + (t.modulos || []).reduce((a, m) => a + (m.quiz || []).length, 0), 0);
+  check(!problemas_.some((x) => x.startsWith('treinamentos')), `treinamentos.json  ${treinamentos.length} treinamento(s), ${nMods} módulos, ${nQ} perguntas`, 'treinamentos.json com erros');
+}
+
 // ---------------------------------------------------------------- ritual trimestral de revisão
 {
   const hoje = new Date().toISOString().slice(0, 10);
@@ -447,7 +492,7 @@ if (dist) {
   try { dados = extrairDados(dist.logic); }
   catch (e) { check(false, '', `o script do bundle não avalia: ${e.message}`); }
   if (dados) {
-    const pares = [['ferramentas', ferramentas], ['escopos', escopos], ['taxonomia', T], ['problemas', problemas], ['modelos', modelos], ['documentoPadrao', documentoPadrao], ['cases', cases], ['trilha', trilha], ['produtiva', produtiva]];
+    const pares = [['ferramentas', ferramentas], ['escopos', escopos], ['taxonomia', T], ['problemas', problemas], ['modelos', modelos], ['documentoPadrao', documentoPadrao], ['cases', cases], ['trilha', trilha], ['produtiva', produtiva], ['treinamentos', treinamentos]];
     for (const [chave, esperado] of pares) {
       const n = Array.isArray(esperado) ? `${esperado.length} itens` : 'ok';
       check(isDeepStrictEqual(dados[chave], esperado), `dist carrega DADOS.${chave}  ${n}`, `DADOS.${chave} no bundle DIVERGE de src/data — rode node tools/pack.mjs`);

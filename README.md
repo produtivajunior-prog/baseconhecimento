@@ -34,6 +34,7 @@ src/
     modelos.json            modelos-padrão (blocos que a IA preenche)
     documento-padrao.json   documento PMMC (10 seções, do PDF oficial)
     produtiva.json          páginas "Como funciona" (áreas, subnúcleos, fluxo comercial) e "Auxílios e reembolsos"
+    treinamentos.json       aba Treinamentos: módulos (blocos de conteúdo, ferramentas, case, exercício) e teste rápido
     rascunhos/              rascunhos gerados de fontes/, aguardando revisão — NUNCA entram no pack
 assets/            logo e fontes; index.json mapeia uuid ↔ arquivo
 vendor/            dc-runtime.js, React embutido e o invólucro do bundle
@@ -85,11 +86,11 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
 ## Navegação e uso
 
 - **URL acompanha a tela**: `#/biblioteca`, `#/ferramenta/<id>`, `#/escopos`, `#/escopo/<id>`, `#/cases`,
-  `#/case/<id>`, `#/cases/novo`, `#/cadastrar`, `#/docs`, `#/recomendar`. Dá para compartilhar o link de
+  `#/case/<id>`, `#/cases/novo`, `#/cadastrar`, `#/docs`, `#/recomendar`, `#/treinamentos`, `#/treinamento/<id>/<n>`. Dá para compartilhar o link de
   uma ferramenta ou case, usar o botão "voltar" do navegador e recarregar sem perder a tela. Funciona em `file://`.
 - **Busca geral** (campo da Biblioteca, lupa do topo ou Enter na busca do Início): procura em todo o Hangar,
   sem acento e sem caixa, com as palavras em qualquer ordem. Lista as ferramentas (as que têm o termo no nome
-  primeiro) e, acima delas, os cases, escopos, termos do glossário, passos do Comece aqui, partes do Como funciona,
+  primeiro) e, acima delas, os cases, escopos, módulos dos treinamentos, termos do glossário, passos do Comece aqui, partes do Como funciona,
   auxílios e problemas do Recomendar que citam o termo, com o trecho onde ele aparece. Cada resultado abre a tela certa.
 - **Teclado**: `/` foca a busca da tela; `Esc` fecha a janela de anexos, o resultado da IA e a confirmação; foco visível em todos os controles.
 - **Nada some sem perguntar**: remover case, capa, vídeo, modelo-padrão ou bloco da documentação, limpar o
@@ -101,6 +102,14 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
 - **Comece aqui** (`#/comece`): trilha do primeiro projeto em seis passos marcáveis (ficam no navegador), as
   ferramentas mapeadas em mais etapas e o glossário. Os termos vêm de `src/data/trilha.json`,
   cada um com `origem`; os marcados `pendente: true` aparecem como "a confirmar" até o CIEP validar.
+- **Treinamentos** (`#/treinamentos`, `#/treinamento/<id>/<módulo>`): cursos curtos por escopo, montados a partir
+  do Hangar e do Drive. O primeiro é **Gestão de Estoque** (7 módulos, ~1h30), com base no PTPJ de Gestão de Estoque,
+  na planilha do Desafio de Gestão de Estoque, no slide do escopo no PPGP 2026, nas fichas da Biblioteca e no case da
+  Mídia Digital. Cada módulo tem conteúdo (texto, lista, fórmula, destaque), atalhos para as ferramentas e o case, e um
+  teste rápido que corrige na hora e explica a resposta. O módulo da Curva ABC tem um exercício de classificação com
+  resolução (cortes 80/90) e o de parâmetros tem a calculadora de estoque de segurança e ponto de pedido. As respostas
+  ficam neste navegador (`hangar.treinos`); "Refazer teste" limpa um módulo. Para criar outro treinamento, acrescente
+  um item em `src/data/treinamentos.json` (o `verify` confere ids, ferramentas, escopo, case e gabarito das perguntas).
 - **Como funciona a Produtiva** (`#/produtiva`): página de boas-vindas com o que é a Produtiva e as áreas
   de atuação (cada uma abre os escopos do grupo), as 5 áreas da empresa com "o que faz" e "procure quando",
   os subnúcleos de Projetos (CIEP, CIT, CS), o caminho do primeiro contato ao projeto (SDR → closer → gerente

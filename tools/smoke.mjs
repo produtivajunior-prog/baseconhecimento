@@ -663,6 +663,47 @@ check(await page.evaluate(() => !window.va && !document.querySelector('script[sr
   check(errosM.length === 0, errosM.length ? `erros no monitoramento: ${errosM[0]}` : 'monitoramento sem erros de JavaScript');
   await pM.close();
 }
+// ---- Treinamentos: lista, módulo, teste rápido com progresso salvo, calculadora ES/PP, exercício Curva ABC e busca ----
+{
+  await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Treinamentos', exact: true }).first().click(); await page.waitForTimeout(400);
+  const tl = await texto();
+  check(/#\/treinamentos$/.test(await page.evaluate(() => location.hash)) && /Gestão de Estoque/.test(tl) && /7 módulos/.test(tl) && /Ainda não começou/.test(tl), 'menu "Treinamentos" abre a lista com o treinamento de Gestão de Estoque (#/treinamentos)');
+  await page.getByRole('button', { name: 'Começar →' }).first().click(); await page.waitForTimeout(400);
+  check(/#\/treinamento\/estoque\/1$/.test(await page.evaluate(() => location.hash)) && /MÓDULO 1 DE 7/.test(await texto()), 'Começar abre o módulo 1 (#/treinamento/estoque/1)');
+  // responde o teste do módulo 1 sempre com a primeira opção
+  const nQ = await page.locator('[data-quiz]').count();
+  for (let i = 0; i < nQ; i++) { await page.locator('[data-quiz]').nth(i).locator('button').first().click(); await page.waitForTimeout(120); }
+  const placar = await page.locator('[data-quiz-placar]').innerText().catch(() => '');
+  check(nQ === 3 && /de 3 certas/.test(placar) && /Certo\.|Não é essa\./.test(await texto()), `teste rápido corrige na hora e mostra o placar (${placar})`);
+  await page.reload(); await page.waitForTimeout(1200);
+  check(/#\/treinamento\/estoque\/1$/.test(await page.evaluate(() => location.hash)) && (await page.locator('[data-quiz-placar]').count()) === 1 && /1 de 7 módulos concluídos/.test(await texto()), 'F5 volta no mesmo módulo e o teste respondido continua salvo (1 de 7)');
+  await page.getByRole('button', { name: 'Refazer teste' }).click(); await page.waitForTimeout(200);
+  check((await page.locator('[data-quiz-placar]').count()) === 0 && /0 de 7 módulos concluídos/.test(await texto()), 'Refazer teste limpa as respostas do módulo');
+  // calculadora (módulo 5)
+  await page.evaluate(() => { location.hash = '#/treinamento/estoque/5'; }); await page.waitForTimeout(500);
+  const es = async () => (await page.locator('[data-calc="es"]').innerText()) + '/' + (await page.locator('[data-calc="pp"]').innerText());
+  check(/MÓDULO 5 DE 7/.test(await texto()) && (await es()) === '23/73', `calculadora ES/PP com o exemplo: ES 23 e PP 73 (${await es()})`);
+  await page.locator('input[data-calc="cm"]').fill('200'); await page.waitForTimeout(150);
+  check((await es()) === '23/123', `mudar o consumo recalcula o ponto de pedido (${await es()})`);
+  await page.locator('input[data-calc="tr"]').fill('abc'); await page.waitForTimeout(150);
+  check((await es()) === '—/—' && /Preencha os três campos/.test(await texto()), 'valor inválido não quebra a conta e explica o que falta');
+  // exercício ABC (módulo 4)
+  await page.evaluate(() => { location.hash = '#/treinamento/estoque/4'; }); await page.waitForTimeout(500);
+  const linhas = page.locator('select[data-abc]');
+  const nL = await linhas.count();
+  const gabarito = { 'Camisa de time oficial': 'A', 'Camisa básica branca': 'A', 'Cropped canelado': 'A', 'Short jeans': 'B', 'Camisa gola polo': 'B', 'Short moletom cinza': 'C', 'Camisa tie-dye': 'C', 'Embalagens': 'C', 'Camisa retrô': 'C', 'Chaveiro': 'C' };
+  for (let i = 0; i < nL; i++) { const nome = (await page.locator('[data-abc-linha]').nth(i).locator('[data-abc-nome]').innerText()).trim(); await page.locator('select[data-abc]').nth(i).selectOption(i === 0 ? (gabarito[nome] === 'A' ? 'C' : 'A') : gabarito[nome]); await page.waitForTimeout(60); }
+  await page.getByRole('button', { name: 'Conferir' }).click(); await page.waitForTimeout(250);
+  const pl = await page.locator('[data-abc-placar]').innerText().catch(() => '');
+  check(nL === 10 && pl === '9 de 10 classes certas' && /✗ era/.test(await texto()) && /Resolução/.test(await texto()) && /45%/.test(await texto()) && /80%/.test(await texto()), `Curva ABC: confere cada linha, aponta o erro e mostra a resolução com % acumulado (${pl})`);
+  // busca geral encontra um módulo
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Buscar em todo o Hangar' }).click(); await page.waitForTimeout(200);
+  await page.keyboard.type('ponto de pedido'); await page.waitForTimeout(400);
+  check(/Treinamentos/.test(await texto()) && /Treinamento Gestão de Estoque · módulo 5/.test(await texto()), 'busca geral acha os módulos do treinamento');
+  await page.keyboard.press('Escape'); await page.waitForTimeout(150);
+}
 await page.getByRole('button', { name: 'Monitoramento do Hangar (só administradores)' }).click(); await page.waitForTimeout(400);
 check(/#\/monitoramento$/.test(await page.evaluate(() => location.hash)), 'botão de monitoramento no topo do Hangar abre #/monitoramento');
 check(/só funciona no endereço da Vercel/.test(await texto()) && (await page.locator('#mon-senha').count()) === 0, 'fora da Vercel o monitoramento avisa e não pede senha');
