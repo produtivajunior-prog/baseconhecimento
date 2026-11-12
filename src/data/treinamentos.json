@@ -1,0 +1,778 @@
+[
+  {
+    "id": "estoque",
+    "titulo": "Gestão de Estoque",
+    "subtitulo": "Do conceito ao projeto: o que é estoque, como diagnosticar, priorizar com a Curva ABC, calcular quando comprar e entregar indicadores e plano de ação ao cliente.",
+    "publico": "Consultores que vão atuar em projetos do escopo Gestão de Estoque",
+    "duracao": "cerca de 1h30",
+    "escopoId": "gestao-de-estoque",
+    "responsavel": {
+      "nome": "Thiago Melo",
+      "email": "thiagomelo@produtivajunior.com.br"
+    },
+    "atualizado": "2026-11-12",
+    "fontes": [
+      {
+        "nome": "PTPJ 2026.1 — Gestão de Estoque (slides do treinamento)",
+        "url": "https://drive.google.com/file/d/1jOci0bLTH2D_YyGmZpuK14rLYwMOnlsf/view"
+      },
+      {
+        "nome": "Desafio Estoque — planilha do desafio (Grupo 1)",
+        "url": "https://docs.google.com/spreadsheets/d/1Qt4ViLx40bjsIjTYk2RIxj88cilI2EQpnwojdjyXH-Q/edit"
+      },
+      {
+        "nome": "[PPGP 2026] Revisão dos Escopos — Gestão de Estoque (slide 11)",
+        "url": ""
+      },
+      {
+        "nome": "Biblioteca do Hangar: Diagnóstico e Gestão de Estoque, Curva ABC, Estoque de Segurança e Ponto de Pedido, 5S, Banco de Indicadores, Kanban, RACI",
+        "url": ""
+      },
+      {
+        "nome": "Banco de cases: Mídia Digital (2026)",
+        "url": ""
+      }
+    ],
+    "modulos": [
+      {
+        "id": "o-que-e-estoque",
+        "titulo": "O que é estoque e por que gerir",
+        "resumo": "Conceito, exemplos, vantagens, desvantagens e os custos que o estoque gera.",
+        "minutos": 10,
+        "blocos": [
+          {
+            "tipo": "texto",
+            "texto": "Estoque é \"a acumulação armazenada de recursos materiais em um sistema de transformação\", e o termo também pode descrever qualquer recurso armazenado (Slack, Chambers e Johnston, 2009). No PTPJ ele é chamado de \"o coração da empresa\": quando falha, falta produto na venda ou sobra capital parado na prateleira."
+          },
+          {
+            "tipo": "destaque",
+            "titulo": "Gestão de estoque não é só a prateleira",
+            "texto": "Ela envolve pessoas (quem compra, recebe, guarda e dá baixa), processos (compra, conferência, armazenagem e expedição) e tecnologia (planilha ou sistema com os saldos)."
+          },
+          {
+            "tipo": "lista",
+            "titulo": "Todo negócio tem algum estoque",
+            "itens": [
+              "Hotelaria: materiais de limpeza, lençóis, bebidas",
+              "Saúde: seringas, gaze, bolsas de sangue, álcool",
+              "Varejo: produtos comercializados, papelão, sacolas plásticas",
+              "Universidade: projetores, cadeiras e mesas, papel A4"
+            ]
+          },
+          {
+            "tipo": "lista",
+            "titulo": "Vantagens de manter estoque",
+            "itens": [
+              "Garantir o atendimento ao cliente",
+              "Proteção contra a mudança de preços",
+              "Proteção contra as incertezas da demanda"
+            ]
+          },
+          {
+            "tipo": "lista",
+            "titulo": "Desvantagens",
+            "itens": [
+              "Obsolescência e perdas",
+              "Montante de capital parado",
+              "Custos relacionados ao estoque"
+            ]
+          },
+          {
+            "tipo": "lista",
+            "titulo": "Custos relacionados aos estoques",
+            "itens": [
+              "Custo de aquisição",
+              "Custo do pedido",
+              "Custo de transporte",
+              "Custo de armazenamento",
+              "Custo de controle",
+              "Custo de oportunidade de venda (o que se perde quando falta o item)"
+            ]
+          },
+          {
+            "tipo": "destaque",
+            "titulo": "Objetivo do projeto",
+            "texto": "Garantir que o cliente tenha o item certo, na quantidade certa, com o menor capital parado possível."
+          }
+        ],
+        "ferramentas": [
+          "gestao-de-estoque"
+        ],
+        "quiz": [
+          {
+            "pergunta": "Qual destes NÃO está entre os custos relacionados ao estoque vistos no treinamento?",
+            "opcoes": [
+              "Custo do pedido",
+              "Custo de armazenamento",
+              "Custo de oportunidade de venda",
+              "Custo de campanha de marketing"
+            ],
+            "correta": 3,
+            "explicacao": "Os custos do estoque são: aquisição, pedido, transporte, armazenamento, controle e oportunidade de venda. Marketing não entra nessa conta."
+          },
+          {
+            "pergunta": "Qual é uma DESVANTAGEM de manter estoque?",
+            "opcoes": [
+              "Garantir o atendimento ao cliente",
+              "Capital parado",
+              "Proteção contra a mudança de preços",
+              "Proteção contra as incertezas da demanda"
+            ],
+            "correta": 1,
+            "explicacao": "Capital parado, obsolescência/perdas e os custos do estoque são as desvantagens. As outras três opções são vantagens."
+          },
+          {
+            "pergunta": "O cliente diz: \"estoque é só a prateleira\". Pelo treinamento, a gestão de estoque envolve:",
+            "opcoes": [
+              "Só contar os produtos",
+              "Pessoas, processos e tecnologia",
+              "Só o sistema de vendas",
+              "Só o setor de compras"
+            ],
+            "correta": 1,
+            "explicacao": "O estoque é o resultado de pessoas, processos e tecnologia. Arrumar só um deles não sustenta o controle."
+          }
+        ]
+      },
+      {
+        "id": "tipos-e-estrutura",
+        "titulo": "Tipos de estoque, cadastro e armazém",
+        "resumo": "Os quatro tipos de estoque, o padrão descritivo de materiais, o endereçamento e o inventário.",
+        "minutos": 12,
+        "blocos": [
+          {
+            "tipo": "lista",
+            "titulo": "Os quatro tipos de estoque",
+            "itens": [
+              "Estoque de segurança: a reserva para quando a demanda for maior que a esperada; compensa as incertezas do fornecimento.",
+              "Estoque de canal: o estoque em trânsito (navio, avião, caminhão).",
+              "Estoque de ciclo: o estoque em processo, quando cada setor fabrica e estoca uma parte do produto até a finalização.",
+              "Estoque de antecipação: especulativo, para flutuações de demanda grandes mas previsíveis (ex.: loja de brinquedos antes do Natal)."
+            ]
+          },
+          {
+            "tipo": "texto",
+            "texto": "Padrão descritivo de materiais: cada SKU precisa de código interno, código de barras, descrição do produto e especificações (caixa, cor, tamanho). Sem cadastro padronizado, o mesmo item aparece com nomes diferentes e nenhum indicador fecha."
+          },
+          {
+            "tipo": "destaque",
+            "titulo": "Endereçamento do armazém",
+            "texto": "A posição de cada item é dada por rua, prédio e apartamento. Assim qualquer pessoa encontra e guarda o item no lugar certo, e a contagem segue uma ordem."
+          },
+          {
+            "tipo": "texto",
+            "texto": "Inventário: contar o físico e comparar com o sistema. É ele que mede a acuracidade inicial e mostra se os dados do cliente servem para calcular alguma coisa."
+          },
+          {
+            "tipo": "lista",
+            "titulo": "5S na área de materiais",
+            "itens": [
+              "Seiri (utilização): o item ainda é necessário? Em que quantidade?",
+              "Seiton (organização): onde cada item fica; os mais usados mais perto",
+              "Seiso (limpeza): o que limpar, quando, por quem e como",
+              "Seiketsu (padronização/saúde): placas, iluminação, padrões visuais",
+              "Shitsuke (disciplina): auditorias com checklist para virar hábito"
+            ]
+          },
+          {
+            "tipo": "destaque",
+            "titulo": "Cuidado",
+            "texto": "Sem o 4º e o 5º S o ambiente volta ao estado anterior em semanas. E não descarte nada sem aprovação do responsável."
+          }
+        ],
+        "ferramentas": [
+          "5s",
+          "gestao-de-estoque"
+        ],
+        "quiz": [
+          {
+            "pergunta": "Uma loja de brinquedos compra muito mais antes do Natal. Que tipo de estoque é esse?",
+            "opcoes": [
+              "Segurança",
+              "Canal",
+              "Ciclo",
+              "Antecipação"
+            ],
+            "correta": 3,
+            "explicacao": "Estoque de antecipação é o especulativo, para uma alta de demanda grande mas previsível, como o Natal."
+          },
+          {
+            "pergunta": "Mercadoria que está no caminhão a caminho da loja é estoque de:",
+            "opcoes": [
+              "Canal",
+              "Segurança",
+              "Ciclo",
+              "Antecipação"
+            ],
+            "correta": 0,
+            "explicacao": "Estoque de canal é o estoque em trânsito."
+          },
+          {
+            "pergunta": "No endereçamento usado nos projetos, a posição de um item é dada por:",
+            "opcoes": [
+              "Rua, prédio e apartamento",
+              "Fornecedor, lote e validade",
+              "Cor, tamanho e preço",
+              "Só o código de barras"
+            ],
+            "correta": 0,
+            "explicacao": "Rua, prédio e apartamento. O código de barras identifica o item; o endereço diz onde ele está."
+          }
+        ]
+      },
+      {
+        "id": "metodo",
+        "titulo": "O método: averiguar, analisar e controlar",
+        "resumo": "As três fases do projeto, o que perguntar ao cliente, as etapas do escopo e os riscos.",
+        "minutos": 12,
+        "blocos": [
+          {
+            "tipo": "lista",
+            "titulo": "1. Averiguar",
+            "itens": [
+              "Conhecer o ambiente do estoque (vá ao local, fotografe)",
+              "Entender o fluxo principal: compra → recebimento → armazenagem → venda",
+              "Entender as variáveis do estoque",
+              "Ver como as informações e os dados são obtidos"
+            ]
+          },
+          {
+            "tipo": "lista",
+            "titulo": "2. Analisar",
+            "itens": [
+              "Quais erros de processo causam baixa confiabilidade dos dados?",
+              "Ferramentas da qualidade para diagnosticar e planejar",
+              "Curva ABC para priorizar os itens"
+            ]
+          },
+          {
+            "tipo": "lista",
+            "titulo": "3. Controlar",
+            "itens": [
+              "Parâmetros de reposição: estoque de segurança, ponto de pedido e lote",
+              "Indicadores: acuracidade, exposição à ruptura, giro e cobertura",
+              "Estratégias de estoque e plano de ação"
+            ]
+          },
+          {
+            "tipo": "lista",
+            "titulo": "O que saber do cliente (PPGP 2026)",
+            "itens": [
+              "Qual o sistema de estoque",
+              "Se faz inventário e com que frequência",
+              "Quantos SKUs e quantos itens tem",
+              "Se há uma pessoa responsável pelo estoque",
+              "Como é o processo de compra, conferência e alimentação do estoque",
+              "Se tem indicadores",
+              "Se os produtos têm sazonalidade"
+            ]
+          },
+          {
+            "tipo": "lista",
+            "titulo": "Perguntas para a primeira reunião",
+            "itens": [
+              "Como vocês decidem hoje quando e quanto comprar?",
+              "Quais produtos mais faltam e quais mais sobram?",
+              "Quanto tempo o fornecedor leva para entregar depois do pedido?",
+              "O saldo do sistema costuma bater com o que está na prateleira?",
+              "Quem é responsável por receber, guardar e dar baixa nos itens?"
+            ]
+          },
+          {
+            "tipo": "texto",
+            "texto": "As 14 etapas do escopo seguem essa lógica: entendimento do negócio (BMC), estrutura do estoque, mapeamento AS IS de ressuprimento e armazenagem (BPMN), necessidades dos clientes, tratamento dos dados, Curva ABC, custos de armazenagem, organização da área de materiais, método de controle, armazenamento, indicadores, processos TO BE, ferramenta de acompanhamento e planos de ação."
+          },
+          {
+            "tipo": "destaque",
+            "titulo": "Riscos do escopo",
+            "texto": "O cliente não implementar o que foi entregue, e o cliente achar que a Produtiva vai contar o estoque. Deixe claro desde o início que a equipe desenha o método e a ferramenta, e quem opera é a equipe do cliente."
+          }
+        ],
+        "ferramentas": [
+          "gestao-de-estoque",
+          "bmc",
+          "bpmn"
+        ],
+        "quiz": [
+          {
+            "pergunta": "Qual a ordem das fases do método?",
+            "opcoes": [
+              "Controlar → Analisar → Averiguar",
+              "Averiguar → Analisar → Controlar",
+              "Analisar → Averiguar → Controlar",
+              "Averiguar → Controlar → Analisar"
+            ],
+            "correta": 1,
+            "explicacao": "Primeiro averiguar (conhecer o estoque e os dados), depois analisar (erros e Curva ABC) e por fim controlar (parâmetros, indicadores e plano)."
+          },
+          {
+            "pergunta": "Antes de calcular estoque de segurança e ponto de pedido, o que é preciso garantir?",
+            "opcoes": [
+              "Que o dashboard esteja pronto",
+              "Que o saldo seja confiável (medir a acuracidade com inventário)",
+              "Que todos os itens sejam classe A",
+              "Que o cliente troque de fornecedor"
+            ],
+            "correta": 1,
+            "explicacao": "Parâmetros calculados sobre um saldo errado dão decisões erradas. Meça a acuracidade antes."
+          },
+          {
+            "pergunta": "Um risco apontado no PPGP 2026 para este escopo é o cliente achar que:",
+            "opcoes": [
+              "A Produtiva vai contar o estoque",
+              "A Curva ABC é obrigatória por lei",
+              "O projeto dura uma semana",
+              "O 5S substitui o inventário"
+            ],
+            "correta": 0,
+            "explicacao": "\"Achar que vamos contar o estoque\" está nos riscos do escopo, junto com \"cliente não implementar\"."
+          }
+        ]
+      },
+      {
+        "id": "curva-abc",
+        "titulo": "Priorizar com a Curva ABC",
+        "resumo": "Como classificar os itens em A, B e C, o que fazer com cada classe e um exercício para praticar.",
+        "minutos": 15,
+        "blocos": [
+          {
+            "tipo": "texto",
+            "texto": "A Curva ABC usa o princípio de Pareto (80-20): poucos itens concentram a maior parte do resultado. Ela mostra onde focar compras, controle e exposição."
+          },
+          {
+            "tipo": "lista",
+            "titulo": "Passo a passo",
+            "itens": [
+              "Escolha o critério: volume de vendas, faturamento ou lucro. Para estoque, o mais comum é o valor (quantidade × custo unitário).",
+              "Levante e limpe os dados do período (idealmente 12 meses): tire duplicidades e padronize unidades.",
+              "Calcule o valor de cada item e ordene do maior para o menor.",
+              "Calcule o % individual (valor ÷ total × 100) e o % acumulado; o último item fecha em 100%.",
+              "Classifique: A = até 80% do acumulado; B = de 80% a 90%; C = de 90% a 100%.",
+              "Plote o gráfico de Pareto e defina ações por classe."
+            ]
+          },
+          {
+            "tipo": "formula",
+            "titulo": "% acumulado",
+            "formula": "% acumulado(i) = % acumulado(i − 1) + % item(i)",
+            "legenda": [
+              "% item = valor do item ÷ soma de todos os itens × 100"
+            ]
+          },
+          {
+            "tipo": "lista",
+            "titulo": "O que fazer com cada classe",
+            "itens": [
+              "A: prioridade de controle e de exposição, estoque de segurança e lugar estratégico no armazém",
+              "B: vender como complemento dos itens A para terem mais saída",
+              "C: promoções e queima de estoque para dar vazão"
+            ]
+          },
+          {
+            "tipo": "destaque",
+            "titulo": "Cuidados",
+            "texto": "Registre o critério e os cortes usados (alguns projetos usam 80/15/5). Por faturamento, itens de baixa margem podem parecer bons: compare com a curva por lucro. E atualize a curva periodicamente."
+          }
+        ],
+        "ferramentas": [
+          "curva-abc",
+          "diagrama-de-pareto"
+        ],
+        "exercicio": "abc",
+        "quiz": [
+          {
+            "pergunta": "Qual é o corte padrão do treinamento para as classes?",
+            "opcoes": [
+              "A até 50%, B até 80%, C o resto",
+              "A até 80%, B de 80% a 90%, C de 90% a 100%",
+              "A até 90%, B até 95%, C o resto",
+              "A, B e C com um terço dos itens cada"
+            ],
+            "correta": 1,
+            "explicacao": "A até 80% do resultado acumulado, B de 80% a 90% e C de 90% a 100%. Se usar outro corte, registre qual."
+          },
+          {
+            "pergunta": "O que o treinamento recomenda para os itens da classe C?",
+            "opcoes": [
+              "Prioridade de exposição",
+              "Aumentar o estoque de segurança",
+              "Promoções e queima de estoque para dar vazão",
+              "Vender como complemento dos itens A"
+            ],
+            "correta": 2,
+            "explicacao": "C: promoções e queima de estoque. A: prioridade e exposição. B: complemento dos itens A."
+          },
+          {
+            "pergunta": "Por que comparar a curva por faturamento com a curva por lucro?",
+            "opcoes": [
+              "Porque o faturamento pode esconder itens de baixa margem",
+              "Porque a curva por lucro é obrigatória",
+              "Porque o faturamento ignora a quantidade vendida",
+              "Não há motivo; dão sempre o mesmo resultado"
+            ],
+            "correta": 0,
+            "explicacao": "Um item pode vender muito e dar pouca margem. A curva por lucro mostra o que realmente sustenta o resultado."
+          }
+        ]
+      },
+      {
+        "id": "parametros",
+        "titulo": "Quando e quanto comprar",
+        "resumo": "Nível de serviço, estoque de segurança, ponto de pedido e lote econômico, com calculadora.",
+        "minutos": 15,
+        "blocos": [
+          {
+            "tipo": "texto",
+            "texto": "Nível de serviço é o índice de disponibilidade: garante que o produto esteja no estoque em x% das vezes em que a demanda surge. Cada nível corresponde a um fator z: 90% → 1,28; 95% → 1,65; 99% → 2,33."
+          },
+          {
+            "tipo": "formula",
+            "titulo": "Estoque de segurança",
+            "formula": "ES = z × σ × √TR",
+            "legenda": [
+              "z = fator do nível de serviço",
+              "σ = desvio padrão do consumo por período",
+              "TR = tempo de reposição, na mesma unidade de tempo do consumo"
+            ]
+          },
+          {
+            "tipo": "formula",
+            "titulo": "Ponto de pedido",
+            "formula": "PP = (CM × TR) + ES",
+            "legenda": [
+              "CM = consumo médio por período",
+              "Quando o saldo chega no PP, dispare o pedido"
+            ]
+          },
+          {
+            "tipo": "destaque",
+            "titulo": "Exemplo",
+            "texto": "Consumo médio de 100 un/mês, σ = 20 un/mês, TR = 0,5 mês e nível de serviço de 95% (z = 1,65): ES = 1,65 × 20 × √0,5 ≈ 23 un; PP = 100 × 0,5 + 23 = 73 un. Teste outros valores na calculadora abaixo."
+          },
+          {
+            "tipo": "formula",
+            "titulo": "Lote econômico de compra",
+            "formula": "LEC = √(2 × D × Cp ÷ Cc)",
+            "legenda": [
+              "D = demanda",
+              "Cp = custo do pedido",
+              "Cc = custo de carregamento (manter o item em estoque)"
+            ]
+          },
+          {
+            "tipo": "formula",
+            "titulo": "Lote econômico de produção",
+            "formula": "LEP = √(2 × A × C ÷ (I × (1 − C ÷ w)))",
+            "legenda": [
+              "A = custo de preparação",
+              "C = consumo anual",
+              "I = custo de armazenagem",
+              "w = capacidade de produção"
+            ]
+          },
+          {
+            "tipo": "lista",
+            "titulo": "Cuidados",
+            "itens": [
+              "Use a mesma unidade de tempo para σ, CM e TR",
+              "Nível de serviço alto demais aumenta muito o estoque: diferencie por classe ABC",
+              "Recalcule quando mudar o fornecedor, a sazonalidade ou a tendência",
+              "Não serve para itens sob encomenda, demanda muito irregular ou sem pelo menos 6 períodos de histórico"
+            ]
+          }
+        ],
+        "ferramentas": [
+          "estoque-de-seguranca-e-ponto-de-pedido"
+        ],
+        "exercicio": "es-pp",
+        "quiz": [
+          {
+            "pergunta": "Consumo médio de 100 un/mês, σ = 20, TR = 0,5 mês e nível de serviço de 95% (z = 1,65). O estoque de segurança é aproximadamente:",
+            "opcoes": [
+              "16 un",
+              "23 un",
+              "33 un",
+              "50 un"
+            ],
+            "correta": 1,
+            "explicacao": "ES = 1,65 × 20 × √0,5 = 1,65 × 20 × 0,707 ≈ 23 un."
+          },
+          {
+            "pergunta": "Qual é a fórmula do ponto de pedido?",
+            "opcoes": [
+              "PP = z × σ × √TR",
+              "PP = (CM × TR) + ES",
+              "PP = CM ÷ TR",
+              "PP = √(2 × D × Cp ÷ Cc)"
+            ],
+            "correta": 1,
+            "explicacao": "PP = consumo médio × tempo de reposição + estoque de segurança. A primeira opção é a do ES e a última é a do lote econômico."
+          },
+          {
+            "pergunta": "Se o nível de serviço sobe de 95% para 99%, o estoque de segurança:",
+            "opcoes": [
+              "Diminui",
+              "Não muda",
+              "Aumenta, porque o z passa de 1,65 para 2,33",
+              "Vira zero"
+            ],
+            "correta": 2,
+            "explicacao": "O z cresce e o ES cresce junto. Por isso o nível de serviço alto se reserva aos itens que mais importam (classe A)."
+          }
+        ]
+      },
+      {
+        "id": "indicadores",
+        "titulo": "Indicadores e ferramenta de acompanhamento",
+        "resumo": "Acuracidade, ruptura, giro e cobertura, a planilha de controle e o case da Mídia Digital.",
+        "minutos": 12,
+        "blocos": [
+          {
+            "tipo": "formula",
+            "titulo": "Acuracidade",
+            "formula": "(informações corretas ÷ informações verificadas) × 100",
+            "legenda": [
+              "Mostra se o sistema é confiável"
+            ]
+          },
+          {
+            "tipo": "formula",
+            "titulo": "Exposição à ruptura",
+            "formula": "(dias abaixo do ES ÷ dias do período) × 100",
+            "legenda": [
+              "% do tempo em que o item ficou exposto a faltar"
+            ]
+          },
+          {
+            "tipo": "formula",
+            "titulo": "Giro de estoque",
+            "formula": "vendas no período ÷ estoque médio no período",
+            "legenda": [
+              "Quantas vezes o estoque se renovou (venda e reposição)"
+            ]
+          },
+          {
+            "tipo": "formula",
+            "titulo": "Cobertura de estoque",
+            "formula": "estoque atual ÷ média de vendas por período",
+            "legenda": [
+              "Por quanto tempo o estoque atende a demanda sem reposição"
+            ]
+          },
+          {
+            "tipo": "texto",
+            "texto": "Escolha poucos indicadores que o cliente consegue acompanhar (o Banco de Indicadores tem a fórmula de cada um) e coloque-os numa planilha de controle com alerta quando o saldo chegar no ponto de pedido, mais um painel visual (ex.: Looker Studio)."
+          },
+          {
+            "tipo": "destaque",
+            "titulo": "Case: Mídia Digital (2026)",
+            "texto": "Gráfica com mais de 2.500 SKUs e saldo que não batia com o físico. A equipe priorizou a contagem pela Curva ABC (A semanal, B a cada duas semanas, C mensal, mais uma lista de itens importantes que não são A), comparou a contagem com o sistema num dashboard, organizou o estoque no sistema pelo layout físico e definiu responsáveis com uma matriz RACI."
+          },
+          {
+            "tipo": "lista",
+            "titulo": "Aprendizados do case",
+            "itens": [
+              "Em empresa grande, reserve cerca de três sprints só para imersão",
+              "Em inventários muito grandes, priorize a contagem pela Curva ABC em vez de tentar contar tudo",
+              "Registre métricas de antes e depois desde o início: o resultado do estoque ficou sem número"
+            ]
+          }
+        ],
+        "ferramentas": [
+          "banco-de-indicadores",
+          "dashboard-looker-studio",
+          "raci",
+          "kanban"
+        ],
+        "case": "midia-digital-2026-gestao-de-estoque",
+        "quiz": [
+          {
+            "pergunta": "Qual é a fórmula do giro de estoque?",
+            "opcoes": [
+              "Estoque atual ÷ média de vendas",
+              "Vendas no período ÷ estoque médio no período",
+              "Dias abaixo do ES ÷ dias do período",
+              "Informações corretas ÷ verificadas"
+            ],
+            "correta": 1,
+            "explicacao": "Giro = vendas ÷ estoque médio. A primeira opção é a cobertura, a terceira a exposição à ruptura e a última a acuracidade."
+          },
+          {
+            "pergunta": "O sistema diz 100 unidades e a contagem acha 50. Que indicador mede esse problema?",
+            "opcoes": [
+              "Giro",
+              "Cobertura",
+              "Acuracidade",
+              "Lote econômico"
+            ],
+            "correta": 2,
+            "explicacao": "Acuracidade mede a confiabilidade da informação do sistema em relação ao físico."
+          },
+          {
+            "pergunta": "Na Mídia Digital, como a contagem foi priorizada?",
+            "opcoes": [
+              "Todos os itens contados toda semana",
+              "Por Curva ABC: A semanal, B a cada duas semanas e C mensal",
+              "Só os itens C, por serem mais numerosos",
+              "Inventário anual completo"
+            ],
+            "correta": 1,
+            "explicacao": "Com mais de 2.500 SKUs, contar tudo era inviável. A Curva ABC definiu a frequência de cada classe."
+          }
+        ]
+      },
+      {
+        "id": "entrega",
+        "titulo": "Estratégias, entregáveis e desafio prático",
+        "resumo": "Estratégias de estoque, o que entregar ao cliente e o desafio Cruz e Credo do PTPJ.",
+        "minutos": 14,
+        "blocos": [
+          {
+            "tipo": "lista",
+            "titulo": "Estratégias de estoque citadas no treinamento",
+            "itens": [
+              "Dinâmica de pulmões: manter um estoque-pulmão planejado entre as etapas para absorver variações",
+              "Cross docking: receber e expedir a mercadoria quase direto, sem armazená-la",
+              "Sistema de gavetas: separar o estoque em duas gavetas; quando a primeira esvazia, é hora de repor"
+            ]
+          },
+          {
+            "tipo": "lista",
+            "titulo": "Entregáveis do escopo (PPGP 2026)",
+            "itens": [
+              "BMC e macroprocesso",
+              "Fluxogramas e POPs",
+              "DCO e RACI",
+              "Curva ABC",
+              "Planilha de controle de estoque",
+              "Indicadores de estoque",
+              "Relatório de 5S",
+              "Manual e vídeos do sistema"
+            ]
+          },
+          {
+            "tipo": "destaque",
+            "titulo": "Leve plano de ação, não só números",
+            "texto": "No desafio do PTPJ, os gestores diziam que uma consultoria que mostra apenas números é desperdício de tempo e dinheiro. Entregue visual claro (dashboard) e um plano de ação com responsáveis."
+          },
+          {
+            "tipo": "lista",
+            "titulo": "Desafio Cruz e Credo (PTPJ 2026.1)",
+            "itens": [
+              "Contexto: empresários de maquiagem internacional há 10 anos; o negócio cresceu em 2025, as compras se multiplicaram e eles não sabem quando nem o que comprar",
+              "Analise os produtos pelo histórico de vendas (Curva ABC)",
+              "Calcule indicadores que ajudem os gestores a enxergar o estoque",
+              "Monte um dashboard no Looker Studio (obrigatório no desafio)",
+              "Feche com um plano de ação: é o que os gestores mais cobram"
+            ]
+          },
+          {
+            "tipo": "destaque",
+            "titulo": "Para treinar de verdade",
+            "texto": "Pegue a planilha do desafio (link nas fontes do treinamento), faça a Curva ABC, calcule ES e PP dos itens A e monte um painel de uma página com o plano de ação. Peça para o responsável pelo escopo revisar."
+          }
+        ],
+        "ferramentas": [
+          "5s",
+          "pop",
+          "raci",
+          "dashboard-looker-studio"
+        ],
+        "quiz": [
+          {
+            "pergunta": "No desafio do PTPJ, o que os gestores mais cobravam da consultoria?",
+            "opcoes": [
+              "Mais números e tabelas",
+              "Planos de ação e informação visual",
+              "Um novo sistema de vendas",
+              "Contagem do estoque pela equipe"
+            ],
+            "correta": 1,
+            "explicacao": "Os gestores tinham dificuldade com muitos números e sempre tocavam nos planos de ação. Dashboard visual e plano de ação são obrigatórios."
+          },
+          {
+            "pergunta": "Qual senso do 5S transforma o novo padrão em hábito?",
+            "opcoes": [
+              "Seiri (utilização)",
+              "Seiton (organização)",
+              "Seiso (limpeza)",
+              "Shitsuke (disciplina)"
+            ],
+            "correta": 3,
+            "explicacao": "Shitsuke é a disciplina: auditorias com checklist para o padrão se manter."
+          },
+          {
+            "pergunta": "No cross docking, a mercadoria:",
+            "opcoes": [
+              "Fica meses armazenada",
+              "É recebida e expedida quase direto, sem armazenagem",
+              "É produzida em lotes econômicos",
+              "Só é contada no inventário anual"
+            ],
+            "correta": 1,
+            "explicacao": "Cross docking reduz armazenagem: o que chega já segue para a expedição."
+          }
+        ]
+      }
+    ],
+    "exercicioAbc": {
+      "enunciado": "Uma loja de roupas quer saber onde focar o controle. Calcule o valor de cada item (quantidade vendida × custo unitário), ordene, calcule o % acumulado e classifique em A (até 80%), B (de 80% a 90%) ou C (acima de 90%).",
+      "cortes": [
+        80,
+        90
+      ],
+      "itens": [
+        {
+          "nome": "Short moletom cinza",
+          "qtd": 30,
+          "custo": 10
+        },
+        {
+          "nome": "Camisa de time oficial",
+          "qtd": 150,
+          "custo": 30
+        },
+        {
+          "nome": "Embalagens",
+          "qtd": 50,
+          "custo": 4
+        },
+        {
+          "nome": "Cropped canelado",
+          "qtd": 80,
+          "custo": 15
+        },
+        {
+          "nome": "Camisa tie-dye",
+          "qtd": 25,
+          "custo": 10
+        },
+        {
+          "nome": "Camisa básica branca",
+          "qtd": 100,
+          "custo": 23
+        },
+        {
+          "nome": "Chaveiro",
+          "qtd": 20,
+          "custo": 5
+        },
+        {
+          "nome": "Short jeans",
+          "qtd": 40,
+          "custo": 15
+        },
+        {
+          "nome": "Camisa retrô",
+          "qtd": 10,
+          "custo": 15
+        },
+        {
+          "nome": "Camisa gola polo",
+          "qtd": 50,
+          "custo": 8
+        }
+      ]
+    }
+  }
+]

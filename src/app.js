@@ -16,6 +16,8 @@ class Component extends DCLogic {
     embedBloqueado: false,
     formCase: this.formCaseVazio(),
     caseEditandoId: null,
+    treinoId: null, treinoMod: 0, treinoProg: this.carregarLocal('hangar.treinos', {}),
+    calcEs: { cm: '100', sigma: '20', tr: '0,5', nivel: '95' }, abcResp: {}, abcConferido: false,
     caseErro: '',
     caseFiltroFerr: '',
     filtrosAbertos: false,
@@ -78,6 +80,7 @@ class Component extends DCLogic {
   CASES = DADOS.cases;
   // Trilha do primeiro projeto e glossário — src/data/trilha.json.
   TRILHA = DADOS.trilha || { passos: [], glossario: [] };
+  TREINOS = DADOS.treinamentos || [];
   // Página "Como funciona a Produtiva" — src/data/produtiva.json.
   PRODUTIVA = DADOS.produtiva || { oQueE: { atuacao: [] }, areas: [], fluxo: { passos: [] }, membro: { itens: [] } };
 
@@ -727,6 +730,8 @@ class Component extends DCLogic {
           open: () => this.openEscopo(e.id) })) },
       { key:'glossario', label:'Glossário', itens: (this.TRILHA.glossario || []).map(g => ({ titulo: g.sigla + (g.nome ? ' — ' + g.nome : ''), sub: 'Glossário',
           textos: [g.sigla, g.nome, g.definicao], open: () => this.irParaTela('comece', 'glossario', { glossQuery: g.sigla }) })) },
+      { key:'treinamentos', label:'Treinamentos', itens: this.TREINOS.flatMap(t => (t.modulos || []).map((m, i) => ({ titulo: m.titulo, sub: 'Treinamento ' + t.titulo + ' · módulo ' + (i + 1),
+          textos: [m.titulo, m.resumo, ...this.textosDe(m.blocos), ...(m.quiz || []).map(q => q.pergunta)], open: () => this.abrirTreino(t.id, i) }))) },
       { key:'trilha', label:'Comece aqui', itens: (this.TRILHA.passos || []).map((p, i) => ({ titulo: p.titulo, sub: 'Comece aqui · passo ' + (i + 1),
           textos: [p.titulo, p.texto], open: () => this.irParaTela('comece', 'trilha-' + p.id) })) },
       { key:'produtiva', label:'Como funciona a Produtiva', itens: [
@@ -1033,6 +1038,7 @@ class Component extends DCLogic {
       case 'comece': return '#/comece';
       case 'produtiva': return '#/produtiva';
       case 'auxilios': return '#/auxilios';
+      case 'treinamentos': return s.treinoId ? '#/treinamento/' + s.treinoId + '/' + ((s.treinoMod || 0) + 1) : '#/treinamentos';
       case 'monitoramento': return '#/monitoramento';
       default: return '#/';
     }
@@ -1056,6 +1062,8 @@ class Component extends DCLogic {
     else if (tela === 'comece') this.nav('comece');
     else if (tela === 'produtiva') this.nav('produtiva');
     else if (tela === 'auxilios') this.nav('auxilios');
+    else if (tela === 'treinamentos') this.setState({ screen: 'treinamentos', treinoId: null });
+    else if (tela === 'treinamento' && this.TREINOS.some(t => t.id === id)) this.abrirTreino(id, (Number(acao) || 1) - 1);
     else if (tela === 'monitoramento') this.abrirMonitoramento();
     else if (this.state.screen !== 'home') this.nav('home');
   }
@@ -1111,7 +1119,7 @@ class Component extends DCLogic {
     this.contarTempo();
     if (h === '#/monitoramento') return; // a tela dos administradores não entra na conta
     const path = '/' + h.replace(/^#\/?/, '');
-    const route = path.replace(/^\/(ferramenta|escopo|case)\/.+/, '/$1/[id]');
+    const route = path.replace(/^\/(ferramenta|escopo|case|treinamento)\/.+/, '/$1/[id]');
     window.va('pageview', { route, path });
     this._telaAtual = { tela: path.split('/')[1] || 'inicio', desde: Date.now(), ms: 0 };
   }
@@ -1153,7 +1161,7 @@ class Component extends DCLogic {
   monRotuloTela(tela) {
     return ({ inicio: 'Início', biblioteca: 'Biblioteca', ferramenta: 'Ficha de ferramenta', escopos: 'Escopos', escopo: 'Escopo aberto',
       cases: 'Banco de cases', case: 'Ficha de case', cadastrar: 'Cadastrar', docs: 'Documentação', recomendar: 'Recomendar',
-      comece: 'Comece aqui', produtiva: 'Como funciona', auxilios: 'Auxílios' })[tela] || tela;
+      comece: 'Comece aqui', produtiva: 'Como funciona', auxilios: 'Auxílios', treinamentos: 'Treinamentos', treinamento: 'Treinamento' })[tela] || tela;
   }
   // "/escopo/estruturacao-comercial" → { tipo: 'Escopo', nome: 'Estruturação Comercial' }
   monRotuloPagina(path) {
@@ -1162,6 +1170,7 @@ class Component extends DCLogic {
     if (tela === 'escopo') { const e = this.escopoPorId(id); return { tipo: 'Escopo', nome: e ? e.nome : id }; }
     if (tela === 'case') { const c = this.allCases().find(x => x.id === id); return { tipo: 'Case', nome: c ? c.cliente : id }; }
     if (tela === 'cases' && id === 'novo') return { tipo: 'Tela', nome: 'Novo case' };
+    if (tela === 'treinamento') { const t = this.TREINOS.find(x => x.id === id); return { tipo: 'Treinamento', nome: t ? t.titulo : id }; }
     return { tipo: 'Tela', nome: this.monRotuloTela(tela || 'inicio') };
   }
   monDuracao(seg) {
@@ -1187,7 +1196,7 @@ class Component extends DCLogic {
       monAtualizar: () => this.carregarMonitoramento(this.monSenhaGuardada(), m.dias), monSair: () => this.sairMonitoramento(),
       monBotaoEntrar: m.carregando ? 'Entrando…' : 'Entrar' };
     if (!d) return base;
-    const telasConteudo = (d.paginas || []).filter(p => /^\/(ferramenta|escopo|case)\//.test(p.nome));
+    const telasConteudo = (d.paginas || []).filter(p => /^\/(ferramenta|escopo|case|treinamento)\//.test(p.nome));
     const serieMax = Math.max(1, ...d.serie.map(p => p.visitas));
     const fmtT = (iso) => { const t = new Date(iso); return d.periodo.dias === 1 ? String((t.getUTCHours() + 21) % 24).padStart(2, '0') + 'h' : String(t.getUTCDate()).padStart(2, '0') + '/' + String(t.getUTCMonth() + 1).padStart(2, '0'); };
     const horaMax = Math.max(1, ...d.porHora);
@@ -1221,6 +1230,112 @@ class Component extends DCLogic {
       monUso: num(d.usoMes.eventos) + ' de ' + num(d.usoMes.limite) + ' eventos', monUsoPct: usoPct, monUsoCor: usoPct >= 80 ? '#C9942A' : '#3DAFC7',
       monUsoAlerta: usoPct >= 80, monUsoTexto: 'Desde o dia 1 deste mês. Cada visita e cada medição de tempo contam um evento; no plano grátis a Vercel pausa a contagem ao chegar no limite e guarda só 1 mês de histórico.',
       monAtualizado: m.atualizado ? 'Atualizado às ' + m.atualizado.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '' };
+  }
+  // ===== Treinamentos (src/data/treinamentos.json): módulos com conteúdo, teste rápido e exercícios =====
+  // Progresso fica neste navegador: hangar.treinos = { <treino>: { quiz: { <módulo>: [opção escolhida por pergunta] } } }
+  abrirTreinamentos() { this.setState({ screen: 'treinamentos', treinoId: null }); if (typeof window !== 'undefined') window.scrollTo(0, 0); }
+  abrirTreino(id, mod) {
+    const t = this.TREINOS.find(x => x.id === id); if (!t) return;
+    const n = Math.max(0, Math.min((t.modulos || []).length - 1, Number(mod) || 0));
+    this.setState({ screen: 'treinamentos', treinoId: id, treinoMod: n });
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
+  }
+  responderTreino(treino, mod, q, op) {
+    const prog = { ...(this.state.treinoProg || {}) }; const t = { ...(prog[treino] || {}) }; const quiz = { ...(t.quiz || {}) };
+    const resp = (quiz[mod] || []).slice(); if (resp[q] !== undefined && resp[q] !== null) return; // resposta não muda: refaça o teste
+    resp[q] = op; quiz[mod] = resp; t.quiz = quiz; prog[treino] = t;
+    this.salvarLocal('hangar.treinos', prog); this.setState({ treinoProg: prog });
+  }
+  refazerTesteTreino(treino, mod) {
+    const prog = { ...(this.state.treinoProg || {}) }; const t = { ...(prog[treino] || {}) }; const quiz = { ...(t.quiz || {}) };
+    delete quiz[mod]; t.quiz = quiz; prog[treino] = t;
+    this.salvarLocal('hangar.treinos', prog); this.setState({ treinoProg: prog });
+  }
+  // Situação de um treinamento: módulos com teste respondido por inteiro e acertos.
+  treinoSituacao(t, prog) {
+    const quiz = ((prog || {})[t.id] || {}).quiz || {};
+    const mods = (t.modulos || []).map(m => { const r = quiz[m.id] || []; const n = (m.quiz || []).length;
+      const respondidas = (m.quiz || []).filter((_, i) => r[i] !== undefined && r[i] !== null).length;
+      const acertos = (m.quiz || []).filter((q, i) => r[i] === q.correta).length;
+      return { feito: n > 0 && respondidas === n, iniciado: respondidas > 0, acertos, n }; });
+    const feitos = mods.filter(x => x.feito).length;
+    return { mods, feitos, total: mods.length, acertos: mods.reduce((a, x) => a + x.acertos, 0), perguntas: mods.reduce((a, x) => a + x.n, 0) };
+  }
+  numBr(v) { const n = Number(String(v || '').trim().replace(/\./g, '').replace(',', '.')); return isFinite(n) ? n : NaN; }
+  fmtNum(n, casas) { return Number(n).toLocaleString('pt-BR', { maximumFractionDigits: casas === undefined ? 2 : casas, minimumFractionDigits: 0 }); }
+  // Curva ABC do exercício: valor = qtd × custo, ordena, % acumulado e classe pelos cortes (padrão 80/90).
+  abcResolucao(ex) {
+    const itens = (ex.itens || []).map((x, i) => ({ ...x, idx: i, valor: x.qtd * x.custo }));
+    const total = itens.reduce((a, x) => a + x.valor, 0) || 1; const [ca, cb] = ex.cortes || [80, 90];
+    let acum = 0;
+    return itens.slice().sort((a, b) => b.valor - a.valor).map(x => { const pct = x.valor / total * 100; acum += pct;
+      return { ...x, pct, acum, classe: acum <= ca + 1e-9 ? 'A' : acum <= cb + 1e-9 ? 'B' : 'C' }; });
+  }
+  treinoVals(s) {
+    const prog = s.treinoProg || {}; const brl = (v) => 'R$ ' + this.fmtNum(v, 2);
+    const treinosLista = this.TREINOS.map(t => { const sit = this.treinoSituacao(t, prog);
+      return { ...t, nModulos: sit.total, minutos: (t.modulos || []).reduce((a, m) => a + (m.minutos || 0), 0),
+        progressoTexto: sit.feitos ? sit.feitos + ' de ' + sit.total + ' módulos concluídos' : 'Ainda não começou',
+        pct: sit.total ? Math.round(sit.feitos / sit.total * 100) : 0, botao: sit.feitos === sit.total && sit.total ? 'Rever' : sit.feitos || sit.mods.some(m => m.iniciado) ? 'Continuar' : 'Começar',
+        abrir: () => { const prox = sit.mods.findIndex(m => !m.feito); this.abrirTreino(t.id, prox < 0 ? 0 : prox); } }; });
+    const t = s.treinoId ? this.TREINOS.find(x => x.id === s.treinoId) : null;
+    const base = { treinosLista, hasTreinos: treinosLista.length > 0, treinoListaVisivel: !t, treinoAberto: !!t, voltarTreinos: () => this.abrirTreinamentos() };
+    if (!t) return base;
+    const sit = this.treinoSituacao(t, prog); const i = Math.max(0, Math.min(t.modulos.length - 1, s.treinoMod || 0)); const m = t.modulos[i];
+    const resp = ((prog[t.id] || {}).quiz || {})[m.id] || [];
+    const escopo = t.escopoId ? this.escopoPorId(t.escopoId) : null;
+    const blocos = (m.blocos || []).map(b => ({ ...b, isTexto: b.tipo === 'texto', isLista: b.tipo === 'lista', isFormula: b.tipo === 'formula', isDestaque: b.tipo === 'destaque',
+      hasTitulo: !!b.titulo, itens: b.itens || [], legenda: b.legenda || [], hasLegenda: !!(b.legenda && b.legenda.length) }));
+    const quiz = (m.quiz || []).map((q, qi) => { const r = resp[qi]; const respondida = r !== undefined && r !== null;
+      return { n: qi + 1, pergunta: q.pergunta, respondida, pendente: !respondida, acertou: respondida && r === q.correta, errou: respondida && r !== q.correta, explicacao: q.explicacao,
+        opcoes: q.opcoes.map((o, oi) => { const certa = oi === q.correta, escolhida = oi === r;
+          return { texto: o, letra: 'ABCDE'[oi], escolher: () => this.responderTreino(t.id, m.id, qi, oi),
+            bg: !respondida ? '#fff' : certa ? '#EAF7EE' : escolhida ? '#FCEDEE' : '#fff', borda: !respondida ? '#DCE7EB' : certa ? '#8FD0A8' : escolhida ? '#E6AFB5' : '#EEF3F5',
+            cor: !respondida ? '#163B45' : certa ? '#1F6B43' : escolhida ? '#9E2F3B' : '#9DAEB4', cursor: respondida ? 'default' : 'pointer',
+            marca: respondida && certa ? '✓' : respondida && escolhida ? '✗' : '' }; }) }; });
+    const ms = sit.mods[i];
+    // exercícios
+    const c = s.calcEs; const z = { '90': 1.28, '95': 1.65, '99': 2.33 }[c.nivel] || 1.65;
+    const cm = this.numBr(c.cm), sg = this.numBr(c.sigma), tr = this.numBr(c.tr);
+    const calcOk = [cm, sg, tr].every(v => isFinite(v) && v >= 0);
+    const es = calcOk ? Math.round(z * sg * Math.sqrt(tr)) : null; const pp = calcOk ? Math.round(cm * tr + es) : null;
+    const setCalc = (k) => (e) => { const v = e.target.value; this.setState(st => ({ calcEs: { ...st.calcEs, [k]: v } })); };
+    const ex = t.exercicioAbc || { itens: [] }; const resol = this.abcResolucao(ex); const porIdx = {}; resol.forEach(x => { porIdx[x.idx] = x; });
+    const abcAcertos = ex.itens.filter((_, k) => s.abcResp[k] === porIdx[k].classe).length;
+    const fontes = (t.fontes || []).map(f => ({ ...f, hasUrl: !!f.url, semUrl: !f.url }));
+    return { ...base, treino: t, treinoTitulo: t.titulo, treinoSub: t.subtitulo, treinoPublico: t.publico, treinoDuracao: t.duracao,
+      treinoPct: sit.total ? Math.round(sit.feitos / sit.total * 100) : 0, treinoProgressoTexto: sit.feitos + ' de ' + sit.total + ' módulos concluídos',
+      treinoConcluido: sit.total > 0 && sit.feitos === sit.total, treinoNota: sit.acertos + ' de ' + sit.perguntas + ' acertos nos testes',
+      treinoEscopo: escopo ? escopo.nome : '', hasTreinoEscopo: !!escopo, abrirTreinoEscopo: () => { if (escopo) this.openEscopo(escopo.id); },
+      treinoFontes: fontes, treinoResponsavel: (t.responsavel || {}).nome || '',
+      treinoModulos: t.modulos.map((x, k) => ({ n: k + 1, titulo: x.titulo, ativo: k === i, feito: sit.mods[k].feito, pendente: !sit.mods[k].feito,
+        bg: k === i ? '#EAF6F9' : 'transparent', cor: k === i ? '#163B45' : '#3C545B', peso: k === i ? '600' : '500', ir: () => this.abrirTreino(t.id, k) })),
+      modN: i + 1, modTotal: t.modulos.length, modTitulo: m.titulo, modResumo: m.resumo, modMinutos: m.minutos ? '~' + m.minutos + ' min' : '',
+      modBlocos: blocos, modFerramentas: (m.ferramentas || []).map(fid => this.allData().find(d => d.id === fid)).filter(Boolean).map(d => ({ nome: d.nome, abrir: () => this.openContent(d.id) })),
+      hasModFerramentas: (m.ferramentas || []).length > 0, modCase: m.case ? (this.allCases().find(x => x.id === m.case) || null) : null,
+      hasModCase: !!(m.case && this.allCases().some(x => x.id === m.case)), abrirModCase: () => { if (m.case) this.openCase(m.case); },
+      modCaseNome: m.case ? ((this.allCases().find(x => x.id === m.case) || {}).cliente || '') : '',
+      modQuiz: quiz, hasModQuiz: quiz.length > 0, modQuizFeito: ms.feito, modQuizPlacar: ms.acertos + ' de ' + ms.n + ' certas',
+      refazerTeste: () => this.refazerTesteTreino(t.id, m.id),
+      s_calcNivel: c.nivel, ultimoModulo: i === t.modulos.length - 1,
+      temAnterior: i > 0, temProximo: i < t.modulos.length - 1, irAnterior: () => this.abrirTreino(t.id, i - 1), irProximo: () => this.abrirTreino(t.id, i + 1),
+      proximoTitulo: i < t.modulos.length - 1 ? t.modulos[i + 1].titulo : '',
+      // calculadora ES/PP
+      isExEsPp: m.exercicio === 'es-pp', calcCm: c.cm, calcSigma: c.sigma, calcTr: c.tr, onCalcCm: setCalc('cm'), onCalcSigma: setCalc('sigma'), onCalcTr: setCalc('tr'), onCalcNivel: setCalc('nivel'),
+      calcNiveis: [{ v: '90', l: '90% (z = 1,28)' }, { v: '95', l: '95% (z = 1,65)' }, { v: '99', l: '99% (z = 2,33)' }].map(o => ({ value: o.v, label: o.l, selected: o.v === c.nivel })),
+      calcOk, calcErro: !calcOk, calcEs: calcOk ? this.fmtNum(es, 0) : '—', calcPp: calcOk ? this.fmtNum(pp, 0) : '—',
+      calcConta: calcOk ? 'ES = ' + this.fmtNum(z) + ' × ' + this.fmtNum(sg) + ' × √' + this.fmtNum(tr) + ' ≈ ' + this.fmtNum(es, 0) + '   ·   PP = ' + this.fmtNum(cm) + ' × ' + this.fmtNum(tr) + ' + ' + this.fmtNum(es, 0) + ' ≈ ' + this.fmtNum(pp, 0) : 'Preencha os três campos com números (use vírgula para decimais).',
+      // exercício Curva ABC
+      isExAbc: m.exercicio === 'abc' && ex.itens.length > 0, abcEnunciado: ex.enunciado || '',
+      abcLinhas: ex.itens.map((x, k) => { const r = s.abcResp[k] || ''; const certo = porIdx[k].classe;
+        return { nome: x.nome, qtd: this.fmtNum(x.qtd, 0), custo: brl(x.custo), resposta: r,
+          opcoes: [{ value: '', label: '—', selected: !r }].concat(['A', 'B', 'C'].map(v => ({ value: v, label: v, selected: r === v }))),
+          escolher: (e) => { const v = e.target.value; this.setState(st => ({ abcResp: { ...st.abcResp, [k]: v }, abcConferido: false })); },
+          conferido: s.abcConferido, marca: !s.abcConferido ? '' : r === certo ? '✓' : r ? '✗ era ' + certo : 'é ' + certo, marcaCor: r === certo ? '#1F6B43' : r ? '#9E2F3B' : '#7C9097' }; }),
+      abcConferir: () => this.setState({ abcConferido: true }), abcLimpar: () => this.setState({ abcResp: {}, abcConferido: false }),
+      abcConferido: s.abcConferido, abcPlacar: abcAcertos + ' de ' + ex.itens.length + ' classes certas',
+      abcResolucao: resol.map(x => ({ nome: x.nome, valor: brl(x.valor), pct: this.fmtNum(x.pct, 1) + '%', acum: this.fmtNum(x.acum, 1) + '%', classe: x.classe,
+        corClasse: { A: '#1E7C92', B: '#9A6B17', C: '#7C9097' }[x.classe] })) };
   }
   componentWillUnmount() {
     if (typeof window === 'undefined') return;
@@ -1558,10 +1673,10 @@ class Component extends DCLogic {
     const dec = (it) => it ? this.decorate(it) : null;
 
     // nav
-    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'produtiva',label:'Como funciona'},{key:'auxilios',label:'Auxílios'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
+    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'treinamentos',label:'Treinamentos'},{key:'produtiva',label:'Como funciona'},{key:'auxilios',label:'Auxílios'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
     const navItems = navDef.map(n => {
       const active = s.screen===n.key || (n.key==='biblioteca' && s.screen==='conteudo') || (n.key==='cases' && (s.screen==='case' || s.screen==='novo-case'));
-      return { label:n.label, go: n.key==='docs' ? ()=>this.goDocs() : ()=>this.nav(n.key), bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
+      return { label:n.label, go: n.key==='docs' ? ()=>this.goDocs() : n.key==='treinamentos' ? ()=>this.abrirTreinamentos() : ()=>this.nav(n.key), bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
     });
 
     // home sections — nada de contador fictício: escopos ativos e uso frequente.
@@ -1820,6 +1935,7 @@ class Component extends DCLogic {
       ...this.revisoesVals(),
       // trilha do primeiro projeto + glossário
       isComece: s.screen==='comece', goComece:()=>this.nav('comece'), ...this.trilhaVals(s, data, dec),
+      isTreinamentos: s.screen==='treinamentos', ...this.treinoVals(s),
       isProdutiva: s.screen==='produtiva', isAuxilios: s.screen==='auxilios', ...this.produtivaVals(),
       isMonitoramento: s.screen==='monitoramento', ...this.monitoramentoVals(s),
       goMonitoramento: () => this.abrirMonitoramento(), monBotaoFundo: s.screen==='monitoramento' ? '#EAF6F9' : '#fff', monBotaoBorda: s.screen==='monitoramento' ? '#9FD7E2' : '#DCE7EB',
