@@ -17,6 +17,7 @@ class Component extends DCLogic {
     formCase: this.formCaseVazio(),
     caseEditandoId: null,
     treinoId: null, treinoMod: 0, treinoProg: this.carregarLocal('hangar.treinos', {}),
+    qArea: 'todas', qTema: '', qProg: this.carregarLocal('hangar.questoes', {}), qSessao: null, qMostrar: false, qRascunho: '',
     calcEs: { cm: '100', sigma: '20', tr: '0,5', nivel: '95' }, abcResp: {}, abcConferido: false,
     caseErro: '',
     caseFiltroFerr: '',
@@ -81,6 +82,16 @@ class Component extends DCLogic {
   // Trilha do primeiro projeto e glossário — src/data/trilha.json.
   TRILHA = DADOS.trilha || { passos: [], glossario: [] };
   TREINOS = DADOS.treinamentos || [];
+  GRUPOS_NAV = [
+    { key:'home', label:'Início', telas:['home'] },
+    { key:'biblioteca', label:'Biblioteca', telas:['biblioteca','conteudo','recomendar'] },
+    { key:'escopos', label:'Escopos', telas:['escopos'] },
+    { key:'cases', label:'Cases', telas:['cases','case','novo-case'] },
+    { key:'capacitacao', label:'Capacitação', sub:[{ key:'treinamentos', label:'Treinamentos' }, { key:'questoes', label:'Questões do PSGP' }] },
+    { key:'produtiva', label:'A Produtiva', sub:[{ key:'comece', label:'Comece aqui' }, { key:'produtiva', label:'Como funciona' }, { key:'auxilios', label:'Auxílios e reembolsos' }] },
+    { key:'cadastrar', label:'Cadastrar', sub:[{ key:'cadastro', label:'Ferramentas e escopos' }, { key:'docs', label:'Gerar documentação' }] },
+  ].map(g => ({ ...g, telas: g.telas || g.sub.map(x => x.key) }));
+  QUESTOES = DADOS.questoes || { areas: [], cards: [], imagens: {} };
   // Página "Como funciona a Produtiva" — src/data/produtiva.json.
   PRODUTIVA = DADOS.produtiva || { oQueE: { atuacao: [] }, areas: [], fluxo: { passos: [] }, membro: { itens: [] } };
 
@@ -730,6 +741,8 @@ class Component extends DCLogic {
           open: () => this.openEscopo(e.id) })) },
       { key:'glossario', label:'Glossário', itens: (this.TRILHA.glossario || []).map(g => ({ titulo: g.sigla + (g.nome ? ' — ' + g.nome : ''), sub: 'Glossário',
           textos: [g.sigla, g.nome, g.definicao], open: () => this.irParaTela('comece', 'glossario', { glossQuery: g.sigla }) })) },
+      { key:'questoes', label:'Questões do PSGP', itens: this.QUESTOES.cards.map(c => ({ titulo: c.pergunta, sub: 'Questão · ' + this.qNomeArea(c),
+          textos: [c.pergunta, c.resposta], open: () => this.qIniciar([c.id], 'busca') })) },
       { key:'treinamentos', label:'Treinamentos', itens: this.TREINOS.flatMap(t => (t.modulos || []).map((m, i) => ({ titulo: m.titulo, sub: 'Treinamento ' + t.titulo + ' · módulo ' + (i + 1),
           textos: [m.titulo, m.resumo, ...this.textosDe(m.blocos), ...(m.quiz || []).map(q => q.pergunta)], open: () => this.abrirTreino(t.id, i) }))) },
       { key:'trilha', label:'Comece aqui', itens: (this.TRILHA.passos || []).map((p, i) => ({ titulo: p.titulo, sub: 'Comece aqui · passo ' + (i + 1),
@@ -1020,6 +1033,17 @@ class Component extends DCLogic {
       prodIrOQueE: () => this.irPara('prod-oquee'), prodIrAreas: () => this.irPara('prod-areas'), prodIrFluxo: () => this.irPara('prod-fluxo'), prodIrMembro: () => this.irPara('prod-membro'),
       goProdutiva: () => this.nav('produtiva'), goAuxilios: () => this.nav('auxilios') };
   }
+  // Grupo do menu: volta para a última subaba usada naquele grupo (ou a primeira).
+  abrirGrupo(g) {
+    if (!g.sub) return this.nav(g.key);
+    const ult = (this.state.subUltima || {})[g.key];
+    this.abrirSub(g.sub.some(x => x.key === ult) ? ult : g.sub[0].key);
+  }
+  abrirSub(key) {
+    const g = this.GRUPOS_NAV.find(x => x.sub && x.sub.some(y => y.key === key));
+    if (g) this.setState(st => ({ subUltima: { ...(st.subUltima || {}), [g.key]: key } }));
+    if (key === 'treinamentos') this.abrirTreinamentos(); else if (key === 'docs') this.goDocs(); else this.nav(key);
+  }
   nav(screen) { this.setState({ screen, escopoId: screen==='escopos' ? null : this.state.escopoId, caseId: screen==='cases' ? null : this.state.caseId }); if(typeof window!=='undefined') window.scrollTo(0,0); }
 
   // ---- Rotas na URL (#/biblioteca, #/ferramenta/pmmc, #/escopo/<id>, #/case/<id>…)
@@ -1038,6 +1062,7 @@ class Component extends DCLogic {
       case 'comece': return '#/comece';
       case 'produtiva': return '#/produtiva';
       case 'auxilios': return '#/auxilios';
+      case 'questoes': return '#/questoes';
       case 'treinamentos': return s.treinoId ? '#/treinamento/' + s.treinoId + '/' + ((s.treinoMod || 0) + 1) : '#/treinamentos';
       case 'monitoramento': return '#/monitoramento';
       default: return '#/';
@@ -1062,6 +1087,7 @@ class Component extends DCLogic {
     else if (tela === 'comece') this.nav('comece');
     else if (tela === 'produtiva') this.nav('produtiva');
     else if (tela === 'auxilios') this.nav('auxilios');
+    else if (tela === 'questoes') this.nav('questoes');
     else if (tela === 'treinamentos') this.setState({ screen: 'treinamentos', treinoId: null });
     else if (tela === 'treinamento' && this.TREINOS.some(t => t.id === id)) this.abrirTreino(id, (Number(acao) || 1) - 1);
     else if (tela === 'monitoramento') this.abrirMonitoramento();
@@ -1090,12 +1116,25 @@ class Component extends DCLogic {
     window.addEventListener('keydown', this._onKey);
     if (location.hash && location.hash !== '#/') this.aplicarHash();
     this.iniciarContagem();
+    this.mostrarAbaAtiva();
   }
   componentDidUpdate() {
     if (typeof location === 'undefined') return;
     const h = this.hashDe(this.state);
     if (location.hash !== h && !(h === '#/' && !location.hash)) { this._hashPropria = true; location.hash = h; }
     this.contarVisita();
+    this.mostrarAbaAtiva();
+  }
+  // No celular o menu do topo e as subabas rolam de lado: ao trocar de tela, traz a aba ativa para a área visível.
+  mostrarAbaAtiva() {
+    if (typeof document === 'undefined' || this._abaVista === this.state.screen) return;
+    this._abaVista = this.state.screen;
+    setTimeout(() => document.querySelectorAll('header nav.hg-nav, nav.hg-subnav').forEach(nav => {
+      const b = nav.querySelector('button[aria-current="page"]');
+      if (!b || nav.scrollWidth <= nav.clientWidth) return;
+      const n = nav.getBoundingClientRect(), r = b.getBoundingClientRect();
+      if (r.left < n.left || r.right > n.right) nav.scrollLeft += (r.left - n.left) - (n.width - r.width) / 2;
+    }), 0);
   }
   // Contagem de acessos (Vercel Web Analytics): só no domínio da Vercel, onde existe /_vercel/insights.
   // No Coolify e no arquivo local nada é carregado. Sem cookies; cada tela conta como uma página.
@@ -1161,7 +1200,7 @@ class Component extends DCLogic {
   monRotuloTela(tela) {
     return ({ inicio: 'Início', biblioteca: 'Biblioteca', ferramenta: 'Ficha de ferramenta', escopos: 'Escopos', escopo: 'Escopo aberto',
       cases: 'Banco de cases', case: 'Ficha de case', cadastrar: 'Cadastrar', docs: 'Documentação', recomendar: 'Recomendar',
-      comece: 'Comece aqui', produtiva: 'Como funciona', auxilios: 'Auxílios', treinamentos: 'Treinamentos', treinamento: 'Treinamento' })[tela] || tela;
+      comece: 'Comece aqui', produtiva: 'Como funciona', auxilios: 'Auxílios', treinamentos: 'Treinamentos', treinamento: 'Treinamento', questoes: 'Questões' })[tela] || tela;
   }
   // "/escopo/estruturacao-comercial" → { tipo: 'Escopo', nome: 'Estruturação Comercial' }
   monRotuloPagina(path) {
@@ -1230,6 +1269,75 @@ class Component extends DCLogic {
       monUso: num(d.usoMes.eventos) + ' de ' + num(d.usoMes.limite) + ' eventos', monUsoPct: usoPct, monUsoCor: usoPct >= 80 ? '#C9942A' : '#3DAFC7',
       monUsoAlerta: usoPct >= 80, monUsoTexto: 'Desde o dia 1 deste mês. Cada visita e cada medição de tempo contam um evento; no plano grátis a Vercel pausa a contagem ao chegar no limite e guarda só 1 mês de histórico.',
       monAtualizado: m.atualizado ? 'Atualizado às ' + m.atualizado.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '' };
+  }
+  // ===== Questões (src/data/questoes.json, baralho Anki do PSGP) =====
+  // Progresso neste navegador: hangar.questoes = { <id do card>: nível 0–4 }.
+  // 0 = errou da última vez, 1 = quase, 2–4 = acertou (cada acerto seguido sobe 1). "Já sabe" = 2+; "para revisar" = 0 ou 1.
+  // No estudo, Errei faz o card voltar 3 posições depois e Quase manda para o fim da sessão.
+  qNomeArea(c) { const a = this.QUESTOES.areas.find(x => x.id === c.area); const t = a && (a.temas || []).find(x => x.id === c.tema); return (a ? a.nome : '') + (t ? ' › ' + t.nome : ''); }
+  qSelecao(s) { return this.QUESTOES.cards.filter(c => (s.qArea === 'todas' || c.area === s.qArea) && (!s.qTema || c.tema === s.qTema)); }
+  qEmbaralhar(a) { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; }
+  qIniciar(ids, modo) {
+    this.setState({ screen: 'questoes', qSessao: { modo, fila: ids.slice(), feitas: 0, total: ids.length, placar: { acertei: 0, quase: 0, errei: 0 }, fim: ids.length === 0 }, qMostrar: false, qRascunho: '' });
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
+  }
+  qEstudar() {
+    const prog = this.state.qProg || {}; const sel = this.qSelecao(this.state);
+    // ordem: errou (0), quase (1), nunca vista, depois as que já acertou (2, 3, 4); dentro do mesmo nível, aleatória
+    const peso = (id) => prog[id] === undefined ? 1.5 : prog[id];
+    const ord = this.qEmbaralhar(sel).sort((a, b) => peso(a.id) - peso(b.id));
+    this.qIniciar(ord.slice(0, 20).map(c => c.id), 'estudo');
+  }
+  qSimulado() { this.qIniciar(this.qEmbaralhar(this.qSelecao(this.state)).slice(0, 20).map(c => c.id), 'simulado'); }
+  qResponder(nota) {
+    const s = this.state; const ses = s.qSessao; if (!ses || !ses.fila.length) return;
+    const id = ses.fila[0]; const prog = { ...(s.qProg || {}) }; const antes = prog[id];
+    prog[id] = nota === 'acertei' ? (antes === undefined ? 2 : Math.min(4, Math.max(2, antes + 1))) : nota === 'quase' ? 1 : 0;
+    const fila = ses.fila.slice(1);
+    if (ses.modo === 'estudo' && nota === 'errei') fila.splice(Math.min(3, fila.length), 0, id);
+    else if (ses.modo === 'estudo' && nota === 'quase') fila.push(id);
+    const novo = { ...ses, fila, feitas: ses.feitas + 1, placar: { ...ses.placar, [nota]: ses.placar[nota] + 1 }, fim: fila.length === 0 };
+    this.salvarLocal('hangar.questoes', prog);
+    this.setState({ qProg: prog, qSessao: novo, qMostrar: false, qRascunho: '' });
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
+  }
+  questoesVals(s) {
+    const Q = this.QUESTOES; const prog = s.qProg || {};
+    const sit = (cs) => ({ total: cs.length, sabe: cs.filter(c => (prog[c.id] || 0) >= 2).length, vistas: cs.filter(c => prog[c.id] !== undefined).length, revisar: cs.filter(c => prog[c.id] !== undefined && prog[c.id] < 2).length });
+    const geral = sit(Q.cards); const sel = this.qSelecao(s); const ss = sit(sel);
+    const chip = (id, nome, n, ativo, go) => ({ nome, n, go, bg: ativo ? '#1E7C92' : '#fff', cor: ativo ? '#fff' : '#3C545B', borda: ativo ? '#1E7C92' : '#DCE7EB' });
+    const areaAtual = Q.areas.find(a => a.id === s.qArea);
+    const ses = s.qSessao; const emSessao = !!(ses && !ses.fim); const fim = !!(ses && ses.fim);
+    const card = emSessao ? Q.cards.find(c => c.id === ses.fila[0]) : null;
+    const nivelTxt = (n) => n === undefined ? 'Nova' : n >= 2 ? 'Acertou da última vez' : n === 0 ? 'Errou da última vez' : 'Quase da última vez';
+    return {
+      qTotal: geral.total, qSabe: geral.sabe, qVistas: geral.vistas, qPctSabe: geral.total ? Math.round(geral.sabe / geral.total * 100) : 0,
+      qInicio: !emSessao && !fim, qEmSessao: emSessao, qFim: fim,
+      qAreas: [chip('todas', 'Todas', Q.cards.length, s.qArea === 'todas', () => this.setState({ qArea: 'todas', qTema: '' }))]
+        .concat(Q.areas.map(a => chip(a.id, a.nome, Q.cards.filter(c => c.area === a.id).length, s.qArea === a.id, () => this.setState({ qArea: a.id, qTema: '' })))),
+      qTemTemas: !!(areaAtual && areaAtual.temas && areaAtual.temas.length), qTemaSel: s.qTema,
+      qTemas: [{ value: '', label: 'Todos os temas' }].concat(((areaAtual && areaAtual.temas) || []).map(t => ({ value: t.id, label: t.nome + ' (' + Q.cards.filter(c => c.area === areaAtual.id && c.tema === t.id).length + ')' }))),
+      qOnTema: (e) => this.setState({ qTema: e.target.value }),
+      qSelTotal: ss.total, qSelSabe: ss.sabe, qSelRevisar: ss.revisar, qSelPct: ss.total ? Math.round(ss.sabe / ss.total * 100) : 0,
+      qSelVazia: ss.total === 0, qEstudar: () => this.qEstudar(), qSimulado: () => this.qSimulado(),
+      qZerar: () => this.pedirConfirmacao({ titulo: 'Zerar o progresso das questões?', texto: 'As marcações de "já sei" e "errei" deste navegador serão apagadas.', label: 'Zerar', ok: () => { this.salvarLocal('hangar.questoes', {}); this.setState({ qProg: {} }); } }),
+      qTemProgresso: geral.vistas > 0,
+      // sessão
+      qPosLinha: !ses ? '' : ses.modo === 'simulado' ? 'Simulado · questão ' + (ses.feitas + 1) + ' de ' + ses.total
+        : ses.modo === 'busca' ? 'Questão encontrada na busca' : 'Estudo · ' + ses.feitas + ' respondidas · faltam ' + ses.fila.length,
+      qBarra: ses && ses.total ? Math.min(100, Math.round(ses.feitas / Math.max(ses.total, ses.feitas + ses.fila.length) * 100)) : 0,
+      qPergunta: card ? card.pergunta : '', qResposta: card ? card.resposta : '', qOnde: card ? this.qNomeArea(card) : '',
+      qNivel: card ? nivelTxt(prog[card.id]) : '',
+      qImagens: card && s.qMostrar ? (card.imagens || []).map(n => ({ src: Q.imagens[n] || '' })).filter(i => i.src) : [],
+      qMostrar: !!s.qMostrar, qEscondida: !s.qMostrar, qVerResposta: () => this.setState({ qMostrar: true }),
+      qRascunho: s.qRascunho, qOnRascunho: (e) => this.setState({ qRascunho: e.target.value }),
+      qTemRascunho: !!(s.qRascunho || '').trim() && !!s.qMostrar,
+      qAcertei: () => this.qResponder('acertei'), qQuase: () => this.qResponder('quase'), qErrei: () => this.qResponder('errei'),
+      qSair: () => this.setState({ qSessao: null, qMostrar: false, qRascunho: '' }),
+      qPlacar: ses ? ses.placar : { acertei: 0, quase: 0, errei: 0 },
+      qFimTitulo: ses && ses.modo === 'simulado' ? 'Simulado concluído' : 'Sessão concluída',
+      qFimNota: ses && ses.modo === 'simulado' && ses.total ? Math.round(ses.placar.acertei / ses.total * 100) + '% de acerto' : '',
+    };
   }
   // ===== Treinamentos (src/data/treinamentos.json): módulos com conteúdo, teste rápido e exercícios =====
   // Progresso fica neste navegador: hangar.treinos = { <treino>: { quiz: { <módulo>: [opção escolhida por pergunta] } } }
@@ -1673,11 +1781,17 @@ class Component extends DCLogic {
     const dec = (it) => it ? this.decorate(it) : null;
 
     // nav
-    const navDef = [{key:'home',label:'Início'},{key:'comece',label:'Comece aqui'},{key:'treinamentos',label:'Treinamentos'},{key:'produtiva',label:'Como funciona'},{key:'auxilios',label:'Auxílios'},{key:'biblioteca',label:'Biblioteca'},{key:'escopos',label:'Escopos'},{key:'cases',label:'Cases'},{key:'cadastro',label:'Cadastrar'},{key:'docs',label:'Documentação'}];
-    const navItems = navDef.map(n => {
-      const active = s.screen===n.key || (n.key==='biblioteca' && s.screen==='conteudo') || (n.key==='cases' && (s.screen==='case' || s.screen==='novo-case'));
-      return { label:n.label, go: n.key==='docs' ? ()=>this.goDocs() : n.key==='treinamentos' ? ()=>this.abrirTreinamentos() : ()=>this.nav(n.key), bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
+    // Menu enxuto: 7 grupos no topo. Grupos com mais de uma tela ganham uma linha de subabas logo abaixo do topo.
+    // As telas e os endereços (#/comece, #/auxilios, #/questoes…) continuam os mesmos; só a navegação foi agrupada.
+    const grupoAtual = this.GRUPOS_NAV.find(g => g.telas.includes(s.screen)) || null;
+    const navItems = this.GRUPOS_NAV.map(g => {
+      const active = grupoAtual === g;
+      return { label:g.label, go: () => this.abrirGrupo(g), current: active ? 'page' : 'false', bg: active?'#EAF6F9':'transparent', color: active?'#1E7C92':'#5E747B', weight: active?'600':'500' };
     });
+    const subnavItens = grupoAtual && grupoAtual.sub ? grupoAtual.sub.map(x => {
+      const ativo = s.screen === x.key;
+      return { label: x.label, go: () => this.abrirSub(x.key), current: ativo ? 'page' : 'false', cor: ativo ? '#163B45' : '#6B8289', peso: ativo ? '600' : '500', borda: ativo ? '#3DAFC7' : 'transparent' };
+    }) : [];
 
     // home sections — nada de contador fictício: escopos ativos e uso frequente.
     const decEscopo = (e) => {
@@ -1936,6 +2050,8 @@ class Component extends DCLogic {
       // trilha do primeiro projeto + glossário
       isComece: s.screen==='comece', goComece:()=>this.nav('comece'), ...this.trilhaVals(s, data, dec),
       isTreinamentos: s.screen==='treinamentos', ...this.treinoVals(s),
+      isQuestoes: s.screen==='questoes', ...this.questoesVals(s),
+      subnavItens, temSubnav: subnavItens.length > 0,
       isProdutiva: s.screen==='produtiva', isAuxilios: s.screen==='auxilios', ...this.produtivaVals(),
       isMonitoramento: s.screen==='monitoramento', ...this.monitoramentoVals(s),
       goMonitoramento: () => this.abrirMonitoramento(), monBotaoFundo: s.screen==='monitoramento' ? '#EAF6F9' : '#fff', monBotaoBorda: s.screen==='monitoramento' ? '#9FD7E2' : '#DCE7EB',

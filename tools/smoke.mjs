@@ -16,6 +16,8 @@
  *   - o botão do anexo abre uma URL do Drive numa aba nova;
  *   - Banco de cases: cadastro com foto → publicar → ficha com capa, vídeo e documento → JSON → galeria após recarregar;
  *     capa trocada/removida direto na galeria e na ficha;
+ *   - menu enxuto: 7 grupos no topo, subabas em Capacitação/A Produtiva/Cadastrar, última subaba lembrada e celular sem corte;
+ *   - Treinamentos (teste rápido, calculadora, Curva ABC) e Questões do PSGP (filtro, estudo, nota, simulado, busca, figura);
  *   - screenshot em dist/<nome>-smoke.png (ignorado pelo git).
  *
  * Precisa do pacote playwright (npx playwright@1 …) e de um Chromium; sem os dois, sai com aviso.
@@ -51,6 +53,11 @@ page.on('console', (m) => { if (m.type() === 'error' && !/fetch|CORS|Failed to l
 await page.goto(pathToFileURL(alvo).href);
 await page.waitForFunction(() => document.body && /Hangar/.test(document.body.innerText) && !document.getElementById('__bundler_loading'), null, { timeout: 15000 }).catch(() => {});
 const texto = async () => page.evaluate(() => document.body.innerText);
+// Menu agrupado: clica no grupo do topo e, se houver, na subaba (Capacitação › Questões do PSGP, A Produtiva › Auxílios…)
+const menu = async (pg, grupo, sub) => {
+  await pg.getByRole('button', { name: grupo, exact: true }).first().click(); await pg.waitForTimeout(250);
+  if (sub) { await pg.locator('nav.hg-subnav').getByRole('button', { name: sub, exact: true }).click(); await pg.waitForTimeout(300); }
+};
 
 check(!/\{\{/.test(await texto()), 'nenhum "{{" cru na tela (runtime subiu sem unpkg)');
 check((await page.locator('#__bundler_err').count()) === 0, 'sem painel vermelho de erro do bundle na tela');
@@ -59,8 +66,35 @@ check(/Por escopo|Escopos/.test(await texto()), 'home renderizou a seção "Por 
 check(/por Produtiva Júnior/.test(await page.locator('header').innerText()) && (await page.locator('header svg ellipse').count()) === 1 && (await page.locator('header svg path[d^="M14.5 31V15.2"]').count()) === 1, 'topo mostra a marca do Hangar (hangar com avião + "por Produtiva Júnior")');
 check(await page.evaluate(() => { const l = document.querySelector('link[rel="icon"][href^="data:image/svg+xml"]'); return !!l && /width='64'.*height='64'/.test(decodeURIComponent(l.getAttribute('href'))); }), 'favicon do Hangar aplicado no <head>, com tamanho fixo (não corta na aba)');
 
+// ---- Menu enxuto: 7 grupos no topo; subabas só em Capacitação, A Produtiva e Cadastrar ----
+{
+  const topo = await page.evaluate(() => [...document.querySelectorAll('header nav.hg-nav button')].map((b) => b.textContent.trim()));
+  check(JSON.stringify(topo) === JSON.stringify(['Início', 'Biblioteca', 'Escopos', 'Cases', 'Capacitação', 'A Produtiva', 'Cadastrar']), `menu do topo tem só os 7 grupos (${topo.join(' | ')})`);
+  check((await page.locator('nav.hg-subnav').count()) === 0, 'na Home não aparece linha de subabas');
+  await menu(page, 'A Produtiva');
+  const subs = await page.evaluate(() => [...document.querySelectorAll('nav.hg-subnav button')].map((b) => b.textContent.trim()));
+  check(/#\/comece$/.test(await page.evaluate(() => location.hash)) && JSON.stringify(subs) === JSON.stringify(['Comece aqui', 'Como funciona', 'Auxílios e reembolsos']),
+    `"A Produtiva" abre o Comece aqui com as subabas Comece aqui, Como funciona e Auxílios (${subs.join(' | ')})`);
+  await page.locator('nav.hg-subnav').getByRole('button', { name: 'Auxílios e reembolsos', exact: true }).click(); await page.waitForTimeout(250);
+  await menu(page, 'Biblioteca'); await menu(page, 'A Produtiva');
+  check(/#\/auxilios$/.test(await page.evaluate(() => location.hash)) && await page.evaluate(() => (document.querySelector('nav.hg-subnav button[aria-current="page"]') || {}).textContent === 'Auxílios e reembolsos'),
+    'voltar ao grupo reabre a última subaba usada (Auxílios) e marca a subaba atual');
+  await menu(page, 'Cadastrar');
+  check(/#\/cadastrar$/.test(await page.evaluate(() => location.hash)) && (await page.locator('nav.hg-subnav button').count()) === 2, '"Cadastrar" junta o cadastro e a geração de documentação');
+  await page.evaluate(() => { location.hash = '#/questoes'; }); await page.waitForTimeout(300);
+  check(await page.evaluate(() => (document.querySelector('header nav.hg-nav button[aria-current="page"]') || {}).textContent === 'Capacitação'), 'link antigo #/questoes abre dentro de Capacitação (grupo marcado no topo)');
+  await page.evaluate(() => { location.hash = '#/'; }); await page.waitForTimeout(300);
+  // celular: o menu rola de lado e a aba do grupo atual aparece inteira; nada rola na horizontal
+  const pCel = await ctx.newPage(); await pCel.setViewportSize({ width: 390, height: 844 });
+  await pCel.goto(pathToFileURL(alvo).href + '#/auxilios'); await pCel.waitForTimeout(1200);
+  const cel = await pCel.evaluate(() => { const nav = document.querySelector('header nav.hg-nav'); const b = nav.querySelector('button[aria-current="page"]');
+    const n = nav.getBoundingClientRect(), r = b.getBoundingClientRect(); return { label: b.textContent.trim(), ok: r.left >= n.left - 1 && r.right <= n.right + 1, over: document.documentElement.scrollWidth - innerWidth }; });
+  check(cel.label === 'A Produtiva' && cel.ok && cel.over <= 0, `celular: aba do grupo atual visível no menu e sem rolagem lateral (${JSON.stringify(cel)})`);
+  await pCel.close();
+}
+
 // Como funciona a Produtiva: menu → página com as 5 áreas, subnúcleos, fluxo comercial → área de atuação abre Escopos
-await page.getByRole('button', { name: 'Como funciona', exact: true }).first().click();
+await menu(page, 'A Produtiva', 'Como funciona');
 await page.waitForTimeout(300);
 {
   const t = await texto();
@@ -77,7 +111,7 @@ await page.waitForTimeout(300);
   check(/A FÓRMULA, PASSO A PASSO|A fórmula, passo a passo/.test(ta) && /PIPJ — como usar/.test(ta) && (await page.locator('a[href*="1p4BvRj0iicLKCzgE_6DwcCi_uUeUBp1Pp8eBe5JWJlc"][target="_blank"]').count()) === 1, 'Auxílios: PIPJ com a fórmula e as regras de uso, e link da planilha de gasolina');
   check(/#\/auxilios$/.test(await page.evaluate(() => location.hash)) && /Reembolso de gasolina/.test(await texto()), 'F5 em #/auxilios volta para a página de auxílios');
   await page.evaluate(() => { location.hash = '#/'; }); await page.waitForTimeout(300);
-  await page.getByRole('button', { name: 'Auxílios', exact: true }).first().click(); await page.waitForTimeout(300);
+  await menu(page, 'A Produtiva', 'Auxílios e reembolsos');
   check(/#\/auxilios$/.test(await page.evaluate(() => location.hash)), 'item "Auxílios" do menu abre a página');
   await page.getByRole('button', { name: 'Ir para Como funciona' }).click(); await page.waitForTimeout(300);
   await page.locator('main article', { hasText: 'Gestão da Tecnologia' }).first().click(); await page.waitForTimeout(400);
@@ -96,12 +130,12 @@ check((await page.getByPlaceholder('Ex.: Matriz de Priorização GUT').last().in
 await page.getByRole('button', { name: 'Publicar conteúdo' }).click(); await page.waitForTimeout(1500);
 await page.reload(); await page.waitForTimeout(1200);
 check(/#\/ferramenta\/novo-/.test(await page.evaluate(() => location.hash)) && /Ferramenta Smoke/.test(await texto()), 'Cadastrar: conteúdo publicado abre a página e continua depois do F5');
-await page.getByRole('button', { name: 'Cadastrar', exact: true }).first().click(); await page.waitForTimeout(300);
+await menu(page, 'Cadastrar', 'Ferramentas e escopos');
 await page.getByRole('button', { name: 'Criar com IA' }).click(); await page.waitForTimeout(200);
 await page.getByPlaceholder(/Cole aqui o material/).fill('A matriz GUT prioriza problemas por gravidade, urgência e tendência.');
 await page.locator('main button', { hasText: /Gerar/ }).first().click(); await page.waitForTimeout(400);
 check(/só funciona quando o Hangar é aberto dentro do Claude/.test(await texto()), 'Cadastrar com IA fora do Claude explica que a IA não está disponível');
-await page.getByRole('button', { name: 'Documentação', exact: true }).first().click(); await page.waitForTimeout(400);
+await menu(page, 'Cadastrar', 'Gerar documentação'); await page.waitForTimeout(150);
 await page.getByRole('button', { name: 'Baixar' }).click(); await page.waitForTimeout(300);
 {
   const dl = await page.evaluate(() => window.__hangarUltimoDownload);
@@ -239,7 +273,7 @@ if (passoTermo) {
 } else check(true, 'sem passos no bundle para testar a busca');
 
 // ---- comece aqui: trilha marcável (localStorage) + glossário com busca
-await page.getByRole('button', { name: 'Comece aqui', exact: true }).first().click(); await page.waitForTimeout(300);
+await menu(page, 'A Produtiva', 'Comece aqui');
 check(/Seu primeiro projeto/i.test(await texto()) && /Glossário/i.test(await texto()), 'tela "Comece aqui" abriu com a trilha e o glossário');
 await page.getByTitle('Marcar como feito').first().click(); await page.waitForTimeout(200);
 check(/1 de \d/.test(await texto()), 'marcar um passo da trilha atualiza o progresso');
@@ -528,7 +562,7 @@ await page.evaluate(() => { try { localStorage.removeItem('hangar.casesLocais');
 // ---- correções de confiança: cada botão faz o que diz e cada mensagem é verdadeira
 {
   // Cadastrar manual: sem dropzone falsa nem barra de passos; publicar sem nome dá toast de erro
-  await page.getByRole('button', { name: 'Cadastrar', exact: true }).first().click(); await page.waitForTimeout(300);
+  await menu(page, 'Cadastrar', 'Ferramentas e escopos');
   await page.getByRole('button', { name: 'Preencher manualmente' }).click(); await page.waitForTimeout(200);
   let t = await texto();
   check(!/Arraste arquivos/.test(t) && !/Informações básicas/.test(t), 'Cadastrar manual: sem dropzone falsa nem barra de passos fixa');
@@ -638,7 +672,7 @@ check(await page.evaluate(() => !window.va && !document.querySelector('script[sr
   await pM.clock.fastForward('00:45');
   await pM.getByRole('button', { name: 'Escopos', exact: true }).first().click(); await pM.waitForTimeout(300);
   await pM.clock.fastForward(1500);
-  await pM.getByRole('button', { name: 'Auxílios', exact: true }).first().click(); await pM.waitForTimeout(300);
+  await pM.evaluate(() => { location.hash = '#/auxilios'; }); await pM.waitForTimeout(300);
   await pM.clock.fastForward('00:05');
   await pM.getByRole('button', { name: 'Monitoramento do Hangar (só administradores)' }).click(); await pM.waitForTimeout(500);
   const vistas = await pM.evaluate(() => window.__vaViews.map((v) => v.path + ' ' + v.route));
@@ -663,10 +697,48 @@ check(await page.evaluate(() => !window.va && !document.querySelector('script[sr
   check(errosM.length === 0, errosM.length ? `erros no monitoramento: ${errosM[0]}` : 'monitoramento sem erros de JavaScript');
   await pM.close();
 }
+// ---- Questões do PSGP: filtro por área/tema, estudo com "ver resposta", nota, progresso salvo, simulado e busca ----
+{
+  await page.evaluate(() => { localStorage.removeItem('hangar.questoes'); location.hash = '#/biblioteca'; }); await page.waitForTimeout(300);
+  await menu(page, 'Capacitação', 'Questões do PSGP');
+  const t0 = await texto();
+  check(/#\/questoes$/.test(await page.evaluate(() => location.hash)) && /427 perguntas do baralho/.test(t0) && /0 de 427 já sabe/.test(t0), 'menu "Questões" abre o banco do PSGP (#/questoes) com as 427 perguntas');
+  await page.getByRole('button', { name: /^Gestão da Produção/ }).first().click(); await page.waitForTimeout(200);
+  await page.locator('select[data-q-tema]').selectOption({ label: 'Gestão de Estoque (17)' }); await page.waitForTimeout(200);
+  check(/17\s*perguntas/.test(await texto()), 'filtrar por área e tema mostra só as perguntas daquele tema (Gestão de Estoque: 17)');
+  await page.getByRole('button', { name: /^Estudar/ }).click(); await page.waitForTimeout(300);
+  const p1 = await page.locator('[data-q-pergunta]').innerText();
+  check(!!p1 && (await page.locator('[data-q-resposta]').count()) === 0 && /Questão|Estudo/.test(await page.locator('[data-q-pos]').innerText()), 'estudo mostra a pergunta sem a resposta');
+  await page.getByRole('button', { name: 'Ver resposta' }).click(); await page.waitForTimeout(200);
+  check((await page.locator('[data-q-resposta]').innerText()).length > 5, 'Ver resposta mostra a resposta');
+  await page.getByRole('button', { name: 'Acertei', exact: true }).click(); await page.waitForTimeout(200);
+  const p2 = await page.locator('[data-q-pergunta]').innerText();
+  check(p2 !== p1 && await page.evaluate((x) => Object.keys(JSON.parse(localStorage.getItem('hangar.questoes') || '{}')).length === 1, null), 'Acertei passa para a próxima e salva o progresso no navegador');
+  await page.getByRole('button', { name: 'Ver resposta' }).click(); await page.waitForTimeout(150);
+  await page.getByRole('button', { name: 'Errei', exact: true }).click(); await page.waitForTimeout(150);
+  check(await page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('hangar.questoes'))).includes(0)), 'Errei marca a questão para revisar');
+  await page.getByRole('button', { name: '← Sair' }).click(); await page.waitForTimeout(200);
+  check(/1\s*para revisar/.test(await texto()), 'de volta às áreas, o resumo conta a questão para revisar');
+  // simulado até o fim
+  await page.getByRole('button', { name: 'Todas', exact: false }).first().click(); await page.waitForTimeout(150);
+  await page.getByRole('button', { name: /^Simulado/ }).click(); await page.waitForTimeout(200);
+  for (let i = 0; i < 20; i++) { await page.getByRole('button', { name: 'Ver resposta' }).click(); await page.getByRole('button', { name: i < 15 ? 'Acertei' : 'Errei', exact: true }).click(); await page.waitForTimeout(40); }
+  const tf = await texto();
+  check(/Simulado concluído/.test(tf) && /75% de acerto/.test(tf), 'simulado de 20 termina com o placar (15 de 20 = 75%)');
+  await page.getByRole('button', { name: 'Voltar às áreas' }).click(); await page.waitForTimeout(150);
+  // imagem embutida
+  await page.getByRole('button', { name: 'Buscar em todo o Hangar' }).click(); await page.waitForTimeout(200);
+  await page.locator('#hg-busca').fill('método 5 porquês'); await page.waitForTimeout(400);
+  check(/Questões do PSGP/i.test(await texto()) && /Explique o método 5 Porquês\?/.test(await texto()), 'busca geral acha as questões');
+  await page.getByText('Explique o método 5 Porquês?').first().click(); await page.waitForTimeout(300);
+  await page.getByRole('button', { name: 'Ver resposta' }).click(); await page.waitForTimeout(200);
+  check(await page.evaluate(() => { const i = document.querySelector('main img[src^="data:image/webp"]'); return !!i && i.naturalWidth > 100; }), 'resultado da busca abre a questão, e a figura do card aparece com a resposta');
+  await page.keyboard.press('Escape');
+}
 // ---- Treinamentos: lista, módulo, teste rápido com progresso salvo, calculadora ES/PP, exercício Curva ABC e busca ----
 {
   await page.evaluate(() => { location.hash = '#/biblioteca'; }); await page.waitForTimeout(300);
-  await page.getByRole('button', { name: 'Treinamentos', exact: true }).first().click(); await page.waitForTimeout(400);
+  await menu(page, 'Capacitação', 'Treinamentos');
   const tl = await texto();
   check(/#\/treinamentos$/.test(await page.evaluate(() => location.hash)) && /Gestão de Estoque/.test(tl) && /7 módulos/.test(tl) && /Ainda não começou/.test(tl), 'menu "Treinamentos" abre a lista com o treinamento de Gestão de Estoque (#/treinamentos)');
   await page.getByRole('button', { name: 'Começar →' }).first().click(); await page.waitForTimeout(400);
@@ -700,8 +772,8 @@ check(await page.evaluate(() => !window.va && !document.querySelector('script[sr
   // busca geral encontra um módulo
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Buscar em todo o Hangar' }).click(); await page.waitForTimeout(200);
-  await page.keyboard.type('ponto de pedido'); await page.waitForTimeout(400);
-  check(/Treinamentos/.test(await texto()) && /Treinamento Gestão de Estoque · módulo 5/.test(await texto()), 'busca geral acha os módulos do treinamento');
+  await page.locator('#hg-busca').fill('ponto de pedido'); await page.waitForTimeout(400);
+  check(/Treinamentos/i.test(await texto()) && /Treinamento Gestão de Estoque · módulo 5/.test(await texto()), 'busca geral acha os módulos do treinamento');
   await page.keyboard.press('Escape'); await page.waitForTimeout(150);
 }
 await page.getByRole('button', { name: 'Monitoramento do Hangar (só administradores)' }).click(); await page.waitForTimeout(400);

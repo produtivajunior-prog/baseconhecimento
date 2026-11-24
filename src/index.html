@@ -190,6 +190,8 @@
       .hg-wrap{flex-wrap:wrap!important}
       .hg-header{flex-wrap:wrap;height:auto!important;padding:10px 16px!important;row-gap:6px}
       .hg-nav{order:3;width:100%;margin-left:0!important;padding-bottom:2px}
+      .hg-subnav{padding:0 16px!important;gap:18px!important}
+      .hg-subnav-bar{position:static!important}
       .hg-capa{height:250px!important}
       .hg-capa-legenda{right:16px!important;bottom:58px!important}
     }
@@ -217,9 +219,9 @@
           <span style="display:flex;align-items:center;gap:5px;font-size:11.5px;color:#5E747B;font-weight:500;margin-top:2px;white-space:nowrap"><img src="3ef4b086-390f-48b4-b543-ba27789b2a30" alt="" style="height:11px;width:auto;display:block">por Produtiva Júnior</span>
         </div>
       </div>
-      <nav class="hg-nav" style="display:flex;align-items:center;gap:2px;margin-left:0;min-width:0">
+      <nav class="hg-nav" style="display:flex;align-items:center;gap:2px;margin-left:8px;min-width:0">
         <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
-          <button onclick="{{ n.go }}" style="border:none;background:{{ n.bg }};color:{{ n.color }};font-size:14px;font-weight:{{ n.weight }};padding:8px 7px;border-radius:9px;cursor:pointer;white-space:nowrap">{{ n.label }}</button>
+          <button onclick="{{ n.go }}" aria-current="{{ n.current }}" style="border:none;background:{{ n.bg }};color:{{ n.color }};font-size:14px;font-weight:{{ n.weight }};padding:8px 10px;border-radius:9px;cursor:pointer;white-space:nowrap">{{ n.label }}</button>
         </sc-for>
       </nav>
       <div style="flex:1"></div>
@@ -235,6 +237,17 @@
       <sc-if value="{{ hasEu }}" hint-placeholder-val="{{ false }}"><div title="{{ euNome }}" style="width:34px;height:34px;border-radius:50%;background:#163B45;color:#fff;font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none">{{ euIniciais }}</div></sc-if>
     </div>
   </header>
+  <!-- Subabas do grupo atual (Capacitação, A Produtiva, Cadastrar). No computador fica presa logo abaixo do topo;
+       no celular rola junto com a página para o topo fixo não ocupar a tela. -->
+  <sc-if value="{{ temSubnav }}" hint-placeholder-val="{{ false }}">
+    <div class="hg-subnav-bar" style="position:sticky;top:69px;z-index:29;background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-bottom:1px solid #E7EEF1">
+      <nav class="hg-nav hg-subnav" aria-label="Seções do grupo" style="max-width:1260px;margin:0 auto;padding:0 28px;display:flex;gap:22px;height:44px;align-items:stretch">
+        <sc-for list="{{ subnavItens }}" as="x" hint-placeholder-count="3">
+          <button onclick="{{ x.go }}" aria-current="{{ x.current }}" style="border:none;border-bottom:2px solid {{ x.borda }};background:transparent;color:{{ x.cor }};font-size:14px;font-weight:{{ x.peso }};padding:0 2px;cursor:pointer;white-space:nowrap" style-hover="color:#163B45">{{ x.label }}</button>
+        </sc-for>
+      </nav>
+    </div>
+  </sc-if>
 
   <!-- ============ HOME ============ -->
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
@@ -1880,7 +1893,7 @@
     </nav>
 
     <!-- 1. O que é a Produtiva -->
-    <section id="prod-oquee" style="scroll-margin-top:90px;margin-top:26px">
+    <section id="prod-oquee" style="scroll-margin-top:134px;margin-top:26px">
       <div class="hg-stack" style="display:flex;gap:26px;align-items:center;background:linear-gradient(150deg,#1B4651 0%,#28697A 100%);border-radius:20px;padding:28px 30px;color:#fff">
         <div style="flex:none;text-align:center;min-width:130px">
           <div style="font-family:'Schibsted Grotesk';font-size:52px;font-weight:800;line-height:1;color:#7FD3E3">{{ prodOQueE.anos }}</div>
@@ -1905,7 +1918,7 @@
     </section>
 
     <!-- 2. As áreas -->
-    <section id="prod-areas" style="scroll-margin-top:90px;margin-top:44px">
+    <section id="prod-areas" style="scroll-margin-top:134px;margin-top:44px">
       <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">Como a Produtiva se organiza</h2>
       <p style="font-size:14.5px;color:#7C9097;margin:6px 0 16px;line-height:1.5">A empresa tem {{ prodNAreas }} áreas. Veja o que cada uma faz e quando procurar cada uma.</p>
       <div class="hg-wrap" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
@@ -1913,7 +1926,7 @@
       </div>
       <div style="display:flex;flex-direction:column;gap:14px">
         <sc-for list="{{ prodAreas }}" as="a" hint-placeholder-count="3">
-          <article id="area-{{ a.id }}" style="scroll-margin-top:90px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px">
+          <article id="area-{{ a.id }}" style="scroll-margin-top:134px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px">
             <div style="display:flex;align-items:center;gap:13px">
               <span style="flex:none;width:44px;height:44px;border-radius:12px;background:{{ a.bg }};color:{{ a.cor }};display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:800;font-size:16px">{{ a.iniciais }}</span>
               <div style="min-width:0">
@@ -1950,7 +1963,7 @@
     </section>
 
     <!-- 3. Como um projeto nasce -->
-    <section id="prod-fluxo" style="scroll-margin-top:90px;margin-top:44px">
+    <section id="prod-fluxo" style="scroll-margin-top:134px;margin-top:44px">
       <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">{{ prodFluxo.titulo }}</h2>
       <p style="font-size:14.5px;color:#7C9097;margin:6px 0 18px;line-height:1.5">{{ prodFluxo.texto }}</p>
       <sc-for list="{{ prodPassos }}" as="f" hint-placeholder-count="5">
@@ -1972,7 +1985,7 @@
     </section>
 
     <!-- 4. Como você é acompanhado -->
-    <section id="prod-membro" style="scroll-margin-top:90px;margin-top:34px">
+    <section id="prod-membro" style="scroll-margin-top:134px;margin-top:34px">
       <h2 style="font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em">{{ prodMembro.titulo }}</h2>
       <p style="font-size:14.5px;color:#7C9097;margin:6px 0 16px;line-height:1.5">{{ prodMembro.texto }}</p>
       <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
@@ -2009,7 +2022,7 @@
       </div>
       <div style="display:flex;flex-direction:column;gap:14px">
         <sc-for list="{{ prodAuxItens }}" as="x" hint-placeholder-count="3">
-          <article id="aux-{{ x.id }}" style="scroll-margin-top:90px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px">
+          <article id="aux-{{ x.id }}" style="scroll-margin-top:134px;background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:22px 24px">
             <div style="display:flex;gap:14px;align-items:flex-start">
               <span style="flex:none;width:42px;height:42px;border-radius:12px;background:#E9F4EE;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2.5" stroke="#39795B" stroke-width="1.8"></rect><circle cx="12" cy="12" r="2.6" stroke="#39795B" stroke-width="1.8"></circle></svg></span>
               <div style="flex:1;min-width:0">
@@ -2232,7 +2245,7 @@
 
     <div style="display:flex;flex-direction:column;gap:14px">
       <sc-for list="{{ trilhaPassos }}" as="p" hint-placeholder-count="6">
-        <article id="trilha-{{ p.id }}" style="scroll-margin-top:90px;background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+        <article id="trilha-{{ p.id }}" style="scroll-margin-top:134px;background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
           <button onclick="{{ p.toggle }}" title="Marcar como feito" style="flex:none;width:34px;height:34px;border-radius:10px;border:1.6px solid #D4E0E4;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;color:#1E7C92" style-hover="border-color:#3DAFC7">
             <sc-if value="{{ p.feito }}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 7" stroke="#2E7D52" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
             <sc-if value="{{ p.pendente }}" hint-placeholder-val="{{ true }}">{{ p.n }}</sc-if>
@@ -2257,7 +2270,7 @@
       </sc-for>
     </div>
 
-    <h2 id="glossario" style="scroll-margin-top:90px;font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin:44px 0 6px">Glossário</h2>
+    <h2 id="glossario" style="scroll-margin-top:134px;font-size:23px;font-weight:700;color:#163B45;letter-spacing:-0.02em;margin:44px 0 6px">Glossário</h2>
     <p style="font-size:14.5px;color:#7C9097;margin:0 0 14px">Siglas e nomes que aparecem nos cronogramas, nos escopos e nas conversas. Termos marcados "a confirmar" ainda não têm definição oficial do CIEP.</p>
     <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #DCE7EB;border-radius:11px;padding:9px 14px;margin-bottom:14px;max-width:420px">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" style="flex:none"><circle cx="11" cy="11" r="7" stroke="#9DAEB4" stroke-width="1.8"></circle><path d="M20 20l-3.2-3.2" stroke="#9DAEB4" stroke-width="1.8" stroke-linecap="round"></path></svg>
@@ -2276,6 +2289,101 @@
       </sc-for>
     </div>
     <sc-if value="{{ semGlossario }}" hint-placeholder-val="{{ false }}"><p style="font-size:14px;color:#8AA0A7;margin:8px 0 0">Nenhum termo com essa palavra.</p></sc-if>
+  </main>
+  </sc-if>
+
+  <!-- ============ QUESTÕES (src/data/questoes.json — baralho Anki do PSGP) ============ -->
+  <sc-if value="{{ isQuestoes }}" hint-placeholder-val="{{ false }}">
+  <main class="hg-main" style="max-width:920px;margin:0 auto;padding:34px 28px 80px">
+    <sc-if value="{{ qInicio }}" hint-placeholder-val="{{ true }}">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:#EAF6F9;color:#1E7C92;font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:100px;margin-bottom:14px">Banco de questões do PSGP</div>
+      <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">Questões para virar gerente de projetos</h1>
+      <p style="font-size:15.5px;color:#5E747B;margin:10px 0 0;line-height:1.55;max-width:700px">{{ qTotal }} perguntas do baralho Anki que a Produtiva usa para se preparar para o Processo Seletivo de Gerentes de Projetos. Leia a pergunta, responda de cabeça (ou escreva), veja a resposta e diga como foi: as que você errar voltam antes. O progresso fica neste navegador.</p>
+
+      <div style="display:flex;align-items:center;gap:14px;margin:22px 0 22px;background:#fff;border:1px solid #E7EEF1;border-radius:14px;padding:14px 18px">
+        <div style="flex:1;height:8px;border-radius:100px;background:#EEF3F5;overflow:hidden"><div style="height:100%;width:{{ qPctSabe }}%;background:#3DAFC7;border-radius:100px"></div></div>
+        <span data-q-geral style="font-size:13.5px;font-weight:600;color:#163B45;white-space:nowrap">{{ qSabe }} de {{ qTotal }} já sabe</span>
+      </div>
+
+      <div style="font-size:13px;font-weight:700;color:#163B45;margin-bottom:9px">Área</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ qAreas }}" as="a" hint-placeholder-count="7">
+          <button onclick="{{ a.go }}" style="border:1.5px solid {{ a.borda }};background:{{ a.bg }};color:{{ a.cor }};font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:100px;cursor:pointer">{{ a.nome }} <span style="opacity:.7;font-weight:500">· {{ a.n }}</span></button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ qTemTemas }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:14px;max-width:420px">
+          <sc-raw-select value="{{ qTemaSel }}" onchange="{{ qOnTema }}" data-q-tema style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:10px 12px;font-size:14.5px;outline:none;background:#fff;color:#172A30"><sc-for list="{{ qTemas }}" as="o" hint-placeholder-count="5"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select>
+        </div>
+      </sc-if>
+
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px;margin-top:22px">
+        <div style="display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:#5E747B">
+          <span><b style="font-size:22px;color:#163B45;font-family:'Schibsted Grotesk'">{{ qSelTotal }}</b> perguntas</span>
+          <span><b style="font-size:22px;color:#2E7D52;font-family:'Schibsted Grotesk'">{{ qSelSabe }}</b> já sabe</span>
+          <span><b style="font-size:22px;color:#9E2F3B;font-family:'Schibsted Grotesk'">{{ qSelRevisar }}</b> para revisar</span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+          <button onclick="{{ qEstudar }}" style="border:none;background:#1E7C92;color:#fff;font-size:14.5px;font-weight:600;padding:11px 20px;border-radius:11px;cursor:pointer" style-hover="background:#17687A">Estudar (até 20, priorizando o que errou)</button>
+          <button onclick="{{ qSimulado }}" style="border:1.5px solid #9FD7E2;background:#EAF6F9;color:#1E7C92;font-size:14.5px;font-weight:600;padding:10px 18px;border-radius:11px;cursor:pointer">Simulado: 20 aleatórias</button>
+        </div>
+        <sc-if value="{{ qTemProgresso }}" hint-placeholder-val="{{ false }}"><button onclick="{{ qZerar }}" style="margin-top:12px;border:none;background:transparent;color:#8AA0A7;font-size:13px;cursor:pointer;padding:0;text-decoration:underline">Zerar meu progresso</button></sc-if>
+      </div>
+      <p style="font-size:12.5px;color:#8AA0A7;margin:18px 0 0">Fonte: baralho Anki "PSGP" compartilhado pelo CIEP. Achou resposta errada ou desatualizada? Avise o CIEP.</p>
+    </sc-if>
+
+    <sc-if value="{{ qEmSessao }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px">
+        <button onclick="{{ qSair }}" style="border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer;padding:0">← Sair</button>
+        <span data-q-pos style="font-size:13px;color:#5E747B">{{ qPosLinha }}</span>
+      </div>
+      <div style="height:6px;border-radius:100px;background:#EEF3F5;overflow:hidden;margin-bottom:18px"><div style="height:100%;width:{{ qBarra }}%;background:#3DAFC7;border-radius:100px;transition:width .3s ease"></div></div>
+      <article style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:24px 26px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px">
+          <span style="background:#F3F7F8;color:#5E747B;padding:4px 10px;border-radius:7px">{{ qOnde }}</span>
+          <span style="background:#F3F7F8;color:#5E747B;padding:4px 10px;border-radius:7px">{{ qNivel }}</span>
+        </div>
+        <h2 data-q-pergunta style="font-size:21px;font-weight:700;color:#163B45;line-height:1.35;margin-top:12px;white-space:pre-line">{{ qPergunta }}</h2>
+        <sc-if value="{{ qEscondida }}" hint-placeholder-val="{{ true }}">
+          <textarea value="{{ qRascunho }}" oninput="{{ qOnRascunho }}" placeholder="Opcional: escreva sua resposta antes de conferir" rows="4" style="width:100%;margin-top:16px;border:1.5px solid #DCE7EB;border-radius:12px;padding:12px 14px;font-size:14.5px;outline:none;resize:vertical;line-height:1.5"></textarea>
+          <button onclick="{{ qVerResposta }}" style="margin-top:12px;border:none;background:#1E7C92;color:#fff;font-size:15px;font-weight:600;padding:12px 22px;border-radius:11px;cursor:pointer" style-hover="background:#17687A">Ver resposta</button>
+        </sc-if>
+        <sc-if value="{{ qMostrar }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ qTemRascunho }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:16px;background:#F6F9FA;border-radius:12px;padding:12px 14px"><div style="font-size:12px;font-weight:600;color:#8AA0A7;margin-bottom:4px">SUA RESPOSTA</div><p style="font-size:14px;color:#3C545B;white-space:pre-line;line-height:1.55">{{ qRascunho }}</p></div>
+          </sc-if>
+          <div style="margin-top:16px;border-top:1px solid #E7EEF1;padding-top:16px">
+            <div style="font-size:12px;font-weight:600;color:#1E7C92;margin-bottom:6px">RESPOSTA</div>
+            <p data-q-resposta style="font-size:15px;color:#22393F;white-space:pre-line;line-height:1.65">{{ qResposta }}</p>
+            <sc-for list="{{ qImagens }}" as="im" hint-placeholder-count="1">
+              <img src="{{ im.src }}" alt="" style="display:block;max-width:100%;height:auto;margin-top:14px;border-radius:10px;border:1px solid #E7EEF1">
+            </sc-for>
+          </div>
+          <div style="font-size:13px;font-weight:600;color:#163B45;margin-top:22px">Como foi?</div>
+          <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px">
+            <button onclick="{{ qErrei }}" style="border:1.5px solid #E6AFB5;background:#FCEDEE;color:#9E2F3B;font-size:14.5px;font-weight:600;padding:12px;border-radius:11px;cursor:pointer">Errei</button>
+            <button onclick="{{ qQuase }}" style="border:1.5px solid #F1DDB4;background:#FFF8EC;color:#9A6B17;font-size:14.5px;font-weight:600;padding:12px;border-radius:11px;cursor:pointer">Quase</button>
+            <button onclick="{{ qAcertei }}" style="border:1.5px solid #8FD0A8;background:#EAF7EE;color:#1F6B43;font-size:14.5px;font-weight:600;padding:12px;border-radius:11px;cursor:pointer">Acertei</button>
+          </div>
+        </sc-if>
+      </article>
+    </sc-if>
+
+    <sc-if value="{{ qFim }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;text-align:center">
+        <h2 data-q-fim style="font-size:24px;font-weight:700;color:#163B45">{{ qFimTitulo }}</h2>
+        <sc-if value="{{ qFimNota }}" hint-placeholder-val="{{ false }}"><div style="font-size:15px;color:#1E7C92;font-weight:600;margin-top:6px">{{ qFimNota }}</div></sc-if>
+        <div style="display:flex;justify-content:center;gap:26px;margin-top:18px;font-size:14px;color:#5E747B">
+          <span><b style="font-size:24px;color:#1F6B43;font-family:'Schibsted Grotesk'">{{ qPlacar.acertei }}</b><br>acertei</span>
+          <span><b style="font-size:24px;color:#9A6B17;font-family:'Schibsted Grotesk'">{{ qPlacar.quase }}</b><br>quase</span>
+          <span><b style="font-size:24px;color:#9E2F3B;font-family:'Schibsted Grotesk'">{{ qPlacar.errei }}</b><br>errei</span>
+        </div>
+        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px">
+          <button onclick="{{ qEstudar }}" style="border:none;background:#1E7C92;color:#fff;font-size:14.5px;font-weight:600;padding:11px 20px;border-radius:11px;cursor:pointer">Estudar mais 20</button>
+          <button onclick="{{ qSair }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:14.5px;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer">Voltar às áreas</button>
+        </div>
+      </div>
+    </sc-if>
   </main>
   </sc-if>
 
@@ -2316,7 +2424,7 @@
   <main class="hg-main" style="max-width:1180px;margin:0 auto;padding:28px 28px 80px">
     <button onclick="{{ voltarTreinos }}" style="border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer;padding:0;margin-bottom:14px">← Treinamentos</button>
     <div class="hg-g2" style="display:grid;grid-template-columns:260px minmax(0,1fr);gap:26px;align-items:start">
-      <aside class="hg-treino-aside" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px 14px;position:sticky;top:86px">
+      <aside class="hg-treino-aside" style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:18px 14px;position:sticky;top:130px">
         <div style="font-family:'Schibsted Grotesk';font-size:17px;font-weight:700;color:#163B45;padding:0 6px">{{ treinoTitulo }}</div>
         <div style="display:flex;align-items:center;gap:10px;margin:10px 6px 4px">
           <div style="flex:1;height:6px;border-radius:100px;background:#EEF3F5;overflow:hidden"><div style="height:100%;width:{{ treinoPct }}%;background:#3DAFC7;border-radius:100px"></div></div>
@@ -2574,7 +2682,7 @@
 
     <div class="hg-cols" style="display:grid;grid-template-columns:430px 1fr;gap:26px;align-items:start;margin-top:24px">
       <!-- EDITOR -->
-      <aside class="hg-aside ciep-scroll" style="position:sticky;top:88px;max-height:calc(100vh - 110px);overflow:auto;display:flex;flex-direction:column;gap:14px;padding-right:2px">
+      <aside class="hg-aside ciep-scroll" style="position:sticky;top:132px;max-height:calc(100vh - 154px);overflow:auto;display:flex;flex-direction:column;gap:14px;padding-right:2px">
         <!-- Gerar com IA -->
         <div style="background:linear-gradient(155deg,#EAF6F9 0%,#F4FBFC 100%);border:1.5px solid #C6E4EC;border-radius:16px;padding:18px">
           <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px">
@@ -2650,7 +2758,7 @@ Pergunta 2" style="width:100%;border:1px solid #DCE7EB;border-radius:9px;padding
 
       <!-- PREVIEW -->
       <div>
-        <div class="hg-aside" style="position:sticky;top:88px;z-index:5;display:flex;align-items:center;gap:12px;background:rgba(246,249,250,0.92);backdrop-filter:blur(6px);padding:8px 0 14px;margin-bottom:2px">
+        <div class="hg-aside" style="position:sticky;top:132px;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:12px;row-gap:8px;background:rgba(246,249,250,0.92);backdrop-filter:blur(6px);padding:8px 0 14px;margin-bottom:2px">
           <span style="display:flex;align-items:center;gap:8px;font-size:13px;color:#7C9097"><span style="width:8px;height:8px;border-radius:50%;background:#3DAFC7"></span>Pré-visualização · {{ docCount }} blocos</span>
           <span style="flex:1"></span>
           <button onclick="{{ saveDoc }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:10px;cursor:pointer" style-hover="border-color:#9FD7E2;color:#1E7C92">Salvar na biblioteca</button>
