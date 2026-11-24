@@ -39,7 +39,7 @@ src/
     rascunhos/              rascunhos gerados de fontes/, aguardando revisão — NUNCA entram no pack
 assets/            logo e fontes; index.json mapeia uuid ↔ arquivo
 vendor/            dc-runtime.js, React embutido e o invólucro do bundle
-tools/             pack / verify / rascunho / promover / smoke / unpack / ppgp-extrair.py
+tools/             pack / verify / rascunho / promover / smoke / unpack / ppgp-extrair.py / anki-questoes.py
 dist/              artefatos gerados — não editar à mão
 ```
 
@@ -138,8 +138,10 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
 
   O progresso fica neste navegador (`hangar.questoes`: 0 = errou, 1 = quase, 2–4 = acertou; "já sabe" = 2+), com
   "Zerar meu progresso". A busca geral também acha as perguntas. Para atualizar o banco, exporte de novo o baralho do
-  Anki (`.colpkg`) e regenere `src/data/questoes.json`: o texto vem sem HTML (listas viram "•" e "1."), as figuras
-  viram WebP de até 1000 px; o `verify` confere áreas, temas, ids, figuras e se sobrou HTML.
+  Anki (Arquivo › Exportar › `.colpkg`, com mídia) e rode `python3 tools/anki-questoes.py "ANKI PSGP.colpkg"` (precisa de
+  `pip install zstandard` e do `ffmpeg`): o texto sai sem HTML (listas viram "•" e "1.", sublistas recuadas, tabelas de
+  etapas uma por linha), as figuras viram WebP de até 1000 px e o id de cada pergunta se mantém, então o progresso
+  salvo continua valendo. O `verify` confere áreas, temas, ids, figuras e se sobrou HTML.
 - **Como funciona a Produtiva** (`#/produtiva`, A Produtiva): página de boas-vindas com o que é a Produtiva e as áreas
   de atuação (cada uma abre os escopos do grupo), as 5 áreas da empresa com "o que faz" e "procure quando",
   os subnúcleos de Projetos (CIEP, CIT, CS), o caminho do primeiro contato ao projeto (SDR → closer → gerente
