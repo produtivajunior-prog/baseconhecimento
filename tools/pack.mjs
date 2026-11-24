@@ -46,6 +46,7 @@ const DADOS = {
   cases: dados('cases'),
   trilha: dados('trilha'),
   treinamentos: dados('treinamentos'),
+  questoes: dados('questoes'),
   produtiva: dados('produtiva'),
 };
 

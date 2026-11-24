@@ -34,7 +34,8 @@ src/
     modelos.json            modelos-padrão (blocos que a IA preenche)
     documento-padrao.json   documento PMMC (10 seções, do PDF oficial)
     produtiva.json          páginas "Como funciona" (áreas, subnúcleos, fluxo comercial) e "Auxílios e reembolsos"
-    treinamentos.json       aba Treinamentos: módulos (blocos de conteúdo, ferramentas, case, exercício) e teste rápido
+    treinamentos.json       Capacitação › Treinamentos: módulos (blocos de conteúdo, ferramentas, case, exercício) e teste rápido
+    questoes.json           Capacitação › Questões do PSGP: 427 perguntas do baralho Anki, áreas/temas e as 38 figuras (WebP embutido)
     rascunhos/              rascunhos gerados de fontes/, aguardando revisão — NUNCA entram no pack
 assets/            logo e fontes; index.json mapeia uuid ↔ arquivo
 vendor/            dc-runtime.js, React embutido e o invólucro do bundle
@@ -77,6 +78,8 @@ escapada dentro do HTML.
   para ferramentas que existem
 - **revisão** — nada entra em `ferramentas.json`/`escopos.json` sem `revisao.status = "aprovado"`
   por e-mail `@produtivajunior.com.br`
+- **treinamentos e questões** — ids, ferramentas, escopo e case dos treinamentos e gabarito dos testes;
+  áreas, temas, ids e figuras das questões do PSGP, sem HTML sobrando no texto
 - **round-trip** — o bundle em `dist/` carrega exatamente o que está em `src/data/`
 - **assets e markup** — bytes dos assets e a marcação batem com `assets/` e `src/index.html`
 
@@ -85,12 +88,27 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
 
 ## Navegação e uso
 
+- **Menu enxuto**: o topo tem só 7 grupos. Os que juntam mais de uma tela mostram uma linha de subabas logo abaixo
+  do topo (fixa no computador; no celular rola junto com a página). Ao voltar a um grupo, abre a última subaba usada.
+
+  | Grupo | Subabas (endereço) |
+  |---|---|
+  | Início | — |
+  | Biblioteca | lista e ficha das ferramentas; o Recomendar (estrela do topo) também fica aqui |
+  | Escopos | — |
+  | Cases | galeria, ficha e cadastro de case |
+  | Capacitação | Treinamentos (`#/treinamentos`) · Questões do PSGP (`#/questoes`) |
+  | A Produtiva | Comece aqui (`#/comece`) · Como funciona (`#/produtiva`) · Auxílios e reembolsos (`#/auxilios`) |
+  | Cadastrar | Ferramentas e escopos (`#/cadastrar`) · Gerar documentação (`#/docs`) |
+
+  Os grupos ficam em `GRUPOS_NAV` (`src/app.js`); os endereços antigos continuam valendo. No celular, o menu do topo
+  rola de lado e a aba do grupo atual é trazida para a área visível.
 - **URL acompanha a tela**: `#/biblioteca`, `#/ferramenta/<id>`, `#/escopos`, `#/escopo/<id>`, `#/cases`,
-  `#/case/<id>`, `#/cases/novo`, `#/cadastrar`, `#/docs`, `#/recomendar`, `#/treinamentos`, `#/treinamento/<id>/<n>`. Dá para compartilhar o link de
+  `#/case/<id>`, `#/cases/novo`, `#/cadastrar`, `#/docs`, `#/recomendar`, `#/treinamentos`, `#/treinamento/<id>/<n>`, `#/questoes`. Dá para compartilhar o link de
   uma ferramenta ou case, usar o botão "voltar" do navegador e recarregar sem perder a tela. Funciona em `file://`.
 - **Busca geral** (campo da Biblioteca, lupa do topo ou Enter na busca do Início): procura em todo o Hangar,
   sem acento e sem caixa, com as palavras em qualquer ordem. Lista as ferramentas (as que têm o termo no nome
-  primeiro) e, acima delas, os cases, escopos, módulos dos treinamentos, termos do glossário, passos do Comece aqui, partes do Como funciona,
+  primeiro) e, acima delas, os cases, escopos, questões do PSGP, módulos dos treinamentos, termos do glossário, passos do Comece aqui, partes do Como funciona,
   auxílios e problemas do Recomendar que citam o termo, com o trecho onde ele aparece. Cada resultado abre a tela certa.
 - **Teclado**: `/` foca a busca da tela; `Esc` fecha a janela de anexos, o resultado da IA e a confirmação; foco visível em todos os controles.
 - **Nada some sem perguntar**: remover case, capa, vídeo, modelo-padrão ou bloco da documentação, limpar o
@@ -99,10 +117,10 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   diz "salvo neste navegador" sempre que algo ainda não foi publicado; ferramentas criadas no navegador levam o
   selo "Só aqui" na Biblioteca e na ficha. "Esse conteúdo foi útil?" abre um e-mail para o responsável da
   ferramenta com a avaliação e a sugestão; "Baixar" no resultado da IA gera o HTML imprimível da ferramenta preenchida.
-- **Comece aqui** (`#/comece`): trilha do primeiro projeto em seis passos marcáveis (ficam no navegador), as
+- **Comece aqui** (`#/comece`, A Produtiva): trilha do primeiro projeto em seis passos marcáveis (ficam no navegador), as
   ferramentas mapeadas em mais etapas e o glossário. Os termos vêm de `src/data/trilha.json`,
   cada um com `origem`; os marcados `pendente: true` aparecem como "a confirmar" até o CIEP validar.
-- **Treinamentos** (`#/treinamentos`, `#/treinamento/<id>/<módulo>`): cursos curtos por escopo, montados a partir
+- **Treinamentos** (`#/treinamentos`, `#/treinamento/<id>/<módulo>`, Capacitação): cursos curtos por escopo, montados a partir
   do Hangar e do Drive. O primeiro é **Gestão de Estoque** (7 módulos, ~1h30), com base no PTPJ de Gestão de Estoque,
   na planilha do Desafio de Gestão de Estoque, no slide do escopo no PPGP 2026, nas fichas da Biblioteca e no case da
   Mídia Digital. Cada módulo tem conteúdo (texto, lista, fórmula, destaque), atalhos para as ferramentas e o case, e um
@@ -110,12 +128,24 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   resolução (cortes 80/90) e o de parâmetros tem a calculadora de estoque de segurança e ponto de pedido. As respostas
   ficam neste navegador (`hangar.treinos`); "Refazer teste" limpa um módulo. Para criar outro treinamento, acrescente
   um item em `src/data/treinamentos.json` (o `verify` confere ids, ferramentas, escopo, case e gabarito das perguntas).
-- **Como funciona a Produtiva** (`#/produtiva`): página de boas-vindas com o que é a Produtiva e as áreas
+- **Questões do PSGP** (`#/questoes`, Capacitação): as 427 perguntas do baralho Anki que a Produtiva usa para se
+  preparar para o Processo Seletivo de Gerentes de Projetos, em 7 áreas (Revisão Geral, Gestão Estratégica, de
+  Projetos, Financeira, da Produção, Escopos e Quiz de Leal) e 31 temas. A pessoa filtra por área e tema e escolhe:
+  - **Estudar**: até 20 perguntas, primeiro as que errou, depois as "quase", as novas e por último as que já acertou.
+    Lê a pergunta, pode escrever a resposta, clica em "Ver resposta" (com as figuras do card) e marca Errei, Quase ou
+    Acertei. Errei faz a pergunta voltar 3 posições depois; Quase manda para o fim da sessão.
+  - **Simulado**: 20 perguntas aleatórias, uma vez cada, com o percentual de acerto no fim.
+
+  O progresso fica neste navegador (`hangar.questoes`: 0 = errou, 1 = quase, 2–4 = acertou; "já sabe" = 2+), com
+  "Zerar meu progresso". A busca geral também acha as perguntas. Para atualizar o banco, exporte de novo o baralho do
+  Anki (`.colpkg`) e regenere `src/data/questoes.json`: o texto vem sem HTML (listas viram "•" e "1."), as figuras
+  viram WebP de até 1000 px; o `verify` confere áreas, temas, ids, figuras e se sobrou HTML.
+- **Como funciona a Produtiva** (`#/produtiva`, A Produtiva): página de boas-vindas com o que é a Produtiva e as áreas
   de atuação (cada uma abre os escopos do grupo), as 5 áreas da empresa com "o que faz" e "procure quando",
   os subnúcleos de Projetos (CIEP, CIT, CS), o caminho do primeiro contato ao projeto (SDR → closer → gerente
   → proposta → execução → CSAT → case) e como o membro é acompanhado. O conteúdo fica em
   `src/data/produtiva.json` e é validado pelo `verify`.
-- **Auxílios e reembolsos** (`#/auxilios`, item "Auxílios" do menu): página própria com o PIPJ (valores por
+- **Auxílios e reembolsos** (`#/auxilios`, A Produtiva): página própria com o PIPJ (valores por
   cargo, o que entra no cálculo, a fórmula com teto de R$ 300, ajustes e casos especiais, e as regras de uso),
   auxílio-alimentação, reembolso de gasolina (com link da planilha), Uber Business e computadores. Fontes: Guia
   de Benefícios dos Membros e Cálculo do PIPJ (2026); regras de uso do PIPJ e computadores vêm do manual de 2025.
@@ -146,7 +176,7 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   perguntas-chave, o que pedir ao cliente, passo a passo e, quando há modelo em canvas, o canvas em branco.
 - **Pergunte a quem fez**: na ficha do case, botões de e-mail e WhatsApp para a equipe, com a mensagem já
   escrita. O WhatsApp é opcional no cadastro.
-- **Celular**: menu em segunda linha rolável, filtros da Biblioteca e dos Cases atrás de um botão "Filtros",
+- **Celular**: menu em segunda linha rolável (a aba atual aparece inteira), subabas que rolam com a página, filtros da Biblioteca e dos Cases atrás de um botão "Filtros",
   grades e formulários em uma coluna. Nada rola na horizontal.
 
 ## Revisão do acervo

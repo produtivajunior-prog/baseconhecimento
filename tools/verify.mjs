@@ -50,6 +50,7 @@ const cases = json('cases');
 const trilha = json('trilha');
 const produtiva = json('produtiva');
 const treinamentos = json('treinamentos');
+const questoes = json('questoes');
 
 const enumDe = (obj) => Array.isArray(obj) ? obj : Object.keys(obj);
 const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -406,6 +407,28 @@ const TELAS = ['home', 'biblioteca', 'escopos', 'cases', 'novo-case', 'cadastro'
   check(!problemas_.some((x) => x.startsWith('treinamentos')), `treinamentos.json  ${treinamentos.length} treinamento(s), ${nMods} módulos, ${nQ} perguntas`, 'treinamentos.json com erros');
 }
 
+// ---------------------------------------------------------------- questões (banco do PSGP)
+{
+  const ctx = 'questoes';
+  const areaIds = new Map((questoes.areas || []).map((a) => [a.id, new Set((a.temas || []).map((t) => t.id))]));
+  const qIds = new Set(); const usadas = new Set();
+  for (const a of questoes.areas || []) { if (!KEBAB.test(a.id || '') || !a.nome) p(ctx, `área inválida: ${JSON.stringify(a.id)}`); for (const t of a.temas || []) if (!KEBAB.test(t.id || '') || !t.nome) p(ctx, `tema inválido em ${a.id}: ${JSON.stringify(t.id)}`); }
+  for (const c of questoes.cards || []) {
+    if (!/^q\d+$/.test(c.id || '') || qIds.has(c.id)) p(ctx, `id inválido ou repetido: ${c.id}`); qIds.add(c.id);
+    if (!areaIds.has(c.area)) p(ctx, `${c.id}: área "${c.area}" não existe`);
+    else if (c.tema && !areaIds.get(c.area).has(c.tema)) p(ctx, `${c.id}: tema "${c.tema}" não existe na área ${c.area}`);
+    if (typeof c.pergunta !== 'string' || !c.pergunta.trim() || typeof c.resposta !== 'string' || !c.resposta.trim()) p(ctx, `${c.id}: pergunta e resposta obrigatórias`);
+    if (/<[a-z]/i.test(c.pergunta + c.resposta)) p(ctx, `${c.id}: sobrou HTML no texto`);
+    for (const n of c.imagens || []) { usadas.add(n); if (!(questoes.imagens || {})[n]) p(ctx, `${c.id}: imagem "${n}" não está em imagens`); }
+  }
+  for (const [n, u] of Object.entries(questoes.imagens || {})) {
+    if (!/^data:image\/(webp|png|jpeg);base64,/.test(u)) p(ctx, `imagem "${n}" precisa ser data:image/…`);
+    if (!usadas.has(n)) aviso(`questoes.json: imagem "${n}" não é usada por nenhuma pergunta`);
+  }
+  const kb = Math.round(JSON.stringify(questoes.imagens || {}).length / 1024);
+  check(!problemas_.some((x) => x.startsWith('questoes')), `questoes.json  ${(questoes.cards || []).length} perguntas, ${(questoes.areas || []).length} áreas, ${Object.keys(questoes.imagens || {}).length} imagens (${kb} KB)`, 'questoes.json com erros');
+}
+
 // ---------------------------------------------------------------- ritual trimestral de revisão
 {
   const hoje = new Date().toISOString().slice(0, 10);
@@ -492,7 +515,7 @@ if (dist) {
   try { dados = extrairDados(dist.logic); }
   catch (e) { check(false, '', `o script do bundle não avalia: ${e.message}`); }
   if (dados) {
-    const pares = [['ferramentas', ferramentas], ['escopos', escopos], ['taxonomia', T], ['problemas', problemas], ['modelos', modelos], ['documentoPadrao', documentoPadrao], ['cases', cases], ['trilha', trilha], ['produtiva', produtiva], ['treinamentos', treinamentos]];
+    const pares = [['ferramentas', ferramentas], ['escopos', escopos], ['taxonomia', T], ['problemas', problemas], ['modelos', modelos], ['documentoPadrao', documentoPadrao], ['cases', cases], ['trilha', trilha], ['produtiva', produtiva], ['treinamentos', treinamentos], ['questoes', questoes]];
     for (const [chave, esperado] of pares) {
       const n = Array.isArray(esperado) ? `${esperado.length} itens` : 'ok';
       check(isDeepStrictEqual(dados[chave], esperado), `dist carrega DADOS.${chave}  ${n}`, `DADOS.${chave} no bundle DIVERGE de src/data — rode node tools/pack.mjs`);
