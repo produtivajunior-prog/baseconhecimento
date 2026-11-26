@@ -17,7 +17,9 @@ class Component extends DCLogic {
     formCase: this.formCaseVazio(),
     caseEditandoId: null,
     treinoId: null, treinoMod: 0, treinoProg: this.carregarLocal('hangar.treinos', {}),
-    qArea: 'todas', qTema: '', qProg: this.carregarLocal('hangar.questoes', {}), qSessao: null, qMostrar: false, qRascunho: '',
+    qAba: 'banco', qArea: 'todas', qTemas: [], qStatus: 'todas', qPag: 1, qAbertas: {}, qFixos: {}, qSoIds: null, qCaderno: 'salvas',
+    qProg: this.carregarLocal('hangar.questoes', {}), qSalvas: this.carregarLocal('hangar.questoes.salvas', {}),
+    qSimArea: 'todas', qSimQtd: 20, qSessao: null, qMostrar: false,
     calcEs: { cm: '100', sigma: '20', tr: '0,5', nivel: '95' }, abcResp: {}, abcConferido: false,
     caseErro: '',
     caseFiltroFerr: '',
@@ -742,7 +744,7 @@ class Component extends DCLogic {
       { key:'glossario', label:'Glossário', itens: (this.TRILHA.glossario || []).map(g => ({ titulo: g.sigla + (g.nome ? ' — ' + g.nome : ''), sub: 'Glossário',
           textos: [g.sigla, g.nome, g.definicao], open: () => this.irParaTela('comece', 'glossario', { glossQuery: g.sigla }) })) },
       { key:'questoes', label:'Questões do PSGP', itens: this.QUESTOES.cards.map(c => ({ titulo: c.pergunta, sub: 'Questão · ' + this.qNomeArea(c),
-          textos: [c.pergunta, c.resposta], open: () => this.qIniciar([c.id], 'busca') })) },
+          textos: [c.pergunta, c.resposta], open: () => this.qAbrirBusca(c.id) })) },
       { key:'treinamentos', label:'Treinamentos', itens: this.TREINOS.flatMap(t => (t.modulos || []).map((m, i) => ({ titulo: m.titulo, sub: 'Treinamento ' + t.titulo + ' · módulo ' + (i + 1),
           textos: [m.titulo, m.resumo, ...this.textosDe(m.blocos), ...(m.quiz || []).map(q => q.pergunta)], open: () => this.abrirTreino(t.id, i) }))) },
       { key:'trilha', label:'Comece aqui', itens: (this.TRILHA.passos || []).map((p, i) => ({ titulo: p.titulo, sub: 'Comece aqui · passo ' + (i + 1),
@@ -1271,72 +1273,130 @@ class Component extends DCLogic {
       monAtualizado: m.atualizado ? 'Atualizado às ' + m.atualizado.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '' };
   }
   // ===== Questões (src/data/questoes.json, baralho Anki do PSGP) =====
-  // Progresso neste navegador: hangar.questoes = { <id do card>: nível 0–4 }.
-  // 0 = errou da última vez, 1 = quase, 2–4 = acertou (cada acerto seguido sobe 1). "Já sabe" = 2+; "para revisar" = 0 ou 1.
-  // No estudo, Errei faz o card voltar 3 posições depois e Quase manda para o fim da sessão.
+  // Banco em lista (10 por página) com filtro de área, temas e status; Simulado (uma por vez); Meu caderno (salvas e para revisar).
+  // Progresso neste navegador: hangar.questoes = { <id>: nível } (0 = errei, 1 = quase, 2–4 = acertei; cada acerto seguido sobe 1)
+  // e hangar.questoes.salvas = { <id>: true }. As perguntas são abertas: "Ver resposta" mostra o gabarito e a pessoa marca como foi.
   qNomeArea(c) { const a = this.QUESTOES.areas.find(x => x.id === c.area); const t = a && (a.temas || []).find(x => x.id === c.tema); return (a ? a.nome : '') + (t ? ' › ' + t.nome : ''); }
-  qSelecao(s) { return this.QUESTOES.cards.filter(c => (s.qArea === 'todas' || c.area === s.qArea) && (!s.qTema || c.tema === s.qTema)); }
+  qCodigo(c) { return 'Q' + c.id.slice(-6); }
   qEmbaralhar(a) { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; }
-  qIniciar(ids, modo) {
-    this.setState({ screen: 'questoes', qSessao: { modo, fila: ids.slice(), feitas: 0, total: ids.length, placar: { acertei: 0, quase: 0, errei: 0 }, fim: ids.length === 0 }, qMostrar: false, qRascunho: '' });
+  qStatusDe(n) { return n === undefined ? 'nao' : n === 0 ? 'errei' : n === 1 ? 'quase' : 'acertei'; }
+  // Questões que aparecem na lista. As que a pessoa acabou de marcar (qFixos) continuam na lista até mudar o filtro,
+  // para não sumirem da tela no meio do estudo (ex.: filtro "Não respondidas").
+  qFiltradas(s) {
+    const prog = s.qProg || {}, salvas = s.qSalvas || {}, fixos = s.qFixos || {};
+    const cs = this.QUESTOES.cards;
+    if (s.qSoIds) return cs.filter(c => s.qSoIds.includes(c.id));
+    if (s.qAba === 'caderno') return cs.filter(c => fixos[c.id] || (s.qCaderno === 'revisar' ? prog[c.id] === 0 || prog[c.id] === 1 : salvas[c.id]));
+    const temas = s.qTemas || [];
+    return cs.filter(c => (s.qArea === 'todas' || c.area === s.qArea) && (!temas.length || temas.includes(c.tema))
+      && (fixos[c.id] || s.qStatus === 'todas' || this.qStatusDe(prog[c.id]) === s.qStatus));
+  }
+  qFiltro(mudanca) { this.setState(st => ({ ...mudanca, qPag: 1, qFixos: {}, qSoIds: null, qAbertas: mudanca.qAba && mudanca.qAba !== st.qAba ? {} : st.qAbertas })); }
+  qNota(id, nota) {
+    const prog = { ...(this.state.qProg || {}) }; const antes = prog[id];
+    prog[id] = nota === 'acertei' ? (antes === undefined ? 2 : Math.min(4, Math.max(2, antes + 1))) : nota === 'quase' ? 1 : 0;
+    this.salvarLocal('hangar.questoes', prog);
+    this.setState(st => ({ qProg: prog, qFixos: { ...(st.qFixos || {}), [id]: true } }));
+  }
+  qSalvar(id) {
+    const salvas = { ...(this.state.qSalvas || {}) };
+    if (salvas[id]) delete salvas[id]; else salvas[id] = true;
+    this.salvarLocal('hangar.questoes.salvas', salvas);
+    this.setState(st => ({ qSalvas: salvas, qFixos: { ...(st.qFixos || {}), [id]: true } }));
+    if (this.showToast) this.showToast(salvas[id] ? 'Salva em Meu caderno.' : 'Removida de Meu caderno.');
+  }
+  qAbrirBusca(id) {
+    this.setState({ screen: 'questoes', qAba: 'banco', qSoIds: [id], qAbertas: {}, qPag: 1, qSessao: null });
     if (typeof window !== 'undefined') window.scrollTo(0, 0);
   }
-  qEstudar() {
-    const prog = this.state.qProg || {}; const sel = this.qSelecao(this.state);
-    // ordem: errou (0), quase (1), nunca vista, depois as que já acertou (2, 3, 4); dentro do mesmo nível, aleatória
-    const peso = (id) => prog[id] === undefined ? 1.5 : prog[id];
-    const ord = this.qEmbaralhar(sel).sort((a, b) => peso(a.id) - peso(b.id));
-    this.qIniciar(ord.slice(0, 20).map(c => c.id), 'estudo');
+  // Simulado: perguntas aleatórias da área escolhida, uma por vez, com o percentual de acerto no fim.
+  qComecarSimulado() {
+    const s = this.state; const pool = this.QUESTOES.cards.filter(c => s.qSimArea === 'todas' || c.area === s.qSimArea);
+    const ids = this.qEmbaralhar(pool).slice(0, s.qSimQtd).map(c => c.id);
+    this.setState({ qSessao: { fila: ids, feitas: 0, total: ids.length, placar: { acertei: 0, quase: 0, errei: 0 }, fim: ids.length === 0 }, qMostrar: false });
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
   }
-  qSimulado() { this.qIniciar(this.qEmbaralhar(this.qSelecao(this.state)).slice(0, 20).map(c => c.id), 'simulado'); }
-  qResponder(nota) {
-    const s = this.state; const ses = s.qSessao; if (!ses || !ses.fila.length) return;
-    const id = ses.fila[0]; const prog = { ...(s.qProg || {}) }; const antes = prog[id];
-    prog[id] = nota === 'acertei' ? (antes === undefined ? 2 : Math.min(4, Math.max(2, antes + 1))) : nota === 'quase' ? 1 : 0;
+  qResponderSimulado(nota) {
+    const ses = this.state.qSessao; if (!ses || !ses.fila.length) return;
+    this.qNota(ses.fila[0], nota);
     const fila = ses.fila.slice(1);
-    if (ses.modo === 'estudo' && nota === 'errei') fila.splice(Math.min(3, fila.length), 0, id);
-    else if (ses.modo === 'estudo' && nota === 'quase') fila.push(id);
-    const novo = { ...ses, fila, feitas: ses.feitas + 1, placar: { ...ses.placar, [nota]: ses.placar[nota] + 1 }, fim: fila.length === 0 };
-    this.salvarLocal('hangar.questoes', prog);
-    this.setState({ qProg: prog, qSessao: novo, qMostrar: false, qRascunho: '' });
+    this.setState({ qSessao: { ...ses, fila, feitas: ses.feitas + 1, placar: { ...ses.placar, [nota]: ses.placar[nota] + 1 }, fim: fila.length === 0 }, qMostrar: false });
     if (typeof window !== 'undefined') window.scrollTo(0, 0);
   }
   questoesVals(s) {
-    const Q = this.QUESTOES; const prog = s.qProg || {};
-    const sit = (cs) => ({ total: cs.length, sabe: cs.filter(c => (prog[c.id] || 0) >= 2).length, vistas: cs.filter(c => prog[c.id] !== undefined).length, revisar: cs.filter(c => prog[c.id] !== undefined && prog[c.id] < 2).length });
-    const geral = sit(Q.cards); const sel = this.qSelecao(s); const ss = sit(sel);
-    const chip = (id, nome, n, ativo, go) => ({ nome, n, go, bg: ativo ? '#1E7C92' : '#fff', cor: ativo ? '#fff' : '#3C545B', borda: ativo ? '#1E7C92' : '#DCE7EB' });
+    const Q = this.QUESTOES; const prog = s.qProg || {}; const salvas = s.qSalvas || {};
+    const POR_PAG = 10;
+    const STATUS = { nao: { txt: 'Não respondida', cor: '#5E747B', bg: '#F3F7F8' }, errei: { txt: 'Errei', cor: '#9E2F3B', bg: '#FCEDEE' },
+      quase: { txt: 'Quase', cor: '#9A6B17', bg: '#FFF8EC' }, acertei: { txt: 'Acertei', cor: '#1F6B43', bg: '#EAF7EE' } };
+    const contaStatus = (cs) => { const r = { todas: cs.length, nao: 0, acertei: 0, quase: 0, errei: 0 }; cs.forEach(c => { r[this.qStatusDe(prog[c.id])]++; }); return r; };
+    const aba = s.qAba || 'banco';
+    const abas = [{ k: 'banco', l: 'Banco de questões' }, { k: 'simulado', l: 'Simulado' }, { k: 'caderno', l: 'Meu caderno' }].map(a => ({
+      label: a.l, go: () => this.qFiltro({ qAba: a.k }), ativo: aba === a.k, cor: aba === a.k ? '#1E7C92' : '#6B8289', borda: aba === a.k ? '#1E7C92' : 'transparent', peso: aba === a.k ? '600' : '500' }));
+    // filtros do banco
     const areaAtual = Q.areas.find(a => a.id === s.qArea);
+    const doRecorte = Q.cards.filter(c => (s.qArea === 'todas' || c.area === s.qArea) && (!(s.qTemas || []).length || s.qTemas.includes(c.tema)));
+    const cont = contaStatus(doRecorte);
+    const statusOps = [['todas', 'Todas'], ['nao', 'Não respondidas'], ['acertei', 'Acertei'], ['quase', 'Quase'], ['errei', 'Errei']].map(([k, l]) => ({
+      label: l, n: cont[k], go: () => this.qFiltro({ qStatus: k }), ativo: s.qStatus === k, marca: s.qStatus === k ? '#1E7C92' : '#C9D6DA', miolo: s.qStatus === k ? '#1E7C92' : 'transparent' }));
+    const temaOps = ((areaAtual && areaAtual.temas) || []).map(t => { const on = (s.qTemas || []).includes(t.id); return {
+      label: t.nome, n: Q.cards.filter(c => c.area === areaAtual.id && c.tema === t.id).length, on,
+      go: () => this.qFiltro({ qTemas: on ? s.qTemas.filter(x => x !== t.id) : (s.qTemas || []).concat(t.id) }),
+      bg: on ? '#1E7C92' : '#fff', cor: on ? '#fff' : '#3C545B', borda: on ? '#1E7C92' : '#DCE7EB' }; });
+    // lista paginada (banco, caderno ou resultado da busca)
+    const lista = aba === 'simulado' && !s.qSoIds ? [] : this.qFiltradas(s);
+    const paginas = Math.max(1, Math.ceil(lista.length / POR_PAG)); const pag = Math.min(Math.max(1, s.qPag || 1), paginas);
+    const ir = (p) => { this.setState({ qPag: p }); if (typeof window !== 'undefined') { const el = document.getElementById('q-lista'); if (el) el.scrollIntoView({ block: 'start' }); } };
+    const itens = lista.slice((pag - 1) * POR_PAG, pag * POR_PAG).map((c, k) => {
+      const st = STATUS[this.qStatusDe(prog[c.id])]; const aberta = !!(s.qAbertas || {})[c.id]; const n = prog[c.id];
+      const nota = (tipo, cor, bg, borda) => { const sel = aberta && this.qStatusDe(n) === tipo && (s.qFixos || {})[c.id];
+        return { go: () => this.qNota(c.id, tipo), bg: sel ? cor : bg, cor: sel ? '#fff' : cor, borda: sel ? cor : borda }; };
+      return { id: c.id, num: (pag - 1) * POR_PAG + k + 1, codigo: this.qCodigo(c), onde: this.qNomeArea(c), pergunta: c.pergunta, resposta: c.resposta,
+        statusTxt: st.txt, statusCor: st.cor, statusBg: st.bg, aberta, fechada: !aberta,
+        imagens: aberta ? (c.imagens || []).map(nm => ({ src: Q.imagens[nm] || '' })).filter(i => i.src) : [],
+        ver: () => this.setState(st2 => ({ qAbertas: { ...(st2.qAbertas || {}), [c.id]: true } })),
+        ocultar: () => this.setState(st2 => { const a = { ...(st2.qAbertas || {}) }; delete a[c.id]; return { qAbertas: a }; }),
+        errei: nota('errei', '#9E2F3B', '#FCEDEE', '#E6AFB5'), quase: nota('quase', '#9A6B17', '#FFF8EC', '#F1DDB4'), acertei: nota('acertei', '#1F6B43', '#EAF7EE', '#8FD0A8'),
+        salva: !!salvas[c.id], salvaAria: salvas[c.id] ? 'true' : 'false', salvarTxt: salvas[c.id] ? 'Salva no caderno' : 'Salvar no caderno', salvarFill: salvas[c.id] ? 'currentColor' : 'none', salvarCor: salvas[c.id] ? '#1E7C92' : '#5E747B', salvar: () => this.qSalvar(c.id) };
+    });
+    const nums = []; for (let p = Math.max(1, pag - 3); p <= Math.min(paginas, pag + 3); p++) nums.push(p);
+    // simulado
     const ses = s.qSessao; const emSessao = !!(ses && !ses.fim); const fim = !!(ses && ses.fim);
     const card = emSessao ? Q.cards.find(c => c.id === ses.fila[0]) : null;
-    const nivelTxt = (n) => n === undefined ? 'Nova' : n >= 2 ? 'Acertou da última vez' : n === 0 ? 'Errou da última vez' : 'Quase da última vez';
+    const geral = contaStatus(Q.cards);
+    const nRevisar = Q.cards.filter(c => prog[c.id] === 0 || prog[c.id] === 1).length; const nSalvas = Q.cards.filter(c => salvas[c.id]).length;
     return {
-      qTotal: geral.total, qSabe: geral.sabe, qVistas: geral.vistas, qPctSabe: geral.total ? Math.round(geral.sabe / geral.total * 100) : 0,
-      qInicio: !emSessao && !fim, qEmSessao: emSessao, qFim: fim,
-      qAreas: [chip('todas', 'Todas', Q.cards.length, s.qArea === 'todas', () => this.setState({ qArea: 'todas', qTema: '' }))]
-        .concat(Q.areas.map(a => chip(a.id, a.nome, Q.cards.filter(c => c.area === a.id).length, s.qArea === a.id, () => this.setState({ qArea: a.id, qTema: '' })))),
-      qTemTemas: !!(areaAtual && areaAtual.temas && areaAtual.temas.length), qTemaSel: s.qTema,
-      qTemas: [{ value: '', label: 'Todos os temas' }].concat(((areaAtual && areaAtual.temas) || []).map(t => ({ value: t.id, label: t.nome + ' (' + Q.cards.filter(c => c.area === areaAtual.id && c.tema === t.id).length + ')' }))),
-      qOnTema: (e) => this.setState({ qTema: e.target.value }),
-      qSelTotal: ss.total, qSelSabe: ss.sabe, qSelRevisar: ss.revisar, qSelPct: ss.total ? Math.round(ss.sabe / ss.total * 100) : 0,
-      qSelVazia: ss.total === 0, qEstudar: () => this.qEstudar(), qSimulado: () => this.qSimulado(),
-      qZerar: () => this.pedirConfirmacao({ titulo: 'Zerar o progresso das questões?', texto: 'As marcações de "já sei" e "errei" deste navegador serão apagadas.', label: 'Zerar', ok: () => { this.salvarLocal('hangar.questoes', {}); this.setState({ qProg: {} }); } }),
-      qTemProgresso: geral.vistas > 0,
-      // sessão
-      qPosLinha: !ses ? '' : ses.modo === 'simulado' ? 'Simulado · questão ' + (ses.feitas + 1) + ' de ' + ses.total
-        : ses.modo === 'busca' ? 'Questão encontrada na busca' : 'Estudo · ' + ses.feitas + ' respondidas · faltam ' + ses.fila.length,
-      qBarra: ses && ses.total ? Math.min(100, Math.round(ses.feitas / Math.max(ses.total, ses.feitas + ses.fila.length) * 100)) : 0,
-      qPergunta: card ? card.pergunta : '', qResposta: card ? card.resposta : '', qOnde: card ? this.qNomeArea(card) : '',
-      qNivel: card ? nivelTxt(prog[card.id]) : '',
-      qImagens: card && s.qMostrar ? (card.imagens || []).map(n => ({ src: Q.imagens[n] || '' })).filter(i => i.src) : [],
+      qTotal: Q.cards.length, qAcertou: geral.acertei, qPctAcertou: Q.cards.length ? Math.round(geral.acertei / Q.cards.length * 100) : 0,
+      qAbas: abas, qAbaBanco: aba === 'banco', qAbaSimulado: aba === 'simulado', qAbaCaderno: aba === 'caderno',
+      qDaBusca: !!s.qSoIds, qVerTodas: () => this.qFiltro({ qArea: 'todas', qTemas: [], qStatus: 'todas' }), qFiltrosVisiveis: aba === 'banco' && !s.qSoIds,
+      qAreaSel: s.qArea, qAreaOps: [{ value: 'todas', label: 'Todas as áreas (' + Q.cards.length + ')' }].concat(Q.areas.map(a => ({ value: a.id, label: a.nome + ' (' + Q.cards.filter(c => c.area === a.id).length + ')' }))),
+      qOnArea: (e) => this.qFiltro({ qArea: e.target.value, qTemas: [] }),
+      qTemTemas: temaOps.length > 0, qTemaOps: temaOps, qStatusOps: statusOps,
+      qLimpar: () => this.qFiltro({ qArea: 'todas', qTemas: [], qStatus: 'todas' }),
+      qAchadas: lista.length, qAchadasTxt: lista.length === 1 ? '1 questão' : lista.length.toLocaleString('pt-BR') + ' questões',
+      qItens: itens, qListaVazia: lista.length === 0 && (aba !== 'simulado' || !!s.qSoIds),
+      qVazioTxt: aba === 'caderno' ? (s.qCaderno === 'revisar' ? 'Nenhuma questão para revisar: as que você marcar como Errei ou Quase aparecem aqui.' : 'Você ainda não salvou nenhuma questão. Use "Salvar no caderno" em qualquer questão do banco.') : 'Nenhuma questão com esses filtros.',
+      qTemPaginas: paginas > 1, qPagTxt: 'Página ' + pag + ' de ' + paginas,
+      qPagNums: nums.map(p => ({ n: p, go: () => ir(p), bg: p === pag ? '#1E7C92' : '#fff', cor: p === pag ? '#fff' : '#3C545B', borda: p === pag ? '#1E7C92' : '#DCE7EB' })),
+      qTemAnterior: pag > 1, qTemProxima: pag < paginas, qAnterior: () => ir(pag - 1), qProxima: () => ir(pag + 1),
+      qCadernoOps: [['salvas', 'Salvas', nSalvas], ['revisar', 'Para revisar (errei ou quase)', nRevisar]].map(([k, l, n]) => ({ label: l, n, go: () => this.qFiltro({ qCaderno: k }),
+        bg: s.qCaderno === k ? '#1E7C92' : '#fff', cor: s.qCaderno === k ? '#fff' : '#3C545B', borda: s.qCaderno === k ? '#1E7C92' : '#DCE7EB' })),
+      qZerar: () => this.pedirConfirmacao({ titulo: 'Zerar o progresso das questões?', texto: 'As marcações de Acertei, Quase e Errei deste navegador serão apagadas. As questões salvas no caderno continuam.', label: 'Zerar', ok: () => { this.salvarLocal('hangar.questoes', {}); this.setState({ qProg: {}, qFixos: {} }); } }),
+      qTemProgresso: Object.keys(prog).length > 0,
+      // simulado
+      qSimConfig: aba === 'simulado' && !emSessao && !fim && !s.qSoIds, qSimEmSessao: aba === 'simulado' && emSessao && !s.qSoIds, qSimFim: aba === 'simulado' && fim && !s.qSoIds,
+      qSimAreaSel: s.qSimArea, qSimAreaOps: [{ value: 'todas', label: 'Todas as áreas' }].concat(Q.areas.map(a => ({ value: a.id, label: a.nome }))),
+      qOnSimArea: (e) => this.setState({ qSimArea: e.target.value }),
+      qSimQtds: [10, 20, 30].map(n => ({ n, go: () => this.setState({ qSimQtd: n }), bg: s.qSimQtd === n ? '#1E7C92' : '#fff', cor: s.qSimQtd === n ? '#fff' : '#3C545B', borda: s.qSimQtd === n ? '#1E7C92' : '#DCE7EB' })),
+      qComecar: () => this.qComecarSimulado(),
+      qPosLinha: ses ? 'Questão ' + (ses.feitas + 1) + ' de ' + ses.total : '',
+      qBarra: ses && ses.total ? Math.round(ses.feitas / ses.total * 100) : 0,
+      qPergunta: card ? card.pergunta : '', qResposta: card ? card.resposta : '', qOnde: card ? this.qCodigo(card) + ' · ' + this.qNomeArea(card) : '',
+      qImagens: card && s.qMostrar ? (card.imagens || []).map(nm => ({ src: Q.imagens[nm] || '' })).filter(i => i.src) : [],
       qMostrar: !!s.qMostrar, qEscondida: !s.qMostrar, qVerResposta: () => this.setState({ qMostrar: true }),
-      qRascunho: s.qRascunho, qOnRascunho: (e) => this.setState({ qRascunho: e.target.value }),
-      qTemRascunho: !!(s.qRascunho || '').trim() && !!s.qMostrar,
-      qAcertei: () => this.qResponder('acertei'), qQuase: () => this.qResponder('quase'), qErrei: () => this.qResponder('errei'),
-      qSair: () => this.setState({ qSessao: null, qMostrar: false, qRascunho: '' }),
+      qAcertei: () => this.qResponderSimulado('acertei'), qQuase: () => this.qResponderSimulado('quase'), qErrei: () => this.qResponderSimulado('errei'),
+      qSair: () => this.setState({ qSessao: null, qMostrar: false }),
       qPlacar: ses ? ses.placar : { acertei: 0, quase: 0, errei: 0 },
-      qFimTitulo: ses && ses.modo === 'simulado' ? 'Simulado concluído' : 'Sessão concluída',
-      qFimNota: ses && ses.modo === 'simulado' && ses.total ? Math.round(ses.placar.acertei / ses.total * 100) + '% de acerto' : '',
+      qFimNota: ses && ses.total ? Math.round(ses.placar.acertei / ses.total * 100) + '% de acerto' : '',
     };
   }
   // ===== Treinamentos (src/data/treinamentos.json): módulos com conteúdo, teste rápido e exercícios =====
