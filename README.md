@@ -128,20 +128,25 @@ fonte não tinha ficam `null` com a pendência registrada, e o verify aceita iss
   resolução (cortes 80/90) e o de parâmetros tem a calculadora de estoque de segurança e ponto de pedido. As respostas
   ficam neste navegador (`hangar.treinos`); "Refazer teste" limpa um módulo. Para criar outro treinamento, acrescente
   um item em `src/data/treinamentos.json` (o `verify` confere ids, ferramentas, escopo, case e gabarito das perguntas).
-- **Questões do PSGP** (`#/questoes`, Capacitação): as 427 perguntas do baralho Anki que a Produtiva usa para se
-  preparar para o Processo Seletivo de Gerentes de Projetos, em 7 áreas (Revisão Geral, Gestão Estratégica, de
-  Projetos, Financeira, da Produção, Escopos e Quiz de Leal) e 31 temas. A pessoa filtra por área e tema e escolhe:
-  - **Estudar**: até 20 perguntas, primeiro as que errou, depois as "quase", as novas e por último as que já acertou.
-    Lê a pergunta, pode escrever a resposta, clica em "Ver resposta" (com as figuras do card) e marca Errei, Quase ou
-    Acertei. Errei faz a pergunta voltar 3 posições depois; Quase manda para o fim da sessão.
-  - **Simulado**: 20 perguntas aleatórias, uma vez cada, com o percentual de acerto no fim.
+- **Questões - Estudo para edital** (`#/questoes`, Capacitação › Questões do PSGP): as 427 perguntas do baralho Anki
+  que a Produtiva usa para se preparar para o Processo Seletivo de Gerentes de Projetos, em 7 áreas (Revisão Geral,
+  Gestão Estratégica, de Projetos, Financeira, da Produção, Escopos e Quiz de Leal) e 31 temas. Três abas:
+  - **Banco de questões**: lista no estilo dos bancos de questões de cursinho, 10 por página. Cada questão tem
+    número, código (Q + 6 dígitos), área › tema e o selo do status; "Ver resposta" abre o gabarito (com as figuras do
+    card) e a pessoa marca Errei, Quase ou Acertei. Filtros: área (com os temas da área em chips, dá para marcar
+    vários) e status (todas, não respondidas, acertei, quase, errei), com a contagem de cada um e "Limpar filtros".
+    Quem acabou de ser marcada continua na tela até mudar um filtro ou a página.
+  - **Simulado**: escolhe a área e 10, 20 ou 30 perguntas aleatórias, uma por vez, com o percentual de acerto no fim.
+  - **Meu caderno**: as questões salvas ("Salvar no caderno", em `hangar.questoes.salvas`) e as que estão para revisar
+    (errei ou quase).
 
   O progresso fica neste navegador (`hangar.questoes`: 0 = errou, 1 = quase, 2–4 = acertou; "já sabe" = 2+), com
-  "Zerar meu progresso". A busca geral também acha as perguntas. Para atualizar o banco, exporte de novo o baralho do
-  Anki (Arquivo › Exportar › `.colpkg`, com mídia) e rode `python3 tools/anki-questoes.py "ANKI PSGP.colpkg"` (precisa de
-  `pip install zstandard` e do `ffmpeg`): o texto sai sem HTML (listas viram "•" e "1.", sublistas recuadas, tabelas de
-  etapas uma por linha), as figuras viram WebP de até 1000 px e o id de cada pergunta se mantém, então o progresso
-  salvo continua valendo. O `verify` confere áreas, temas, ids, figuras e se sobrou HTML.
+  "Zerar meu progresso" (as salvas continuam). A busca geral também acha as perguntas e abre a questão no banco.
+  Para atualizar o banco, exporte de novo o baralho do Anki (Arquivo › Exportar › `.colpkg`, com mídia) e rode
+  `python3 tools/anki-questoes.py "ANKI PSGP.colpkg"` (precisa de `pip install zstandard` e do `ffmpeg`): o texto sai
+  sem HTML (listas viram "•" e "1.", sublistas recuadas, tabelas de etapas uma por linha), as figuras viram WebP de até
+  1000 px e o id de cada pergunta se mantém, então o progresso salvo continua valendo. O `verify` confere áreas,
+  temas, ids, figuras e se sobrou HTML.
 - **Como funciona a Produtiva** (`#/produtiva`, A Produtiva): página de boas-vindas com o que é a Produtiva e as áreas
   de atuação (cada uma abre os escopos do grupo), as 5 áreas da empresa com "o que faz" e "procure quando",
   os subnúcleos de Projetos (CIEP, CIT, CS), o caminho do primeiro contato ao projeto (SDR → closer → gerente

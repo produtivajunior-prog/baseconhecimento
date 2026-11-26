@@ -17,7 +17,8 @@
  *   - Banco de cases: cadastro com foto → publicar → ficha com capa, vídeo e documento → JSON → galeria após recarregar;
  *     capa trocada/removida direto na galeria e na ficha;
  *   - menu enxuto: 7 grupos no topo, subabas em Capacitação/A Produtiva/Cadastrar, última subaba lembrada e celular sem corte;
- *   - Treinamentos (teste rápido, calculadora, Curva ABC) e Questões do PSGP (filtro, estudo, nota, simulado, busca, figura);
+ *   - Treinamentos (teste rápido, calculadora, Curva ABC) e Questões do PSGP (lista paginada, filtros de área/tema/status,
+ *     nota, caderno, simulado, busca, figura);
  *   - screenshot em dist/<nome>-smoke.png (ignorado pelo git).
  *
  * Precisa do pacote playwright (npx playwright@1 …) e de um Chromium; sem os dois, sai com aviso.
@@ -697,43 +698,54 @@ check(await page.evaluate(() => !window.va && !document.querySelector('script[sr
   check(errosM.length === 0, errosM.length ? `erros no monitoramento: ${errosM[0]}` : 'monitoramento sem erros de JavaScript');
   await pM.close();
 }
-// ---- Questões do PSGP: filtro por área/tema, estudo com "ver resposta", nota, progresso salvo, simulado e busca ----
+// ---- Questões do PSGP: banco em lista com filtros (área, temas, status), paginação, nota, caderno, simulado e busca ----
 {
-  await page.evaluate(() => { localStorage.removeItem('hangar.questoes'); location.hash = '#/biblioteca'; }); await page.waitForTimeout(300);
+  await page.evaluate(() => { localStorage.removeItem('hangar.questoes'); localStorage.removeItem('hangar.questoes.salvas'); location.hash = '#/biblioteca'; }); await page.waitForTimeout(300);
   await menu(page, 'Capacitação', 'Questões do PSGP');
-  const t0 = await texto();
-  check(/#\/questoes$/.test(await page.evaluate(() => location.hash)) && /427 perguntas do baralho/.test(t0) && /0 de 427 já sabe/.test(t0), 'menu "Questões" abre o banco do PSGP (#/questoes) com as 427 perguntas');
-  await page.getByRole('button', { name: /^Gestão da Produção/ }).first().click(); await page.waitForTimeout(200);
-  await page.locator('select[data-q-tema]').selectOption({ label: 'Gestão de Estoque (17)' }); await page.waitForTimeout(200);
-  check(/17\s*perguntas/.test(await texto()), 'filtrar por área e tema mostra só as perguntas daquele tema (Gestão de Estoque: 17)');
-  await page.getByRole('button', { name: /^Estudar/ }).click(); await page.waitForTimeout(300);
-  const p1 = await page.locator('[data-q-pergunta]').innerText();
-  check(!!p1 && (await page.locator('[data-q-resposta]').count()) === 0 && /Questão|Estudo/.test(await page.locator('[data-q-pos]').innerText()), 'estudo mostra a pergunta sem a resposta');
-  await page.getByRole('button', { name: 'Ver resposta' }).click(); await page.waitForTimeout(200);
-  check((await page.locator('[data-q-resposta]').innerText()).length > 5, 'Ver resposta mostra a resposta');
-  await page.getByRole('button', { name: 'Acertei', exact: true }).click(); await page.waitForTimeout(200);
-  const p2 = await page.locator('[data-q-pergunta]').innerText();
-  check(p2 !== p1 && await page.evaluate((x) => Object.keys(JSON.parse(localStorage.getItem('hangar.questoes') || '{}')).length === 1, null), 'Acertei passa para a próxima e salva o progresso no navegador');
-  await page.getByRole('button', { name: 'Ver resposta' }).click(); await page.waitForTimeout(150);
-  await page.getByRole('button', { name: 'Errei', exact: true }).click(); await page.waitForTimeout(150);
-  check(await page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('hangar.questoes'))).includes(0)), 'Errei marca a questão para revisar');
-  await page.getByRole('button', { name: '← Sair' }).click(); await page.waitForTimeout(200);
-  check(/1\s*para revisar/.test(await texto()), 'de volta às áreas, o resumo conta a questão para revisar');
-  // simulado até o fim
-  await page.getByRole('button', { name: 'Todas', exact: false }).first().click(); await page.waitForTimeout(150);
-  await page.getByRole('button', { name: /^Simulado/ }).click(); await page.waitForTimeout(200);
-  for (let i = 0; i < 20; i++) { await page.getByRole('button', { name: 'Ver resposta' }).click(); await page.getByRole('button', { name: i < 15 ? 'Acertei' : 'Errei', exact: true }).click(); await page.waitForTimeout(40); }
-  const tf = await texto();
-  check(/Simulado concluído/.test(tf) && /75% de acerto/.test(tf), 'simulado de 20 termina com o placar (15 de 20 = 75%)');
-  await page.getByRole('button', { name: 'Voltar às áreas' }).click(); await page.waitForTimeout(150);
-  // imagem embutida
+  const achadas = async () => (await page.locator('[data-q-achadas]').innerText()).replace(/\s+/g, ' ');
+  check(/#\/questoes$/.test(await page.evaluate(() => location.hash)) && /Questões - Estudo para edital/.test(await texto()) && /Foram encontradas 427 questões/.test(await achadas()),
+    'Capacitação › Questões abre o banco "Questões - Estudo para edital" com as 427 questões');
+  check((await page.locator('[data-q-item]').count()) === 10 && /Página 1 de 43/.test(await page.locator('[data-q-pag]').innerText()), 'lista mostra 10 questões por página (43 páginas)');
+  await page.getByRole('button', { name: 'Próxima ›' }).click(); await page.waitForTimeout(250);
+  check((await page.locator('[data-q-item]').first().innerText()).startsWith('11'), 'Próxima leva para a página 2 (questão 11)');
+  await page.locator('select[data-q-area]').selectOption('gestao-da-producao'); await page.waitForTimeout(200);
+  await page.locator('button[data-q-tema]', { hasText: 'Gestão de Estoque' }).click(); await page.waitForTimeout(200);
+  check(/Foram encontradas 17 questões/.test(await achadas()) && /Gestão da Produção › Gestão de Estoque/.test(await page.locator('[data-q-item]').first().innerText()), 'filtro de área + tema mostra só Gestão de Estoque (17)');
+  const q1 = page.locator('[data-q-item]').nth(0), q2 = page.locator('[data-q-item]').nth(1);
+  check((await q1.locator('[data-q-resposta]').count()) === 0, 'a resposta começa escondida');
+  await q1.getByRole('button', { name: 'Ver resposta' }).click(); await page.waitForTimeout(150);
+  check((await q1.locator('[data-q-resposta]').innerText()).length > 5, 'Ver resposta mostra o gabarito');
+  await q1.getByRole('button', { name: 'Acertei', exact: true }).click(); await page.waitForTimeout(150);
+  await q2.getByRole('button', { name: 'Ver resposta' }).click(); await q2.getByRole('button', { name: 'Errei', exact: true }).click(); await page.waitForTimeout(150);
+  check(await q1.locator('[data-q-status-txt]').innerText() === 'Acertei' && await q2.locator('[data-q-status-txt]').innerText() === 'Errei'
+    && await page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('hangar.questoes') || '{}')).length === 2), 'Acertei/Errei marcam a questão e ficam salvos no navegador');
+  await page.locator('button[data-q-status]', { hasText: 'Errei' }).click(); await page.waitForTimeout(200);
+  check(/Foram encontradas 1 questão/.test(await achadas()), 'filtro de status "Errei" mostra só a questão errada');
+  await page.locator('button[data-q-status]', { hasText: 'Não respondidas' }).click(); await page.waitForTimeout(200);
+  check(/Foram encontradas 15 questões/.test(await achadas()), 'filtro "Não respondidas" desconta as já marcadas (15)');
+  await page.locator('[data-q-item]').first().locator('button[data-q-salvar]').click(); await page.waitForTimeout(200);
+  check((await page.locator('[data-q-item]').count()) === 10, 'questão marcada/salva não some da lista no meio do estudo');
+  await page.getByRole('button', { name: 'Meu caderno', exact: true }).click(); await page.waitForTimeout(250);
+  check((await page.locator('[data-q-item]').count()) === 1 && /Salva no caderno/.test(await page.locator('[data-q-item]').first().innerText()), 'Meu caderno › Salvas mostra a questão salva');
+  await page.getByRole('button', { name: /^Para revisar/ }).click(); await page.waitForTimeout(200);
+  check((await page.locator('[data-q-item]').count()) === 1 && await page.locator('[data-q-status-txt]').first().innerText() === 'Errei', 'Meu caderno › Para revisar mostra a questão errada');
+  // simulado
+  await page.getByRole('button', { name: 'Simulado', exact: true }).click(); await page.waitForTimeout(200);
+  await page.getByRole('button', { name: '10', exact: true }).click(); await page.getByRole('button', { name: 'Começar simulado' }).click(); await page.waitForTimeout(200);
+  check(/Questão 1 de 10/.test(await page.locator('[data-q-pos]').innerText()), 'simulado de 10 começa na questão 1 de 10');
+  for (let i = 0; i < 10; i++) { await page.getByRole('button', { name: 'Ver resposta' }).click(); await page.getByRole('button', { name: i < 8 ? 'Acertei' : 'Errei', exact: true }).click(); await page.waitForTimeout(40); }
+  check(/Simulado concluído/.test(await texto()) && /80% de acerto/.test(await texto()), 'simulado termina com o placar (8 de 10 = 80%)');
+  await page.getByRole('button', { name: 'Fazer outro simulado' }).click(); await page.waitForTimeout(150);
+  // busca geral abre a questão com a figura
   await page.getByRole('button', { name: 'Buscar em todo o Hangar' }).click(); await page.waitForTimeout(200);
   await page.locator('#hg-busca').fill('método 5 porquês'); await page.waitForTimeout(400);
   check(/Questões do PSGP/i.test(await texto()) && /Explique o método 5 Porquês\?/.test(await texto()), 'busca geral acha as questões');
   await page.getByText('Explique o método 5 Porquês?').first().click(); await page.waitForTimeout(300);
-  await page.getByRole('button', { name: 'Ver resposta' }).click(); await page.waitForTimeout(200);
-  check(await page.evaluate(() => { const i = document.querySelector('main img[src^="data:image/webp"]'); return !!i && i.naturalWidth > 100; }), 'resultado da busca abre a questão, e a figura do card aparece com a resposta');
-  await page.keyboard.press('Escape');
+  check(/Questão encontrada na busca/.test(await texto()) && (await page.locator('[data-q-item]').count()) === 1, 'resultado da busca abre a questão no banco');
+  await page.locator('[data-q-item]').first().getByRole('button', { name: 'Ver resposta' }).click(); await page.waitForTimeout(250);
+  check(await page.evaluate(() => { const i = document.querySelector('[data-q-item] img[src^="data:image/webp"]'); return !!i && i.naturalWidth > 100; }), 'a figura do card aparece com a resposta');
+  await page.getByRole('button', { name: 'Ver todas as questões →' }).click(); await page.waitForTimeout(200);
+  check(/Foram encontradas 427 questões/.test(await achadas()), '"Ver todas as questões" volta ao banco completo');
 }
 // ---- Treinamentos: lista, módulo, teste rápido com progresso salvo, calculadora ES/PP, exercício Curva ABC e busca ----
 {

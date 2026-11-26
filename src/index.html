@@ -2294,96 +2294,183 @@
 
   <!-- ============ QUESTÕES (src/data/questoes.json — baralho Anki do PSGP) ============ -->
   <sc-if value="{{ isQuestoes }}" hint-placeholder-val="{{ false }}">
-  <main class="hg-main" style="max-width:920px;margin:0 auto;padding:34px 28px 80px">
-    <sc-if value="{{ qInicio }}" hint-placeholder-val="{{ true }}">
-      <div style="display:inline-flex;align-items:center;gap:8px;background:#EAF6F9;color:#1E7C92;font-size:12.5px;font-weight:600;padding:6px 13px;border-radius:100px;margin-bottom:14px">Banco de questões do PSGP</div>
-      <h1 style="font-size:32px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.12">Questões para virar gerente de projetos</h1>
-      <p style="font-size:15.5px;color:#5E747B;margin:10px 0 0;line-height:1.55;max-width:700px">{{ qTotal }} perguntas do baralho Anki que a Produtiva usa para se preparar para o Processo Seletivo de Gerentes de Projetos. Leia a pergunta, responda de cabeça (ou escreva), veja a resposta e diga como foi: as que você errar voltam antes. O progresso fica neste navegador.</p>
+  <main class="hg-main" style="max-width:1000px;margin:0 auto;padding:30px 28px 80px">
+    <div style="font-size:13px;color:#8AA0A7">Capacitação <span style="margin:0 6px">›</span> Questões</div>
+    <h1 style="font-size:30px;font-weight:700;color:#163B45;letter-spacing:-0.025em;line-height:1.15;margin-top:8px">Questões - Estudo para edital</h1>
+    <p style="font-size:15px;color:#5E747B;margin:8px 0 0;line-height:1.55;max-width:720px">{{ qTotal }} perguntas do baralho Anki que a Produtiva usa para se preparar para o Processo Seletivo de Gerentes de Projetos. Filtre por área e tema, veja a resposta e marque como foi. O progresso fica neste navegador.</p>
 
-      <div style="display:flex;align-items:center;gap:14px;margin:22px 0 22px;background:#fff;border:1px solid #E7EEF1;border-radius:14px;padding:14px 18px">
-        <div style="flex:1;height:8px;border-radius:100px;background:#EEF3F5;overflow:hidden"><div style="height:100%;width:{{ qPctSabe }}%;background:#3DAFC7;border-radius:100px"></div></div>
-        <span data-q-geral style="font-size:13.5px;font-weight:600;color:#163B45;white-space:nowrap">{{ qSabe }} de {{ qTotal }} já sabe</span>
-      </div>
+    <div style="display:flex;align-items:center;gap:14px;margin:18px 0 0;max-width:520px">
+      <div style="flex:1;height:7px;border-radius:100px;background:#E7EEF1;overflow:hidden"><div style="height:100%;width:{{ qPctAcertou }}%;background:#3DAFC7;border-radius:100px"></div></div>
+      <span data-q-geral style="font-size:13px;font-weight:600;color:#163B45;white-space:nowrap">{{ qAcertou }} de {{ qTotal }} acertadas</span>
+    </div>
 
-      <div style="font-size:13px;font-weight:700;color:#163B45;margin-bottom:9px">Área</div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px">
-        <sc-for list="{{ qAreas }}" as="a" hint-placeholder-count="7">
-          <button onclick="{{ a.go }}" style="border:1.5px solid {{ a.borda }};background:{{ a.bg }};color:{{ a.cor }};font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:100px;cursor:pointer">{{ a.nome }} <span style="opacity:.7;font-weight:500">· {{ a.n }}</span></button>
-        </sc-for>
-      </div>
-      <sc-if value="{{ qTemTemas }}" hint-placeholder-val="{{ false }}">
-        <div style="margin-top:14px;max-width:420px">
-          <sc-raw-select value="{{ qTemaSel }}" onchange="{{ qOnTema }}" data-q-tema style="width:100%;border:1.5px solid #DCE7EB;border-radius:11px;padding:10px 12px;font-size:14.5px;outline:none;background:#fff;color:#172A30"><sc-for list="{{ qTemas }}" as="o" hint-placeholder-count="5"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select>
-        </div>
-      </sc-if>
+    <nav class="hg-nav" aria-label="Seções das questões" style="display:flex;gap:26px;border-bottom:1px solid #E2EBEE;margin-top:22px">
+      <sc-for list="{{ qAbas }}" as="a" hint-placeholder-count="3">
+        <button onclick="{{ a.go }}" style="border:none;background:transparent;border-bottom:2px solid {{ a.borda }};color:{{ a.cor }};font-size:14.5px;font-weight:{{ a.peso }};padding:10px 2px;margin-bottom:-1px;cursor:pointer;white-space:nowrap">{{ a.label }}</button>
+      </sc-for>
+    </nav>
 
-      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px;margin-top:22px">
-        <div style="display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:#5E747B">
-          <span><b style="font-size:22px;color:#163B45;font-family:'Schibsted Grotesk'">{{ qSelTotal }}</b> perguntas</span>
-          <span><b style="font-size:22px;color:#2E7D52;font-family:'Schibsted Grotesk'">{{ qSelSabe }}</b> já sabe</span>
-          <span><b style="font-size:22px;color:#9E2F3B;font-family:'Schibsted Grotesk'">{{ qSelRevisar }}</b> para revisar</span>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
-          <button onclick="{{ qEstudar }}" style="border:none;background:#1E7C92;color:#fff;font-size:14.5px;font-weight:600;padding:11px 20px;border-radius:11px;cursor:pointer" style-hover="background:#17687A">Estudar (até 20, priorizando o que errou)</button>
-          <button onclick="{{ qSimulado }}" style="border:1.5px solid #9FD7E2;background:#EAF6F9;color:#1E7C92;font-size:14.5px;font-weight:600;padding:10px 18px;border-radius:11px;cursor:pointer">Simulado: 20 aleatórias</button>
-        </div>
-        <sc-if value="{{ qTemProgresso }}" hint-placeholder-val="{{ false }}"><button onclick="{{ qZerar }}" style="margin-top:12px;border:none;background:transparent;color:#8AA0A7;font-size:13px;cursor:pointer;padding:0;text-decoration:underline">Zerar meu progresso</button></sc-if>
+    <!-- resultado da busca geral -->
+    <sc-if value="{{ qDaBusca }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#EAF6F9;border:1px solid #CDE6EC;border-radius:12px;padding:12px 16px;margin-top:20px">
+        <span style="font-size:14px;color:#1E7C92;font-weight:600">Questão encontrada na busca</span>
+        <button onclick="{{ qVerTodas }}" style="border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer;padding:0">Ver todas as questões →</button>
       </div>
-      <p style="font-size:12.5px;color:#8AA0A7;margin:18px 0 0">Fonte: baralho Anki "PSGP" compartilhado pelo CIEP. Achou resposta errada ou desatualizada? Avise o CIEP.</p>
     </sc-if>
 
-    <sc-if value="{{ qEmSessao }}" hint-placeholder-val="{{ false }}">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px">
-        <button onclick="{{ qSair }}" style="border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer;padding:0">← Sair</button>
-        <span data-q-pos style="font-size:13px;color:#5E747B">{{ qPosLinha }}</span>
-      </div>
-      <div style="height:6px;border-radius:100px;background:#EEF3F5;overflow:hidden;margin-bottom:18px"><div style="height:100%;width:{{ qBarra }}%;background:#3DAFC7;border-radius:100px;transition:width .3s ease"></div></div>
-      <article style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:24px 26px">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px">
-          <span style="background:#F3F7F8;color:#5E747B;padding:4px 10px;border-radius:7px">{{ qOnde }}</span>
-          <span style="background:#F3F7F8;color:#5E747B;padding:4px 10px;border-radius:7px">{{ qNivel }}</span>
-        </div>
-        <h2 data-q-pergunta style="font-size:21px;font-weight:700;color:#163B45;line-height:1.35;margin-top:12px;white-space:pre-line">{{ qPergunta }}</h2>
-        <sc-if value="{{ qEscondida }}" hint-placeholder-val="{{ true }}">
-          <textarea value="{{ qRascunho }}" oninput="{{ qOnRascunho }}" placeholder="Opcional: escreva sua resposta antes de conferir" rows="4" style="width:100%;margin-top:16px;border:1.5px solid #DCE7EB;border-radius:12px;padding:12px 14px;font-size:14.5px;outline:none;resize:vertical;line-height:1.5"></textarea>
-          <button onclick="{{ qVerResposta }}" style="margin-top:12px;border:none;background:#1E7C92;color:#fff;font-size:15px;font-weight:600;padding:12px 22px;border-radius:11px;cursor:pointer" style-hover="background:#17687A">Ver resposta</button>
-        </sc-if>
-        <sc-if value="{{ qMostrar }}" hint-placeholder-val="{{ false }}">
-          <sc-if value="{{ qTemRascunho }}" hint-placeholder-val="{{ false }}">
-            <div style="margin-top:16px;background:#F6F9FA;border-radius:12px;padding:12px 14px"><div style="font-size:12px;font-weight:600;color:#8AA0A7;margin-bottom:4px">SUA RESPOSTA</div><p style="font-size:14px;color:#3C545B;white-space:pre-line;line-height:1.55">{{ qRascunho }}</p></div>
+    <!-- filtros do banco -->
+    <sc-if value="{{ qFiltrosVisiveis }}" hint-placeholder-val="{{ true }}">
+      <div class="hg-g2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px">
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px">
+          <div style="font-size:15px;font-weight:700;color:#163B45">Área</div>
+          <div style="font-size:13px;color:#7C9097;margin-top:3px">Escolha uma área para filtrar pelos temas.</div>
+          <sc-raw-select value="{{ qAreaSel }}" onchange="{{ qOnArea }}" data-q-area style="width:100%;margin-top:12px;border:1.5px solid #DCE7EB;border-radius:11px;padding:10px 12px;font-size:14.5px;outline:none;background:#fff;color:#172A30"><sc-for list="{{ qAreaOps }}" as="o" hint-placeholder-count="8"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select>
+          <sc-if value="{{ qTemTemas }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:13px;font-weight:600;color:#3C545B;margin-top:16px">Temas <span style="font-weight:400;color:#9DAEB4">opcional</span></div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:8px">
+              <sc-for list="{{ qTemaOps }}" as="t" hint-placeholder-count="5">
+                <button onclick="{{ t.go }}" data-q-tema style="border:1.5px solid {{ t.borda }};background:{{ t.bg }};color:{{ t.cor }};font-size:13px;font-weight:600;padding:6px 11px;border-radius:100px;cursor:pointer">{{ t.label }} <span style="opacity:.7;font-weight:500">· {{ t.n }}</span></button>
+              </sc-for>
+            </div>
           </sc-if>
-          <div style="margin-top:16px;border-top:1px solid #E7EEF1;padding-top:16px">
-            <div style="font-size:12px;font-weight:600;color:#1E7C92;margin-bottom:6px">RESPOSTA</div>
-            <p data-q-resposta style="font-size:15px;color:#22393F;white-space:pre-line;line-height:1.65">{{ qResposta }}</p>
-            <sc-for list="{{ qImagens }}" as="im" hint-placeholder-count="1">
-              <img src="{{ im.src }}" alt="" style="display:block;max-width:100%;height:auto;margin-top:14px;border-radius:10px;border:1px solid #E7EEF1">
+        </div>
+        <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:20px 22px">
+          <div style="font-size:15px;font-weight:700;color:#163B45">Status</div>
+          <div style="font-size:13px;color:#7C9097;margin-top:3px">Pelo que você já marcou neste navegador.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px">
+            <sc-for list="{{ qStatusOps }}" as="o" hint-placeholder-count="5">
+              <button onclick="{{ o.go }}" data-q-status style="display:flex;align-items:center;gap:8px;border:none;background:transparent;color:#22393F;font-size:14px;cursor:pointer;padding:4px 0">
+                <span style="flex:none;width:16px;height:16px;border-radius:50%;border:2px solid {{ o.marca }};display:flex;align-items:center;justify-content:center"><span style="width:8px;height:8px;border-radius:50%;background:{{ o.miolo }}"></span></span>
+                {{ o.label }} <span style="color:#9DAEB4">({{ o.n }})</span>
+              </button>
             </sc-for>
           </div>
-          <div style="font-size:13px;font-weight:600;color:#163B45;margin-top:22px">Como foi?</div>
-          <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px">
-            <button onclick="{{ qErrei }}" style="border:1.5px solid #E6AFB5;background:#FCEDEE;color:#9E2F3B;font-size:14.5px;font-weight:600;padding:12px;border-radius:11px;cursor:pointer">Errei</button>
-            <button onclick="{{ qQuase }}" style="border:1.5px solid #F1DDB4;background:#FFF8EC;color:#9A6B17;font-size:14.5px;font-weight:600;padding:12px;border-radius:11px;cursor:pointer">Quase</button>
-            <button onclick="{{ qAcertei }}" style="border:1.5px solid #8FD0A8;background:#EAF7EE;color:#1F6B43;font-size:14.5px;font-weight:600;padding:12px;border-radius:11px;cursor:pointer">Acertei</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:16px">
+        <span data-q-achadas style="font-size:14px;color:#5E747B">Foram encontradas <b style="color:#163B45">{{ qAchadasTxt }}</b></span>
+        <button onclick="{{ qLimpar }}" style="border:none;background:transparent;color:#5E747B;font-size:13.5px;font-weight:600;cursor:pointer;padding:0">↺ Limpar filtros</button>
+      </div>
+    </sc-if>
+
+    <!-- caderno -->
+    <sc-if value="{{ qAbaCaderno }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:22px">
+        <sc-for list="{{ qCadernoOps }}" as="o" hint-placeholder-count="2">
+          <button onclick="{{ o.go }}" style="border:1.5px solid {{ o.borda }};background:{{ o.bg }};color:{{ o.cor }};font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:100px;cursor:pointer">{{ o.label }} <span style="opacity:.75;font-weight:500">· {{ o.n }}</span></button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- lista de questões (banco, caderno e busca) -->
+    <div id="q-lista" style="scroll-margin-top:130px;display:flex;flex-direction:column;gap:16px;margin-top:16px">
+      <sc-for list="{{ qItens }}" as="q" hint-placeholder-count="3">
+        <article data-q-item style="background:#fff;border:1px solid #E2EBEE;border-radius:14px;overflow:hidden">
+          <div style="display:flex;align-items:stretch;background:#F3F7F8;border-bottom:1px solid #E7EEF1;font-size:13px">
+            <span style="padding:9px 12px;color:#8AA0A7;border-right:1px solid #E2EBEE;flex-shrink:0">{{ q.num }}</span>
+            <span data-q-codigo style="padding:9px 12px;background:#9DB3BA;color:#fff;font-weight:700;flex-shrink:0">{{ q.codigo }}</span>
+            <span style="padding:9px 12px;color:#3C545B;flex:1;min-width:0;line-height:1.4">{{ q.onde }}</span>
+            <span style="display:flex;align-items:center;padding:0 12px 0 4px;flex-shrink:0"><span data-q-status-txt style="font-size:12px;font-weight:600;color:{{ q.statusCor }};background:{{ q.statusBg }};padding:3px 9px;border-radius:7px">{{ q.statusTxt }}</span></span>
+          </div>
+          <div style="padding:18px 22px 16px">
+            <p data-q-pergunta style="margin:0;font-size:16px;color:#163B45;line-height:1.55;white-space:pre-line;font-weight:500">{{ q.pergunta }}</p>
+            <sc-if value="{{ q.fechada }}" hint-placeholder-val="{{ true }}">
+              <button onclick="{{ q.ver }}" style="margin-top:14px;border:none;background:#1E7C92;color:#fff;font-size:14px;font-weight:600;padding:10px 18px;border-radius:10px;cursor:pointer" style-hover="background:#17687A">Ver resposta</button>
+            </sc-if>
+            <sc-if value="{{ q.aberta }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:14px;background:#F6FAFB;border:1px solid #E2EEF1;border-radius:12px;padding:14px 16px">
+                <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:.03em;margin-bottom:6px">RESPOSTA</div>
+                <p data-q-resposta style="margin:0;font-size:14.5px;color:#22393F;white-space:pre-line;line-height:1.65">{{ q.resposta }}</p>
+                <sc-for list="{{ q.imagens }}" as="im" hint-placeholder-count="1">
+                  <img src="{{ im.src }}" alt="" style="display:block;max-width:100%;height:auto;margin-top:12px;border-radius:10px;border:1px solid #E7EEF1;background:#fff">
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px">
+                <span style="font-size:13px;font-weight:600;color:#163B45;margin-right:4px">Como foi?</span>
+                <button onclick="{{ q.errei.go }}" style="border:1.5px solid {{ q.errei.borda }};background:{{ q.errei.bg }};color:{{ q.errei.cor }};font-size:13.5px;font-weight:600;padding:7px 14px;border-radius:9px;cursor:pointer">Errei</button>
+                <button onclick="{{ q.quase.go }}" style="border:1.5px solid {{ q.quase.borda }};background:{{ q.quase.bg }};color:{{ q.quase.cor }};font-size:13.5px;font-weight:600;padding:7px 14px;border-radius:9px;cursor:pointer">Quase</button>
+                <button onclick="{{ q.acertei.go }}" style="border:1.5px solid {{ q.acertei.borda }};background:{{ q.acertei.bg }};color:{{ q.acertei.cor }};font-size:13.5px;font-weight:600;padding:7px 14px;border-radius:9px;cursor:pointer">Acertei</button>
+                <button onclick="{{ q.ocultar }}" style="margin-left:auto;border:none;background:transparent;color:#8AA0A7;font-size:13px;cursor:pointer;padding:0">Ocultar resposta</button>
+              </div>
+            </sc-if>
+          </div>
+          <div style="border-top:1px solid #EEF3F5;padding:9px 22px;display:flex;gap:18px">
+            <button onclick="{{ q.salvar }}" data-q-salvar aria-pressed="{{ q.salvaAria }}" style="display:flex;align-items:center;gap:6px;border:none;background:transparent;color:{{ q.salvarCor }};font-size:13px;font-weight:600;cursor:pointer;padding:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="{{ q.salvarFill }}"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path></svg>{{ q.salvarTxt }}</button>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+    <sc-if value="{{ qListaVazia }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border:1px dashed #DCE7EB;border-radius:14px;padding:28px;text-align:center;font-size:14px;color:#7C9097;margin-top:16px">{{ qVazioTxt }}</div>
+    </sc-if>
+    <sc-if value="{{ qTemPaginas }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:22px">
+        <sc-if value="{{ qTemAnterior }}" hint-placeholder-val="{{ false }}"><button onclick="{{ qAnterior }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 12px;border-radius:9px;cursor:pointer">‹ Anterior</button></sc-if>
+        <sc-for list="{{ qPagNums }}" as="p" hint-placeholder-count="5">
+          <button onclick="{{ p.go }}" style="min-width:36px;border:1px solid {{ p.borda }};background:{{ p.bg }};color:{{ p.cor }};font-size:13.5px;font-weight:600;padding:8px 10px;border-radius:9px;cursor:pointer">{{ p.n }}</button>
+        </sc-for>
+        <sc-if value="{{ qTemProxima }}" hint-placeholder-val="{{ true }}"><button onclick="{{ qProxima }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:13.5px;font-weight:600;padding:8px 12px;border-radius:9px;cursor:pointer">Próxima ›</button></sc-if>
+      </div>
+      <div data-q-pag style="text-align:center;font-size:12.5px;color:#8AA0A7;margin-top:8px">{{ qPagTxt }}</div>
+    </sc-if>
+
+    <!-- simulado -->
+    <sc-if value="{{ qSimConfig }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:22px 24px;margin-top:22px;max-width:620px">
+        <div style="font-size:17px;font-weight:700;color:#163B45">Monte um simulado</div>
+        <p style="font-size:14px;color:#5E747B;margin:6px 0 0;line-height:1.55">Perguntas aleatórias, uma por vez. No fim aparece o seu percentual de acerto, e as respostas entram no seu progresso.</p>
+        <div style="font-size:13px;font-weight:600;color:#3C545B;margin-top:16px">Área</div>
+        <sc-raw-select value="{{ qSimAreaSel }}" onchange="{{ qOnSimArea }}" style="width:100%;margin-top:6px;border:1.5px solid #DCE7EB;border-radius:11px;padding:10px 12px;font-size:14.5px;outline:none;background:#fff;color:#172A30"><sc-for list="{{ qSimAreaOps }}" as="o" hint-placeholder-count="8"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select>
+        <div style="font-size:13px;font-weight:600;color:#3C545B;margin-top:16px">Quantidade</div>
+        <div style="display:flex;gap:8px;margin-top:6px">
+          <sc-for list="{{ qSimQtds }}" as="o" hint-placeholder-count="3"><button onclick="{{ o.go }}" style="border:1.5px solid {{ o.borda }};background:{{ o.bg }};color:{{ o.cor }};font-size:14px;font-weight:600;padding:8px 16px;border-radius:100px;cursor:pointer">{{ o.n }}</button></sc-for>
+        </div>
+        <button onclick="{{ qComecar }}" style="margin-top:20px;border:none;background:#1E7C92;color:#fff;font-size:15px;font-weight:600;padding:11px 22px;border-radius:11px;cursor:pointer" style-hover="background:#17687A">Começar simulado</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ qSimEmSessao }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 10px">
+        <button onclick="{{ qSair }}" style="border:none;background:transparent;color:#1E7C92;font-size:14px;font-weight:600;cursor:pointer;padding:0">← Sair do simulado</button>
+        <span data-q-pos style="font-size:13px;color:#5E747B">{{ qPosLinha }}</span>
+      </div>
+      <div style="height:6px;border-radius:100px;background:#EEF3F5;overflow:hidden;margin-bottom:16px"><div style="height:100%;width:{{ qBarra }}%;background:#3DAFC7;border-radius:100px;transition:width .3s ease"></div></div>
+      <article style="background:#fff;border:1px solid #E2EBEE;border-radius:16px;padding:22px 24px">
+        <div style="font-size:12.5px;color:#7C9097">{{ qOnde }}</div>
+        <h2 data-q-sim-pergunta style="font-size:19px;font-weight:600;color:#163B45;line-height:1.45;margin-top:8px;white-space:pre-line">{{ qPergunta }}</h2>
+        <sc-if value="{{ qEscondida }}" hint-placeholder-val="{{ true }}">
+          <button onclick="{{ qVerResposta }}" style="margin-top:16px;border:none;background:#1E7C92;color:#fff;font-size:14.5px;font-weight:600;padding:11px 20px;border-radius:10px;cursor:pointer">Ver resposta</button>
+        </sc-if>
+        <sc-if value="{{ qMostrar }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:16px;background:#F6FAFB;border:1px solid #E2EEF1;border-radius:12px;padding:14px 16px">
+            <div style="font-size:12px;font-weight:700;color:#1E7C92;letter-spacing:.03em;margin-bottom:6px">RESPOSTA</div>
+            <p style="margin:0;font-size:14.5px;color:#22393F;white-space:pre-line;line-height:1.65">{{ qResposta }}</p>
+            <sc-for list="{{ qImagens }}" as="im" hint-placeholder-count="1"><img src="{{ im.src }}" alt="" style="display:block;max-width:100%;height:auto;margin-top:12px;border-radius:10px;border:1px solid #E7EEF1;background:#fff"></sc-for>
+          </div>
+          <div class="hg-g3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px">
+            <button onclick="{{ qErrei }}" style="border:1.5px solid #E6AFB5;background:#FCEDEE;color:#9E2F3B;font-size:14.5px;font-weight:600;padding:11px;border-radius:10px;cursor:pointer">Errei</button>
+            <button onclick="{{ qQuase }}" style="border:1.5px solid #F1DDB4;background:#FFF8EC;color:#9A6B17;font-size:14.5px;font-weight:600;padding:11px;border-radius:10px;cursor:pointer">Quase</button>
+            <button onclick="{{ qAcertei }}" style="border:1.5px solid #8FD0A8;background:#EAF7EE;color:#1F6B43;font-size:14.5px;font-weight:600;padding:11px;border-radius:10px;cursor:pointer">Acertei</button>
           </div>
         </sc-if>
       </article>
     </sc-if>
-
-    <sc-if value="{{ qFim }}" hint-placeholder-val="{{ false }}">
-      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:18px;padding:28px;text-align:center">
-        <h2 data-q-fim style="font-size:24px;font-weight:700;color:#163B45">{{ qFimTitulo }}</h2>
-        <sc-if value="{{ qFimNota }}" hint-placeholder-val="{{ false }}"><div style="font-size:15px;color:#1E7C92;font-weight:600;margin-top:6px">{{ qFimNota }}</div></sc-if>
+    <sc-if value="{{ qSimFim }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border:1px solid #E7EEF1;border-radius:16px;padding:28px;text-align:center;margin-top:22px">
+        <h2 data-q-fim style="font-size:23px;font-weight:700;color:#163B45">Simulado concluído</h2>
+        <div style="font-size:15px;color:#1E7C92;font-weight:600;margin-top:6px">{{ qFimNota }}</div>
         <div style="display:flex;justify-content:center;gap:26px;margin-top:18px;font-size:14px;color:#5E747B">
-          <span><b style="font-size:24px;color:#1F6B43;font-family:'Schibsted Grotesk'">{{ qPlacar.acertei }}</b><br>acertei</span>
-          <span><b style="font-size:24px;color:#9A6B17;font-family:'Schibsted Grotesk'">{{ qPlacar.quase }}</b><br>quase</span>
-          <span><b style="font-size:24px;color:#9E2F3B;font-family:'Schibsted Grotesk'">{{ qPlacar.errei }}</b><br>errei</span>
+          <span><b style="font-size:24px;color:#1F6B43">{{ qPlacar.acertei }}</b><br>acertei</span>
+          <span><b style="font-size:24px;color:#9A6B17">{{ qPlacar.quase }}</b><br>quase</span>
+          <span><b style="font-size:24px;color:#9E2F3B">{{ qPlacar.errei }}</b><br>errei</span>
         </div>
-        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px">
-          <button onclick="{{ qEstudar }}" style="border:none;background:#1E7C92;color:#fff;font-size:14.5px;font-weight:600;padding:11px 20px;border-radius:11px;cursor:pointer">Estudar mais 20</button>
-          <button onclick="{{ qSair }}" style="border:1px solid #DCE7EB;background:#fff;color:#3C545B;font-size:14.5px;font-weight:600;padding:11px 18px;border-radius:11px;cursor:pointer">Voltar às áreas</button>
-        </div>
+        <button onclick="{{ qSair }}" style="margin-top:22px;border:none;background:#1E7C92;color:#fff;font-size:14.5px;font-weight:600;padding:11px 20px;border-radius:11px;cursor:pointer">Fazer outro simulado</button>
       </div>
     </sc-if>
+
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:26px;font-size:12.5px;color:#8AA0A7">
+      <span>Fonte: baralho Anki "PSGP" compartilhado pelo CIEP. Achou resposta errada ou desatualizada? Avise o CIEP.</span>
+      <sc-if value="{{ qTemProgresso }}" hint-placeholder-val="{{ false }}"><button onclick="{{ qZerar }}" style="border:none;background:transparent;color:#8AA0A7;font-size:12.5px;cursor:pointer;padding:0;text-decoration:underline">Zerar meu progresso</button></sc-if>
+    </div>
   </main>
   </sc-if>
 
